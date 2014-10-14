@@ -1,0 +1,240 @@
+﻿@{
+    ViewBag.Title = "Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@model FT.Web.Model.Models.HotelModel*@
+
+<div style="display: none" id="hideAll">&nbsp;</div>
+@*<script type="text/javascript">
+    document.getElementById("hideAll").style.display = "block";
+</script>*@
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<script src="~/Scripts/home.js"></script>
+<link href="~/Content/Home.css" rel="stylesheet" />
+<link href="~/Content/jquery/stylesheet-image-based.css" rel="stylesheet" />
+<link href="~/Content/Buscadores.css" rel="stylesheet" />
+<style>
+    label {
+    color: #FFF;
+    font-family: Verdana;
+    font-size: 11px;
+}
+</style>
+<script src="~/Scripts/CallAjax.js"></script>
+@*<script src="~/Scripts/MultiMP.js"></script>*@
+@*<script src="~/Scripts/MontePacote.js"></script>*@
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Content -->
+<div class="content-bg">
+    <div class="content">
+
+        <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Coluna esquerda -->
+        <div class="content-left">
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Buscador -->
+            <div id="tabs" class="buscador tabs">
+                <ul>
+                    <li><a href="#tabs-1">Pacotes</a></li>
+                    <li><a href="#tabs-2">Passagens</a></li>
+                    <li><a href="#tabs-3">Hotéis</a></li>
+                    <li><a href="#tabs-4">Carros</a></li>
+                    <li><a href="#tabs-5">Serviços</a></li>
+                    <li><a href="#tabs-6">Monte seu pacote</a></li>
+                </ul>
+
+                <div id="tabs-1">
+                    <div class="buscador-campos">
+                        <div id="BuscaPac">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <div class="buscador-campos">
+                        <div id="BuscaAereo">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-3">
+                    <div class="buscador-campos">
+                        @*<div id="BuscaHotel">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>*@
+                          @{ 
+                            try
+                            {
+                                Html.RenderAction("HotelForm", "Hotel");
+                            }
+                            catch (Exception ex)
+                            {
+                                FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction HotelForm");
+                                //FTV.Shared.Business.TRACER_BL.AddException(FTV.Shared.Business.EnumProcesso.WebSite, null, ex, "RenderAction HotelForm"); 
+                            }
+                        }
+                        <script>
+                            $("#Checkin").val(getToday());
+                            $("#Checkout").val(getTomorow());
+                        </script>
+                    </div>
+                </div>
+                <div id="tabs-4">
+                    <div class="buscador-campos">
+                        <div id="BuscaCar">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-5">
+                    <div class="buscador-campos">
+                        <div id="BuscaAtv">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-6">
+                    <div class="buscador-campos">
+                       @* <div id="BuscaMP">
+                            <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                        </div>*@
+                          @{
+                            try
+                            {
+                                Html.RenderAction("MPFormMulti", "MontePacote");
+                            }
+                            catch (Exception ex)
+                            {
+                                FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction MontePacote");
+                                //FTV.Shared.Business.TRACER_BL.AddException(FTV.Shared.Business.EnumProcesso.WebSite, null, ex, "RenderAction MontePacote"); 
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Buscador -->
+
+
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Destaque Hotéis e Passagens -->
+            <div class="passagens-hoteis-destaque">
+                <div id="HotelDestakNasc">
+                    <img src="/Images/loader.gif" style="margin-left: 175px; margin-top: 150px; padding-bottom: 35px;">
+                </div>
+                <div id="HotelDestakInter">
+                </div>
+                <div class="passagens-hoteis-legenda">* Diárias por pessoa em apartamento duplo.</div>
+            </div>
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Destaque Hotéis e Passagens -->
+
+
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Módulo Editorial -->
+            <div class="editorial-destaque">
+
+                <div class="editorial-left">
+                    <a href="/hotsite/destinos-nacionais">
+                        <div class="editorial-destinos-nacionais">
+                            <h3>Destinos <strong>Nacionais</strong></h3>
+                            <img src="@string.Format("/Images/editorial_nacional.gif")" width="130" height="80" alt="">
+                        </div>
+                    </a>
+                    <a href="/hotsite/destinos-internacionais">
+                        <div class="editorial-destinos-internacionais">
+                            <h3>Destinos <strong>Internacionais</strong></h3>
+                            <img src="@string.Format("/Images/editorial_internacional.gif")" width="130" height="80" alt="">
+                        </div>
+                    </a>
+                </div>
+
+                <a href="/hotsite/InformacoesImportantes">
+                    <div class="editorial-right">
+                        <img src="@string.Format("/Images/editorial_informacoes.png")" width="110" height="125" alt="">
+                        <p class="editorial-info-1">Informações</p>
+                        <p class="editorial-info-2">Importantes</p>
+                        <p class="editorial-info-3">para sua viagem.</p>
+                    </div>
+                </a>
+                <a href="/hotsite/Caderno">
+                    <div class="editorial-right">
+                        <img src="@string.Format("/Images/editorial_cadernos.png")" width="110" height="125" alt="">
+                        <p class="editorial-cadernos-1">Cadernos de</p>
+                        <p class="editorial-cadernos-2">Viagem</p>
+                        <p class="editorial-cadernos-3">Diversos roteiros para você.</p>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Módulo Editorial -->
+
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Cadastro E-mail -->
+            <div class="cadastro-email">
+                <div class="cadastro-email-top">
+                    <p class="cadastro-email-top-title">OFERTAS EXCLUSIVAS PARA VOCÊ!</p>
+                    <p class="cadastro-email-top-text"><b>Assine</b> e receba nossas promoções.</p>
+                </div>
+                <div class="cadastro-email-form">
+                    @{
+                        Html.RenderPartial("NewsletterForm", "Home");
+                    }
+                </div>
+            </div>
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Cadastro E-mail -->
+
+
+        </div>
+        <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Coluna esquerda -->
+
+
+
+
+
+        <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Coluna Direita -->
+        <div class="content-right">
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Slideshow -->
+            <div id="bannerDestaque">
+                <img src="/Images/loader.gif" style="margin-top: 150px; margin-left: 145px; padding-bottom: 150px;">
+            </div>
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Slideshow -->
+
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Pacotes -->
+            <div class="pacotes-destaque">
+                <div class="pacotes-destaque-header">
+                    <!-- Nacionais -->
+                    <div class="ico-pacotes-nacionais"></div>
+                    <h2 class="pacotes-destaque-titulo-nacionais">Pacotes<strong> Nacionais</strong></h2>
+                </div>
+
+                <div class="pacotes" id="PacotesNasc">
+                    <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                </div>
+            </div>
+
+            <div class="pacotes-destaque">
+                <div class="pacotes-destaque-header">
+                    <!-- Pacotes Internacionais -->
+                    <div class="ico-pacotes-internacionais"></div>
+                    <h2 class="pacotes-destaque-titulo-internacionais">Pacotes<strong> Internacionais</strong></h2>
+                </div>
+
+                <div class="pacotes" id="PacotesInter">
+                    <img style="margin-top: 150px; margin-left: 145px;" src="/Images/loader.gif" />
+                </div>
+
+            </div>
+            <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Pacotes -->
+        </div>
+        <!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Coluna Direita -->
+        <div class="clear"></div>
+    </div>
+</div>
+<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Content -->
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Hotsites -->
+
+
+<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• Hotsites -->

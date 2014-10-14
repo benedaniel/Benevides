@@ -1,0 +1,33 @@
+﻿@model FT.Web.Model.Models.ConsultaPacoteMatrizRetorno
+
+<div class="idaevoltapacote" style="margin-top: 0; width: 676px; padding-top: 0; min-height: 18px; background-color: #7580A8; color: #FFF; font-weight: normal !important; border-top-right-radius: 10px; border-top-left-radius: 10px;">
+    <div class="labelaereo" style="width: 350px"><span class="tituloAereoPacote">Pacote</span></div>
+    <div class="labelaereo" style="width: 60px"><span class="tituloAereoPacote">Dias</span></div>
+    <div class="labelaereo" style="width: 180px"><span class="tituloAereoPacote">Preço por pessoa (apto. duplo)</span></div>
+    <img style="float: right; margin-right: 5px; margin-top: 2px; cursor: pointer" src="~/Content/images/btnfechar.png" onclick="esconderPacotes()" />
+</div>
+
+@{int j = 0; string back1 = string.Empty;}
+            
+@foreach (var pacote in Model.ListaAereoPacoteMatriz)
+{
+    if (j % 2 == 0) { back1 = "background-color: #EFF0FF;"; } else { back1 = "background-color: white;"; }
+    <div style="border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; width: 688px; height: auto; @back1">
+        <label style="margin-left: 10px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 350px; margin-top: 5px;">
+            @pacote.NomePacote
+        </label>
+        <label style="float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 60px; margin-top: 5px;">
+            @pacote.NumeroDias
+        </label>
+        <label style="float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 115px; margin-top: 5px;">
+             @pacote.SiglaMoeda @((pacote.ValorReferencia / 2).ToString("n2"))
+        </label>
+        <a class="button_ver_pacote" style="font-size: 12px !important; margin-bottom: 5px; margin-left: 0px; margin-top: 0px;" onclick="exibirPacotesVenda(@(pacote.Sequencial+j), '@Model.trecho1;@Model.trecho2;', '@pacote.CodigoPacoteMatriz')">Listar Hoteis</a>
+        <div style="clear:both"></div>
+    </div>
+    <div id="divpacotesvenda-@(pacote.Sequencial+j)" class="divpacotesvenda" style="border-bottom: 1px solid; margin-top: 5px; border-left: 1px solid; border-right: 1px solid; display:none; height: auto; width: 677px; margin-left: 5px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; margin-bottom: 10px; border-radius: 10px;">
+    </div>
+    
+    j++;
+}
+

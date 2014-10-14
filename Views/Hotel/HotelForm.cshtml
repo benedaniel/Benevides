@@ -1,0 +1,148 @@
+﻿@model FT.Web.Model.Models.HotelModel
+<script src="~/Scripts/Hotel.js"></script>
+<link href="~/Content/form.css" rel="stylesheet" />
+
+@{ RouteValueDictionary route = new RouteValueDictionary(ViewContext.RouteData.Values);}
+
+@using (Html.BeginForm("Resultado", "Hotel", route, FormMethod.Post, new { id = "hotelform" }))
+{
+    <div class="contentBuscaHotel">
+        <h3>Procure o seu Hotel</h3>
+
+        @Html.LabelFor(model => model.DestinoHotel, new { @class = "buscadorlabel" })
+        <div id="divDestinoHotel">
+
+            @if (String.IsNullOrEmpty(Model.DestinoHotel))
+            {  
+                <script>
+                    $(document).ready(function () {
+                        $("#DestinoHotel").addClass("inputdestino watermark");
+                        $("#DestinoHotel").attr("title", "Informe seu destino");
+                        $("#DestinoHotel").val("");
+                        $('#DestinoHotel').watermark();
+                    });
+                </script>
+                @Html.TextBoxFor(model => model.DestinoHotel, new { @class = "inputdestino watermark", title = "Informe seu destino" })
+                @Html.ValidationMessageFor(model => model.DestinoHotel)}
+            else
+            { 
+                @Html.TextBoxFor(model => model.DestinoHotel, new { @class = "inputdestino", title = "Informe seu destino" })
+                @Html.ValidationMessageFor(model => model.DestinoHotel)
+            }
+        </div>
+
+        <br class="saveSearch" />
+        <p class="BuscadorSetDate">
+            <div class="checkin SetDate">
+                @Html.LabelFor(model => model.Checkin, new { @class = "buscadorlabel" })
+                <br class="saveSearch" />
+                @Html.TextBoxFor(model => model.Checkin, new { @class = "txtStartDate" })
+                <span class="ErroDatas">
+                    @Html.ValidationMessageFor(model => model.Checkin)
+                </span>
+            </div>
+            <div class="checkout SetDate">
+                @Html.LabelFor(model => model.Checkout, new { @class = "buscadorlabel" })
+                <br class="saveSearch" />
+                @Html.TextBoxFor(model => model.Checkout, new { @class = "txtEndDate", @onchange = "validarDataRetorno('Checkin', 'Checkout')" })
+                <span class="ErroDatas">
+                    @Html.ValidationMessageFor(model => model.Checkout)
+                </span>
+            </div>
+
+            <div class="quants" style="padding: 0px;">
+                <label style="font-family: Verdana; font-size: 12px; font-weight: bold;" class="noitelab">Noites</label><br class="saveSearch" />
+                <div>
+                    <a href="javascript:" id="plusNights" class="plusHotel"></a>
+                    <input id="txtNoites" name="txtNoites" type="text" value="0" onkeypress="return isNumberKey(event)" maxlength="2" onkeyup="changeNightsKeyHotel(this.value);" />
+                    <a href="javascript:" id="minusNights" class="minusHotel"></a>
+                    <input type="hidden" id="hdnNoites" name="hdnNoites" value="@Request["hdnNoites"]" />
+                    <input type="hidden" id="hdnNoitesRequest" name="hdnNoitesRequest" value="@Request["txtNoites"]" />
+                </div>
+            </div>
+        </p>
+
+        <div class="clear"></div>
+        <div class="bar"></div>
+        <div class="clear"></div>
+        <style>
+            .agrpQuarto1 {
+                min-height: 86px;
+                display: block;
+            }
+        </style>
+        <div class="quartos">
+            @{
+            if (Session["Apartamentos"] != null)
+            {
+                var Apto = new List<FT.Web.Model.Models.ApartamentoModel>();
+                Apto = (List<FT.Web.Model.Models.ApartamentoModel>)Session["Apartamentos"];
+                Html.RenderPartial("Quartos", Apto);
+            }
+            else { Html.RenderPartial("Quartos", Model.Apartamentos); }
+            }
+        </div>
+
+        <div class="clear"></div>
+        <div class="bar"></div>
+        <div class="clear"></div>
+        <br class="saveSearch" />
+        <p>
+            <a href="javascript:" id="clickme" class="buscaAvancada">Busca avançada
+                <img id="imgav" src="~/Images/ava.gif" />
+            </a>
+
+            <a href="javascript:" id="clickmeResult" style="display: none;" class="buscaAvancada">Busca avançada
+                <img id="imgavResult" src="~/Images/avas.jpg" />
+            </a>
+        </p>
+        <br />
+
+        <div id="moreoptionshotel" style="display: none">
+            <p>
+                @Html.LabelFor(model => model.NomeHotel, new { @class = "buscadorlabel" })
+                <br class="saveSearch" />
+                @Html.TextBoxFor(model => model.NomeHotel, new { @class = "inputdestino  watermark", title = "Informe o nome do hotel" })
+                @Html.ValidationMessageFor(model => model.NomeHotel)
+            </p>
+
+            <br class="saveSearch" />
+
+            <div class="checkin SetDate">
+                @Html.LabelFor(model => model.Estrelas, new { @class = "buscadorlabel" })
+                <br class="saveSearch" />
+                <div class="styled-select-form">
+                    @Html.DropDownListFor(model => model.Estrelas, ViewBag.ComboClasses as IEnumerable<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.Estrelas)
+                </div>
+            </div>
+
+            <div class="checkin SetDate">
+                @Html.LabelFor(model => model.TipoReserva, new { @class = "buscadorlabel" })
+                <br class="saveSearch" />
+                <div class="styled-select-form">
+                    @Html.DropDownListFor(model => model.TipoReserva, ViewBag.ComboConfirmacoes as IEnumerable<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.TipoReserva)
+                </div>
+            </div>
+            <br />
+
+            <div class="clear"></div>
+            <br />
+        </div>
+
+        <input id="origem" name="origem" type="hidden" />
+        <input id="numerodeadultos" name="numerodeadultos" type="hidden" />
+
+        <input id="hdnDestinoHotelCodigo" name="numerodeadultos" value="@Model.CodigoCidade" type="hidden" />
+        <hr style="height: 1px; margin: 20px; background-color: silver; display: none;" class="barr">
+        <input type="submit" value="" class="btnPesquisar" onclick="javascript: return SendToServerHotel()" />
+        <input type="submit" value="Refazer Busca" style="display: none;" class="btnRePesquisar" onclick="javascript: return SendToServerHotel()" />
+
+        <input id="HDCidadeHotel" name="HDCidadeHotel" type="hidden" value="@Html.Raw(Model.CodigoCidade)" />
+
+        <input type="text" class="CodCity" value="@Model.CodigoCidade" style="display:none;"  />
+
+    </div>
+}
+

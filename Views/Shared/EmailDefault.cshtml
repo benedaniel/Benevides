@@ -1,0 +1,102 @@
+﻿@model FT.Web.Model.Models.FaleConoscoModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+@*
+ViewBag.Layout = "EventosEIncentivo";
+ViewBag.Title = "Eventos e incentivo";
+ViewBag.SiteCSS = "eventos";
+ViewBag.IDEmpresa = 5;
+*@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style type="text/css">
+        .texto{font-size:16px;}
+        .texto div{float:left;display:block;width:300px;}
+        .texto div.mensagem{width:initial;}
+        .texto br.clear{clear:both;}
+    </style>
+</head>
+<body class="texto">
+    <h4>@ViewBag.Title de @Model.Nome</h4>
+    <div class="mensagem">
+        Um usu&aacute;rio do site enviou um email atrav&eacute;s do <strong>@ViewBag.Title</strong> com as seguintes informa&ccedil;&otilde;es:
+    </div>
+    <br class="clear" />
+
+    <div>
+        <strong>Nome:</strong>
+        <br />
+        @Model.Nome
+    </div>
+
+    <div>
+        <strong>Email:</strong>
+        <br />
+        @Model.Email
+    </div>
+    <br class="clear" />
+
+    <div>
+        <strong>Sexo:</strong>
+        <br />
+        @switch (Model.Sexo)
+        {
+            case 'M':
+            case 'm':
+                @Html.Raw("Masculino")
+                break;
+            case 'F':
+            case 'f':
+                @Html.Raw("Feminino")
+                break;
+            default:
+                @Html.Raw("Indefinido")
+                break;
+        }
+    </div>
+
+    <div>
+        <strong>Data de nascimento:</strong>
+        <br />
+        @Model.DataDeNascimento.ToShortDateString()
+    </div>
+    <br class="clear" />
+
+    <div>
+        <strong>Telefone:</strong>
+        <br />
+        @Model.Telefone
+    </div>
+
+    <div>
+        <strong>Celular:</strong>
+        <br />
+        @Model.Celular
+    </div>
+    <br class="clear" />
+    
+    <div>
+        <strong>Assunto:</strong>
+        <br />
+        @Model.Assunto
+    </div>
+    <div>
+        <strong>Endere&ccedil;o (cidade - estado):</strong>
+        <br />
+        @Model.Cidade - @Model.Estado
+    </div>
+    <br class="clear" />
+
+    <div class="mensagem">
+        <strong>Mensagem:</strong>
+        <br />
+        @Model.Mensagem
+    </div>
+    <br class="clear" />
+    </div>
+</body>
+</html>

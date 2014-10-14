@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+@model List<FT.Web.Model.Models.DestaqueModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Noticiaseventos</title>
+    <link href="~/Hotsites/template/css/style.css" rel="stylesheet" />
+    <style>
+        .destaque-box-eventos {
+            height: 116px !important;
+            float: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Noticia Box -->
+    @if (Model.Count() > 3)
+    {
+        foreach (var item in Model.Take(3))
+        {
+        <div class="destaque-box-eventos">
+            <a href="@item.LinkDestaque" target="_top">
+                <div class="destaque-box-item-eventos">
+                    <div class="destaque-box-item-img-eventos">
+                        @if (item.DestaqueFotos.Count > 0)
+                        {
+                            <img src="@item.DestaqueFotos.FirstOrDefault().UrlFoto@item.DestaqueFotos.FirstOrDefault().CdFoto" width="68" height="68" alt="" title="" />
+                        }
+                    </div>
+                    <p class="destaque-box-item-txt1-eventos">@item.NomeDestaque</p>
+                    <p class="destaque-box-item-txt2-eventos">@item.DescricaoDestaque</p>
+                </div>
+            </a>
+        </div>
+        }
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+        <div class="destaque-box-eventos">
+            <a href="@item.LinkDestaque" target="_top">
+                <div class="destaque-box-item-eventos">
+                    <div class="destaque-box-item-img-eventos">
+                        @if (item.DestaqueFotos.Count > 0)
+                        {
+                            <img src="@item.DestaqueFotos.FirstOrDefault().UrlFoto@item.DestaqueFotos.FirstOrDefault().CdFoto" width="68" height="68" alt="" title="" />
+                        }
+                    </div>
+                    <p class="destaque-box-item-txt1-eventos">@item.NomeDestaque</p>
+                    <p class="destaque-box-item-txt2-eventos">@item.DescricaoDestaque</p>
+                </div>
+            </a>
+        </div>
+        }
+    }
+</body>
+</html>

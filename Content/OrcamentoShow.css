@@ -1,0 +1,360 @@
+﻿.control-cotizacao, #div-loading-cotizacao {
+    display: block;
+    margin: auto;
+    width: 930px;
+}
+
+    .control-cotizacao .itens-cotizados {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+
+.itens-cotizados {
+    background: none repeat scroll 0 0 #F1FAFF;
+    border: 1px solid #CEECF2;
+    border-radius: 5px;
+    color: #284066;
+    float: left;
+    margin: 0;
+    padding: 7px 16px;
+    width: 731px;
+}
+
+.Title-cotizacao-add, .mensage-cotizacao {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+a.btn-salvar-cotizacao {
+    background: url("../Images/bt-enviar-cotizacao.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: bold;
+    height: 25px;
+    margin: 5px 0 0 10px;
+    padding-top: 6px;
+    text-decoration: none;
+    text-indent: 8px;
+    width: 153px;
+}
+
+.div-painel-save {
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 332px;
+    color: #333;
+}
+
+.campo-texto-cotizacao {
+    border: 1px solid #CCCCCC;
+    width: 320px;
+}
+
+.div-painel-save p {
+    margin-top: 10px;
+}
+
+.cotizacao-button-salvar {
+    background: url("../Images/bt-enviar-cotizacao.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: inline-block;
+    font-weight: bold;
+    height: 25px;
+    margin: 5px 0 0 10px;
+    padding-top: 6px;
+    text-decoration: none;
+    text-indent: 8px;
+    width: 153px;
+}
+
+.cotizacaoes-div-salvas select {
+    border: 1px solid #B7B7B7;
+    border-radius: 4px;
+    float: left;
+    height: 30px;
+    padding: 5px 10px;
+    width: 430px;
+}
+
+
+a.cotizacao-button-update {
+    background: url("../Images/bt-ok.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: inline-block;
+    float: left;
+    height: 30px;
+    margin-left: 20px;
+    padding-top: 7px;
+    text-align: center;
+    text-decoration: none;
+    text-indent: -1px;
+    width: 46px;
+}
+
+/*Pacote*/
+
+.content_pacote {
+    display: block;
+    font-size: 11px;
+    margin: auto auto auto 30px;
+    min-height: 325px;
+    width: 917px;
+    float: left;
+}
+
+.span-titulo-package {
+    color: #0D4379;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.div-infos-package, .div-infos-packagePrint {
+    float: left;
+    margin: 0px 10px;
+    text-align: left;
+    width: 590px;
+}
+
+.div-info-flight-hotel {
+    border-top: 1px solid #DDDDDD;
+    display: block;
+    margin-top: 20px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.div-info-flight {
+    float: left;
+    padding-bottom: 20px;
+    padding-right: 35px;
+    width: 255px;
+}
+
+.div-info-hotel {
+    border-left: 1px solid rgb(221, 221, 221);
+    float: left;
+    padding-left: 35px;
+    width: 255px;
+}
+
+.div-finance-package {
+    width: 200px;
+    margin-top: 20px;
+    float: left;
+}
+
+.pacote_tax {
+    background: none repeat scroll 0 0 #CCCCCC;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin-top: 50px;
+}
+
+    .pacote_tax tr td {
+        padding: 3px;
+    }
+
+.span-flight-title, .span-hotel-title {
+    color: #6C6C6C;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+a#RemoverPacote {
+    background: url("../Images/bt-remover.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 15px;
+    margin-top: -20px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 50px;
+}
+
+.infofly {
+    float: right;
+    margin-top: 10px;
+    width: 170px;
+}
+
+.div-flight-left {
+    float: left;
+    height: 90px;
+    margin-top: 12px;
+    text-align: center;
+    width: 75px;
+}
+
+.image-package-pacote {
+    display: block;
+    float: left;
+    height: 200px;
+    width: 150px;
+}
+
+/*Aereo*/
+
+
+.saida-voo, .title-voo-classe {
+    color: rgb(108, 108, 108);
+    font-weight: bold;
+}
+
+.vooName-voo.infomation-voo {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(13, 67, 121);
+    padding-bottom: 5px;
+}
+
+.title-voo-company {
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+
+.content_aereo {
+    font-size: 11px;
+    margin: auto auto auto 30px;
+    width: 917px;
+    clear: both;
+}
+
+.aereo_tax {
+    background: none repeat scroll 0 0 #CCCCCC;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin-top: 50px;
+    width: 100%;
+}
+
+    .aereo_tax tr td {
+        padding: 3px;
+    }
+
+.conteudo_aereo td {
+    vertical-align: top;
+}
+
+.tbTrechos {
+    padding-left: 90px;
+    padding-right: 70px;
+}
+
+.td-info-voo {
+    border-bottom: 1px dashed #CCCCCC;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+/*Carro*/
+
+.content_carro {
+    font-size: 11px;
+    margin: auto auto auto 30px;
+    width: 917px;
+}
+
+
+.name-car {
+    color: #0D4379;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.infomation-car {
+    font-weight: bold;
+}
+
+.div-car-price {
+    border: 1px solid #CCCCCC;
+    border-collapse: collapse;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.table-info-car {
+    width: 100%;
+}
+
+/*Atividade*/
+
+.content_atividade {
+    font-size: 11px;
+    margin: auto auto auto 30px;
+    width: 917px;
+}
+
+.atividade_infos {
+    float: left;
+    display: block;
+}
+
+.atividade_taxs {
+    float: right;
+    display: block;
+}
+
+
+.atividade_tax {
+    background: none repeat scroll 0 0 #CCCCCC;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin-top: 20px;
+    padding: 5px;
+}
+
+    .atividade_tax td {
+        padding: 5px;
+    }
+
+div.content_atividade div.ativ {
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    min-height: 140px;
+}
+
+.RemoverAtividade {
+    background: url("../Images/bt-remover.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 15px;
+    margin-top: 4px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 50px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .orcamento-editar, .orcamento-editar * {
+        visibility: visible;
+    }
+
+    .orcamento-editar {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .form-orcamento {
+        visibility: hidden !important;
+    }
+
+    .form-orcamento * {
+        visibility: hidden !important;
+    }
+
+    .linkRemover {
+        visibility: hidden !important;
+    }
+}

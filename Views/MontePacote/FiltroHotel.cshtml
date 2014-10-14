@@ -1,0 +1,275 @@
+﻿@model List<FT.Web.Model.Models.HotelModel>
+
+<link href="~/Content/FiltroHotel.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<link href="~/Content/Hotel.css" rel="stylesheet" />
+<link href="~/Content/HotelResult.css" rel="stylesheet" />
+
+<script>
+    
+    function FiltrarPorFacilidades() {
+        abortTimer();
+
+        var facilidade = "";
+
+        for(var i = 0; i < $(".facilidadesFiltro").length; i++){
+            if($(".facilidadesFiltro")[i].checked) {
+                facilidade += $(".facilidadesFiltro")[i].value;
+                facilidade += ",";
+            }
+        }
+
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        var args = new Object();
+        args = {
+            lstFacilidades: facilidade,
+            qtdeItensPorPagina: $("#quantidadeResultados").val(),
+            ordenacao: $(".combo-ordenar").val(),
+            isMontePacote: true
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorFacilidades",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            success: function (result) {
+                
+                $("#HotelResultado").fadeOut();
+                $("#HotelResultado").html(result);
+
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+                $(holder).pagination("selectPage", 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+                        $(spanTotalHoteis).text(qtdRegistros);
+                        $(holder).pagination("updateItems", qtdRegistros);
+                        $(".loadingDefault").hide();
+
+                        AtualizarMapaHotel();
+
+                        abortTimer();
+                    }
+                });
+
+                jaPesquisado = false;
+
+            }
+        });
+    }
+
+    function FiltrarPorEstrelas() {
+        abortTimer();
+
+        var estrela = "";
+
+        for(var i = 0; i < $(".numeroestrelas").length; i++) {
+            if($(".numeroestrelas")[i].checked) {
+                estrela += $(".numeroestrelas")[i].value;
+                estrela += ",";
+            }
+        }
+
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        var args = new Object();
+        args = {
+            estrela: estrela,
+            qtdeItensPorPagina: qtdeItensPorPagina,
+            ordenacao: $(".combo-ordenar").val(),
+            isMontePacote: true
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorEstrelas",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            success: function (result) {
+                
+                $("#HotelResultado").fadeOut();
+                $("#HotelResultado").html(result);
+                
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+                $("#holder").pagination("selectPage", 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+                        
+                        $(spanTotalHoteis).text(qtdRegistros);
+                        $(holder).pagination("updateItems", qtdRegistros);
+                        $(".loadingDefault").hide();
+
+                        AtualizarMapaHotel();
+                        abortTimer();
+                    }
+                });
+
+                jaPesquisado = false;
+            }
+        });
+    }    
+    
+    $(function () {
+        $("#clickme").hide();
+        $("#clickmeResult").show();
+        $(".numeroestrelas").change(function() {
+            FiltrarPorEstrelas();
+        });
+        $(".facilidadesFiltro").change(function() {
+            FiltrarPorFacilidades();
+        }); 
+    });
+    function SearchHotelName()
+    { 
+        var num = $("#txtNome").val().length;
+        if(num >= 3 || num == 0)
+        {
+            setTimeout(FiltrarPorNome(),1000);
+        }
+    }
+    function sayHi()
+    {
+        postarformMP();
+    }
+
+
+
+</script>
+
+<script>
+    var busca = false;
+    var pesquisar = false;
+    var i = 0;
+    
+    setInterval(function(){
+        if (i > 1 && pesquisar == true)
+        {
+            pesquisar = false;
+            busca = true;
+        }
+        if(busca)
+        {
+            postarformMP();
+            busca = false;
+        }
+        i = i+1;   
+    },555); 
+  
+    //function SearchHotelName() {
+    //    i = 0;
+    //    pesquisar = true;
+     
+    //}
+</script>
+
+<div class="content-left" style="display: block;">
+    <div class="filtroHotel">
+        <div id="headerResultados" class="titulo-filtros-left">
+            <span class="iconeMala" style="">Filtro Hotel</span>
+        </div>
+        <div class="divcampos-filtros-left">
+            <div>
+                <label>Nome do hotel</label>
+                <input type="text" id="txtNome" onkeyup="SearchHotelName();" class="inputFiltro watermark" title="Filtro por nome" /><br />
+            </div>
+            @{
+                if (ViewBag.Dados != null)
+                {
+                    var dadosBusca = ViewBag.Dados;
+
+                <input id='QuantAdultos' type='hidden' value='@dadosBusca.QuantAdultos' />
+                <input id='QuantCriancas' type='hidden' value='@dadosBusca.QuantCriancas' />
+                <input id='Checkin' type='hidden' value='@dadosBusca.Checkin' />
+                <input id='Checkout' type='hidden' value='@dadosBusca.Checkout' />
+                <input id='CodigoCidade' type='hidden' value='@dadosBusca.CodigoCidade' />
+                }
+            }
+            <div>
+                <label>Faixa de preço</label>
+                <script>
+                    $(function () {
+                        $("#slider-range").slider({
+                            range: true,
+                            change: function(event,ui){ FiltrarPorValor();},
+                            min: 0,
+                            max: @Math.Floor(Convert.ToDecimal(Session["MaiorPreco"])),
+                            values: [@Math.Floor(Convert.ToDecimal(Session["MenorPreco"])), @Math.Floor(Convert.ToDecimal(Session["MaiorPreco"]))],
+                            slide: function (event, ui) {
+                                $("#amount").val("R$" + ui.values[0] + " - R$" + ui.values[1]);
+                            }
+                        });
+                        $("#amount").val("R$" + $("#slider-range").slider("values", 0) +
+                        " - R$" + $("#slider-range").slider("values", 1));
+                    });
+                </script>
+                <div class="preco">
+                    <p>
+                        <input type="text" id="amount" class="inputFiltro" style="color: #f6931f; font-weight: bold;" />
+                    </p>
+                    <div id="slider-range"></div>
+                </div>
+            </div>
+            <div>
+                <label class="lblEstrela">Estrelas</label>
+                <div class="listaFiltro">
+                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio1" name="stars" value="3">
+                    <label for="radio1">
+                        <div class="hotel-resultados-estrelas estrela1"></div>
+                    </label>
+                    <br />
+                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio2" name="stars" value="4">
+                    <label for="radio2">
+                        <div class="hotel-resultados-estrelas estrela2"></div>
+                    </label>
+                    <br />
+                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio3" name="stars" value="5">
+                    <label for="radio3">
+                        <div class="hotel-resultados-estrelas estrela3"></div>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="lblEstrela">Facilidades</label>
+                <div class="listaFiltro">
+                    <input type='checkbox' id='ck_facilidade01' class="facilidadesFiltro" name='facilities' value='TV a cabo'>
+                    <label for="ck_facilidade01">TV a cabo</label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade02' class="facilidadesFiltro" name='facilities' value='Telefone'>
+                    <label for="ck_facilidade02">Telefone</label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade03' class="facilidadesFiltro" name='facilities' value='Piscina'>
+                    <label for="ck_facilidade03">Piscina</label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade04' class="facilidadesFiltro" name='facilities' value='Ar condicionado'>
+                    <label for="ck_facilidade04">Ar condicionado </label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade05' class="facilidadesFiltro" name='facilities' value='Estacionamento'>
+                    <label for="ck_facilidade05">Estacionamento </label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade06' class="facilidadesFiltro" name='facilities' value='Wi-fi'>
+                    <label for="ck_facilidade06">Wi-fi </label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade07' class="facilidadesFiltro" name='facilities' value='Cofre'>
+                    <label for="ck_facilidade07">Cofre</label>
+                    <br />
+                    <input type='checkbox' id='ck_facilidade08' class="facilidadesFiltro" name='facilities' value='Acesso para Deficientes'>
+                    <label for="ck_facilidade08">Acesso para Deficientes</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,718 @@
+﻿
+div.SetDate .ui-datepicker-trigger {
+    background: url("../Images/calendario_input-silver.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: right;
+    height: 35px;
+    width: 35px;
+    margin-top: -36px;
+}
+
+.picker-text {
+    width: 124px;
+    height: 35px;
+    float: left;
+}
+
+.text-data-filtro-left {
+    border: 1px solid #D6D6D6;
+    float: left;
+    margin: 0 10px 0 0;
+    width: 110px;
+    color: #999999;
+    font-size: 0.8em;
+}
+
+.dropdown-hora-filtros-left {
+    border: 1px solid #D6D6D6;
+    float: right;
+    width: 79px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    height: 36px;
+}
+
+.checkbox-filtros-left {
+    width: 30px;
+    padding: 3px 6px;
+    margin: 8px 0;
+    border: solid 1px #bb410a;
+    border-top: solid 1px #7f2f00;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: none;
+    color: #999;
+    font-size: 0.8em;
+    float: left;
+}
+
+.label-checkbox-filtros-left {
+    color: #666666;
+    font-family: Verdana;
+    font-size: 10.4px;
+    font-weight: bold;
+    margin-left: 8px;
+    float: left;
+    margin: 15px 8px;
+    display: none;
+    font-family: Verdana;
+    font-weight: bold;
+    line-height: 0px;
+    padding-left: 0px;
+}
+
+
+.buttonRefazerPesquisa-filtros-left {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("../Images/images_pacote/bot_refazer_busca.png") no-repeat scroll 0 0 #C2ECFF;
+    border-image: none;
+    border-style: solid;
+    border-width: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    height: 34px;
+    float: right;
+    padding: 0;
+    width: 146px;
+}
+
+
+
+/* inicio filtros*/
+.filtros-left {
+    float: left;
+    color: white;
+    background-color: #f05c18;
+    width: 255px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.titulo-filtros-left {
+    margin: 10px;
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 20px;
+}
+
+.divcampos-filtros-left {
+    background-color: #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
+    display: inline-block;
+    margin: 2px;
+    padding: 20px;
+}
+
+.label-filtros-left {
+    color: #666666;
+    display: block;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.dropdown-filtros-left {
+    background: url("../Images/images_pacote/dropdown_arrow.png") no-repeat scroll right center #FFFFFF;
+    border: 1px solid #D6D6D6;
+    border-radius: 5px 5px 5px 5px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 5px;
+    width: 100%;
+}
+
+.campos-filtros-left {
+    border: 1px solid #D6D6D6;
+    /*-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-image: none;*/
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    color: #999999;
+    font-size: 0.8em;
+    margin: 0;
+    width: 197px;
+}
+
+/* fim filtros*/
+
+
+
+/* g*/
+
+input[type=checkbox],
+input[type=radio ] {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    box-shadow: none;
+    color: #666666;
+    font-size: 0.8em;
+    margin: 0px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    height: 10px;
+    opacity: 0;
+}
+
+    input[type=checkbox]:not(old),
+    input[type=radio ]:not(old) {
+        width: 21px;
+        margin: 0;
+        padding: 0;
+    }
+
+        input[type=checkbox]:not(old) + label,
+        input[type=radio ]:not(old) + label {
+            display: inline-block;
+            margin-left: 0px;
+            padding-left: 28px;
+            background: url('../Images/checks.png') no-repeat 0 0;
+            line-height: 24px;
+            color: #666666;
+            font-family: Verdana;
+            font-weight: bold;
+            font-size: 10.4px;
+        }
+
+        input[type=checkbox]:not(old):checked + label,
+        input[type=radio]:not(old):checked + label {
+            background-position: 0 -25px;
+        }
+
+/*g*/
+
+.content-resultado-right {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 688px;
+    /*border: 1px solid #CCCCCC;*/
+    border-radius: 10px 10px 10px 10px;
+    height: auto;
+    padding: 0 0 5px;
+}
+
+.content-cabecalho {
+    background: url("../Images/images_pacote/bg3_cabecalho_detalhes_pacote.gif") repeat-x scroll center bottom rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #DDDDDD;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    height: 130px;
+}
+
+
+/*inicio região resultado pesquisa*/
+/*inicio cabeçalho*/
+.carro-detalhes-ico-titulo {
+    background: url("../Images/icones_titulo.png") repeat scroll right center rgba(0, 0, 0, 0);
+    float: left;
+    height: 39px;
+    margin: 5px 10px;
+    width: 40px;
+}
+
+.carro-detalhes-titulo {
+    color: #EE5C29;
+    display: block;
+    float: left;
+    font-size: 1.3em;
+    height: auto;
+    margin: 8px 0 0;
+    padding: 5px 0;
+    text-transform: uppercase;
+    width: 625px;
+}
+
+.clear {
+    clear: both;
+}
+
+.carro-detalhes-inclui {
+    height: auto;
+    margin: 0 0 0 60px;
+}
+
+.carro-detalhes-chechinout {
+    color: #777777;
+    display: block;
+    font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-size: 0.8em;
+    margin: 10px 0 10px 60px;
+}
+/*fim cabeçalho*/
+
+.bloco-carro {
+    border: 1px solid #CCCCCC;
+    border-radius: 10px 10px 10px 10px;
+    height: auto;
+    margin: 20px 0px;
+    overflow: hidden;
+    width: auto;
+    /*background: url("../images/bgCar.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background-size: 100% 117px;*/
+}
+
+.tabela-resulado-carro {
+    border: 0 none;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+}
+
+.tabela-titulo-resulado-carro {
+    /*background-color: whitesmoke;*/
+    text-align: left;
+    border-top: 0px;
+    height: 40px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
+    .tabela-titulo-resulado-carro:hover {
+        background: none !important;
+    }
+
+.tabela-linha-resulado-carro {
+    /*border-bottom: 1px solid #f7f7f7;*/
+    padding: 0 3px;
+    height: 30px;
+}
+
+    .tabela-linha-resulado-carro:hover {
+        /*border-bottom: 1px solid #f7f7f7;*/
+        padding: 0 3px;
+        height: 30px;
+        background-color: #FFF;
+    }
+
+.agrupador {
+    height: 30px;
+    padding-top: 6px;
+    color: #f55a18;
+    background-color: whitesmoke;
+}
+
+.tabela-campo-plano {
+    border-top: 0;
+    padding-left: 5px;
+    width: 290px;
+    border-bottom: 1px solid lightgray;
+    font-size: 10.4px;
+    color: #737373;
+}
+
+.tabela-campo-preco {
+    border-top: 0;
+    padding-left: 5px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+    font-size: 15px;
+    color: #737373;
+    min-width: 150px;
+}
+
+.moeda-simbolo {
+    font-size: 10px;
+    float: left;
+    width: 21px;
+    text-align: right;
+    margin: 0px;
+}
+
+.valor-principal {
+    float: left;
+    text-align: right;
+    width: 60px;
+}
+
+.centavo-principal {
+    float: left;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.simbolo-detalhe-carro {
+    border-radius: 21px 21px 21px 21px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    float: left;
+    height: 15px;
+    width: 15px;
+    margin-left: 5px;
+    background-color: rgb(86, 206, 243);
+}
+
+/*fim região resultado pesquisa*/
+
+
+
+
+
+#simplemodal-overlay {
+    background-color: #000000;
+}
+
+#simplemodal-container {
+    background-color: #333333;
+    border: 4px solid #444444;
+    color: #BBBBBB;
+    height: 360px;
+    padding: 12px;
+    width: 600px;
+}
+
+    #simplemodal-container .simplemodal-data {
+        padding: 8px;
+    }
+
+    #simplemodal-container code {
+        background: none repeat scroll 0 0 #141414;
+        border-left: 3px solid #65B43D;
+        color: #BBBBBB;
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+        padding: 4px 6px 6px;
+    }
+
+    #simplemodal-container a {
+        color: #DDDDDD;
+    }
+
+        #simplemodal-container a.modalCloseImg {
+            background: url("../images/x.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            cursor: pointer;
+            display: inline;
+            height: 29px;
+            position: absolute;
+            right: -16px;
+            top: -15px;
+            width: 25px;
+            z-index: 3200;
+        }
+
+    #simplemodal-container h3 {
+        color: #84B8D9;
+    }
+/* INICIO -- POPUP POPUP POPUP*/
+
+/* INICIO - BLOCO SUPERIOR*/
+.divDetalhesVeiculo {
+    border: solid 1px #0094ff;
+    background-color: white;
+    height: 685px;
+    margin: -9px;
+    padding: 10px;
+    width: 679px;
+    overflow: hidden;
+    overflow-x: hidden;
+    font-size: small;
+}
+
+.regiao-caracteristica {
+    border-bottom: 1px solid #D6D6D6;
+    display: inline-block;
+    margin-top: 20px;
+    width: 680px;
+}
+
+.title-detalhe {
+    background-color: #f75918;
+    color: #FFFFFF;
+    display: list-item;
+    font-size: medium;
+    font-weight: bold;
+    height: 20px;
+    margin: -10px;
+    padding: 6px 11px;
+}
+
+.image-locadora {
+    display: block;
+    font-weight: bold;
+    height: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 55px;
+}
+
+.detalhe-caracteristica {
+    float: left;
+    width: 290px;
+}
+
+.imagem-carro {
+    float: left;
+    padding-left: 10px;
+}
+
+    .imagem-carro img {
+        float: left;
+        padding-left: 10px;
+        max-height: 140px;
+    }
+
+.regiao-detalhe-comprar {
+    position: static;
+    color: #313131;
+    float: right;
+    font-size: 11px;
+    text-align: center;
+    width: 130px;
+}
+
+.carro-detalhe-botao-comprar {
+    background: url("../images/hotel_detalhes_comprar_2.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    font-size: 15px;
+    height: 43px;
+    margin: 0 auto;
+    width: 90px;
+}
+
+.carro-detalhe-valor {
+    font-size: 20px;
+}
+
+/*FIM -BLOCO SUPERIOR*/
+
+/*INICIO - BLOCO INTERMEDIARIO*/
+
+
+.regiao-retirada-devolucao {
+    border-bottom: 1px solid #D6D6D6;
+    display: inline-block;
+    margin-top: 20px;
+    width: 680px;
+}
+
+.regiao-detalhes {
+    border-bottom: 1px solid #D6D6D6;
+    display: inline-block;
+    margin-top: 20px;
+    width: 680px;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 180px;
+}
+
+.retirada-devolucao {
+    color: #3d81c0;
+    font-weight: bold;
+}
+
+.cor-descricao-detalhe {
+    color: #313131;
+}
+
+.titulo-retirada-devolucao {
+}
+/*FIM - BLOCO INTERMEDIARIO*/
+
+/* FIM -- POPUP POPUP POPUP*/
+
+
+
+/*CABEÇALHO2CABEÇALHO2CABEÇALHO2CABEÇALHO2CABEÇALHO2*/
+
+.carro-cabecalho-1 {
+    width: auto;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 10px;
+    /*margin: 0 10px;*/
+}
+
+.carro-cabecalho-1-1 {
+    height: 50px;
+    background: #DDD;
+    border-bottom: solid 1px #CCC;
+    border-radius: 10px 10px 0 0;
+    -moz-box-radius: 10px 10px 0 0;
+    -webkit-box-radius: 10px 10px 0 0;
+}
+
+.carro-cabecalho-1-texto-1 {
+    display: block;
+    float: left;
+    height: 40px;
+    line-height: 43px;
+    padding: 5px 0 5px 5px;
+    color: #0b5bb4;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.carro-cabecalho-1-2 {
+    height: auto;
+    background: #f2f2f2;
+    border-top: solid 1px #FFF;
+    border-radius: 0 0 10px 10px;
+    -moz-box-radius: 0 0 10px 10px;
+    -webkit-box-radius: 0 0 10px 10px;
+    padding: 0 0 15px 0;
+}
+
+.carro-cabecalho-1-texto-3 {
+    font-size: 1.5em;
+    margin: 15px 0 0 20px;
+    color: #ee5c28;
+}
+
+.carro-cabecalho-1-texto-4 {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.8em;
+    margin: 5px 0 0 20px;
+    color: #777;
+}
+
+.nav-precos:hover {
+    background-color: #dedede;
+    opacity: 1;
+}
+
+.nav-precos {
+    background-color: #CFCFCF;
+    border-radius: 16px 16px 16px 16px;
+    height: 20px;
+    margin-top: 124px;
+    opacity: 0.5;
+    padding: 0 0 0 5px;
+    position: absolute;
+    width: 18px;
+}
+
+.seta-dir {
+    margin-left: 315px;
+}
+
+.seta-esq {
+    margin-left: -20px;
+}
+
+
+/*CABEÇALHO2CABEÇALHO2CABEÇALHO2CABEÇALHO2CABEÇALHO2*/
+
+
+
+.cor-descricao-detalhe ul li {
+    height: 25px;
+    line-height: 50px;
+}
+
+    .cor-descricao-detalhe ul li img {
+        height: 25px;
+        line-height: 50px;
+        vertical-align: central;
+        margin: 0;
+        padding: 0;
+    }
+
+
+
+
+
+
+.btnTesteAzul {
+    background-color: #0B407F;
+    border: 1px solid #07264B;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    margin-left: -21px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    width: 106px;
+}
+
+
+    .btnTesteAzul:hover {
+        border: 1px solid #031121;
+        background-color: #072850;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#072850), to(#000000));
+        background-image: -webkit-linear-gradient(top, #072850, #000000);
+        background-image: -moz-linear-gradient(top, #072850, #000000);
+        background-image: -ms-linear-gradient(top, #072850, #000000);
+        background-image: -o-linear-gradient(top, #072850, #000000);
+        background-image: linear-gradient(to bottom, #072850, #000000);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#072850, endColorstr=#000000);
+    }
+
+
+.tbsParcela {
+    background: none repeat scroll 0 0 #F5F8FA;
+    border: 1px solid #F37736;
+    border-radius: 10px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+    display: none;
+    margin-top: -99px;
+    padding: 10px;
+    position: absolute;
+    right: 30px;
+}
+
+
+
+.tbDetalhePreco td {
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.fecharDetalhePreco {
+    text-decoration: underline;
+    color: #f37736;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.fecharDetalhePreco {
+    color: #F37736;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+
+.div-retirada {
+    float: left;
+
+}
+
+.div-devolucao {
+    float: right;
+    margin-right: 105px;
+}

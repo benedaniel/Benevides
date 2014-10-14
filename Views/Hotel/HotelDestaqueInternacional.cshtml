@@ -1,0 +1,57 @@
+﻿@model List<FT.Web.Model.Models.HotelDestaqueModel>
+
+@if (Model != null)
+{ 
+    <div class="passagens-destaque-header">
+        <!-- Passagens -->
+        <p class="passagens-destaque-titulo">Reserve aqui o seu<strong> Hotel Internacional</strong></p>
+    </div>
+    <div class="apartirde">a partir de*</div>
+    foreach (var item in Model)
+    {
+        if (item.DataInicial < DateTime.Now)
+        {
+    <a href='~/Hotel/@item.CodigoCidade/@DateTime.Now.AddDays(1).ToString("dd-MM-yyyy")/@DateTime.Now.AddDays(8).ToString("dd-MM-yyyy")' onclick="$('.loadingDefault').show();">
+        <div class="linha-tabela-passagens">
+            <div class="passagens-destaque-destino">
+                <h4>Hotel em <strong>@item.NomeCidade</strong></h4>
+            </div>
+            @if (item.QuantidadeParcela == null)
+            {
+                <div class="destaque-parcelas">à vista</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@String.Format("{0:0.00}", item.ValorReferencia.Value.ToString("n2"))</div>
+            }
+            else
+            {
+                <div class="destaque-parcelas">@item.QuantidadeParcela@Html.Raw("x")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@String.Format("{0:0.00}", item.ValorParcela.Value.ToString("n2"))</div>
+            }
+        </div>
+    </a>
+        }
+        else
+        {
+    <a href='~/Hotel/@item.CodigoCidade/@Convert.ToDateTime(item.DataInicial).ToString("dd-MM-yyyy")/@Convert.ToDateTime(item.DataFinal).ToString("dd-MM-yyyy")' onclick="$('.loadingDefault').show();">
+        <div class="linha-tabela-passagens">
+            <div class="passagens-destaque-destino">
+                <h4>Hotel em <strong>@item.NomeCidade</strong></h4>
+            </div>
+            @if (item.QuantidadeParcela == null)
+            {
+                <div class="destaque-parcelas">à vista</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@String.Format("{0:0.00}", item.ValorReferencia.Value.ToString("n2"))</div>
+            }
+            else
+            {
+                <div class="destaque-parcelas">@item.QuantidadeParcela@Html.Raw("x")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@String.Format("{0:0.00}", item.ValorParcela.Value.ToString("n2"))</div>
+            }
+        </div>
+    </a>
+        }
+    }
+}

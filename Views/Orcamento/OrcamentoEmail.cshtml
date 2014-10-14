@@ -1,0 +1,911 @@
+﻿@model FT.Web.Model.Models.OrcamentoEmail
+<table width="920" border="0" align="center" cellpadding="0" cellspacing="0" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+    <tbody>
+        <tr>
+            <td valign="top">
+                <table width="920" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td valign="top">
+                                <table width="920" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td valign="top" style="padding-bottom: 40px">
+                                                <img alt="" src="http://www.flytourviagens.com.br/static/flyTourViagens/_img/Logomarca_Flytour_viagens-03.png" width="210" height="120"></td>
+                                            <td align="right" valign="middle" style="font-family: Verdana; font-weight: bold; font-size: 10px; color: #565656">@Model.NomeAgencia<br>
+                                                @Model.Endereco, @Model.NumeroEndereco @Model.Complemento
+                                                <br />
+                                                @Model.Cidade, @Model.Estado
+                                                <br>
+                                                Tel.:<a href="tel:%28" + @Model.DDD + "%29" + @Model.Telefone value="+55" + @Model.DDD + @Model.Telefone target="_blank">(@Model.DDD)@Model.Telefone</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                <table width="920" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="middle" bgcolor="#f2f1f6" style="padding: 15px 20px">
+                                                                <span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #073f70">Nossas sugestões para sua viagem</span><br>
+                                                                <span style="font-family: Verdana; color: #333; font-size: 10px">Valores e disponibilidade sujeitos a alteração sem aviso prévio.</span>
+                                                            </td>
+                                                            <td align="right" valign="middle" bgcolor="#f2f1f6" style="padding: 15px 20px">
+                                                                <span style="font-family: Verdana; font-size: 10px; color: #333">Data: @Model.DataEnvio</span><br>
+                                                                <span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #274249">Orçamento: <span style="font-size: 10px; font-weight: bold; color: #e9682e">@Model.NumOrcamento</span></span><br>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family: Verdana; font-size: 10px; color: #3b3b3b; padding: 20px 15px; border: 1px solid #ccc; border-radius: 0 0 10px 10px; background: url(https://ci4.googleusercontent.com/proxy/SFMDO652Il8ifaR3TAzk7wODnGj6utKsm07QTAppz9ac3PUd3dzwu_HMxcr4xTVFrS3Ay-5c1YGrZ50R7hOSXemjQRdymw5bv-WCNWt_U78=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/bgfooter.jpg) repeat-x 0 bottom">
+                                                <table width="890" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top" style="font-family: Verdana; font-size: 15px; font-style: italic; font-weight: bold; color: #333; padding: 5px 10px; border-bottom: 15px solid #fff; white-space: pre-line">@Model.Assunto</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td valign="top" style="font-family: Verdana; font-size: 13px; font-style: italic; font-weight: bold; color: #333; padding: 5px 10px; border-bottom: 15px solid #fff; white-space: pre-line">@Model.Mensagem</td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#feefe5">Destino: 		<span style="color: #f86500">@Model.Destino</span>
+                                                            </td>
+                                                        </tr>
+
+                                                        @foreach (var item in Model.Hoteis)
+                                                        {
+                                                            <tr>
+                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#f7f7f7">
+                                                                    <span style="font-family: Verdana; color: #f86500; font-size: 10px"></span>&nbsp;&nbsp;&nbsp;<span>Hotel</span>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="890" border="0" cellspacing="0" cellpadding="0" style="border-bottom: 10px solid #fff">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td valign="top">
+                                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td valign="top" width="140" height="110" rowspan="3">
+                                                                                                    <img alt="" src="@item.Imagem" width="125" height="100"></td>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #08486e">@item.NomeHotel</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top">
+                                                                                                    <span style="background: url('https://ci4.googleusercontent.com/proxy/mqrL0rn5N_qfERZdbthkIsci2cybcRJzdHod5XMj0gEHtV-Ymwmf6CWrceq4fWL-SOVExDzPbsVdGETOSMxp4id-qnOK_s5DWgkRSrg=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/stars.png') no-repeat scroll 0 0 transparent; display: block; float: left; width: 72px; min-height: 17px"></span>
+                                                                                                    <span style="color: #e98c00; font-size: 13px; font-weight: bold; line-height: 1.6; margin-left: 5px; width: 200px">@item.Estrelas Estrelas</span>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">@item.Endereco</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td align="right" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Período: 
+															<strong>de</strong> <strong>@item.Periodo</strong><br>
+                                                                                    <br>
+
+                                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="text-align: right">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                                                                                                    <strong>Acomodação:</strong>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            @foreach (var acomodacao in item.Apartamentos)
+                                                                                            {
+                                                                                                if (acomodacao.Passageiros.Count > 0)
+                                                                                                {
+
+                                                                                                    if (@acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() == 1)
+                                                                                                    {
+                                                                                                <tr>
+                                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() Adultos
+                                         @if (acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() > 0)
+                                         {
+                                             if (acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() == 1)
+                                             {
+                                             <strong>e @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() criança
+                                             </strong>
+                                             }
+                                             else
+                                             {
+                                             <strong>Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() crianças
+                                             </strong>
+                                             }
+                                         }
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                <tr>
+                                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() Adultos
+                                            @if (acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() > 0)
+                                            {
+                                                if (@acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() == 1)
+                                                {
+                                                <strong>e @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() criança
+                                                </strong>
+                                                }
+                                                else
+                                                {
+                                                <strong>Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() crianças
+                                                </strong>
+                                                }
+                                            }
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="2">
+                                                                                    <table width="100%" cellpadding="0" cellspacing="3">
+                                                                                        <tbody>
+                                                                                            <tr bgcolor="#f0f0f0" style="font-size: 10px; color: #223e4a">
+                                                                                                <td width="25%" height="25" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Quarto</td>
+                                                                                                <td width="25%" height="25" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Regime</td>
+                                                                                                <td width="25%" height="25" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Diária Média</td>
+                                                                                                <td width="25%" height="25" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Total do Período</td>
+                                                                                            </tr>
+
+                                                                                            @foreach (var items in item.Acomodacao)
+                                                                                            {
+                                                                                                <tr bgcolor="#f7f7f7">
+                                                                                                    <td height="45" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">@items.Quarto</td>
+                                                                                                    <td height="45" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">@items.Regime</td>
+                                                                                                    <td height="45" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">R$ <strong>@items.DiariaMedia</strong></td>
+                                                                                                    <td height="45" align="center" valign="middle" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">R$ <strong>@items.TotalPeriodo</strong></td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" style="background: url(https://ci6.googleusercontent.com/proxy/uxmLWF79C8JRciBp4y9Ny2x7rowViB32sySXEjZLoXugNL0EErM3VMFevA4AKf4lm5wMiztPL8fCYYkmllXC7WU4AMBGTRXwbim_0g=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/line.jpg) repeat-x center center; padding: 10px">&nbsp;</td>
+                                                            </tr>
+                                                        }
+
+
+                                                        @if (Model.Aereo.Count() > 0)
+                                                        { 
+
+                                                            <tr>
+                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#f7f7f7">
+                                                                    <span style="font-family: Verdana; color: #f86500; font-size: 10px">Item</span>&nbsp;&nbsp;&nbsp;<span>Passagem aérea</span>&nbsp;												
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+
+                                                                            @for (int i = 0; i < Model.Aereo.Count(); i++)
+                                                                            {
+                                                                                var item = Model.Aereo[i];
+                                                                                <tr style="height: 15px">
+                                                                                    <td width="140" valign="top">
+                                                                                        <img alt="" src="@item.ImagemCia" style="border: 1px solid #eeeeee; padding: 30px; width: 55px">
+                                                                                    </td>
+                                                                                    <td height="14" valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Saída
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">
+                                                                                                    @item.LocalSaida
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                                                                                                    <strong>Cia: @item.CiaSaida</strong>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                                                                                                    <strong>Classe: @item.ClasseSaida</strong>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Horário: @item.HorarioSaida
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Nº Voo: @item.NumVooSaida
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Chegada
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">
+                                                                                                    @item.LocalChegada
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                                                                                                    <strong>Cia: @item.CiaChegada</strong>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                                                                                                    <strong>Classe: @item.ClasseChegada</strong>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Horário: @item.HorarioChegada
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"></td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    @if (i == 0)
+                                                                                    {
+                                                                                        <td width="220" rowspan="6" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px">
+
+                                                                                            <table style="width: 100%; border-collapse: collapse">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td style="background-color: #f0f0f0; font-size: 11px; padding: 0 6px; border-right: 3px solid #ffffff; border-bottom: 3px solid #ffffff">
+                                                                                                            <span>Total de passagens</span>
+                                                                                                        </td>
+                                                                                                        <td style="background-color: #f0f0f0; font-size: 11px; padding: 2px; text-align: center; font-weight: bold; border-bottom: 3px solid #ffffff">
+                                                                                                            <span>R$ @item.TotalPassagens</span>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td style="background-color: #f7f7f7; font-size: 10px; padding: 0 8px; color: #9a9a9a; border-right: 3px solid #ffffff">
+                                                                                                            <span>Taxa de embarque</span>
+                                                                                                        </td>
+                                                                                                        <td style="background-color: #f7f7f7; font-size: 10px; padding: 1px; color: #9a9a9a; text-align: center">
+                                                                                                            <span>R$ @item.Taxa</span>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr style="background-color: #f0f0f0; font-size: 14px; line-height: 17px">
+                                                                                                        <td style="padding: 6px; font-weight: bold">
+                                                                                                            <span>Total</span>
+                                                                                                        </td>
+                                                                                                        <td style="padding: 6px; text-align: center; font-weight: bold">
+                                                                                                            <span>R$ @item.Total</span>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <div style="text-align: right; padding-top: 5px; clear: both"><strong>Passageiros:</strong></div>
+                                                                                            <div style="text-align: right; clear: both">@item.QuantidadeAdulto Adulto</div>
+                                                                                            @if (!(String.IsNullOrEmpty(item.QuantidadeCrianca)))
+                                                                                            {
+                                                                                                <div style="text-align: right; clear: both">- @item.QuantidadeCrianca crianças</div>
+                                                                                            }
+                                                                                            @if (!(String.IsNullOrEmpty(item.QuantidadeBebe)))
+                                                                                            {
+                                                                                                <div style="text-align: right; clear: both">- @item.QuantidadeBebe bebes</div>
+                                                                                            }
+                                                                                        </td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td width="0" rowspan="6" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px"></td>
+                                                                                    }
+                                                                                </tr>
+                                                                            }
+                                                                            <tr>
+                                                                                <td style="display: block; height: 15px;"></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        }
+                                                        <tr>
+                                                            <td valign="top" style="background: url(https://ci6.googleusercontent.com/proxy/uxmLWF79C8JRciBp4y9Ny2x7rowViB32sySXEjZLoXugNL0EErM3VMFevA4AKf4lm5wMiztPL8fCYYkmllXC7WU4AMBGTRXwbim_0g=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/line.jpg) repeat-x center center; padding: 10px">&nbsp;</td>
+                                                        </tr>
+
+
+                                                        @foreach (var item in Model.Carro)
+                                                        {
+                                                            <tr>
+                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#f7f7f7">
+                                                                    <span style="font-family: Verdana; color: #f86500; font-size: 10px">Item</span>&nbsp;&nbsp;&nbsp;
+												<span style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Carro</span>&nbsp;
+												<span style="font-family: Verdana; font-size: 10px; font-weight: normal; color: #888888; padding: 10px 0 15px">(Retirada @item.DataDRetirada | Devolução @item.DataDevolucao)</span>
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <img alt="" src="@item.ImagemLocadora">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="140" rowspan="5" valign="top">
+                                                                                    <img src="@item.ImagemCarro" alt="" width="124" height="77"></td>
+                                                                                <td colspan="2" valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@item.TipoCarro</td>
+                                                                                <td width="140" rowspan="5" valign="top" style="color: #58595b">
+                                                                                    <div style="background-color: #f0f0f0; font-size: 14px; font-weight: bold; line-height: 17px; padding: 6px">
+                                                                                        <span style="padding-left: 6px">Total:</span>
+                                                                                        <span style="float: right; padding-right: 6px">R$ @item.Total</span>
+                                                                                        <br>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="300" valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">Retirada</td>
+                                                                                <td width="300" valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">Devolução</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"><strong>@item.LocalRetirada</strong></td>
+                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"><strong>@item.LocalDevolucao</strong></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Data: @item.DataDRetirada</td>
+                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Data: @item.DataDevolucao</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">ADE: @item.OBS</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" style="background: url(https://ci6.googleusercontent.com/proxy/uxmLWF79C8JRciBp4y9Ny2x7rowViB32sySXEjZLoXugNL0EErM3VMFevA4AKf4lm5wMiztPL8fCYYkmllXC7WU4AMBGTRXwbim_0g=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/line.jpg) repeat-x center center; padding: 10px">&nbsp;</td>
+                                                            </tr>
+                                                       
+                                                        }
+                                                        @foreach (var item in Model.Pacote)
+                                                        {
+                                                            <tr>
+                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#f7f7f7">
+                                                                    <span style="font-family: Verdana; color: #f86500; font-size: 10px">Item</span>&nbsp;&nbsp;&nbsp;<span>Pacote</span>&nbsp;												
+                                                                </td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td width="140" rowspan="3" valign="top">
+
+                                                                                    @if (item.Hotel.Count > 0)
+                                                                                    {
+                                                                                        <img alt="" src="@item.Hotel[0].Imagem" width="125" height="100" />
+                                                                                    }
+                                                                                </td>
+                                                                                <td valign="top">
+                                                                                    <table style="width: 500px; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@item.Titulo</span>
+                                                                                                    <br>
+                                                                                                    @*<span style="font-family: Verdana; font-size: 10px; color: #3b3b3b">@item.Dias dias</span><br>*@
+                                                                                                    <span style="font-family: Verdana; font-size: 10px; color: #3b3b3b; text-transform: capitalize">Período: @item.Periodo</span>
+
+                                                                                                    <br>
+                                                                                                    @if (item.Hotel.Count > 0)
+                                                                                                    {
+                                                                                                        <span style="font-family: Verdana; font-size: 10px; color: #3b3b3b; text-transform: capitalize"><strong>Checkin:</strong> @item.Hotel[0].Checkin.Split(' ')[0]</span>
+                                                                                                        <br />
+                                                                                                        <span style="font-family: Verdana; font-size: 10px; color: #3b3b3b; text-transform: capitalize"><strong>Checkout:</strong> @item.Hotel[0].Checkout.Split(' ')[0]</span>
+                                                                                                    }
+                                                                                                    <div style="clear: both; padding-bottom: 5px; padding-top: 10px"><strong>O Pacote inclui:</strong></div>
+                                                                                                    <div style="padding-bottom: 20px">
+                                                                                                        @item.ItensInclusos
+                                                                                                        - Completa assistência da equipe Flytour Viagens com guias locais.
+                                                                                                    <br>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Pacote:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">R$ @item.Valorpacote</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f7f7f7; border-bottom: 6px solid #ffffff; border-right: 3px solid #ffffff; color: #9a9a9a; font-size: 11px; padding: 0 6px">Taxas:</td>
+                                                                                                <td style="background-color: #f7f7f7; border-bottom: 6px solid #ffffff; color: #9a9a9a; font-size: 11px; padding: 2px; text-align: center">R$ @item.Taxas</td>
+                                                                                            </tr>
+                                                                                            <tr style="background-color: #f0f0f0; font-size: 14px; line-height: 17px">
+                                                                                                <td style="font-weight: bold; padding: 6px">Total:</td>
+                                                                                                <td style="font-weight: bold; padding: 6px; text-align: center">R$ @item.Total</td>
+                                                                                            </tr>
+
+                                                                                            @*<tr>
+                                                                                            <td valign="top" colspan="2" style="font-size: 11px; line-height: 11px; padding-top: 10px; text-align: right">
+                                                                                                <strong>Acomodação:</strong>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td valign="top" colspan="2" style="font-size: 11px; color: #3b3b3b; text-align: right">Apartamento 1: 2 Adultos
+                                                                                            </td>
+                                                                                        </tr>*@
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top">
+                                                                                    <p>
+                                                                                    </p>
+                                                                                    <table width="545" border="0" style="border-top: 1px solid #ddd; padding-top: 20px" cellspacing="0" cellpadding="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td width="237" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b; padding-right: 35px; border-right: 1px solid #ddd">
+                                                                                                    @if (item.Aereo.Count > 0)
+                                                                                                    {
+                                                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <td height="20" colspan="2" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"><strong>Detalhes do Voo</strong></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td width="57" rowspan="2" valign="top" style="padding-top: 5px; padding-right: 5px; text-align: center">
+                                                                                                                        <span>
+                                                                                                                            <img alt="" src="@item.Aereo.First().Imagem" width="44" height="44">
+                                                                                                                        </span>
+                                                                                                                        <br>
+                                                                                                                    </td>
+                                                                                                                    <td height="13" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+
+                                                                                                                        <span>Voo de Ida</span><br>
+                                                                                                                        <span><strong>@item.Aereo.First().InfoSaida</strong></span><br>
+                                                                                                                        <span>Saída: @item.Aereo.First().HorarioSaida</span><br>
+                                                                                                                        <br>
+
+                                                                                                                        <span>Voo de Volta </span>
+                                                                                                                        <br>
+                                                                                                                        <span><strong>@item.Aereo.Last().InfoChegada</strong></span><br>
+                                                                                                                        <span>Saída: @item.Aereo.Last().HorarioChegada</span><br>
+                                                                                                                        <br>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #333"></td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table> 
+                                                                                                        
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td width="237" valign="top" style="padding-left: 35px">
+
+                                                                                                    @if (item.Hotel.Count > 0)
+                                                                                                    {
+                                                                                                        foreach (var hotel in item.Hotel)
+                                                                                                        {
+                                                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                                                            <tbody>
+                                                                                                                <tr>
+                                                                                                                    <td height="20" colspan="2" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"><strong>Detalhes do Hotel</strong></td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td width="57" rowspan="4" valign="middle">
+
+                                                                                                                        <img src="@hotel.Imagem" alt="" width="44" height="44">
+                                                                                                                    </td>
+                                                                                                                    <td height="13" valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b"><strong>@hotel.NomeHotel</strong></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr>
+                                                                                                                    <td width="200" valign="top">
+
+                                                                                                                        @*<span style="background: url('https://ci6.googleusercontent.com/proxy/jlLo5NkkdHnRBndFUwnrHP7l9geonhYzHkTD88WcIqJ59hoJf5NlKP4RvOAdR9uN9DxllqpljmBZmB3RH18OIifrYuxDJhqgrOFxX0ZGHTW0JcA=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/small_stars.png') no-repeat scroll 0 0 transparent; display: block; float: left; width: 45px; min-height: 14px"></span>*@
+                                                                                                                        <span style="color: #e98c00; font-size: 11px; font-weight: bold; line-height: 1.6; margin-left: 5px; width: 200px">@hotel.Estrelas Estrelas</span>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                                <tr>
+                                                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #333">Quarto: @hotel.Quarto</td>
+                                                                                                                </tr>
+
+                                                                                                                <tr>
+                                                                                                                    <td valign="top" style="font-family: Verdana; font-size: 10px; color: #333">Regime: @hotel.Regime
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    <p></p>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" style="background: url(https://ci6.googleusercontent.com/proxy/uxmLWF79C8JRciBp4y9Ny2x7rowViB32sySXEjZLoXugNL0EErM3VMFevA4AKf4lm5wMiztPL8fCYYkmllXC7WU4AMBGTRXwbim_0g=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/line.jpg) repeat-x center center; padding: 10px">&nbsp;</td>
+                                                            </tr>
+                                                        }
+                                                        @if (Model.Atividade.Count > 0)
+                                                        {
+                                                            <tr>
+                                                                <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #58595b; padding: 10px 35px; border-bottom: 10px solid #fff" bgcolor="#f7f7f7">
+                                                                    <span style="font-family: Verdana; color: #f86500; font-size: 10px">Item</span>&nbsp;&nbsp;&nbsp;<span>Serviço</span>&nbsp;												
+                                                                </td>
+
+                                                            </tr>   
+
+                                                            foreach (var item in Model.Atividade)
+                                                            {
+                                                                foreach (var assistenciaViagem in item.AssistenciaViagem)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        @foreach (var regime in assistenciaViagem.TarifasItem)
+                                                                        { 
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td valign="top">
+                                                                                        <table style="width: 500px; border-collapse: collapse">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@assistenciaViagem.NomeAtividade</span></td>
+                                                                                                </tr>
+
+                                                                                                <tr>
+                                                                                                    <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @regime.DataInicial</span></td>
+                                                                                                    <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data final: @regime.DataFinal</span></td>
+                                                                                                </tr>
+
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                        <table style="width: 100%; border-collapse: collapse">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@assistenciaViagem.ValorTotal.ToString("c2")</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        }
+
+                                                                    </table>
+                                                                </td>
+                                                            </tr>  
+                                                                }
+                                                                foreach (var transfer in item.Transfer)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@transfer.NomeAtividade</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @item.dtEmbarque</span></td>
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            @for (int i = 0; i < transfer.Apartamento.Count; i++)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Quantidade:</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">@transfer.Apartamento[i].Passageiros.Count pessoas<br>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@transfer.ValorTotal.ToString("c2")</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                                }
+                                                                foreach (var passeio in item.Passeio)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@passeio.NomeAtividade</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @item.dtEmbarque</span></td>
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            @for (int i = 0; i < passeio.Apartamento.Count; i++)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Quantidade:</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">@passeio.Apartamento[i].Passageiros.Count pessoas<br>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@passeio.ValorTotal.ToString("c2")</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                                }
+                                                                foreach (var ingresso in item.Ingresso)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@ingresso.NomeAtividade</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @item.dtEmbarque</span></td>
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            @for (int i = 0; i < ingresso.Apartamento.Count; i++)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Quantidade:</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">@ingresso.Apartamento[i].Passageiros.Count pessoas<br>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@ingresso.ValorTotal.ToString("c2")</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                                }
+                                                                foreach (var pacoteAtividade in item.PacoteAtividade)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@pacoteAtividade.NomeAtividade</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @item.dtEmbarque</span></td>
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            @for (int i = 0; i < pacoteAtividade.Apartamento.Count; i++)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Quantidade:</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">@pacoteAtividade.Apartamento[i].Passageiros.Count pessoas<br>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@pacoteAtividade.ValorTotal.ToString("c2")</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                                }
+                                                                foreach (var restaurante in item.Restaurante)
+                                                                { 
+                                                            <tr>
+                                                                <td valign="top">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">@restaurante.NomeAtividade</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><span style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Data inicial: @item.dtEmbarque</span></td>
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            @for (int i = 0; i < restaurante.Apartamento.Count; i++)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Quantidade:</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">@restaurante.Apartamento[i].Passageiros.Count pessoas<br>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td width="190" rowspan="5" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px; padding-top: 30px">
+                                                                                    <table style="width: 100%; border-collapse: collapse">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; border-right: 3px solid #ffffff; font-size: 11px; padding: 0 6px">Valor do Serviço:</td>
+                                                                                                <td style="background-color: #f0f0f0; border-bottom: 3px solid #ffffff; font-size: 11px; font-weight: bold; padding: 3px; text-align: center">@restaurante.ValorTotal.ToString("c2")</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                                }                                                                
+                                                                
+                                                            <tr>
+                                                                <td valign="top" style="background: url(https://ci6.googleusercontent.com/proxy/uxmLWF79C8JRciBp4y9Ny2x7rowViB32sySXEjZLoXugNL0EErM3VMFevA4AKf4lm5wMiztPL8fCYYkmllXC7WU4AMBGTRXwbim_0g=s0-d-e1#http://www.hotelsuite.com.br/images/cotizacao/line.jpg) repeat-x center center; padding: 10px">&nbsp;</td>
+                                                            </tr>                                                            
+                                                            }
+                                                        }
+                                                        <tr>
+                                                            <td valign="top" style="color: #58595b; font-family: Verdana; font-size: 10px; color: #58595b; font-family: Verdana; font-size: 10px; font-weight: bold; text-align: center; font-weight: bold">Serviços operados pela Flytour Viagens.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top" style="padding-top: 5px">
+
+                                                                <div style="background-color: #fdefe6; padding-left: 25px; padding-top: 10px; padding-bottom: 5px">
+                                                                    <span style="color: #58595b; font-family: Verdana; font-size: 10px; font-weight: bold">Valores e disponibilidade sujeitos a alteração sem prévio avisos.</span>
+                                                                </div>
+
+                                                                <div style="background-color: #fdefe6; padding-left: 25px; padding-top: 5px; padding-bottom: 5px">
+                                                                    <span style="color: #58595b; font-family: Verdana; font-size: 10px; font-weight: bold">Condições de pagamento: </span>
+                                                                    <span style="color: #f86500; font-family: Verdana; font-size: 10px; font-weight: bold">Entrada de 20% + 9 parcelas iguais sem juros.</span>
+                                                                </div>
+                                                                <p></p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

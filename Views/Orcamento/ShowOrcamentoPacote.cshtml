@@ -1,0 +1,212 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+@foreach (var pacote in Model.Pacote)
+{
+    <div class="content_pacote">
+        <div class="div-button-remover">
+            <a class="linkRemover" onclick="removerItemOrcamento('@pacote.CodigoPacote', @Model.CodigoOrcamento, 3)">Remover</a>
+        </div>
+        <div class="group-info-package">
+
+            <div class="div-image-package">
+                @if (pacote.Hotel != null && pacote.Hotel.Count >= 1)
+                {
+                    if (pacote.Hotel[0].HotelFotos != null && pacote.Hotel[0].HotelFotos.Count >= 1)
+                    {
+                    <img class="image-package-pacote" src="@pacote.Hotel[0].HotelFotos[0].HotelFotoUrl">
+                    }
+                    else
+                    {
+                    <img src="~/Images/no-image.png" alt="Hotel sem imagem." width="100" style="float: left" />
+                    
+                    }
+                }
+            </div>
+            <div class="div-infos-package">
+                <span class="span-titulo-package">@pacote.NomePacote</span><br />
+                <br />
+                <strong>
+                    @if (pacote.Aereo.Count > 0)
+                    {
+                        DateTime data = Convert.ToDateTime(pacote.Aereo.Last().DataRetorno);
+                        DateTime datainicial = Convert.ToDateTime(pacote.Aereo[1].DataEmbarque);
+                        var totaldias = Math.Abs(((data - datainicial).Days));
+                        <span class="span-dias-package">@totaldias dias</span>
+                    }
+                </strong>
+                <br />
+                @if (pacote.Aereo.Count > 0)
+                {
+                    int dataMonth = Convert.ToDateTime(pacote.Aereo.FirstOrDefault().DataEmbarque).Month;
+                    int dataYear = Convert.ToDateTime(pacote.Aereo.FirstOrDefault().DataEmbarque).Year;
+                    <span class="span-periodoadults-package"><strong>Período:</strong> @FT.Web.Site.Controllers.Base._BaseController.RetornaNomeMesView(dataMonth)/@dataYear </span>
+                }
+                else if (pacote.Hotel.Count > 0)
+                {
+                    int dataMonth = Convert.ToDateTime(pacote.Hotel.FirstOrDefault().Checkin).Month;
+                    int dataYear = Convert.ToDateTime(pacote.Hotel.FirstOrDefault().Checkin).Year;
+                    <span style="margin-left: 35px;" class="span-periodoadults-package"><strong>Período:</strong> @FT.Web.Site.Controllers.Base._BaseController.RetornaNomeMesView(dataMonth)/@dataYear </span>
+                }
+                <br>
+
+                @if (pacote.Aereo.Count > 0)
+                {
+                    var countIda = 0;
+                    var countVolta = 0;
+                    for (int i = 0; i < pacote.Aereo.Count; i++)
+                    {
+                        if (pacote.Aereo.First().DataEmbarque.Substring(0, 10) == pacote.Aereo[i].DataEmbarque.Substring(0, 10))
+                        {
+                            countIda++;
+                        }
+                        if (pacote.Aereo.Last().DataEmbarque.Substring(0, 10) == pacote.Aereo[i].DataEmbarque.Substring(0, 10))
+                        {
+                            countVolta++;
+                        }
+                    }
+                    
+                    <span><strong>Saída:</strong>  @pacote.Aereo.FirstOrDefault().DataEmbarque</span>
+                    <br />
+                    <br />
+                    <div class="title-package-include">
+                        <strong>O Pacote inclui:</strong>
+                    </div>
+                    <div class="package-include">
+                        @foreach (var PacoteItemServico in pacote.PacoteDescricaoServico)
+                        {
+                            <span class="ConteudoSubtitulo">@Html.Raw(PacoteItemServico.Descricao.Replace("-", "<br />"))</span><br />
+                        }
+                    </div>
+
+                    <div class="div-info-flight-hotel">
+                        <div class="div-info-flight">
+                            <span class="span-flight-title">Detalhes do Voo</span><br />
+                            <div class="clear"></div>
+                            <div class="div-flight-left">
+                                <img class="image-package-flight" src="@pacote.Aereo.First().FotoUrl">
+                            </div>
+
+                            @foreach (var item in pacote.Aereo)
+                            {
+                                <div class="infofly">
+                                    <div class="div-flight-departure">
+                                        <span class="span-flight-airdeparture">
+                                            @item.DescricaoVoo
+                                        </span>
+                                        <br />
+                                        <span class="span-flight-datetime">
+                                            <span class="span-flight-datetime-title"><strong>Saída: </strong></span>
+                                            @item.DataEmbarque</span><br />
+                                        <span class="span-flight-datetime">
+                                            <span class="span-flight-datetime-title"><strong>Chegada: </strong></span>
+                                            @item.DataRetorno</span><br />
+                                    </div>
+                                    <br />
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                }
+                @foreach (var hotel in pacote.Regime)
+                {
+                    if (hotel.NomeHotelConjugado != null)
+                    {
+                    <div class="div-info-hotel">
+                        <span class="span-hotel-title">Detalhes do Hotel</span>
+                        <br />
+                        <div class="clear"></div>
+                        <br />
+                        <span class="span-hotel-name"><strong>@hotel.NomeHotelConjugado</strong></span><span><br />
+                            <span class="stars-cotizados-hotel" style="width: 54px;"></span>
+                        </span>
+                        <span class="span-hotel-room"><strong>Quarto:</strong> @hotel.QuartoConjugado.Split(' ')[0]</span><br />
+                        <span class="span-hotel-regime"><strong>Regime:</strong> @hotel.TipoRegimeConjugado</span>
+                        <br />
+                        <br />
+                        <span class="span-hotel-room"><strong>Checkin:</strong> @hotel.CheckinConjugado.Split(' ')[0]</span><br />
+                        <span class="span-hotel-regime"><strong>Checkout:</strong> @hotel.CheckoutConjugado.Split(' ')[0]</span>
+                    </div>
+                    <p></p>
+                    }
+
+                    if (pacote.Aereo.Count == 0)
+                    {
+                    <style>
+                        .div-info-hotel {
+                            border: 0 !important;
+                        }
+                    </style>
+                    }
+
+                    <div class="div-info-hotel">
+                        <span class="span-hotel-title">Detalhes do Hotel</span>
+                        <br />
+                        <div class="clear"></div>
+                        <br />
+                        <span class="span-hotel-name"><strong>@hotel.NomeHotel</strong></span><span><br />
+                            <span class="stars-cotizados-hotel" style="width: 54px;"></span>
+                            <span class="NumStar-DP">@pacote.Hotel.FirstOrDefault().Estrelas Estrelas</span><br />
+                        </span>
+                        <span class="span-hotel-room"><strong>Quarto:</strong> @hotel.Quarto</span><br />
+                        <span class="span-hotel-regime"><strong>Regime:</strong> @hotel.TipoRegime</span>
+                        <br />
+                        <span class="span-hotel-room"><strong>Checkin:</strong> @hotel.Checkin.Split(' ')[0]</span><br />
+                        <span class="span-hotel-regime"><strong>Checkout:</strong> @hotel.Checkout.Split(' ')[0]</span>
+                    </div>
+                    
+                    if (pacote.Aereo.Count == 0)
+                    {
+                    <div class="clear"></div>
+                    <div style="margin-left: 34px; margin-bottom: 50px;">
+                        <br />
+                        <div class="title-package-include">
+                            <strong>O Pacote inclui:</strong>
+                        </div>
+                        <div class="package-include">
+                            @foreach (var PacoteItemServico in pacote.PacoteDescricaoServico)
+                            {
+                                <span class="ConteudoSubtitulo">@Html.Raw(PacoteItemServico.Descricao.Replace("-", "<br />"))</span><br />
+                            }
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+            <div>
+                @foreach (var regime in pacote.Regime)
+                {
+                    <table class="pacote_tax">
+                        <tbody>
+                            <tr>
+                                <td class="title-price-package"><span>Valor do pacote</span></td>
+                                <td class="price-package"><span>R$ @regime.ValorTotalSemTaxas</span></td>
+                            </tr>
+                            <tr>
+                                <td class="title-tax-package"><span>Taxas</span></td>
+                                <td class="tax-package"><span>R$ @regime.Taxas</span></td>
+                            </tr>
+                            <tr class="totalprice-package-line">
+                                <td class="title-totalprice-package"><span><strong>Total</strong></span></td>
+                                <td class="totalprice-package"><span><strong>R$  @regime.ValorTotal</strong></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+                <table class="pacote_tax">
+                    <tr style="float: right;">
+                        <td class="title-pax-package-hotel"><strong>Acomodação:</strong></td>
+                    </tr>
+                    @for (int i = 0; i < pacote.Apartamento.Count; i++)
+                    {
+                        <tr>
+                            <td>Apartamento @(i + 1) : @pacote.Apartamento[i].Passageiros.Count passageiros<br>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+}

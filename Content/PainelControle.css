@@ -1,0 +1,161 @@
+﻿
+/*INDEX INICIO INICIO*/
+
+.centerdiv {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.botao.centerdiv img {
+    height: 50px;
+}
+
+.botao {
+    background-color: #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    height: 54px;
+    width: 54px;
+}
+
+.borda {
+    border: 1px solid #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    float: left;
+    height: 105px;
+    padding: 25px 15px 4px;
+    width: 100px;
+}
+
+    .borda:hover {
+        border: 1px solid orange;
+    }
+
+.divLinhaIcone {
+    height: 135px;
+    margin: auto;
+    padding: 0 10px;
+    width: 960px;
+}
+
+.margemLeft {
+    margin-left: 19px;
+}
+
+/*INDEX FIM FIM*/
+
+
+
+
+
+
+/*LISTA USUARIO LISTA USUARIO INICIO INICIO*/
+.link-button {
+    border: 1px solid blue;
+    color: white;
+    background-color: blue;
+    padding: 3px 8px;
+    border-radius: 7px 7px 7px 7px;
+    margin-right: 3px;
+    margin: -3px 3px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.table-titulo {
+    background-color: #FFAA85;
+    height: 30px;
+}
+
+.font-color-white {
+    color: white;
+}
+
+.font-color-gray {
+    color: #8F8F8F;
+}
+
+.font-color-azul {
+    color: #024387;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
+
+.float-left {
+    float: left;
+}
+
+.font-12 {
+    font-size: 12px;
+    color: #024387;
+}
+
+.table-linha-alternat-colorS {
+    background-color: #FFEBE4;
+    height: 30px;
+    font-size: 11px;
+    border-bottom: 1px solid #EA620A;
+    border-right: 1px solid #EA620A;
+    color: #8F8F8F;
+    vertical-align: central;
+    text-align: left;
+    padding-left: 10px;
+    margin: auto;
+}
+
+.table-linha-alternat-colorN {
+    background-color: white;
+    height: 30px;
+    font-size: 11px;
+    color: #8F8F8F;
+    border-bottom: 1px solid #EA620A;
+    border-right: 1px solid #EA620A;
+    vertical-align: central;
+    text-align: left;
+    padding-left: 10px;
+    margin: auto;
+}
+
+.table-border {
+    border: 1px solid #EA620A;
+}
+
+.table-border-top {
+    border-top: 1px solid #EA620A;
+}
+
+.table-border-right {
+    border-right: 1px solid #EA620A;
+}
+
+.table-border-bottom {
+    border-bottom: 1px solid #EA620A;
+}
+
+.table-border-left {
+    border-left: 1px solid #EA620A;
+}
+
+.table-text-center {
+    vertical-align: central;
+    text-align: center;
+    margin: auto;
+}
+
+#colEditar {
+    width:130px;
+}
+/*LISTA USUARIO LISTA USUARIO FIM FIM FIM*/
+
+
+
+
+
+

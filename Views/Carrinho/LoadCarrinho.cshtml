@@ -1,0 +1,167 @@
+﻿@model FT.Web.Model.Models.FlyTourModel
+@{
+    ViewBag.Title = "Carrinho - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+}
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+<h3>
+    <em>Itens</em> selecionados: 
+</h3>
+<br />
+<div id="update-message">
+</div>
+<table>
+    <tr>
+        <th><span style="color: orange">Item</span></th>
+        <th><span style="color: orange">Descrição</span></th>
+        <th><span style="color: orange">Preço</span></th>
+        <th><span style="color: red">Remover</span></th>
+    </tr>
+    @foreach (var atividade in Model.Atividade)
+    {
+        <tr id="row-@atividade.NomeAtividade">
+            <td>
+                @atividade.CodigoAtividade
+            </td>
+            <td>
+                <span style="font-weight: bold;">@atividade.NomeAtividade</span>
+            </td>
+            <td id="item-count-@atividade.NomeAtividade">
+                @foreach (var tarifaAtividade in atividade.TarifasItem)
+                {
+                    @tarifaAtividade.ValorTotal
+                }
+            </td>
+            <td>
+                <a href="#" class="RemoveLink" data-id="@atividade.CodigoAtividade">Remover</a>
+            </td>
+        </tr>
+    }
+
+    @foreach (var PacoteItem in Model.Pacote)
+    {
+        
+        <tr id="row-@PacoteItem.CodigoPacote">
+            <td>
+                <br />@PacoteItem.CodigoPacote
+                <br />
+            </td>
+            <td>
+                <br />
+                &nbsp;&nbsp;<span style="font-weight: bold;"> @PacoteItem.NomePacote </span>
+                <br />
+                ( @PacoteItem.Titulo)<br />
+            </td>
+            <td>
+                <br />
+                &nbsp;&nbsp;&nbsp;@PacoteItem.ValorVenda
+                <br />
+            </td>
+            <td>
+                <br />
+                <a href="">Remover</a>
+                <br />
+            </td>
+        </tr>
+            
+        
+    }
+
+    @foreach (var aereo in Model.Aereo)
+    {
+        foreach (var trecho in aereo.Trechos)
+        {
+            <tr id="row-@aereo.CodigoTarifa">
+            <td>
+                @Html.Label(trecho.DataOrigem.ToString("dd:MM:yyyy")) <span>&nbsp</span> @Html.Label(trecho.DataDestino.ToString("dd:MM:yyyy"))
+            <span>&nbsp&nbsp&nbsp&nbsp</span>@if (trecho.QuantidadeConexao == 0)
+                                             {<span>Voo Direto</span> }
+                                             else
+                                             {@trecho.QuantidadeConexao.ToString() <span> Parada(s)</span>}
+            <span>&nbsp&nbsp&nbsp&nbsp</span>@Html.Label(trecho.SiglaAeroportoOrigem)<span>-</span>@Html.Label(trecho.NomeCidadeOrigem)<span>&nbsp&nbsp</span> @Html.Label(trecho.SiglaAeroportoDestino)<span> - </span>
+                @Html.Label(trecho.NomeCidadeDestino)
+            <span>&nbsp&nbsp&nbsp-&nbsp</span>
+                @Html.Label(trecho.NomeCia);
+            </td>
+            <td>
+                <br />
+                <a href="">Remover</a>
+                <br />
+            </td>
+        </tr>
+        }
+    }
+
+    @foreach (var hotel in Model.Hotel)
+    {
+        <tr id="row-@hotel.NomeHotel">
+            <td>
+                <label>@hotel.NomeHotel</label>
+            </td>
+            <td>
+                @hotel.ValorDiaria
+            </td>
+            <td id="item-count-@hotel.ValorDiaria"></td>
+            <td>
+                <a href="#" class="RemoveLink" data-id="@hotel.CodigoHotel">Remover</a>
+            </td>
+        </tr>
+    }
+    @foreach (var carro in Model.Carro)
+    { 
+        <tr id="row-@carro.DescricaoCategoria">
+            <td>
+                <label>@carro.ModeloReferencia</label>
+            </td>
+            <td>
+                @String.Format("Retirada ({0}) - Devolução ({1})", carro.DataCheckIn, carro.DataCheckOut)
+            </td>
+            <td id="item-count-@carro.ValorTotal">@carro.ValorTotal.ToString("n2")</td>
+            <td>
+                <a href="#" class="RemoveLink" data-id="@carro.CodigoTarifa">Remover</a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            <br />
+            <br />
+        </td>
+        <td>
+            <br />
+            <br />
+        </td>
+        <td id="cart-total"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            @Html.ActionLink("RESERVAR", "Index", "Reserva")
+        </td>
+        <td id="cart-total">Total:
+        </td>
+    </tr>
+</table>

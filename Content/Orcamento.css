@@ -1,0 +1,557 @@
+﻿div.content-orcamento {
+    clear: both;
+    margin: auto;
+    width: 980px;
+    margin-top: 50px;
+}
+
+    div.content-orcamento h2 {
+        background: none repeat scroll 0 0 #DDDDDD;
+        border-bottom: 1px solid #CCCCCC;
+        border-radius: 10px 10px 0 0;
+        color: #0B5BB4;
+        display: block;
+        font-size: 1.2em;
+        height: 17px;
+        padding: 21px;
+        text-transform: uppercase;
+        font-family: Verdana;
+    }
+
+    div.content-orcamento div.orcamento-busca {
+        background: none repeat scroll 0 0 #F1F2F5;
+        padding: 50px 30px;
+        clear: both;
+        margin: auto;
+        width: 920px;
+        height: 135px;
+    }
+
+div.orcamento-busca div.orcamento-busca-left {
+    float: left;
+}
+
+div.div-start-date label, div-number-orcamento label, div.div-end-date label, div.div-number-orcamento label {
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+div.div-start-date input, div.div-end-date input {
+    height: 24px;
+    width: 225px;
+    border-radius: 5px 0 0 5px;
+    border-right: 0 none;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 5px;
+    line-height: 34px;
+    margin: 8px 0;
+    font-size: 0.8em;
+    border: 1px solid #D6D6D6;
+    border-right: 0;
+}
+
+
+div.orcamento-busca div.orcamento-busca-left div.div-end-date label {
+    width: 80px;
+}
+
+div.orcamento-busca div.orcamento-busca-right {
+    float: right;
+    margin-right: 145px;
+}
+
+.div-number-orcamento input {
+    height: 24px;
+    width: 330px;
+    border-radius: 5px;
+    border-right: 0 none;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 5px;
+    line-height: 34px;
+    margin: 8px 0;
+    font-size: 0.8em;
+    border: 1px solid #D6D6D6;
+}
+
+.ui-datepicker-trigger {
+    background: url("../Images/calendario_input-silver.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: right;
+    height: 37px;
+    margin-top: 8px;
+    width: 37px;
+    text-indent: -9999px;
+}
+
+.btnPesquisar {
+    background: url("../Images/botao_Pesquisar.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: block;
+    height: 35px;
+    width: 160px;
+    float: right;
+}
+
+.orcamento-resultado {
+    background: none repeat scroll 0 0 #FFF;
+    padding: 50px 30px;
+    clear: both;
+    margin: auto;
+    width: 920px;
+    height: auto;
+    border: solid 1px #CCC;
+}
+
+    .orcamento-resultado h3 {
+        color: #0B5BB4;
+        display: block;
+        font-family: Verdana;
+    }
+
+.resultado-active, .resultado-archived {
+    background: linear-gradient(to bottom, #FFFFFF 0%, #EDEBEB 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #DBDBDB;
+    border-radius: 4px;
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.3);
+    color: #868686;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 15px 10px 20px 0;
+    padding: 3px 8px;
+    text-transform: uppercase;
+}
+
+.edit-button {
+    background: url("../Images/icon-edit.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 16px;
+}
+
+.archive-button {
+    background: url("../Images/icon-archive.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 16px;
+}
+
+
+.orcamento-editar-top {
+    background: none repeat scroll 0 0 #F1F2F5;
+    clear: both;
+    height: 55px;
+    margin: auto;
+    padding: 20px 30px;
+    width: 920px;
+}
+
+.orcamento-editar-left {
+    float: left;
+    margin-right: 210px;
+}
+
+.orcamento-editar-right {
+    float: right;
+    margin-right: 10px;
+}
+
+
+.orcamento-editar-left-titulo {
+    color: #0D4379;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.orcamento-editar-info {
+    color: #929292;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.orcamento-editar-right label {
+    color: #58595C;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.orcamento-numero {
+    color: #F86500;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.inf-hotel-destino {
+    background: none repeat scroll 0 0 #FDEFE6;
+    color: #666666;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0 5px !important;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+
+.title-destino {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+.name-destino {
+    color: #F76502;
+    font-size: 14px;
+}
+
+.orcamento-hotel {
+    background: none repeat scroll 0 0 #F1F2F5;
+    clear: both;
+    height: auto;
+    margin: auto;
+    padding: 20px 30px;
+    width: 920px;
+}
+
+    .orcamento-hotel span {
+        font-family: Arial,Helvetica,sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #929292;
+        font-size: 11px;
+    }
+
+.orcamento-hotel-left {
+    float: left;
+}
+
+.orcamento-hotel-right {
+    float: right;
+    margin-right: 10px;
+}
+
+.orcamento-hotel-left img {
+    float: left;
+    margin-bottom: 50px;
+    margin-right: 20px;
+}
+
+.hotel-title {
+    color: #0D4379;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+label.inf-star {
+    color: #E98C00;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.6;
+    margin-right: 10px;
+}
+
+a.linkRemover {
+    background: url("../Images/bt-remover.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    float: right;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 50px;
+}
+
+a#RemoverAereo {
+    background: url("../Images/bt-remover.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    float: right;
+    overflow: hidden;
+    text-indent: -999px;
+    width: 50px;
+}
+
+div.hotel-periodo label, div.hotel-acomodacao label {
+    font-family: Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #929292;
+    font-size: 11px;
+}
+
+div.hotel-acomodacao strong, div.hotel-periodo strong {
+    font-family: Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 12px;
+}
+
+.orcamentos-itens-content {
+    background: none repeat scroll 0 0 #F1F2F5;
+    clear: both;
+    margin: auto;
+    padding-bottom: 25px;
+}
+
+    .orcamentos-itens-content h3 {
+        background: none repeat scroll 0 0 #7a98ba;
+        color: #58595B;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 7px 7px 7px 30px;
+        text-align: left;
+        padding: 7px;
+        width: 909px;
+        float: left;
+    }
+
+        .orcamentos-itens-content h3 span {
+            background: url("../Images/setinhas-secoes.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            color: #58595B;
+            cursor: pointer;
+            display: block;
+            font-size: 14px;
+            height: 18px;
+            line-height: 1.4;
+            overflow: hidden;
+            padding-left: 26px;
+        }
+
+
+.regime-hotel-check input {
+    border: 0;
+    color: #999999;
+    font-size: 0.8em;
+    height: 10px;
+    line-height: 34px;
+    margin: 0;
+    padding: 0;
+    width: 10px;
+}
+
+
+
+.form-orcamento {
+    border: 1px dashed #CCCCCC;
+    display: inline-block;
+    margin: auto;
+    padding: 29px;
+    text-align: left;
+    width: 920px;
+}
+
+.div-input-name {
+    float: left;
+    margin-right: 100px;
+}
+
+.div-campos-envio input[type="text"], .div-campos-envio textarea {
+    border-color: #AAAAAA #CCCCCC #CCCCCC #AAAAAA;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: normal;
+    outline: 0 none;
+    padding: 3px 4px 4px;
+}
+
+.div-input-email {
+    display: inline-block;
+}
+
+.div-campos-envio span {
+    display: block;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.div-campos-envio input[type="text"], .div-campos-envio textarea {
+    border-color: #AAAAAA #CCCCCC #CCCCCC #AAAAAA;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: normal;
+    outline: 0 none;
+    padding: 3px 4px 4px;
+}
+
+.div-input-assunto {
+    margin-top: 20px;
+}
+
+.div-input-mensage {
+    margin-top: 20px;
+}
+
+    .div-input-mensage .text-envio {
+        vertical-align: top;
+    }
+
+    .div-input-mensage textarea {
+        width: 628px;
+    }
+
+
+.title-form-orcamento {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtitle-form-orcamento {
+    font-size: 14px;
+}
+
+a.button-enviar {
+    background: url("../Images/bt-enviar-cotizacao.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 11px;
+    height: 30px;
+    margin: 20px 20px 0 0px;
+    overflow: hidden;
+    padding-top: 8px;
+    text-decoration: none;
+    text-indent: 11px;
+    width: 152px;
+}
+
+a.button-salvar-notsend {
+    color: #FC6700;
+    display: inline-block;
+    font-size: 11px;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+
+a.button-closed-notsave {
+    color: #6C6C6C;
+    display: inline-block;
+    font-size: 11px;
+    margin-top: 25px;
+}
+
+/*Table*/
+.datagrid table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+}
+
+.datagrid {
+    font: normal 12px/150% Arial, Helvetica, sans-serif;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #8C8C8C;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+    .datagrid table td, .datagrid table th {
+        padding: 3px 10px;
+    }
+
+    .datagrid table thead th {
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D) );
+        background: -moz-linear-gradient( center top, #8C8C8C 5%, #7D7D7D 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+        background-color: #8C8C8C;
+        color: #FFFFFF;
+        font-size: 12px;
+        font-weight: bold;
+        border-left: 2px solid #A3A3A3;
+    }
+
+        .datagrid table thead th:first-child {
+            border: none;
+        }
+
+    .datagrid table tbody td {
+        color: #7D7D7D;
+        border-left: 1px solid #DBDBDB;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    .datagrid table tbody .alt td {
+        background: #EBEBEB;
+        color: #7D7D7D;
+    }
+
+    .datagrid table tbody td:first-child {
+        border-left: none;
+    }
+
+    .datagrid table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .datagrid table tfoot td div {
+        border-top: 1px solid #8C8C8C;
+        background: #EBEBEB;
+    }
+
+    .datagrid table tfoot td {
+        padding: 0;
+        font-size: 12px;
+    }
+
+        .datagrid table tfoot td div {
+            padding: 2px;
+        }
+
+        .datagrid table tfoot td ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-align: right;
+        }
+
+    .datagrid table tfoot li {
+        display: inline;
+    }
+
+        .datagrid table tfoot li a {
+            text-decoration: none;
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 1px;
+            color: #F5F5F5;
+            border: 1px solid #8C8C8C;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8C8C8C), color-stop(1, #7D7D7D) );
+            background: -moz-linear-gradient( center top, #8C8C8C 5%, #7D7D7D 100% );
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8C8C8C', endColorstr='#7D7D7D');
+            background-color: #8C8C8C;
+        }
+
+    .datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover {
+        text-decoration: none;
+        border-color: #7D7D7D;
+        color: #F5F5F5;
+        background: none;
+        background-color: #8C8C8C;
+    }

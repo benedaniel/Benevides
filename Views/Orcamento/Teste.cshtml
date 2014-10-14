@@ -1,0 +1,115 @@
+﻿<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr style="height: 15px">
+            <td width="140" rowspan="6" valign="top">
+                <img alt="" src="@item.ImagemCia" style="border: 1px solid #eeeeee; padding: 30px; width: 55px">
+            </td>
+            <td height="14" valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">
+                <table>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">Saída
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">
+                            @item.LocalSaida
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                            <strong>Cia: @item.CiaSaida</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                            <strong>Classe: @item.ClasseSaida</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Horário: @item.HorarioSaida
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Nº Voo: @item.NumVooSaida
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td valign="top" style="font-family: Verdana; font-size: 10px; color: #6c6c6c">
+                <table>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">
+                            Chegada
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; font-weight: bold; color: #0d4379">
+                            @item.LocalSaida
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                            <strong>Cia: @item.CiaSaida</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">
+                            <strong>Classe: @item.ClasseSaida</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Horário: @item.HorarioSaida
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top" style="font-family: Verdana; font-size: 10px; color: #3b3b3b">Nº Voo: @item.NumVooSaida
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="220" rowspan="6" align="right" valign="top" style="font-family: Verdana; color: #58595b; font-size: 10px">
+                <table style="width: 100%; border-collapse: collapse">
+                    <tbody>
+                        <tr>
+                            <td style="background-color: #f0f0f0; font-size: 11px; padding: 0 6px; border-right: 3px solid #ffffff; border-bottom: 3px solid #ffffff">
+                                <span>Total de passagens</span>
+                            </td>
+                            <td style="background-color: #f0f0f0; font-size: 11px; padding: 2px; text-align: center; font-weight: bold; border-bottom: 3px solid #ffffff">
+                                <span>R$ @item.TotalPassagens</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #f7f7f7; font-size: 10px; padding: 0 8px; color: #9a9a9a; border-right: 3px solid #ffffff">
+                                <span>Taxa de embarque</span>
+                            </td>
+                            <td style="background-color: #f7f7f7; font-size: 10px; padding: 1px; color: #9a9a9a; text-align: center">
+                                <span>R$ @item.Taxa</span>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f0f0f0; font-size: 14px; line-height: 17px">
+                            <td style="padding: 6px; font-weight: bold">
+                                <span>Total</span>
+                            </td>
+                            <td style="padding: 6px; text-align: center; font-weight: bold">
+                                <span>R$ @item.Total</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align: right; padding-top: 5px; clear: both"><strong>Passageiros:</strong></div>
+                <div style="text-align: right; clear: both">@item.QuantidadeAdulto Adulto</div>
+                @if (!(String.IsNullOrEmpty(item.QuantidadeCrianca)))
+                {
+                    <div style="text-align: right; clear: both">- @item.QuantidadeCrianca crianças</div>
+                }
+                @if (!(String.IsNullOrEmpty(item.QuantidadeBebe)))
+                {
+                    <div style="text-align: right; clear: both">- @item.QuantidadeBebe bebes</div>
+                }
+
+            </td>
+        </tr>
+    </tbody>
+</table>

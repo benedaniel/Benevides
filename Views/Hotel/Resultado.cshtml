@@ -1,0 +1,950 @@
+﻿@{
+    ViewBag.Title = "Hóteis - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var consultaAssincrona = System.Configuration.ConfigurationManager.AppSettings["ConsultaAssincrona"];
+}
+
+@model List<FT.Web.Model.Models.HotelModel>
+
+<link href="~/Content/FiltroHotel.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery/jquery.fancybox.js"></script>
+<script src="~/Scripts/jquery/jquery.simplemodal.js"></script>
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="~/Scripts/WithLabel.js"></script>
+<script src="~/Scripts/Mapa.js"></script>
+
+<link href="~/Content/Hotel.css" rel="stylesheet" />
+<link href="~/Content/HotelResult.css" rel="stylesheet" />
+<link href="~/Content/jquery/jquery.fancybox.css" rel="stylesheet" />
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery.simplePagination.js"></script>
+<link href="~/Scripts/simplePagination.css" rel="stylesheet" />
+
+<style>
+    .imgMapa {
+        display: block;
+        width: 100px;
+    }
+</style>
+@*<style type="text/css">
+    .labels {
+        color: #2E7E94 !important;
+        margin-left: -23px !important;
+        margin-top: -56px !important;
+        text-align: center;
+        white-space: nowrap;
+        width: 48px;
+    }
+</style>*@
+
+<script>
+
+    var jaPesquisado = false;
+    var qtdUltimaPesquisa = 0;
+
+    function SearchHotelName()
+    { 
+        if(!jaPesquisado)
+        {
+            jaPesquisado = true;
+            var num = $("#txtNome").val().length;
+            if((num >= 3 && num != qtdUltimaPesquisa) || num == 0)
+            {                
+                qtdUltimaPesquisa = num;
+
+                setTimeout(FiltrarPorNome(),3000);
+
+                $(".loadingDefault").show();
+            }
+            else
+            {
+                jaPesquisado = false;
+            }
+        }
+    }
+    function sayHi()
+    {
+        postarform();
+    }
+
+    var busca = false;
+    var pesquisar = false;
+    var i = 0;
+    
+    $(function () {
+        try{
+            $(holder).pagination({
+                items: @Session["TotalHoteis"].ToString() ,
+                itemsOnPage: $(quantidadeResultados).val(),
+                prevText: "Anterior",
+                nextText: "Próxima",
+                onPageClick: function (pageNumber) { 
+
+                    MudarPagina($(quantidadeResultados).val(), pageNumber);
+                }
+            });
+        }
+            catch(object)
+            {
+            }
+        });
+    
+    function MudarPagina(itensPorPagina, pageNumber)
+    {
+        var args = new Object();
+        args = {
+            totalItensPagina: itensPorPagina, 
+            pagina: pageNumber, ordenacao: $(".combo-ordenar").val()
+        };
+
+        $('.loadingDefault').show();
+
+        $.ajax({
+            url: "/Hotel/MudarPagina",
+            data: args,
+            dataType: 'html',
+            type: 'POST',
+            success: function (result) {
+                if (result) {
+                    $("#HotelResultado").html(result);
+                    $('.loadingDefault').hide();
+                    window.scroll(0, 0);
+                }
+            }
+        });
+        AtualizarMapaHotel();
+        
+    }
+
+    var quantidadeConsultas = 0;
+    var quantidadeRetorno = 0;
+    var totalMilisegundosBusca = 7000;
+    var totalMaximoVerificacoes = 5;
+
+    var tid = @ViewBag.ContadorAssincrono + ";" ;
+
+    function VerificarNovosHoteis() {
+    
+        var args = new Object();
+
+        $("#spnBuscaHoteis").show();
+
+        try {
+            $.ajax({
+                url: "/Hotel/QuantidadeNovosRegistros",
+                success: function (data) {
+                    try {
+                        data = parseInt(data);
+
+                        var totalNovos = 0;
+
+                        if(data > 0){                            
+
+                            totalNovos = data - parseInt($(spanTotalHoteis).text());
+                        }
+
+                        if(quantidadeRetorno == data || data == 0 || totalNovos <= 0){
+                            quantidadeConsultas = quantidadeConsultas + 1;
+                        }
+                        else{
+                            quantidadeConsultas = 0;
+                        }
+                        
+                        $.ajax({
+                            url: "/Hotel/VerificarConsultaFinalizada",
+                            success: function (isConsultaFinalizada) {
+                                
+                                if(isConsultaFinalizada == "False") {                                    
+
+                                    if(quantidadeConsultas > totalMaximoVerificacoes) {
+
+                                        clearTimeout(tid);
+                                        $("#spnBuscaHoteis").hide();
+
+                                    }
+                                    else {
+    
+                                        tid = setTimeout(VerificarNovosHoteis, totalMilisegundosBusca);
+
+                                    }
+
+                                }
+                                else {
+                                    clearTimeout(tid);
+                                    $("#spnBuscaHoteis").hide(); 
+                                }
+                            }
+                        });
+                        
+                        quantidadeRetorno = data;
+                        
+                        //if(totalNovos > 0){
+                        if(data > 0) {
+                            $(".btnAtualizarRegistros").text("Ver novos hotéis (" + totalNovos + ")");
+
+                            $("#TotalRegistrosAdicionados").text(totalNovos);
+                        }
+
+
+                        if(totalNovos > 0) {
+                            $("#btnAtualizarTela").show();
+                        }
+                        else {
+                            $("#btnAtualizarTela").hide();
+                        }
+                    }
+                    catch(x) {
+
+                    }
+                },
+                error: function(err) {
+
+                }
+            });
+            AtualizarMapaHotel();
+        }
+        catch(object) {
+
+        }
+    }
+
+    function abortTimer() {
+        clearTimeout(tid);
+    }
+
+    function atualizarTela() {
+
+        $('.loadingDefault').show();
+
+        var args = new Object();
+
+        args = { 
+            totalItensPagina: $(quantidadeResultados).val(), 
+            ordenacao: $(".combo-ordenar").val() 
+        };
+
+        var valorMaximo = 0;
+        var valorMinimo = 0;
+
+        $.ajax({
+            url: "/Hotel/AtualizarNovosHoteis",
+            data: args,
+            dataType: 'html',
+            type: 'POST',
+            async: false,
+            success: function(result){
+                if(result){
+
+                    $("#HotelResultado").fadeOut();
+
+                    $("#HotelResultado").html(result);                    
+
+                    window.scroll(0, 0);
+
+                    $("#HotelResultado").fadeIn();
+
+                    var total = parseInt($(TotalRegistrosAdicionados).text()) + parseInt($(spanTotalHoteis).text());
+
+                    $(spanTotalHoteis).text(total);
+
+                    $(holder).pagination('updateItems', $(spanTotalHoteis).text());
+
+                    $(TotalRegistrosAdicionados).text("0");
+
+                    $(holder).pagination('selectPage', 1);
+                    
+                    $.ajax({
+                        url: "/Hotel/RetornarValorMaximo",
+                        type: 'POST',
+                        async: false,
+                        success: function(resultMax){                            
+                            
+                            valorMaximo = parseInt(resultMax);
+
+                            $('#slider-range').slider( "option", "max", valorMaximo);
+                        }
+                    });
+
+                    $("#btnAtualizarTela").hide();
+
+                    $(".loadingDefault").hide();
+                }
+
+                AtualizarMapaHotel();
+
+            },
+            error:function(data){
+                
+                $('.loadingDefault').hide();
+                abortTimer();
+            }
+        });
+    }
+
+    function postarFormAtualizado() {
+
+        abortTimer();
+
+        $('.watermark').watermark('clearWatermarks');
+        $('.loadingDefault').show();
+
+        var index = 0;
+        var estrela = "";
+
+        for (var i = 0; i < $(".numeroestrelas").length; i++) {
+            if ($(".numeroestrelas")[i].checked) {
+                estrela += $(".numeroestrelas")[i].value;
+                estrela += ",";
+            }
+        }
+
+        var facilidade = "";
+
+        for (var i = 0; i < $(".facilidadesFiltro").length; i++) {
+            if ($(".facilidadesFiltro")[i].checked) {
+                facilidade += $(".facilidadesFiltro")[i].value;
+                facilidade += ",";
+            }
+        }
+
+        var rangeValor = $("#amount").val();
+        var nomehotel = $("#txtNome").val();
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+    
+        rangeValor = rangeValor.replace("R$", "");
+        rangeValor = rangeValor.replace("R$", "");
+        rangeValor = rangeValor.replace(" ", "");
+        rangeValor = rangeValor.split("-");
+
+        var args = new Object();
+        args = {
+            nome: nomehotel,
+            menorPreco: rangeValor[0],
+            maiorPreco: rangeValor[1],
+            estrela: estrela,
+            lstFacilidades: facilidade,
+            qtdeItensPorPagina: $("#quantidadeResultados").val(),
+            ordenacao: $(".combo-ordenar").val()
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelAtualizado",
+            type: "POST",
+            dataType: 'html',
+            data: args,
+            success: function (result) {
+
+                $("#HotelResultado").fadeOut();
+
+                $("#HotelResultado").html(result);
+
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+
+                $(holder).pagination('selectPage', 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+
+                        $(spanTotalHoteis).text(qtdRegistros);
+
+                        $(holder).pagination('updateItems', qtdRegistros);
+
+                        $('.loadingDefault').hide();
+
+                        AtualizarMapaHotel();
+
+                        abortTimer();
+                    }
+                });
+                
+                jaPesquisado = false;
+            }
+        });
+    }
+
+    function FiltrarPorValor() {
+
+        abortTimer();
+
+        $('.loadingDefault').show();
+
+        var rangeValor = $("#amount").val();
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        rangeValor = rangeValor.replace("R$", "");
+        rangeValor = rangeValor.replace("R$", "");
+        rangeValor = rangeValor.replace(" ", "");
+        rangeValor = rangeValor.split("-");
+
+        var args = new Object();
+        args = {
+            menorPreco: rangeValor[0],
+            maiorPreco: rangeValor[1],
+            qtdeItensPorPagina: qtdeItensPorPagina,
+            ordenacao: $(".combo-ordenar").val(),
+            precoMaximo: $("#slider-range").slider("option", "max"),
+            precoMinimo: $("#slider-range").slider("option", "min")
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorRangeValor",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            success: function(result) {
+
+                $("#HotelResultado").fadeOut();
+
+                $("#HotelResultado").html(result);
+
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+
+                $(holder).pagination('selectPage', 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+                        $(spanTotalHoteis).text(qtdRegistros);
+
+                        $(holder).pagination('updateItems', qtdRegistros);
+
+                        $('.loadingDefault').hide();
+
+                        AtualizarMapaHotel();
+
+                        abortTimer();
+                    }
+                });
+
+                jaPesquisado = false;
+
+                $('.loadingDefault').hide();
+            }
+        });
+    }
+
+    function FiltrarPorNome() {
+
+        abortTimer();
+
+        $('.loadingDefault').show();
+
+        $("#txtNome").prop("disabled", true);
+
+        var nomeHotel = $("#txtNome").val();
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        var args = new Object();
+
+        args = {
+            nome: nomeHotel,
+            qtdeItensPorPagina: qtdeItensPorPagina,
+            ordenacao: $(".combo-ordenar").val()
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorNome",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            async: false,
+            success: function (result) {
+
+                $("#HotelResultado").fadeOut();
+
+                $("#HotelResultado").html(result);
+
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+
+                $(holder).pagination('selectPage', 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+
+                        $(spanTotalHoteis).text(qtdRegistros);
+                        $(holder).pagination("updateItems", qtdRegistros);
+                        $(".loadingDefault").hide();
+                        AtualizarMapaHotel();
+
+                        abortTimer();
+
+                        $("#txtNome").prop("disabled", false);
+
+                    }
+                });
+
+                jaPesquisado = false;
+
+                //$(".loadingDefault").hide();
+
+            }
+        });
+
+        $('.loadingDefault').show();
+    }
+
+    function FiltrarPorFacilidades() {
+
+        abortTimer();
+
+        $('.loadingDefault').show();
+
+        var facilidade = "";
+
+        for(var i = 0; i < $(".facilidadesFiltro").length; i++){
+            if($(".facilidadesFiltro")[i].checked) {
+                facilidade += $(".facilidadesFiltro")[i].value;
+                facilidade += ",";
+            }
+        }
+
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        var args = new Object();
+        args = {
+            lstFacilidades: facilidade,
+            qtdeItensPorPagina: $("#quantidadeResultados").val(),
+            ordenacao: $(".combo-ordenar").val()
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorFacilidades",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            success: function (result) {
+                
+                $("#HotelResultado").fadeOut();
+                $("#HotelResultado").html(result);
+
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+                $(holder).pagination("selectPage", 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+                        $(spanTotalHoteis).text(qtdRegistros);
+                        $(holder).pagination("updateItems", qtdRegistros);
+                        $(".loadingDefault").hide();
+
+                        AtualizarMapaHotel();
+
+                        abortTimer();
+                    }
+                });
+
+                jaPesquisado = false;
+
+            }
+        });
+
+        $('.loadingDefault').hide();
+    }
+
+    function FiltrarPorEstrelas() {
+        
+        abortTimer();
+
+        $('.loadingDefault').show();
+
+        var estrela = "";
+
+        for(var i = 0; i < $(".numeroestrelas").length; i++) {
+            if($(".numeroestrelas")[i].checked) {
+                estrela += $(".numeroestrelas")[i].value;
+                estrela += ",";
+            }
+        }
+
+        var qtdeItensPorPagina = $("#quantidadeResultados").val();
+
+        var args = new Object();
+        args = {
+            estrela: estrela,
+            qtdeItensPorPagina: qtdeItensPorPagina,
+            ordenacao: $(".combo-ordenar").val()
+        };
+
+        $.ajax({
+            url: "/Hotel/FiltroHotelPorEstrelas",
+            type: "POST",
+            dataType: "html",
+            data: args,
+            success: function (result) {
+                
+                $("#HotelResultado").fadeOut();
+                $("#HotelResultado").html(result);
+                
+                window.scroll(0, 0);
+
+                $("#HotelResultado").fadeIn();
+                $(holder).pagination("selectPage", 1);
+
+                $.ajax({
+                    url: "/Hotel/TotalHoteisFiltrados",
+                    type: "POST",
+                    async: false,
+                    success: function (qtdRegistros) {
+                        
+                        $(spanTotalHoteis).text(qtdRegistros);
+                        $(holder).pagination("updateItems", qtdRegistros);
+                        $(".loadingDefault").hide();
+
+                        AtualizarMapaHotel();
+                        abortTimer();
+                    }
+                });
+
+                jaPesquisado = false;
+            }
+        });
+
+        $('.loadingDefault').show();
+    }
+
+    function AtualizarMapaHotel(){
+        $.ajax({
+            url: "/Hotel/CarregarHoteisMapa",
+            type: "POST",
+            //dataType: 'json',
+            async: true,
+            success: function (hoteisMapa) {
+                if(hoteisMapa != "" || hoteisMapa != null){
+                    $("#hdnHoteisMapa").val(hoteisMapa);
+                    $(".bot-hoteis-mapa").fadeIn();
+                }
+            }
+        });
+    }
+    
+</script>
+
+<div id="fotosGallery">
+</div>
+<div class="content">
+    <div id="orcamentocontent">
+    </div>
+    <input id="hdnDestinoHotelCodigoTeste" name="hdnDestinoHotelCodigoTeste" type="hidden" />
+    <input id="hdnHoteisMapa" name="hdnHoteisMapa" type="hidden" />
+    <div class="content-left">
+        <div class="filtroHotel">
+            <div id="headerResultadosBusca" class="titulo-filtros-left">
+                <span class="iconeMala" style="">Nova busca</span>
+            </div>
+            <div class="divcampos-filtros-left">
+                @{Html.RenderAction("HotelForm", "Hotel");}
+                <script>
+                    $('.watermark').watermark('clearWatermarks');
+                    $(document).ready(function () {
+                        $("#hdnDestinoHotelCodigo").val("@ViewBag.CodigoCidade");
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="filtroHotel">
+            <div id="headerResultados" class="titulo-filtros-left">
+                <span class="iconeMala" style="">Filtro Hotel</span>
+            </div>
+            <div class="divcampos-filtros-left">
+                <div>
+                    <label>Nome do hotel</label>
+                    <input type="text" id="txtNome" class="inputFiltro watermark" onkeyup="SearchHotelName()" title="Filtro por nome" /><br />
+
+                </div>
+                @{
+                    if (ViewBag.Dados != null)
+                    {
+                        FT.Web.Model.Models.HotelModel dadosBusca = ViewBag.Dados;
+                        
+                    <input id='QuantAdultos' type='hidden' value='@dadosBusca.QuantAdultos' />
+                    <input id='QuantCriancas' type='hidden' value='@dadosBusca.QuantCriancas' />
+                    <input id='Checkin' type='hidden' value='@dadosBusca.Checkin' />
+                    <input id='Checkout' type='hidden' value='@dadosBusca.Checkout' />
+                    <input id='CodigoCidade' type='hidden' value='@dadosBusca.CodigoCidade' />
+                    }
+                }
+                <div>
+                    <label>Faixa de preço</label>
+                    <script>
+                        $(function () {
+                            $("#slider-range").slider({
+                                range: true,
+                                change: function(event,ui){ FiltrarPorValor();},
+                                min: 0,
+                                max: @ViewBag.MaiorPreco,
+                                values: [@ViewBag.MenorPreco, @ViewBag.MaiorPreco],
+                                slide: function (event, ui) {
+                                    $("#amount").val("R$" + ui.values[0] + " - R$" + ui.values[1]);
+                                }
+                            });
+                            $("#amount").val("R$" + $("#slider-range").slider("values", 0) +
+                                " - R$" + $("#slider-range").slider("values", 1));
+                        });
+                    </script>
+                    <div class="preco">
+                        <p>
+                            <input type="text" id="amount" class="inputFiltro" style="color: #f6931f; font-weight: bold;" />
+                        </p>
+                        <div id="slider-range"></div>
+                    </div>
+                </div>
+                <div>
+                    <label class="lblEstrela">Estrelas</label>
+                    <div class="listaFiltro">
+                        <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio1" name="stars" value="3">
+                        <label for="radio1">
+                            <div class="hotel-resultados-estrelas estrela1"></div>
+                        </label>
+                        <br />
+                        <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio2" name="stars" value="4">
+                        <label for="radio2">
+                            <div class="hotel-resultados-estrelas estrela2"></div>
+                        </label>
+                        <br />
+                        <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio3" name="stars" value="5">
+                        <label for="radio3">
+                            <div class="hotel-resultados-estrelas estrela3"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="lblEstrela">Facilidades</label>
+                    <div class="listaFiltro">
+                        <input type='checkbox' id='ck_facilidade01' class="facilidadesFiltro" name='facilities' value='TV a cabo'>
+                        <label for="ck_facilidade01">TV a cabo</label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade02' class="facilidadesFiltro" name='facilities' value='Telefone'>
+                        <label for="ck_facilidade02">Telefone</label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade03' class="facilidadesFiltro" name='facilities' value='Piscina'>
+                        <label for="ck_facilidade03">Piscina</label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade04' class="facilidadesFiltro" name='facilities' value='Ar condicionado'>
+                        <label for="ck_facilidade04">Ar condicionado </label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade05' class="facilidadesFiltro" name='facilities' value='Estacionamento'>
+                        <label for="ck_facilidade05">Estacionamento </label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade06' class="facilidadesFiltro" name='facilities' value='Wi-fi'>
+                        <label for="ck_facilidade06">Wi-fi </label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade07' class="facilidadesFiltro" name='facilities' value='Cofre'>
+                        <label for="ck_facilidade07">Cofre</label>
+                        <br />
+                        <input type='checkbox' id='ck_facilidade08' class="facilidadesFiltro" name='facilities' value='Acesso para Deficientes'>
+                        <label for="ck_facilidade08">Acesso para Deficientes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-right-hotel">
+        @if (Model != null && Model.Count > 0)
+        {
+            <script>
+                function HoteisnoMapa() {
+                    //var arr = @Html.Raw(Json.Encode(@ViewBag.HotelMapa))
+                    var arr = $.parseJSON($(hdnHoteisMapa).val());
+                    BuscaHoteisMapa(arr);
+                }
+
+                function mapaDetalhe(lat, long, indice) {
+                    //var arr = @Html.Raw(Json.Encode(@ViewBag.HotelMapa))
+                    var arr = $.parseJSON($(hdnHoteisMapa).val());
+                    BuscaHoteisMapaComZoom(arr, long, lat, indice);
+                }
+            </script>
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Cabeçalho Resultados Hotel -->
+            <div class="hotel-cabecalho-1">
+                <div class="hotel-cabecalho-1-1">
+                    <div class="icone-titulo"></div>
+                    <p class="hotel-cabecalho-1-texto-1">Resultados da Pesquisa</p>
+                    <select class="combo-ordenar" name="">
+                        <option value="3">Preço - menor > maior</option>
+                        <option value="4">Preço - maior > menor</option>
+                    </select>
+                    <p class="hotel-cabecalho-1-texto-2">Ordenar por</p>
+                </div>
+                <div class="hotel-cabecalho-1-2">
+                    <p class="hotel-cabecalho-1-texto-3">
+                        Encontrados <span id="spanTotalHoteis">@Session["TotalHoteis"].ToString()</span> <strong>hotéis</strong> em
+                        @if (ViewBag.DestinoHotel != null)
+                        {
+                            <strong>@ViewBag.DestinoHotel.CidadeEstadoPais</strong>
+                        }
+                        else
+                        {
+                            if (String.IsNullOrEmpty(Model.FirstOrDefault().DestinoHotel))
+                            {
+                            <strong>@Model.FirstOrDefault().NomeCidade, @Model.FirstOrDefault().NomePais</strong>
+                            }
+                            else
+                            {
+                            <strong>@Model.FirstOrDefault().DestinoHotel</strong>
+                            }
+                        }
+                    </p>
+
+                    <p class="hotel-cabecalho-1-texto-4">
+                        Período de <strong>
+                            <label id="ckIn">@Model.FirstOrDefault().Checkin</label>
+
+                        </strong>
+                        a <strong>
+                            <label id="ckOut">@Model.FirstOrDefault().Checkout</label>
+                            | 
+                              @if (ViewBag.Dados == null && Model[0].Apartamentos != null && Model[0].Apartamentos.Count > 0)
+                              {
+
+                                  int counterAdultos = 0;
+                                  int counterCriancas = 0;
+                                  foreach (var Adultos in Model[0].Apartamentos)
+                                  {
+                                      counterAdultos = Adultos.Passageiros.Where(p => p.IdadePassageiro > 12).Count();
+                                      counterCriancas = Adultos.Passageiros.Count - counterAdultos;
+                                  }
+               
+                                  <label class="qtAdult">@counterAdultos</label><label> adulto(s)</label>
+                                  <label>
+                                      e
+                                      <label class="qtChild">@counterCriancas</label>
+                                      criança(s)</label>
+                                  <script>
+                                      $(function () {
+                                          $("#txtAdultos").val(@counterAdultos);
+                                      });
+                                  </script>
+                              }
+                              else
+                              {
+                                  if (ViewBag.Dados != null)
+                                  {
+                                      FT.Web.Model.Models.HotelModel dadosBusca = ViewBag.Dados;
+
+                                      int counterAdultos = dadosBusca.QuantAdultos.HasValue ? dadosBusca.QuantAdultos.Value : 0;
+                                      int counterCriancas = dadosBusca.QuantCriancas.HasValue ? dadosBusca.QuantCriancas.Value : 0;
+               
+                                  <label class="qtAdult">@counterAdultos</label><label> adulto(s)</label>
+                                  <label>
+                                      e
+                                          <label class="qtChild">@counterCriancas</label>
+                                      criança(s)</label>
+                                  <script>
+                                      $(function () {
+                                          $("#txtAdultos").val(@ViewBag.Dados.QuantAdultos);
+                                      });
+                                  </script>
+                                  }
+                              }
+                        </strong>
+                    </p>
+
+
+                    @{
+                              if (consultaAssincrona.ToUpper() == "S")
+                              { 
+                        <p class="hotel-cabecalho-1-texto-5">
+                            <span id="spnBuscaHoteis">Estamos buscando os melhores preços de hotéis
+                                        <img src="~/Images/loader.gif" width="70" height="10" />
+                            </span>
+                            <span id="btnAtualizarTela" style="display: none;">
+                                @*<input type="button" value="Ver novos hotéis" class="btnAtualizarRegistros" onclick="atualizarTela()" />*@
+                                <a href="#" class="btnAtualizarRegistros" onclick="atualizarTela()">Ver novos hotéis</a>
+                            </span>
+                        </p>
+                        <p class="hotel-cabecalho-1-texto-6" style="display: none;">
+                            Número de novos resultados: <span id="TotalRegistrosAdicionados">0</span>
+                        </p>
+
+
+                              }
+                    }
+
+
+
+                </div>
+            </div>
+            <!-- ............................................................................ Cabeçalho Resultados Hotel -->
+
+
+
+
+
+
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Botoes Hoteis Resultados -->
+            <div class="hoteis-botoes">
+                <a href="#" onclick="resultadoHotel()">
+                    <div class="bot-hoteis-lista" style="display: none;"></div>
+                </a>
+                <a href="#">
+                    @*@{
+                              List<FT.Web.Model.Models.HoteisMapaModel> Maps = ViewBag.HotelMapa;
+                    }
+                    @if (Maps.Count() > 0)
+                    {*@
+                    <div class="bot-hoteis-mapa" style="display: none;"></div>
+                    @*}*@
+                </a>
+                <div class="hoteis-quantidade-resultados">
+                    <select class="combo-quantidade-resultados" name="" id="quantidadeResultados">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <p class="hoteis-quantidade-resultados-texto">Hotéis por página</p>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <!-- ............................................................................ Botoes Hoteis Resultados -->
+
+            <div id="HotelResultado">
+                @Html.Partial("~/Views/Hotel/ResultadoGrid.cshtml", Model)
+            </div>
+                         
+            <div id="holder" class="holder">
+            </div>
+
+                         
+            <div class="hoteisMapa">
+                <div id="mapa" style="height: 600px; width: 725px; border: 1px solid #CCC;">
+                </div>
+            </div>
+        }
+        else
+        {
+            Html.RenderPartial("NoDataFound", false);
+        }
+        <div class="HotelDetalhado">
+        </div>
+    </div>
+</div>
+<script>
+    $("#hdnDestinoHotelCodigo").val("@ViewBag.CodigoCidade");
+
+    AtualizarMapaHotel();
+</script>

@@ -1,0 +1,57 @@
+﻿@model FT.Web.Model.Models.UsuarioModel
+
+@{
+    ViewBag.Title = "RecuperarSenha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string Error = Convert.ToString(ViewBag.Error);}
+<div class="content">
+    <br />
+    <div style="margin: auto; width: 250px;">
+        <h2 style="color: orangered; text-align: center;">Recuperar Senha</h2>
+        <br />
+
+        @using (Html.BeginForm("ExecutaRecuperarSenha", "Autenticar", FormMethod.Post, new { @id="formRecuperaSenha" }))
+        {
+            
+            <div>
+                @Html.LabelFor(p => p.Usuario, new { @class = "label-campo-geral", @style = "margin-left: 24px;" })
+            </div>
+            <div style="text-align: center;">
+                <div style="width: 215px; margin: 0px auto;">
+                    @Html.TextBoxFor(p => p.Usuario, new { @id = "txtUsuario" })
+                    @Html.ValidationMessageFor(p => p.Usuario)
+                </div>
+                <div>
+                    <input type="button"  onclick="return submitRecuperaUsuario();" class="bg-btn-height39" value="Recuperar" />
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+    
+    function submitRecuperaUsuario() {
+
+        if (validaForm('#formRecuperaSenha')) {
+
+            var args = new Object();
+            args = { usuario: $("#txtUsuario").val() };
+
+            $.ajax({
+                url: '/Autenticar/ExecutaRecuperarSenha',
+                type: 'POST',
+                data: JSON.stringify(args),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    showMensagem("Recuperar Senha", data, 500);
+                },
+                erro: function (data) {
+                    showMensagem("Recuperar Senha", data);
+                }
+            });
+        }
+    }
+</script>

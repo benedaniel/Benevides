@@ -1,0 +1,310 @@
+﻿@model FT.Web.Model.Models.HotelModel
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Hotel Detalhes -->
+<script>
+    function mapaDetalheStreetView(lat, long) {
+        $('.hoteisMapa').modal({
+            minHeight: 635,
+            minWidth: 735
+        });
+
+        var arr = @Html.Raw(Json.Encode(@ViewBag.HotelMapa))
+        BuscaHoteisMapaComZoom(arr, long, lat)
+    }
+</script>
+<style>
+    .hotel-detalhes-preco-pessoa {
+        clear: both;
+        color: #999999;
+        display: block;
+        font-family: Verdana,Verdana,sans-serif;
+        font-size: 0.7em;
+        margin: 24px 50px;
+        padding: 0 4px 0 0;
+        text-align: left;
+        width: 186px;
+    }
+
+    .button_comprar_menor, .button_solicitar_menor, .button_lotado_menor {
+        margin-left: 33px;
+        margin-top: 15px;
+    }
+
+        .button_comprar_menor:hover, .button_solicitar_menor:hover, .button_lotado_menor:hover {
+            margin-left: 33px;
+            margin-top: 15px;
+        }
+
+    .button_comprar, .button_solicitar, .button_lotado {
+        margin-left: 77px;
+        margin-top: -13px;
+    }
+
+        .button_comprar:hover, .button_solicitar:hover, .button_lotado:hover {
+            margin-left: 77px;
+            margin-top: -13px;
+        }
+</style>
+<div class="hotel-detalhes">
+    <div class="hotel-detalhes-titulo">
+        <div class="hotel-detalhes-titulo-texto">@Model.NomeHotel</div>
+        @if (Model.NumeroEstrelas == 1)
+        {
+            <div class="hotel-detalhes-titulo-estrelas" style="width: 26px;"></div>
+        }
+        else if (Model.NumeroEstrelas == 2)
+        {
+            <div class="hotel-detalhes-titulo-estrelas" style="width: 49px;"></div>
+        }
+        else if (Model.NumeroEstrelas == 3)
+        {
+            <div class="hotel-detalhes-titulo-estrelas" style="width: 73px;"></div>
+        }
+        else if (Model.NumeroEstrelas == 4)
+        {
+            <div class="hotel-detalhes-titulo-estrelas" style="width: 95px;"></div>
+        }
+        else if (Model.NumeroEstrelas >= 5)
+        {
+            <div class="hotel-detalhes-titulo-estrelas" style="width: 120px;"></div>
+        }
+        <div class="clear"></div>
+    </div>
+
+    @if (!String.IsNullOrEmpty(Model.NomeEstado))
+    {   
+        <div class="hotel-detalhes-titulo-texto-2">@Model.Endereco.ToUpper(), CEP: @Model.Cep @Model.NomeCidade.ToUpper() - @Model.NomePais.ToUpper()</div>
+    }
+    else
+    {
+        <div class="hotel-detalhes-titulo-texto-2">Endereço não informado.</div>
+    }
+
+    <div class="hotel-detalhes-galeria">
+        @if (Model.HotelFotos != null && Model.HotelFotos.Count() > 0)
+        {
+            <img src="@Model.HotelFotos.FirstOrDefault().HotelFotoUrl" style="max-width: 285px; max-height: 210px;" alt="@Model.HotelFotos.FirstOrDefault().HotelFotoTitulo" />
+        }
+        else
+        {
+            <img src="~/Images/no-image.png" alt="Hotel sem imagem." />
+        }
+        <div class="clear"></div>
+
+        @if (Model.HotelFotos.Count() > 1)
+        {
+            <div class="hotel-resultados-foto-hotel-ico"></div>
+            <div class="hotel-resultados-foto-hotel">
+                <a href="#fotosGallery" id="testes" onclick="hotelGalleryDetalhes(@Json.Encode(Model.HotelFotos))">Fotos do Hotel</a>
+            </div>
+        }
+    </div>
+
+    <div class="hotel-detalhes-right">
+        <div class="hotel-detalhes-valor">
+            <p class="hotel-detalhes-apartirde">Diária a partir de</p>
+            <div class="hotel-detalhes-valor-parcela">@Model.ValorFinalMenorPreco.Value.ToString("n2")</div>
+            <div class="hotel-detalhes-moeda">R$</div>
+        </div>
+        @if (ViewBag.IsMontePacote == null)
+        {
+            if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 0)
+            { 
+            <br />
+            <div class="clear"></div>
+            <a class="button_solicitar"  href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa), true)">Solicitar
+            </a>
+            }
+            else if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 2)
+            { 
+            <br />
+            <div class="clear"></div>
+            <a class="button_lotado"  href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa), true)">Lotado
+            </a>
+            }
+            else if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 1)
+            { 
+            <br />
+            <div class="clear"></div>
+                    
+            <a class="button_comprar"  href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa), true)">Comprar
+            </a>
+            }
+            <div>
+                <img style="cursor: pointer;
+    height: 22px;
+    margin-left: 79px;
+    margin-top: 10px;" src="/Images/adicionar-carrinho.png" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.CodigoTarifa), false)"/>
+            </div>
+
+        }
+        else
+        {
+            if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 0)
+            { 
+            <a href="#" class="addMPSucessSolicitar" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa))">Adicionar ao pacote
+            </a>
+            }
+            else if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 2)
+            {
+            <a href="#" class="addMPSucessLotado" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa))">Adicionar ao pacote
+            </a>
+            }
+            else if (Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoStatusVenda == 1)
+            {
+            <a href="#" class="addMPSucess" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa))">Adicionar ao pacote
+            </a>
+            }
+        }
+
+
+        @if (Session["Usuario"] != null)
+        { 
+            <br />
+            <div class="clear"></div>
+            <a href="javascript:" style="margin: 75px;"  onclick="AdicionarOrcamento(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().CodigoTarifa))">
+                <img src="@string.Format("/Images/bot_orcamento.png")" />
+            </a>
+        }
+        <p class="hotel-detalhes-preco-pessoa">
+
+            <br />
+            Quarto: <strong>@Model.AcomodacaoMenorPreco</strong><br />
+            Regime: <strong>@Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeRegimeAlimentacao</strong>
+        </p>
+    </div>
+
+    <div class="hotel-detalhes-descricao">
+        @Model.DescricaoHotel
+    </div>
+
+
+
+    @if (!String.IsNullOrEmpty(Model.Latitude))
+    {
+        <div class="hotel-detalhes-titulo-1">Localização | <strong>@Model.NomeHotel.ToUpper()</strong></div>
+
+        <div class="hotel-detalhes-titulo-mapa">Mapa</div>
+        <div class="hotel-detalhes-titulo-streetview">Street View</div>
+        <a href="#" onclick="BuscaHoteisMapaComZoom(@Html.Raw(Json.Encode(Model)), @Model.Longitude, @Model.Latitude, 1)">
+            <div class="hotel-detalhes-local-mapa"></div>
+        </a>
+        <a href="#" onclick="BuscaHoteisMapaComStreetView(@Html.Raw(Json.Encode(Model)), @Model.Latitude, @Model.Longitude)">
+            <div class="hotel-detalhes-local-streetview"></div>
+        </a>
+    }
+    <div class="clear"></div>
+
+    @foreach (var item in Model.HotelFacilidades)
+    {
+        if (item.TituloFacilidade == "Facilidades do Hotel")
+        {
+        <div class="hotel-detalhes-titulo-1">Serviços | <strong>@Model.NomeHotel.ToUpper()</strong></div>
+        <div class="hotel-detalhes-servicos">
+              <ul class="hotel-detalhes-servicos-lista">
+            @foreach (var facilidade in item.Facilidades)
+            {   
+                <li>@facilidade.NomeFacilidade</li>
+            }
+            </ul>
+        </div>
+        }
+        if (item.TituloFacilidade == "Instalações do Apartamento")
+        {
+        <div class="hotel-detalhes-titulo-1">Instalações do Apartamento</div>
+        <div class="hotel-detalhes-instalacoes">
+            <ul class="hotel-detalhes-instalacoes-lista">
+
+                @foreach (var facilidade in item.Facilidades)
+                {
+                    <li>@facilidade.NomeFacilidade</li>
+                }
+
+
+            </ul>
+            <div class="clear"></div>
+        </div>
+        }
+    }
+    @*
+    <div class="hotel-detalhes-titulo-1">Condições</div>
+
+    <div class="hotel-detalhes-condicoes-texto">
+        <p>Horário de Entrada: 14:00 hrs</p>
+        <p>horário de Saída: 12:00 hrs</p>
+    </div>*@
+    <div class="hotel-detalhes-titulo-1">Quartos | <strong>@Model.NomeHotel.ToUpper()</strong></div>
+    @foreach (FT.Web.Model.Models.AcomodacaoModel acomodacao in Model.Acomodacoes)
+    {
+        foreach (FT.Web.Model.Models.TarifaModel tarifa in acomodacao.Tarifas)
+        {
+        <div class="hotel-detalhes-quartos">
+            <a href="#">
+                <div class="hotel-detalhes-quartos-img"></div>
+            </a>
+            <div class="hotel-detalhes-quartos-1">
+                <p>Quarto: <strong>@acomodacao.NomeAcomodacao</strong></p>
+                <p>Regime: <strong>@tarifa.NomeRegimeAlimentacao</strong></p>
+            </div>
+            <div class="hotel-detalhes-quartos-2">
+                <p>
+                    Diária Média: <strong>
+                        <br />
+                        R$ @tarifa.ValorDiariaMedia.ToString("n2")</strong>
+                </p>
+            </div>
+            <div class="hotel-detalhes-quartos-3">
+                <p>
+                    Total do Período: <strong>
+                        <br />
+                        R$ @tarifa.ValorTotal.ToString("n2")</strong>
+                </p>
+            </div>
+            @if (ViewBag.IsMontePacote == null)
+            {
+                if (tarifa.CodigoStatusVenda == 0)
+                { 
+                <a class="button_solicitar_menor" href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa), true)">Solicitar</a>
+                }
+                else if (tarifa.CodigoStatusVenda == 2)
+                { 
+                <a class="button_lotado_menor" href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa), true)">Lotado</a>
+                }
+                else if (tarifa.CodigoStatusVenda == 1)
+                { 
+                <a class="button_comprar_menor" href="#" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa), true)">Comprar</a>
+                }
+                <div>
+                    <img style="cursor: pointer;
+    height: 22px;
+    margin-left: 20px;
+    margin-top: 10px;" src="/Images/adicionar-carrinho.png" onclick="Registrar(@Html.Raw(Json.Encode(Model.CodigoHotel)),@Json.Encode(Model.Acomodacoes.FirstOrDefault().Tarifas.FirstOrDefault().NomeAcomodacao) ,@Json.Encode(Model.CodigoTarifa), false)"/>
+                </div>
+            }
+            else
+            {
+                if (tarifa.CodigoStatusVenda == 0)
+                { 
+                <a href="#" class="addMPSucessSmallSolicitar" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa))">Adicionar ao pacote
+                </a>
+                }
+                else if (tarifa.CodigoStatusVenda == 2)
+                { 
+                <a href="#" class="addMPSucessSmallLotado" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa))">Adicionar ao pacote
+                </a>
+                }
+                else if (tarifa.CodigoStatusVenda == 1)
+                { 
+                <a href="#" class="addMPSucessSmall" onclick="AdicionarHotelMontePacote(@Html.Raw(Json.Encode(Model)),@Json.Encode(tarifa.NomeAcomodacao) ,@Json.Encode(tarifa.CodigoTarifa))">Adicionar ao pacote
+                </a>
+                }
+
+            }
+            <div class="clear"></div>
+        </div>
+        }
+    }
+</div>
+<div class="hoteisMapaStreet" style="display: none;">
+    <div id="pano" style="width: 100%; height: 400px;"></div>
+    <div id="map-canvas" style="width: 100%; height: 200px; top: 8px;"></div>
+</div>

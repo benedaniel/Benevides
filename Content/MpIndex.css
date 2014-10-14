@@ -1,0 +1,174 @@
+﻿div.quartos ul li div.roomChilAge {
+    display: none;
+    float: left;
+    height: 40px;
+    margin-left: 235px !important;
+    margin-top: -61px !important;
+    padding-top: 17px;
+    width: 171px;
+}
+
+    div.quartos ul li div.roomChilAge label {
+        height: 18px !important;
+        width: 100%;
+    }
+
+.conteudo label {
+    color: #666 !important;
+}
+
+.labelMontePacote {
+    font-size: 12px !important;
+    font-weight: bold;
+}
+
+.Mpinside {
+    color: #000;
+}
+
+.titleinside {
+    display: none;
+}
+
+.DivRadioMP {
+    color: #000 !important;
+}
+
+.SimpleInsideOrigem {
+    float: left;
+}
+
+.SimpleInsideDestino {
+    float: right;
+    margin-right: 40px;
+}
+
+input[type="checkbox"]:not(old) + label, input[type="radio"]:not(old) + label {
+    color: #104984 !important;
+}
+
+input.marked, textarea.marked, .inputdestinoMP {
+    color: #999999;
+    display: block;
+}
+
+.insideDestinoTex {
+    margin-top: 19px;
+    margin-bottom: 10px;
+}
+
+.insideOrigemTex {
+    margin-bottom: 10px;
+}
+
+div.BuscadorSetDate {
+    float: left;
+    width: 256px !important;
+}
+
+    div.BuscadorSetDate div.SetDate input {
+        width: 175px;
+    }
+
+div.quants {
+    padding: 0 !important;
+}
+
+.MontePacoteDivPrincipal {
+    background-color: #EFEFEF;
+    border: 1px solid #FCEDE6;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 56% !important;
+}
+
+.contentBusca {
+    padding: 15px;
+}
+
+.buscadorlabel {
+    font-size: 12px !important;
+    font-weight: bold;
+}
+
+#DivtituloMP label, .roomTitle label {
+    color: #104984 !important;
+}
+
+#trechosAdicionaisMP li {
+    display: block;
+    height: 270px;
+    width: 100%;
+}
+
+.IndexINde {
+    display: block;
+    height: 70px;
+    width: 100%;
+}
+
+.MPRetorno {
+    width:224px !important;
+}
+
+.destinos {
+    display: block;
+    font-size: 12px;
+    height: auto;
+    padding: 10px;
+    width: 100%;
+}
+
+    .destinos p {
+    display: block;
+    height: 15px;
+    line-height: 12px;
+    margin: 0 0 21px 11px;
+    padding: 0;
+}
+
+
+    
+.button_exampleBacj {
+    background-color: #606C88;
+    background-image: linear-gradient(to bottom, #606C88, #3F4C6B);
+    border: 1px solid #495267;
+    border-radius: 3px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 11px;
+    margin-top: 20px;
+    padding: 10px;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.button_exampleBacj:hover{
+ border:1px solid #363d4c;
+ background-color: #4b546a; background-image: -webkit-gradient(linear, left top, left bottom, from(#4b546a), to(#2c354b));
+ background-image: -webkit-linear-gradient(top, #4b546a, #2c354b);
+ background-image: -moz-linear-gradient(top, #4b546a, #2c354b);
+ background-image: -ms-linear-gradient(top, #4b546a, #2c354b);
+ background-image: -o-linear-gradient(top, #4b546a, #2c354b);
+ background-image: linear-gradient(to bottom, #4b546a, #2c354b);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#4b546a, endColorstr=#2c354b);
+}
+
+select.agechild {
+    width: 60px !important;
+}
+
+.styled-select-form-small {
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border-color: #D6D6D6 !important;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    color: #0F6DC7;
+    float: left;
+    padding: 0 !important;
+    width: 56px !important;
+}

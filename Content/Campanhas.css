@@ -1,0 +1,40 @@
+﻿div.content {
+    height: auto;
+    margin: auto;
+    padding: 20px 0 40px 30px;
+    width: 970px;
+}
+
+div.destino {
+    float: left;
+    height: 204px;
+    margin-bottom: 40px;
+    margin-right: 51px;
+    width: 272px;
+}
+
+    div.destino a.inter {
+        background: url("../Images/destint.png") no-repeat scroll -226px 0 rgba(0, 0, 0, 0);
+        display: block;
+        height: 126px;
+        width: 226px;
+    }
+
+    div.destino p.inter {
+        color: #EF6918;
+        margin-top: 10px;
+        font-weight: bold;
+        font-family: Tahoma,Verdana,Geneva,sans-serif;
+        font-size: 0.9em;
+    }
+
+    div.destino a.nasc {
+        background: url("../Images/destnac.png") no-repeat scroll -226px 0 rgba(0, 0, 0, 0);
+        display: block;
+        height: 204px;
+        width: 272px;
+    }
+
+    div.destino a:hover {
+        background-position: 0px 0px;
+    }

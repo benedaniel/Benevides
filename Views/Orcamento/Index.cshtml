@@ -1,0 +1,313 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+
+<script src="~/Scripts/Reserva.js"></script>
+<link href="~/Content/Reserva.css" rel="stylesheet" />
+
+<div>
+    <!-- CARREGANDO O PACOTE NA TELA DE RESERVA -->
+    @using (Html.BeginForm("TestarXml", "Orcamento", FormMethod.Post, null))
+    {
+        @*<button type="submit" value="testar" />*@
+        
+        <div id="DivRight" style="float: left; color: white; background-color: #EFEFEF; width: 360px; margin-left: 15px; border-radius: 10px;">
+            <br />
+            <span style="font-family: Verdana; color: #00387b; font-size: 14px; margin: 20px; font-weight: bold;" class="iconeMala">RESUMO DA COMPRA</span>
+            @if (Model.Carro.Count > 0)
+            {
+                <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                    <div class="icoTituloCarro"></div>
+                    <span class="TituloMenu">Aluguel de carro</span><br />
+                    <br />
+                    <hr class="hrMenu">
+                    @foreach (var carro in Model.Carro)
+                    {
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #CE6D21; font-size: 11px;" class="iconeMala">Aluguel de:</span><br />
+                            <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 12px;">@carro.ModeloReferencia </span>
+                        </div>
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">Locadora:</span><br />
+                            <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 10px;">@carro.DescricaoLocadora </span>
+                        </div>
+                        <hr class="hrMenu">
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span class="SubTitulo">Retirada em:</span>
+                            <span class="ConteudoSubtitulo">@carro.LocaisRetirada[0].NomeCidade</span><br />
+                            <span class="ConteudoSubtitulo">@carro.DataCheckIn as @carro.HoraCheckInSelecionada </span>
+                        </div>    
+                        
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span class="SubTitulo">Devolução em: </span>
+                            <span class="ConteudoSubtitulo">@carro.LocaisDevolucao[0].NomeCidade</span><br />
+                            <span class="ConteudoSubtitulo">@carro.DataCheckOut as @carro.HoraCheckOutSelecionada </span>
+                        </div>    
+                        <hr class="hrMenu">
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                            <label id="lblTotCarro" name="lblTotCarro" style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@carro.ValorTotal </label>
+                            <br />
+                            <br />
+                        </div>    
+                    }
+                </div>
+            }
+            @if (Model.Atividade.Count > 0)
+            {
+                <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                    <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                        <div class="icoTituloAtividade"></div>
+                        <span class="TituloMenuPacote">Detalhes da Atividade</span><br />
+                        <br />
+                        <hr class="hrMenuPacote">
+                        @foreach (var atividade in Model.Atividade)
+                        {
+                            foreach (var Translados in atividade.Transfer)
+                            {
+                            <div style="margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">TRASLADOS</span><br />
+                                <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@Translados.NomeAtividade</span><br />
+                                <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Translados.TarifasItem[0].DataInicial).ToString("dd/MM/yyyy")</span><br />
+                            </div>   
+                                
+                            <br />
+                            <hr class="hrMenuPacote">
+                            <div style="margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR :</span>
+                                <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">R$  @string.Format("{0:0.00}", @Translados.TarifasItem[0].ValorTotal).Remove(string.Format("{0:0.00}", @Translados.TarifasItem[0].ValorTotal).Length - 2)00  </span>
+                                <br />
+                                <br />
+                            </div>
+                            }
+                            foreach (var AssistenciaViagem in atividade.AssistenciaViagem)
+                            {
+                            <div style="margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">ASSISTENCIA VIAGEM</span><br />
+                                <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@AssistenciaViagem.NomeAtividade</span><br />
+                                <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@AssistenciaViagem.TarifasItem[0].DataInicial).ToString("dd/MM/yyyy")</span><br />
+                            </div>      
+                        
+                            <br />
+                            <hr class="hrMenuPacote">
+                            <div style="margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                                <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">R$  @string.Format("{0:0.00}", @AssistenciaViagem.TarifasItem[0].ValorTotal).Remove(string.Format("{0:0.00}", @AssistenciaViagem.TarifasItem[0].ValorTotal).Length - 2)00  </span>
+                                <br />
+                                <br />
+                            </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Hotel.Count > 0)
+            {
+                <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                    <div class="icoTituloHotel"></div>
+                    <span class="TituloMenu">Detalhes da Hospedagem</span><br />
+                    <br />
+                    <hr class="hrMenu">
+                    @foreach (var HotelItens in Model.Hotel)
+                    {
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span class="SubTitulo">Hotel:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.NomeHotel</span>
+                            <br />
+                            <span class="SubTitulo">Quantidade de noites:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.QuantAdultos</span>
+                            <br />
+                            <span class="SubTitulo">Check-in:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.Checkin</span>
+                            <br />
+                            <span class="SubTitulo">Check-out:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.Checkout</span>
+                            <br />
+                            <span class="SubTitulo">Tipo de Apartamento:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.Acomodacoes[0].NomeAcomodacao</span>
+                            <br />
+                            <span class="SubTitulo">Regime de Alimentação:</span>
+                            <span class="ConteudoSubtitulo">@HotelItens.TipoReserva</span>
+                            <hr style="height: 1px; margin-left: 20px; margin-right: 20px; background-color: #d6d6d6;">
+                        </div>
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                            <label id="lblTotHotel" name="lblToHotel" style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@string.Format("{0:0.00}", @HotelItens.ValorFinalMenorPreco).Remove(string.Format("{0:0.00}", @HotelItens.ValorFinalMenorPreco).Length - 2)00  </label>
+                            <br />
+                            <br />
+                        </div>
+                            
+                    }
+                </div>
+            }
+            @foreach (var aereo in Model.Aereo)
+            {
+                int counterVoo = 0;
+                <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                    <div class="icoTituloAereo"></div>
+                    <span class="TituloMenu">Detalhes da Passagem</span><br />
+                    <br />
+                    <hr class="hrMenu">
+
+
+                    @foreach (var AereoItens in aereo.Trechos)
+                    {
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            @if (counterVoo == 0)
+                            {
+                                <div class="icoTituloPacoteAereoIda"></div>
+                                    
+                                <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">IDA</span>
+                            }
+                            else
+                            {
+                                <div class="icoTituloPacoteAereoVolta"></div>
+                                <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">VOLTA</span> }
+                            }
+
+                                <img  style="width: 35px;height: 20px;float: right;margin-right: 21px;" src="@AereoItens.UrlLogoCia" />
+                            <br />
+                            <br />
+                            <span class="SubTitulo">Saída</span><br />
+                            <span class="ConteudoSubtitulo">@AereoItens.NomeCidadeOrigem  , </span>
+                            <span class="SubTitulo">@AereoItens.NomeAeroportoOrigem (@AereoItens.SiglaAeroportoOrigem) </span>
+                            <br />
+                            <span class="ConteudoSubtitulo">@AereoItens.DataOrigem.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataOrigem.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm") </span>
+                            <br />
+                            <span class="SubTitulo">Voo</span>
+                            <span class="ConteudoSubtitulo">@AereoItens.Seguimentos[0].NumeroVoo </span>
+
+                            <span style="font-family: Verdana; color: #666666; font-size: 10px;" class="iconeMala">/ Classe</span>
+                            <span class="ConteudoSubtitulo">@AereoItens.Seguimentos[0].CodigoClasse </span>
+
+                        </div>
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span class="SubTitulo">Chegada</span><br />
+                            <span class="ConteudoSubtitulo">@AereoItens.NomeCidadeDestino , </span>
+                            <span class="SubTitulo">@AereoItens.NomeAeroportoDestino (@AereoItens.SiglaAeroportoDestino) </span>
+                            <br />
+                            <span class="ConteudoSubtitulo">@AereoItens.DataDestino.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataDestino.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm")</span>
+                        </div>
+                        <hr class="hrMenu">
+                                 
+                            counterVoo = 1;
+                    }
+                    <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                        <span style="font-family: Verdana; color: #bdbabd; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                        <label id="lblTotAereo" name="lblTotAereo" style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@string.Format("{0:0.00}", @aereo.Valor).Remove(string.Format("{0:0.00}", @aereo.Valor).Length - 2)00  </label>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            }
+            @if (Model.Pacote.Count > 0)
+            {
+                <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                    @foreach (var PacoteItens in Model.Pacote)
+                    {
+                        foreach (var PacoteItem in PacoteItens.Itens)
+                        {
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <div class="icoTituloPacote"></div>
+                            <span class="TituloMenuPacote">Detalhes do Pacote</span><br />
+                            <br />
+                            <hr class="hrMenuPacote">
+                            <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">Pacote</span><br />
+                            <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 12px;">@PacoteItem.NomePacote.Replace("-", " ") </span>
+                        </div>
+                        <hr class="hrMenu">
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span class="SubTitulo">Destino:</span>
+                            <span class="ConteudoSubtitulo">@PacoteItem.NomeCidade </span>
+                            <br />
+                            <span class="ConteudoSubtitulo">em 15/12/2013 </span>
+                        </div>    
+                        <hr class="hrMenu">
+                            int counterVooPacote = 0;
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #bdbabd; font-size: 11px; font-weight: bold;" class="iconeMala">Serviços Incluidos:</span>
+                            <br />
+                            @foreach (var Regime in PacoteItem.Regime)
+                            {
+                                <span class="SubTitulo">HOSPEDAGEM</span>
+                                <br />
+                                <span class="SubTitulo">Nome Hotel:</span> <span class="ConteudoSubtitulo">@Regime.NomeHotel</span><br />
+                                <span class="SubTitulo">Check-in:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Regime.Checkin).ToString("dd/MM/yyyy")</span><br />
+                                <span class="SubTitulo">Check-out:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Regime.Checkout).ToString("dd/MM/yyyy")</span><br />
+                                <span class="SubTitulo">Regime de Alimentação:</span> <span class="ConteudoSubtitulo">@Regime.TipoRegime</span><br />
+                                <span class="SubTitulo">Tipo de Apartamento:</span> <span class="ConteudoSubtitulo">@Regime.Quarto</span><br />
+                            }
+                            <br />
+                            <hr class="hrMenuPacote">
+                            <br />
+                            <span class="SubTitulo">VOO</span>
+                            <br />
+                            @foreach (var Voo in PacoteItem.Aereo)
+                            {
+                                <div style="margin-bottom: 5px; margin-top: 5px;">
+                                    @if (counterVooPacote == 0)
+                                    {
+                                        <div class="icoTituloPacoteAereoIda"></div>
+                                        <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">IDA</span>
+                                        counterVooPacote = 1;
+                                    }
+                                    else
+                                    {
+                                        <div class="icoTituloPacoteAereoVolta"></div>
+                                        <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">VOLTA</span>
+                                    }
+                                    <img  style="width: 35px;height: 20px;float: right;margin-right: 21px;" src="@Voo.FotoUrl" />
+                                    <br />
+                                    <br />
+                                    <span class="SubTitulo">Saída</span><br />
+                                    <span class="ConteudoSubtitulo">@Voo.OrigemNome   </span>
+                                    <span class="ConteudoSubtitulo">@Voo.DescricaoVoo</span>
+                                    <br />
+                                    <span class="ConteudoSubtitulo">@Convert.ToDateTime(Voo.DataEmbarque).ToString("dddd").Substring(0, 3).ToUpper(), @Convert.ToDateTime(Voo.DataEmbarque).ToString("dd/MM/yyyy") as  @Convert.ToDateTime(Voo.DataEmbarque).ToString("HH:mm") </span>
+                                    <br />
+
+
+                                    <div style="margin-bottom: 5px; margin-top: 5px;">
+                                        <span style="font-family: Verdana; color: #666666; font-size: 11px;" class="iconeMala">Chegada</span><br />
+                                        <span class="ConteudoSubtitulo">@Convert.ToDateTime(Voo.DataRetorno).ToString("dddd").Substring(0, 3).ToUpper(), @Convert.ToDateTime(Voo.DataRetorno).ToString("dd/MM/yyyy") as  @Convert.ToDateTime(Voo.DataRetorno).ToString("HH:mm") </span>
+                                    </div>
+                                </div>
+                            }
+                        </div>    
+                        <hr style="height: 1px; margin-left: 20px; margin-right: 20px; background-color: #d6d6d6;">  
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            @foreach (var Regime in PacoteItem.Regime)
+                            {
+                                <div>
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR TAXAS:</span>
+                                    <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">R$ @Regime.Taxas </span>
+                                    <br />
+
+                                </div>
+                            }
+                            <div>
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold; float: left;" class="iconeMala">VALOR:</span>
+                                <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">R$
+                                    <label id="lblTotPacote" name="lblTotPacote">@PacoteItem.Regime[0].ValorTotal </label>
+                                </span>
+                            </div>
+                            <br />
+                        </div>    
+                        
+                    
+                        }
+                    }
+                </div>
+                <br />
+            }
+
+            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                <span class="SubTitulo">TOTAL TAXAS:</span> <span class="ConteudoSubtitulo"></span>
+                <span style="font-family: Verdana; color: RED; font-size: 14px; font-weight: bold;" class="iconeMala">TOTAL:</span>
+                <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">R$<label id="lblTotal" name="lblTotal"></label></span>
+                <br />
+                <br />
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content">
+    @if (Session["Usuario"] != null && (!string.IsNullOrEmpty((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).Token)))
+    {
+        Html.RenderAction("Menu", "PainelControle", new { @titulo = "Reservas do Cliente" });
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        string url = "";
+
+        string IsUrlVoucherDev = System.Configuration.ConfigurationManager.AppSettings["IsUrlVoucherDev"];
+        if (!string.IsNullOrEmpty(IsUrlVoucherDev) && (Convert.ToBoolean(IsUrlVoucherDev)))
+        {
+            url = System.Configuration.ConfigurationManager.AppSettings["UrlBackoffice"]
+                + "pkg_portal.prc_inicial?"
+                + "p_id_pessoa_agencia=" + (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).ID_PESSOA_AGENCIA
+                + "&token=" + (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).Token;
+        }
+        else
+        {
+            url = System.Configuration.ConfigurationManager.AppSettings["UrlBackoffice"]
+                + "pkg_portal.prc_inicial?"
+                + "p_id_pessoa_agencia=" + (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).ID_PESSOA_AGENCIA
+                + "&token=" + (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).Token;
+        }
+       
+        <iframe width="100%" height="750px" src="@url&p_id_pagina=11"></iframe>
+       
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                showMensagem("Reservas", "É preciso estar logado no sistema para acessar esta tela.", 400);
+                $(function () {
+                    $("#btnMsgOk").click(function () {
+                        window.location.href = "/";
+                    });
+                });
+            });
+        </script>
+    }
+</div>

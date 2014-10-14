@@ -1,0 +1,68 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+@{
+    var idPlusAdults = "plusAdultsMP" + ViewBag.Indice;
+    var idMinusAdults = "minusAdultsMP" + ViewBag.Indice;
+}
+<li>
+    <div class='roomTitle'>
+        @if (ViewBag.Indice == null)
+        {
+            <label>Quarto 1</label>
+        }
+        else
+        { <label>Quarto  @ViewBag.Indice</label>}
+    </div>
+    <div class='roomAdults'>
+        <label class='buscadorlabel'>Adultos</label>
+        <br />
+        <div class="quartosmm">
+            <a href="javascript:" id="@idPlusAdults" class="plusHotel" onclick="addMP('@idPlusAdults', 'normal')"></a>
+            <input id="txtAdultos" type="text" class='QuantAdultos' value="1" onkeypress="return isNumberKey(event)" class="valid">
+            <a href="javascript:" id="@idMinusAdults" class="minusHotel" onclick="removeQtdAdultosMP('@idMinusAdults', 'normal')"></a>
+        </div>
+    </div>
+    <div class='roomChil'>
+        <label class='buscadorlabel'>Crianças</label>
+        <br />
+        @if (ViewBag.Indice == null || ViewBag.Indice == 0)
+        {
+            <select class='QuantCriancas' style="width: 65px; height: 36px;" onchange="qtCriancas(this, 1, 'normal')">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        }
+        else
+        {
+            
+            <select class='QuantCriancas' style="width:65px; height: 36px;" onchange="qtCriancas(this, @ViewBag.Indice, 'normal')">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        }
+    </div>
+    <br />
+    @if (ViewBag.Indice == null)
+    {
+        <div class="roomChilAge" id='roomChilAge_1' style="margin-top: -22px;">
+            <label class='buscadorlabel'>Idades</label>
+            <div class="clear"></div>
+            <div id="criancas_1" class="criancas">
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="roomChilAge" id='roomChilAge_@ViewBag.Indice' style="margin-top: -22px;">
+            <label class='buscadorlabel'>Idades</label>
+            <div class="clear"></div>
+            <div id="criancas_@ViewBag.Indice" class="criancas">
+            </div>
+        </div>
+    }
+</li>

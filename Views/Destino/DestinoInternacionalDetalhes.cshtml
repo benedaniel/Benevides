@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "DestinoNacionalDetalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IList<FT.Web.Model.Models.DestinoModel>
+<script>
+    function ShowDetails(item) {
+        var myClass = $(item).attr("class");
+        $('.destino-item').hide("slow");
+        $('.div_' + myClass).show("slow");
+    }
+</script>
+<style>
+    .destino-item {
+        display: none;
+    }
+</style>
+@if (Model != null)
+{
+    foreach (FT.Web.Model.Models.DestinoModel item in Model)
+    {
+    <link href="~/Content/Destinos.css" rel="stylesheet" />
+    <div class="content">
+        <div class="logoDestInt">
+            <img src="~/Images/logodestint.jpg" />
+            <h2 class="inter">Destinos Internacionais</h2>
+        </div>
+        <div class="destino-topo">
+            <div class="destino-fotos">
+                @if (item.Foto.Count > 0)
+                {
+                    <div class="imgPrincipal" style="background-image:url('@item.Foto[0].DestinoFotoUrl')">
+                    </div>
+                    if (item.Foto.Count > 1)
+                    {
+                    <ul class="imgMenor">
+                        @for (int i = 1; i < item.Foto.Count; i++)
+                        {
+                            <li style="background-image:url('@item.Foto[i].DestinoFotoUrl')"></li>
+                        }
+                    </ul>
+                    }
+                }
+            </div>
+            <div class="destino-desc">
+                <h1>@item.NomeCidade</h1>
+                <p style="width: 595px;">
+                    @item.DescricaoDestino
+                </p>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="destino-conteudo">
+            <div class="destino-menu">
+                <ul>
+                    <li>Pacotes</li>
+                    @foreach (FT.Web.Model.Models.DestinoTopico topico in item.Topico)
+                    {
+                        <li class="topico_@topico.CodigoDestinoTopico" onclick="ShowDetails(this)">@topico.NomeDestinoTopico</li>
+                    }
+                </ul>
+            </div>
+            <script src="~/Scripts/PacoteMatriz.js"></script>
+            <link href="~/Content/PacoteX.css" rel="stylesheet" />
+            <style>
+                .pacote-matriz {
+                    -moz-border-bottom-colors: none;
+                    -moz-border-left-colors: none;
+                    -moz-border-right-colors: none;
+                    -moz-border-top-colors: none;
+                    border-color: #CCCCCC -moz-use-text-color;
+                    border-image: none;
+                    border-radius: 10px 10px 10px 10px;
+                    border-style: solid none;
+                    border-width: 1px 0;
+                    height: auto;
+                    margin-bottom: 68px;
+                    margin-left: -36px;
+                    margin-top: -37px;
+                    overflow: hidden;
+                    width: 695px;
+                }
+
+                .pacote-matriz-right {
+                    background: url("../Images/bg2_matriz.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+                    border-left: 1px solid #EEEEEE;
+                    border-radius: 0 10px 10px 0;
+                    float: right;
+                    height: 225px;
+                    width: 181px;
+                }
+
+                .div_topico_0 {
+                    display: block;
+                }
+            </style>
+             @{ var data = DateTime.Now.AddDays(15); }
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: '/Pacote/GridPacoteMatriz',
+                        type: 'POST',
+                        data: { DataViagem: "@data.Year-@data.Month-@data.Day", CidadeDestino: "@item.CodigoCidade", CidadeEmbarque: "9668", OrdenarPor: "3" },
+                        dataType: 'html',
+                        success: function (result) {
+                            $("#Pacotes").html(result);
+                        }
+                    });
+                });
+            </script>
+            <div id="Pacotes" class="destino-item div_topico_0">
+            </div>
+            @foreach (FT.Web.Model.Models.DestinoTopico topico in item.Topico)
+            {
+                <div class="destino-item div_topico_@topico.CodigoDestinoTopico">
+                    <h1>@topico.NomeDestinoTopico</h1>
+                    <br />
+                    <br />
+                    @{var conteudo = topico.Conteudo.OrderBy(p => p.Ordem).ToList();}
+                    @for (int i = 0; i < conteudo.Count; i++)
+                    {
+                        <h2>@conteudo[i].ConteudoTitulo</h2>
+                        <p>
+                            @conteudo[i].ConteudoDescricao
+                        </p>
+                        <br />
+                    }
+                </div>
+            }
+        </div>
+        <br />
+        @if (!String.IsNullOrEmpty(ViewBag.GeomobUrl))
+        {
+            <iframe width="950" height="600" scrolling="no" frameborder="0" src="@ViewBag.GeomobUrl"></iframe>
+        }
+    </div>
+    }
+}
+else
+{
+    <link href="~/Content/NoDataFound.css" rel="stylesheet" />
+
+    <div class="totalNoDataFound">
+        <div class="imgNoDataFound">
+            <img src="~/Images/ico_resultado_nao_encontrado.png" />
+        </div>
+        <div class="textNoDataFound">
+            <span class="desculpeNoDataFound">Desculpe,</span>
+            <br />
+            <span class="NaoEncontradoNoDataFound">Não Foram encontrados resultados para a sua busca.</span>
+            <br />
+            <span class="PorFavorNoDataFound">Por favor, tente refazer a busca utilizando novas informações.</span>
+            <br />
+            <br />
+            <span class="obrigadoNoDataFound">Obrigado!</span>
+        </div>
+    </div>
+    
+}

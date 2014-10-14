@@ -1,0 +1,246 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HotelMenuForm</title>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/ResizeIframe.js"></script>
+    <script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/jquery/stylesheet-image-based.css" rel="stylesheet" />
+    <link href="~/Content/Buscadores.css" rel="stylesheet" />
+    <script src="~/Scripts/home.js"></script>
+    <link href="~/Content/Master.css" rel="stylesheet" />
+    <script src="~/Scripts/Site.js"></script>
+    <script src="~/Scripts/Watermark.js"></script>
+    <script src="~/Scripts/moment-with-langs.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <link href="~/Content/datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/Hotel.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Validations.js"></script>
+
+    <style>
+        .ErroDatas span.field-validation-error {
+            width: 120px;
+        }
+
+        .buttonPacoteRemover {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background: url("../Images/images_pacote/del_quarto.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            border-color: #7F2F00 #BB410A #BB410A;
+            border-image: none;
+            border-right: 0 solid #BB410A;
+            border-style: solid;
+            border-width: 0;
+            color: #063D75;
+            cursor: pointer;
+            font-family: Verdana;
+            font-size: 19px;
+            height: 23px;
+            margin-bottom: 20px;
+            padding: 3px 6px;
+            vertical-align: middle;
+            width: 24px;
+        }
+
+        .buttonPacote {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background: url("../Images/images_pacote/add_quarto.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            border-color: #7F2F00 #BB410A #BB410A;
+            border-image: none;
+            border-right: 0 solid #BB410A;
+            border-style: solid;
+            border-width: 0;
+            color: #063D75;
+            cursor: pointer;
+            font-family: Verdana;
+            font-size: 19px;
+            height: 23px;
+            margin-bottom: 20px;
+            vertical-align: middle;
+            margin-left: 20px;
+            padding: 3px 6px;
+            width: 24px;
+        }
+
+        .buscador-campos {
+            background: none repeat scroll 0 0 #F05C18;
+            border-radius: 8px;
+            clear: both;
+            margin: 0;
+            min-height: 380px;
+            padding: 25px;
+            width: 428px;
+        }
+    </style>
+    <style>
+        label {
+            color: #FFF;
+            font-family: Verdana;
+            font-size: 11px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            AjusteHeightFrameParent("iframeBuscadorHotel", 30);
+        });
+    </script>
+</head>
+<body>
+    <div style="display: none" id="hideAll">&nbsp;</div>
+    <div class="loading" style="display: none;">
+        <img src="~/Images/Loading_2.gif" width="370" />
+    </div>
+    @model FT.Web.Model.Models.HotelModel
+
+    <div id="tabs-3">
+        <div class="buscador-campos">
+            @{RouteValueDictionary route = new RouteValueDictionary(ViewContext.RouteData.Values);}
+
+            @using (Html.BeginForm("Resultado", "Hotel", route, FormMethod.Post, new { id = "hotelform", target = "_top" }))
+            {
+                <div class="contentBuscaHotel">
+                    <h3>Procure o seu Hotel</h3>
+
+                    @Html.LabelFor(model => model.DestinoHotel, new { @class = "buscadorlabel" })
+                    <div id="divDestinoHotel">
+
+                        @if (String.IsNullOrEmpty(Model.DestinoHotel))
+                        {  
+                            <script>
+                                $(document).ready(function () {
+                                    $("#DestinoHotel").addClass("inputdestino watermark");
+                                    $("#DestinoHotel").attr("title", "Informe seu destino");
+                                    $("#DestinoHotel").val("");
+                                    $('#DestinoHotel').watermark();
+                                });
+                            </script>
+                            @Html.TextBoxFor(model => model.DestinoHotel, new { @class = "inputdestino watermark", title = "Informe seu destino" })
+                            @Html.ValidationMessageFor(model => model.DestinoHotel)}
+                        else
+                        { 
+                            @Html.TextBoxFor(model => model.DestinoHotel, new { @class = "inputdestino", title = "Informe seu destino" })
+                            @Html.ValidationMessageFor(model => model.DestinoHotel)
+                        }
+                    </div>
+
+                    <br class="saveSearch" />
+                    <p class="BuscadorSetDate">
+                        <div class="checkin SetDate">
+                            @Html.LabelFor(model => model.Checkin, new { @class = "buscadorlabel" })
+                            <br class="saveSearch" />
+                            @Html.TextBoxFor(model => model.Checkin, new { @class = "txtStartDate" })
+
+                            <span class="ErroDatas">
+                                @Html.ValidationMessageFor(model => model.Checkin)
+                            </span>
+                        </div>
+                        <div class="checkout SetDate">
+                            @Html.LabelFor(model => model.Checkout, new { @class = "buscadorlabel" })
+                            <br class="saveSearch" />
+                            @Html.TextBoxFor(model => model.Checkout, new { @class = "txtEndDate" })
+                            <span class="ErroDatas">
+                                @Html.ValidationMessageFor(model => model.Checkout)
+                            </span>
+                        </div>
+
+                        <div class="quants" style="padding: 0px;">
+                            <label style="font-family: Verdana; font-size: 12px; font-weight: bold;" class="noitelab">Noites</label><br class="saveSearch" />
+                            <div>
+                                <a href="javascript:" id="plusNights" class="plusHotel"></a>
+                                <input id="txtNoites" name="txtNoites" type="text" value="0" onkeypress="return isNumberKey(event)" />
+                                <a href="javascript:" id="minusNights" class="minusHotel"></a>
+                                <input type="hidden" id="hdnNoites" name="hdnNoites" value="@Request["hdnNoites"]" />
+                                <input type="hidden" id="hdnNoitesRequest" name="hdnNoitesRequest" value="@Request["txtNoites"]" />
+                            </div>
+                        </div>
+                    </p>
+
+                    <div class="clear"></div>
+                    <div class="bar"></div>
+                    <div class="clear"></div>
+
+
+
+                    <div class="quartos">
+
+                        @{Html.RenderPartial("Quartos", Model.Apartamentos);}
+
+                    </div>
+
+
+
+                    <div class="clear"></div>
+                    <div class="bar"></div>
+                    <div class="clear"></div>
+                    <br class="saveSearch" />
+                    <p>
+                        <a href="javascript:" id="clickmeMenu" class="buscaAvancada">Busca avançada
+                <img id="imgav" src="~/Images/ava.gif" />
+                        </a>
+
+                        <a href="javascript:" id="clickmeResult" style="display: none;" class="buscaAvancada">Busca avançada
+                <img id="imgavResult" src="~/Images/avas.jpg" />
+                        </a>
+                    </p>
+                    <br />
+
+                    <div id="moreoptionshotel" style="display: none">
+                        <p>
+                            @Html.LabelFor(model => model.NomeHotel, new { @class = "buscadorlabel" })
+                            <br class="saveSearch" />
+                            @Html.TextBoxFor(model => model.NomeHotel, new { @class = "inputdestino  watermark", title = "Informe o nome do hotel" })
+                            @Html.ValidationMessageFor(model => model.NomeHotel)
+                        </p>
+
+                        <br class="saveSearch" />
+
+                        <div class="checkin SetDate">
+                            @Html.LabelFor(model => model.Estrelas, new { @class = "buscadorlabel" })
+                            <br class="saveSearch" />
+                            <div class="styled-select-form">
+                                @Html.DropDownListFor(model => model.Estrelas, ViewBag.ComboClasses as IEnumerable<SelectListItem>)
+                                @Html.ValidationMessageFor(model => model.Estrelas)
+                            </div>
+                        </div>
+
+                        <div class="checkin SetDate">
+                            @Html.LabelFor(model => model.TipoReserva, new { @class = "buscadorlabel" })
+                            <br class="saveSearch" />
+                            <div class="styled-select-form">
+                                @Html.DropDownListFor(model => model.TipoReserva, ViewBag.ComboConfirmacoes as IEnumerable<SelectListItem>)
+                                @Html.ValidationMessageFor(model => model.TipoReserva)
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="clear"></div>
+                        <br />
+                    </div>
+
+                    <input id="origem" name="origem" type="hidden" />
+                    <input id="numerodeadultos" name="numerodeadultos" type="hidden" />
+                   @* <input id="hdnDestinoHotelCodigo" name="numerodeadultos" type="hidden" />*@
+                    <hr style="height: 1px; margin: 20px; background-color: silver; display: none;" class="barr">
+                    <input type="submit" value="" class="btnPesquisar" onclick="return SendToServerHotel()" />
+                </div>
+            }
+        </div>
+    </div>
+    <script>
+        $("#Checkin").val(getToday());
+        $("#Checkout").val(getTomorow());
+    </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+@foreach (var item in Model.Aereo)
+{
+    <div class="content_aereo">
+        <table class="table-voo">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="conteudo_aereo">
+                            <tbody>
+                                <tr>
+                                    <td class="td-image-voo">
+                                        <img class="image-package" style="margin-top:10px;" src="@item.Trechos.FirstOrDefault().UrlLogoCia">
+                                    </td>
+                                    <td class="tbTrechos">
+                                        <table>
+                                            @foreach (var trecho in item.Trechos)
+                                            {
+                                                <tr class="tbTrechoslinhas">
+                                                    <td class="td-info-voo">
+                                                        <div class="saida-voo">Saída</div>
+                                                        <div class="vooName-voo infomation-voo">@trecho.NomeCidadeOrigem
+                                                            <br />
+                                                            (@trecho.NomeAeroportoOrigem)
+                                                        </div>
+                                                        <div class="title-voo-company">Cia: @trecho.NomeCia</div>
+                                                        <div class="title-voo-horario">Data: @trecho.DataOrigemAbrev @trecho.DataOrigem.ToString("HH:mm")</div>
+                                                        <div class="title-voo-paradas">Paradas:  @trecho.QuantidadeConexao</div>
+                                                        <div class="title-voo-numvoo">Nº Voo:  @trecho.Seguimentos[0].NumeroVoo</div>
+                                                    </td>
+                                                    <td class="td-info-voo">
+                                                        <div class="chegada-voo">
+                                                            Chegada<br>
+                                                            <div class="vooName-voo infomation-voo">@trecho.NomeCidadeDestino
+                                                                <br />
+                                                                (@trecho.NomeAeroportoDestino)
+                                                            </div>
+                                                            @*<div class="title-voo-classe">Classe: @trecho.Seguimentos[0].Cabine</div>*@
+                                                            <div class="title-voo-horario">Data: @trecho.DataDestinoAbrev @trecho.DataDestino.ToString("HH:mm")</div>
+                                                            @{
+                                                string c = FT.Web.Business.Aereo.AereoBusiness.HoraTotal(trecho.DataDestino, trecho.DataOrigem);
+                                                                <div class="title-voo-duracao">@Html.Label(c)</div>              
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </td>
+
+                                    <td class="td-btremove-voo">
+                                        <a class="linkRemover" onclick="removerItemOrcamento('@item.CodigoTarifa', @Model.CodigoOrcamento, 2)">Remover</a>
+                                        <table class="aereo_tax">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title-price-flight"><span>Valor Passagens</span>                             </td>
+                                                    <td class="price-flight"><span>@item.Valor.ToString("C2")</span>                                 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="title-boarding-flight"><span>Valor Taxas</span>                             </td>
+                                                    <td class="boarding-flight"><span>@item.ValorTaxa.ToString("C2")</span>                             </td>
+                                                </tr>
+                                                <tr class="totalprice-package-line">
+                                                    <td class="title-totalprice-flight"><span><strong>Valor Total</strong></span>                             </td>
+                                                    <td class="totalprice-flight"><span><strong>@((item.Valor + item.ValorTaxa).ToString("C2"))</strong></span>                             </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="flight-pax">
+                                            <span class="title-flight-pax"><strong>Passageiros:</strong></span><br>
+
+                                            @if (item.QuantidadeAdulto > 1)
+                                            {
+                                                <span class="title-qtpessoas">@item.QuantidadeAdulto Adultos</span>
+                                            }
+                                            else
+                                            {<span class="title-qtpessoas">@item.QuantidadeAdulto Adulto</span>}
+
+                                            @if (item.QuantidadeCrianca != 0)
+                                            {
+                                                if (item.QuantidadeCrianca == 1)
+                                                {<span class="title-qtpessoas"> e @item.QuantidadeCrianca criança</span> }
+                                                if (item.QuantidadeCrianca > 1)
+                                                {<span class="title-qtpessoas"> e @item.QuantidadeCrianca crianças</span>  }
+                                            }
+                                            @if (item.QuantidadeBebe != 0)
+                                            {
+                                                if (item.QuantidadeBebe == 1)
+                                                {<span class="title-qtpessoas"> e @item.QuantidadeCrianca bebe</span> }
+                                                if (item.QuantidadeBebe > 1)
+                                                {<span class="title-qtpessoas"> e @item.QuantidadeCrianca bebes</span>  }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

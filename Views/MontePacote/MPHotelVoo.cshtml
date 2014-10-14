@@ -1,0 +1,135 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+
+<script src="~/Scripts/MontePacote.js"></script>
+
+<script>
+
+    function SendToServerMP() {
+
+        //$("#hotelform").validate();
+        //if (!$("#hotelform").valid()) {
+        //    return false;
+        //}
+        //$('.loadingDefault').show();
+        //$('.watermark').watermark('clearWatermarks');
+
+        var criancas = Array();
+        var agechild = Array();
+
+        var Apartamentos = Array();
+        var Quartos = $(".listaQuartosMP li");
+
+        for (var i = 0; i < Quartos.length ; i++) {
+            var Apartamento = new Object();
+            Quartos[i].id = "liId" + i;
+            Apartamento.quantadulto = $("#liId" + i + " input.QuantAdultos").val();
+            Apartamento.criancas = Array();
+            agechild = $("#" + Quartos[i].id + " .agechild");
+            for (var j = 0; j < agechild.length ; j++) {
+                Apartamento.criancas.push(agechild[j].value);
+            }
+            Apartamentos.push(Apartamento);
+        }
+
+        $("#origemMP").val(JSON.stringify(Apartamentos));
+    }
+
+</script>
+
+@{RouteValueDictionary route = new RouteValueDictionary(ViewContext.RouteData.Values);}
+@using (Html.BeginForm("MPHotelVooForm", "MontePacote", route, FormMethod.Post, new { id = "MPHotelVooForm" }))
+{
+
+
+    @*@Html.LabelFor(model => model.NomeCidadeOrigem, new { @class = "buscadorlabel" })*@
+    <div id="divSaidaHotel">
+        <script>
+            $(document).ready(function () {
+                $("#Origem").addClass("inputdestino watermark");
+                $("#Origem").attr("title", "Informe sua origem");
+                $("#Origem").val("");
+                $('#Origem').watermark();
+            });
+        </script>
+        <div id="divOrigem">
+            @*@Html.TextBoxFor(model => model.NomeCidadeOrigem, new { @class = "inputdestinoMP watermark", title = "Informe sua origem", @id = "OrigemMP" })*@
+            @*@Html.ValidationMessageFor(model => model.NomeCidadeOrigem)*@
+        </div>
+
+    </div>
+
+
+    @*@Html.LabelFor(model => model.NomeCidadeDestino, new { @class = "buscadorlabel" })*@
+    <div id="divDestinoHotel">
+        <script>
+            $(document).ready(function () {
+                $("#Destino").addClass("inputdestino watermark");
+                $("#Destino").attr("title", "Informe seu destino");
+                $("#Destino").val("");
+                $('#Destino').watermark();
+            });
+        </script>
+        <div id="divDestino">
+            @*@Html.TextBoxFor(model => model.NomeCidadeDestino, new { @class = "inputdestinoMP watermark", title = "Informe seu destino", @id = "DestinoMP" })*@
+            @*@Html.ValidationMessageFor(model => model.NomeCidadeDestino)*@
+        </div>
+    </div>
+    <br />
+    <div class="clear"></div>
+
+    <div class="BuscadorSetDate">
+        <div class="SetDate">
+            @*@Html.LabelFor(model => model.Saida, new { @class = "buscadorlabel" })<br />*@
+            @*@Html.TextBoxFor(model => model.Saida, new { @class = "txtStartDate" })*@
+            @*@Html.ValidationMessageFor(model => model.Saida)*@
+        </div>
+    </div>
+
+    <div class="BuscadorSetDate">
+        <div class="SetDate">
+            @*@Html.LabelFor(model => model.Retorno, new { @class = "buscadorlabel" })<br />*@
+            @*@Html.TextBoxFor(model => model.Retorno, new { @class = "txtEndDate" })*@
+            @*@Html.ValidationMessageFor(model => model.Retorno)*@
+        </div>
+    </div>
+
+    <div class="quants" style="padding: 0px;">
+        <label style="font-family: Verdana; font-size: 12px; font-weight: bold;" class="noitelab">Noites</label><br class="saveSearch" />
+        <div>
+            <a href="javascript:" id="plusNightsMonte" class="plusHotel"></a>
+            <input id="txtNoitesMonte" type="text" value="0" onkeypress="return isNumberKey(event)" />
+            <a href="javascript:" id="minusNightsMonte" class="minusHotel"></a>
+            <input type="hidden" id="hdnNoites" name="hdnNoites" value="@Request["hdnNoites"]" />
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <div class="bar"></div>
+    <div class="clear"></div>
+
+    <p class="BuscadorSet">
+        @*@Html.LabelFor(model => model.QuantQuartos, new { @class = "buscadorlabel" })*@
+        <input type="button" id="plusRoomsMonte" class="buttonPacote" />
+        <input type="button" id="minusRoomsMonte" class="buttonPacoteRemover">
+    </p>
+    <div class="clear"></div>
+    <div class="quartos">
+        <ul class="listaQuartosMP">
+            @{Html.RenderAction("QuartosMP", "MontePacote");}
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+    <div class="bar"></div>
+    <div class="clear"></div>
+    <br class="saveSearch" />
+    
+    <input id="origemMP" name="origemMP" type="hidden" />
+    <input id="numerodeadultos" name="numerodeadultos" type="hidden" />
+    <input id="hdnDestinoHotelCodigoMP" name="numerodeadultos" type="hidden" />
+
+    <div>
+        @*<input type="submit" value="" class="btnPesquisar" onclick="javascript: $('.loadingDefault').show();" />*@
+        <input type="submit" value="" class="btnPesquisar" onclick="SendToServerMP()" />
+    </div>
+}

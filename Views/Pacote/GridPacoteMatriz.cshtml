@@ -1,0 +1,114 @@
+﻿@model IList<FT.Web.Model.Models.PacoteModel>
+@{
+    ViewBag.Title = "LoadPacoteMatriz - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+}
+@if (Model == null || Model.Count == 0)
+{
+    Html.RenderPartial("NoDataFound", false);
+}
+else
+{
+    foreach (var Itens in Model)
+    {
+    <div class="pacote-matriz">
+        <div class="pacote-matriz-left">
+            <div class="pacote-matriz-left-1">
+                <div class="pacote-matriz-left-1-img">
+                    <img width="128px" height="128px" src="@Itens.CaminhoImagem" />
+                </div>
+                <div class="pacote-matriz-left-1-produto">
+                    <div class="pacote-matriz-left-1-titulo">@Itens.NomePacoteSite  </div>
+                    <div class="pacote-matriz-left-1-inclui">
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Aereo) > 0)
+                        {
+                            <div class="matriz-inclui-passagem">
+                                <div class="matriz-inclui-passagem-img"></div>
+                                <p class="matriz-inclui-passagem-p">Passagem</p>
+                            </div>
+                        }
+
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Hotel) > 0)
+                        {
+                            <div class="matriz-inclui-hotel">
+                                <div class="matriz-inclui-hotel-img"></div>
+                                <p class="matriz-inclui-hotel-p">Hotel</p>
+                            </div>
+                        }
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Locadora) > 0)
+                        {  
+                            <div class="matriz-inclui-carro">
+                                <div class="matriz-inclui-carro-img"></div>
+                                <p class="matriz-inclui-carro-p">Carro</p>
+                            </div>
+                        }
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Transfer) > 0)
+                        {
+                            <div class="matriz-inclui-traslado">
+                                <div class="matriz-inclui-traslado-img"></div>
+                                <p class="matriz-inclui-traslado-p">Traslados</p>
+                            </div>
+                        }
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.PasseioServiço) > 0)
+                        {
+                            <div class="matriz-inclui-traslado">
+                                <div class="matriz-inclui-traslado-img"></div>
+                                <p class="matriz-inclui-traslado-p">Passeio</p>
+                            </div>
+                        }
+                        @if (Itens.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Ingresso) > 0)
+                        {
+                            <div class="matriz-inclui-ingresso">
+                                <div class="matriz-inclui-ingresso-img"></div>
+                                <p class="matriz-inclui-ingresso-p">Ingresso</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="pacote-matriz-left-2">
+                <a href="#">
+                    <div style="display: none;" class="pacote-matriz-left-2-data">
+                        <img width="30" height="30" alt="" src="../Images/images_pacote/ico_calendario_matriz.png">Escolher data<br>
+                        da viagem
+                    </div>
+                </a>
+                <div style="display: none;" class="pacote-matriz-left-2-encontradas">
+                    Foram encontradas <strong>14 opções</strong> para este pacote.<br>
+                    Veja mais em “Ver detalhe”.
+                </div>
+            </div>
+        </div>
+        <div class="pacote-matriz-right">
+            <div class="pacote-matriz-valor">
+                @if (Itens.QuantidadeParcela > 1)
+                {
+                    <div class="pacote-matriz-apartirde">a partir de</div>
+                    <div class="pacote-matriz-parcelas">@Itens.QuantidadeParcela x R$</div>
+                    <div class="pacote-matriz-semjuros">sem juros</div>
+                    <div class="pacote-matriz-valor-parcela">@String.Format("{0:0.00}", Itens.ValorParcela.ToString("n2"))<b></b></div>
+                    
+                    <p class="pacote-matriz-entrada">
+                        + entrada R$ @String.Format("{0:0.00}", Itens.ValorEntrada.ToString("n2"))
+                        <br>
+                        à vista R$ @String.Format("{0:0.00}", Convert.ToDecimal(Itens.ValorPacote).ToString("n2"))
+                    </p>
+                    <p class="matriz-preco-pessoa">Preço por pessoa (apto. duplo)</p>
+                }
+                else
+                {
+                    <div class="pacote-matriz-apartirde" style="width: 85px !important">a partir de</div>
+                    <div class="pacote-matriz-parcelas">R$</div>
+                    <div class="pacote-matriz-semjuros">&nbsp;</div>
+                    <div class="pacote-matriz-valor-parcela">@String.Format("{0:0.00}", Convert.ToDecimal(Itens.ValorPacote).ToString("n2"))<b></b></div>
+                    <p class="matriz-preco-pessoa">Preço por pessoa (apto. duplo)</p>
+                }
+            </div>
+            <a href="/Pacote/LoadDetalhePacoteMatriz/@Itens.CodigoPacote/@Itens.DataSaidaPadrao/@Itens.CodigoEmbarque">
+                <div class="matriz-verdetalhe"></div>
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    }
+}
