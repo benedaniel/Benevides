@@ -11,5 +11,6 @@ namespace ClassLibrary1
         public string Codigo { get; set; }
 
         public int Numeral { get; set; }
+        public decimal PropriedadeDecimal { get; set; }
     }
 }
