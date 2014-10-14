@@ -8,5 +8,8 @@ namespace ClassLibrary1
 {
     public class Class1
     {
+        public string Codigo { get; set; }
+
+        public int Numeral { get; set; }
     }
 }
