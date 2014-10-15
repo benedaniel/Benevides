@@ -12,5 +12,7 @@ namespace ClassLibrary1
 
         public int Numeral { get; set; }
         public decimal PropriedadeDecimal { get; set; }
+
+        public string MaisUma { get; set; }
     }
 }
