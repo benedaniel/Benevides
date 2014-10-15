@@ -1,0 +1,916 @@
+﻿@model FT.Web.Model.Models.FlyTourModel
+@{
+    ViewBag.Title = "Reserva - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    var Dados = (@ViewBag.DadoUsuario as FT.Web.Model.Models.PessoaModel);
+}
+@{var PermitirTarifaOp = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["TravarTarifaOperadora"]);}
+@{var tarifaOp = false;}
+<script src="~/Scripts/Reserva.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="~/Scripts/Mapa.js"></script>
+<link href="~/Content/Reserva.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery.maskedinput.js"></script>
+<script src="~/Scripts/jquery/jquery.onlychars.js"></script>
+
+@using (Html.BeginForm("RegistrarReserva", "Reserva", FormMethod.Post))
+{
+    var nomeRegimeAlimentacao = "";
+    string cep = string.Empty;
+    <div style="margin: auto; width: 980px; margin-top: 20px;" id="DivPai">
+        <div style="margin: auto; width: 600px; float: left;">
+            <span style="font-family: Verdana; margin-left: 5px; font-size: 20px; color: #00387b;">RESUMO DA SOLICITAÇÃO</span>
+            <br />
+            <span style="font-family: Verdana; margin-left: 5px; font-weight: bold; color: #666666; font-size: 12px;">Detalhes dos serviços solicitados</span>
+            @if (Model.ValorTotalComprar == 0)
+            {
+                <script>
+                    window.location = '/Home';
+                </script>
+            }
+            @if (Model.ValorTotal > 0 && Model.ValorTotalComprar > 0)
+            {
+                <div id="sugerir" class="grid1" style="background-color: rgba(233, 233, 233, 0.7); margin-top: 10px; padding: 5px; padding-left: 10px; height: 60px; border: solid 1px #CCC; margin-bottom: 15px; margin-left: 5px; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px;">
+                    <span style="font-family: Verdana; font-size: 17px; color: #CE6D21;">Existem Itens no seu carrinho, deseja inclui-los em sua compra?</span>
+                    <div style="cursor: pointer; font-weight: bold; margin-top: 5px; font-size: 15px; text-align: center; padding: 2px; height: 20px; color: #FFF; float: left; width: 50px; border: solid 1px #00AE29; background-color: #00AE29;" onclick="finalizarCompra(false); ">
+                        Sim
+                    </div>
+                    <div style="cursor: pointer; margin-left: 15px;  margin-top: 5px; font-size: 15px; text-align: center; padding: 2px; height: 20px; color: #FFF; float: left; width: 50px; border: solid 1px #F05C18; background-color: #F05C18;" onclick="javascript: $('#sugerir').hide(); ">
+                        Não
+                    </div>
+                </div>
+            }
+
+            @if (PermitirTarifaOp)
+            {
+                if (Model.Aereo.Count(p => p.TarifaOperadora) > 0 && (!Model.Hotel.Any() && !Model.Pacote.Any()))
+                {
+                    tarifaOp = true;
+                <div id="sugerir" class="grid1" style="background-color: rgba(233, 233, 233, 0.7); margin-top: 10px; padding: 21px 5px 5px 10px; padding-left: 10px; height: 60px; border: solid 1px #CCC; margin-bottom: 15px; margin-left: 5px; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px;">
+                    <span style="font-family: Verdana; font-size: 17px; color: #CE6D21;">Existe uma tarifa operadora em seu carrinho.
+                        <br />
+                        Esta tarifa só pode ser vendida junto com hotel.
+                    </span>
+                </div>
+                }
+            }
+
+
+            <ul style="margin-left: 15px; margin-top: 10px;">
+                <li style="float: right; font-style: italic; font-family: Verdana; font-size: 11px; color: #9c9e9c; font-weight: bold;">* Preenchimento Obrigatório</li>
+            </ul>
+            <div class="clear"></div>
+            @if (Session["Usuario"] != null)
+            {
+                if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER != null)
+                {
+
+                }
+                else
+                {
+                    cep = (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).ENDERECO.NR_CEP;
+                <script>
+                    var arr = @Html.Raw(Json.Encode(@ViewBag.AgenciaMapa))
+                   
+
+                    function AgenciasMapa() {
+                        BuscaAgenciasMapa(arr, '@cep');
+                        $('.loadingDefault').fadeOut();
+                    }
+                </script>
+                }
+            }
+            @{int i = 1;}
+            @{int CounterPax = 0;}
+            @{int CounterApto = 0;}
+            @foreach (var Apartamentos in Model.Apartamentos)
+            {
+                <div class="grid1" style="border: solid 1px #CCC; margin-bottom: 15px; margin-left: 5px; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px;">
+                    @if (Model.UtilizaApartamentos)
+                    {
+                        <div style="margin-left: 10px; width: 330px; background-color: #FFF; margin-bottom: 20px; margin-top: -10px;">
+                            <label style="font-size: 13px; font-weight: bold; margin-left: 15px; margin-top: 30px; color: #CE6D21;">
+                                Dados dos Passageiros - Apartamento @i</label>
+                        </div>
+                    }
+                    @foreach (var Passageiros in Apartamentos.Passageiros)
+                    {
+                        <div>
+                            <label style="font-size: 12px; margin-top: 15px; font-weight: bold; margin-left: 15px; margin-top: 30px; color: #00387B;">
+                                Passageiro @(CounterPax + 1) - 
+                                @if (Model.UtilizaIdades)
+                                {
+                                    <label style="font-size: 12px; color: #F05C18; margin-top: 15px; font-weight: bold; margin-top: 30px;">@Passageiros.TipoPaxHotelServicoPacote</label>                                    
+                                }
+                                else
+                                {
+                                    <label style="font-size: 12px; color: #F05C18; margin-top: 15px; font-weight: bold; margin-top: 30px;">@Passageiros.TipoPaxAereoCarro</label>
+                                }
+                            </label>
+                            <div id="DivPai2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 600px; height: auto; padding: 5px 0 20px 0; margin-left: 5px; margin-top: 4px; overflow: hidden;">
+                                <input type="hidden" name="hdnApartamentoIndex-@CounterPax" id="hdnApartamentoIndex-@CounterPax" value="@i" />
+                                <ul>
+                                    <li>
+                                        @Html.Label("Nome", new { @class = "labelReserva" })<br />
+                                        @Html.TextBox("txtNome" + Convert.ToString(CounterPax), "", new { @class = "inputReserva validar validname", @onchange = "validate(this)", @onkeyup = "validarNumTxt(this,'text')" })
+                                    </li>
+                                    <li>
+                                        @Html.Label("Sobrenome", new { @class = "labelReserva" })<br />
+                                        @Html.TextBox("txtSobrenome" + Convert.ToString(CounterPax), "", new { @class = "inputReserva validar validname", @onchange = "validate(this)", @onkeyup = "validarNumTxt(this,'text')" })
+                                    </li>
+                                    <li>
+                                        @Html.Label("Data de Nascimento", new { @class = "labelReserva" })<br />
+                                        @Html.TextBox("txtDataNascimento" + Convert.ToString(CounterPax), "", new { @class = "DataNascimento validar IdadeCrianca", @onchange = "validate(this)", @onkeyup = "return MascaraData(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                                        <input type="hidden" id="pax-@Convert.ToString(CounterPax)" value="@Passageiros.IdadePassageiro")
+                                    </li>
+                                    <li>
+                                        @if (Model.UtilizaIdades)
+                                        {
+                                            <div id="lblDataInvalida-@CounterPax" style="border:solid 1px #D6D6D6; border-radius: 6px; margin-bottom:0px; padding:10px;  display:none">
+                                                <label style="font-size: 12px; color: #F00; margin-top: 15px; font-weight: bold; margin-top: 30px;">A idade do passageiro na data da viagem deve ser igual a utilizada na consulta!</label>
+                                            </div>                                    
+                                        }
+                                        else
+                                        {
+                                            <div id="lblDataInvalida-@CounterPax" style="border:solid 1px #D6D6D6; border-radius: 6px; margin-bottom:0px; padding:10px; display:none">
+                                                <label style="font-size: 12px; color: #F00; margin-top: 15px; font-weight: bold; margin-top: 30px;">A idade do passageiro na data da viagem deve ser igual a utilizada na consulta!</label>
+                                            </div>
+                                        }
+                                    </li>
+                                    <li>
+                                        @Html.Label("Sexo", new { @class = "labelReserva" })<br />
+                                        @Html.DropDownList("ddlSexo" + Convert.ToString(CounterPax), Model.Sexo, new { @class = "cmbSexo" })
+                                    </li>
+                                    @if (Model.Documento.Exists(p => p.CodigoDocumento == "3"))
+                                    {
+                                        if (Model.Documento.First(p => p.CodigoDocumento == "3").IndicadorObrigatorio == "S")
+                                        {
+                                        <li>
+                                            @Html.Label("RG", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtRg" + Convert.ToString(CounterPax), "", new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li>
+                                            @Html.Label("RG", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtRg" + Convert.ToString(CounterPax), "", new { @class = "inputReserva" })
+                                        </li>
+                                        }
+                                    }
+                                    @if (Model.Documento.Exists(p => p.CodigoDocumento == "1"))
+                                    {
+                                        if (Model.Documento.First(p => p.CodigoDocumento == "3").IndicadorObrigatorio == "S")
+                                        {
+                                        <li>
+                                            @Html.Label("CPF", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtCPF" + Convert.ToString(CounterPax), "", new { @class = "inputReserva validar", @onchange = "validate(this)", @onkeyup = "return MascaraCPF(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li>
+                                            @Html.Label("CPF", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtCPF" + Convert.ToString(CounterPax), "", new { @class = "inputReserva", @onkeyup = "return MascaraCPF(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                                        </li> 
+                                        }
+                                    }
+                                    @if (Model.Documento.Exists(p => p.CodigoDocumento == "6"))
+                                    {
+                                        if (Model.Documento.First(p => p.CodigoDocumento == "6").IndicadorObrigatorio == "S")
+                                        {
+                                        <li>
+                                            @Html.Label("Passaporte", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtPassaporte" + Convert.ToString(CounterPax), "", new { @class = "inputReserva" })
+                                        </li>
+                                        <li>
+                                            @Html.Label("Validade", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtValidade" + Convert.ToString(CounterPax), "", new { @class = "Validade", @onkeyup = "return MascaraData(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li>
+                                            @Html.Label("Passaporte", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtPassaporte" + Convert.ToString(CounterPax), "", new { @class = "inputReserva" })
+                                        </li>
+                                        <li>
+                                            @Html.Label("Validade", new { @class = "labelReserva" })<br />
+                                            @Html.TextBox("txtValidade" + Convert.ToString(CounterPax), "", new { @class = "Validade", @onkeyup = "return MascaraData(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                                        </li>
+                                        }
+                                    }
+                                    @if (Model.Carro != null && Model.Carro.Count > 0)
+                                    {
+                                        if (Passageiros.IdadePassageiro > 18)
+                                        {
+                                        <li>
+                                            @Html.Label("Condutor", new { @class = "labelReserva" })<br />
+                                            @Html.CheckBox("ckCondutor" + Convert.ToString(CounterPax), new { @class = "condutor ckCondutor", @onclick = "ckBox(this)" })
+                                            <input type="hidden" name="condutor_@Convert.ToString(CounterPax)" />
+                                        </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+                                DatePickerNew(@CounterPax);
+                            });
+                        </script>
+                                    CounterPax++;
+                    }
+                    @{i = i + 1;}
+                    @{CounterApto = CounterApto + 1;}
+                </div>
+            }
+            <input type="hidden" name="qtdPassageiros" id="qtdPassageiros" value="@CounterPax" />
+            <input type="hidden" name="qtdApto" id="qtdApto" value="@CounterApto" />
+            @if (((Model.Atividade != null && Model.Atividade.Count > 0 && Model.Atividade.SelectMany(p => p.Transfer).Count() > 0) || (Model.Pacote != null && Model.Pacote.Count > 0 && Model.Pacote.SelectMany(p => p.PacoteServico).Any(b => b.idServico == 4))) && (Model.Pacote.SelectMany(p => p.PacoteServico).Count(b => b.idServico == 2) == 0) && (Model.Aereo == null || Model.Aereo.Count == 0))
+            { 
+                <div>
+                    <div style="float: left; color: white; border-radius: 10px; margin-bottom: 10px; background-color: #EFEFEF; width: 600px; margin-left: 5px;">
+                        <span style="font-family: Verdana; color: #00387b; font-size: 14px; margin: 20px; line-height: 2.5em; font-weight: bold;" class="iconeMala">INFORMAÇÕES ADICIONAIS SOBRE VOOS</span><br />
+                    </div>
+                    <div id="DivPai2" style="float: left; width: 600px; margin-bottom: 10px; height: auto; border: solid 1px #CCC; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px; padding: 15px 0 20px 0; margin-left: 5px; overflow: hidden;">
+                        <div style="margin-left: 10px; width: 100px; position: absolute; background-color: #FFF; margin-bottom: 20px;">
+                            <label style="font-size: 13px; font-weight: bold; margin-left: 15px; margin-top: 30px; color: #CE6D21;">
+                                Chegada</label>
+                        </div>
+                        <ul>
+                            <li>
+                                @Html.Label("Hora", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtHoraVooChegada", "", new { @class = "inputReserva", @style = "width: 55px; margin-left:5px;", @onkeyup = "return MascaraHora(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                            </li>
+                            <li>
+                                @Html.Label("Cia", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtCiaVooChegada", "", new { @class = "inputReserva", @style = "width: 150px" })
+                            </li>
+                            <li>
+                                @Html.Label("Número Voo", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtNumVooChegada", "", new { @class = "inputReserva", @style = "width: 95px" })
+                            </li>
+                            <li>
+                                @Html.Label("Localizador", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtLocalizadorChegada", "", new { @class = "inputReserva", @style = "width: 100px" })
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="DivPai2" style="float: left; width: 600px; margin-bottom: 10px; height: auto; border: solid 1px #CCC; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px; padding: 15px 0 20px 0; margin-left: 5px; overflow: hidden;">
+                        <div style="margin-left: 10px; width: 100px; position: absolute; background-color: #FFF; margin-bottom: 20px;">
+                            <label style="font-size: 13px; font-weight: bold; margin-left: 15px; margin-top: 30px; color: #CE6D21;">
+                                Partida</label>
+                        </div>
+                        <ul>
+                            <li>
+                                @Html.Label("Hora", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtHoraVooPartida", "", new { @class = "inputReserva", @style = "width: 55px; margin-left:5px;", @onkeyup = "return MascaraHora(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                            </li>
+                            <li>
+                                @Html.Label("Cia", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtCiaVooPartida", "", new { @class = "inputReserva", @style = "width: 150px" })
+                            </li>
+                            <li>
+                                @Html.Label("Número Voo", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtNumVooPartida", "", new { @class = "inputReserva", @style = "width: 95px" })
+                            </li>
+                            <li>
+                                @Html.Label("Localizador", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtLocalizadorPartida", "", new { @class = "inputReserva", @style = "width: 100px" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br />
+                <br />
+            }
+            <br />
+            @if (Session["Usuario"] != null)
+            {
+                if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER == null)
+                {
+                <div style="float: left; color: white; border-radius: 10px; background-color: #EFEFEF; width: 600px; margin-left: 5px;">
+                    <span style="font-family: Verdana; color: #00387b; font-size: 14px; margin: 20px; line-height: 2.5em; font-weight: bold;" class="iconeMala">ENDEREÇO DE COBRANÇA</span><br />
+                </div>
+                <div id="divEndCobranca" style="float: left; width: 600px; height: auto; border: solid 1px #CCC; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px; padding: 15px 0 20px 0; margin-left: 5px; overflow: hidden;">
+                    <ul>
+                        <li class="LiEndereco">
+                            <input type="checkbox" value="S" id="chkEnderecoCobranca" checked="checked" />
+                            @Html.Label("Usar o mesmo endereço do cadastro", new { @class = "labelReserva", @style = "vertical-align: super;" })
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            @Html.Label("CEP", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtCodigoCep", Dados.ENDERECO.NR_CEP, new { @class = "inputReserva validar", @onchange = "validate(this)", @onkeyup = "return MascaraCep(this, event);", onkeypress = "return numeros(event.keyCode, event.which);" })
+                        </li>
+                        <li>
+                            @Html.Label("Logradouro", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtLogradouro", Dados.ENDERECO.DS_ENDERECO, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                        <li>
+                            @Html.Label("Tipo", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtTipo", Dados.ENDERECO.TP_ENDERECO, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                        <li>
+                            @Html.Label("Numero", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtNumero", Dados.ENDERECO.NR_ENDERECO, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                        <li>
+                            @Html.Label("Complemento", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtComplemento", Dados.ENDERECO.DS_COMPLEMENTO, new { @class = "inputReserva" })
+                        </li>
+                        <li>
+                            @Html.Label("Bairro", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtBairro", Dados.ENDERECO.DS_BAIRRO, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                        <li>
+                            @Html.Label("Pais", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtPais", Dados.ENDERECO.DS_PAIS, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                        <li>
+                            @Html.Label("Cidade", new { @class = "labelReserva" })<br />
+                            @Html.TextBox("txtCidade", Dados.ENDERECO.DS_CIDADE, new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                        </li>
+                    </ul>
+                    <br />
+                </div>
+                <br />
+@*<div style="float: left; color: white; background-color: #f05c18; width: 255px; margin-left: 10px; margin-top: 10px; border-radius: 10px;">
+                </div>*@
+                    if (Model.DisponivelCompra)
+                    {
+                <div style="float: left; color: white; border-radius: 10px; background-color: #EFEFEF; width: 600px; margin-left: 5px;">
+                    <span style="font-family: Verdana; color: #00387b; font-size: 14px; float: left; margin-left: 20px; line-height: 2.5em; font-weight: bold;" class="iconeMala">FORMA DE PAGAMENTO</span>
+                    <div id="divAddCartao">
+                        <p class="BuscadorSet">
+                            @Html.Label("Acrescentar Cartão", new { @class = "adicionarCartao" })
+                            <input type="button" id="plusRooms" onclick="adicionarCartao()" class="buttonPacote" />
+                            <input type="button" id="minusRooms" onclick="removerCartao()" class="buttonPacoteRemover" />
+                        </p>
+                    </div>
+                </div>
+                <ul id="cartoesAdicionais">
+                </ul>
+                    }
+                <input type="hidden" name="hdnAgencia" id="hdnAgencia" />
+                <input type="hidden" name="qtdPagamentos" id="qtdPagamentos" />
+                <input type="hidden" name="hdnCodigoPlanoParcela" id="hdnCodigoPlanoParcela" />
+                <input type="hidden" name="hdnDataVencimento" id="hdnDataVencimento" />              
+                
+                }
+            }
+            <div style="float: left; color: white; border-radius: 10px; background-color: #EFEFEF; width: 600px; margin-left: 5px;">
+                <span style="font-family: Verdana; color: #00387b; font-size: 14px; margin: 20px; line-height: 2.5em; font-weight: bold;" class="iconeMala">CANAL DE ATENDIMENTO</span><br />
+            </div>
+            <div id="DivPai2" style="float: left; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 600px; height: auto; border: solid 1px #CCC; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px; padding: 15px 0 20px 0; margin-left: 5px; margin-top: 4px; overflow: hidden;">
+                @if (Session["Usuario"] != null)
+                {
+                    if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER == null)
+                    {                
+                    <ul>
+                        <li style="float: left">
+                            @Html.Label("Agencia", new { @class = "labelReserva", @id = "cmpAgencia" })<br />
+                            @if (Model.DisponivelCompra)
+                            {
+                                @Html.TextBox("txtAgencia", "", new { @class = "inputReserva" })
+                            }
+                            else
+                            {
+                                @Html.TextBox("txtAgencia", "", new { @class = "inputReserva validar", @onchange = "validate(this)" })
+                            }
+                        </li>
+                        <li style="float: left">
+                            <a href="javascript:$('.loadingDefault').fadeIn(); AgenciasMapa();">
+                                <div class="botao-1" style="margin: 18px 0 0 33px;">
+                                    <div class="botao-1-left"></div>
+                                    <div class="botao-1-center">
+                                        Selecione a agência mais proxima
+                                    </div>
+                                    <div class="botao-1-right"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    }
+                    else
+                    {
+                    <div class="grid1">
+                        <div style="float: left; margin-left: 20px;">
+                            @Html.Label("Filial", new { @class = "labelReserva" })<br />
+                            @* <select id="DLState" name="DLState" class="DLState">
+                                <option>Selecione</option>
+                            </select>*@
+                            <label style="color: #00387B; display: block; font-family: Verdana; font-size: 11px; font-weight: bold; margin-left: 3px; padding: 5px; width: 190px;"
+                                id="DLStates">
+                            </label>
+                        </div>
+                        <div style="float: left; margin-left: 60px;">
+                            @Html.Label("Atendente", new { @class = "labelReserva" })<br />
+                            <select id="DLAtendente" name="DLAtendente" class="DLAtendente">
+                                <option>Selecione</option>
+                            </select>
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+            <div style="float: left; width: 600px; margin-left: 5px;">
+                @if (Session["Usuario"] != null)
+                {
+                    if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER == null)
+                    {  
+                    <div id="div_condicoes" style="display: none; width: 720px; height: auto; background-color: white; border: 1px solid black">
+                        <div class="content" style="width: 720px;">
+                            <iframe id="iframeReserva" height="3000px" width="100%" src="~/Hotsites/reserva-condicoes-gerais-b2c.htm"></iframe>
+                        </div>
+                    </div>
+                    <input type="checkbox" id="ckLiAceito" class="ckCondutor" onclick="ckBox(this)" />
+                    <span>Li e aceito as </span><a onclick="verCondicoes()" style="cursor: pointer; color: #085AD4;">Condições Gerais</a>
+                    <p class="button">
+                        @if (tarifaOp)
+                        {
+                            <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 111px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Comprar" onclick="return buyTO()">
+                        }
+                        else
+                        {
+                            <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 111px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Comprar" onclick="return validateFields(@Model.DisponivelCompra)">
+                        }
+                    </p>
+                    }
+                    else
+                    {
+                    <div id="div_condicoes" style="display: none; width: 720px; height: auto; background-color: white; border: 1px solid black">
+                        <div class="content" style="width: 720px;">
+                            <iframe id="iframeReserva" height="3000px" width="100%" src="~/Hotsites/reserva-condicoes-gerais-b2b.htm"></iframe>
+                        </div>
+                    </div>
+                    <input type="checkbox" id="ckLiAceito" class="ckCondutor" onclick="ckBox(this)" />
+                    <span>Li e aceito as </span><a onclick="verCondicoes()" style="cursor: pointer; color: #085AD4;">Condições Gerais</a>
+                    <p class="button">
+                        @if (tarifaOp)
+                        {
+                            <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 111px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Comprar" onclick="return buyTO()">
+                        }
+                        else
+                        {
+                            <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 111px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Comprar" onclick="return validateFieldsBtoB()">
+                        }
+                    </p>
+                    }
+                }
+            </div>
+        </div>
+        <div>
+            <div id="DivRight" style="float: left; color: white; background-color: #EFEFEF; width: 360px; margin-left: 15px; border-radius: 10px;">
+                <br />
+                <span style="font-family: Verdana; color: #00387b; font-size: 14px; margin: 20px; font-weight: bold;" class="iconeMala">RESUMO DA COMPRA</span>
+                @if (Model.Carro.Where(p => p.Comprar).Count() > 0)
+                {
+                    <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                        <div class="icoTituloCarro"></div>
+                        <span class="TituloMenu">Aluguel de carro</span>
+
+                        <br />
+                        <hr class="hrMenu">
+                        @foreach (var carro in Model.Carro.Where(p => p.Comprar))
+                        {
+                            <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Carro', '@carro.CodigoTarifa'); window.location.reload();" />
+                            <br />
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #CE6D21; font-size: 11px;" class="iconeMala">Aluguel de:</span><br />
+                                <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 12px;">@carro.ModeloReferencia </span>
+                            </div>
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">Locadora:</span><br />
+                                <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 10px;">@carro.DescricaoLocadora </span>
+                            </div>
+                            <hr class="hrMenu">
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span class="SubTitulo">Retirada em:</span>
+                                <span class="ConteudoSubtitulo">@carro.LocaisRetirada[0].NomeCidade</span><br />
+                                <span class="ConteudoSubtitulo">@carro.DataCheckIn as @carro.HoraCheckInSelecionada </span>
+                            </div>    
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span class="SubTitulo">Devolução em: </span>
+                                <span class="ConteudoSubtitulo">@carro.LocaisDevolucao[0].NomeCidade</span><br />
+                                <span class="ConteudoSubtitulo">@carro.DataCheckOut as @carro.HoraCheckOutSelecionada </span>
+                            </div>    
+                            <hr class="hrMenu">
+                            <div style="margin-top: 10px; margin-right: 10px; margin-bottom: 5px; margin-left: 20px;">
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR TAXAS:</span>
+                                <span style="font-family: Verdana; float: right; font-size: 17px; color: #00387b;">@carro.ValorTaxa.ToString("C2") </span>
+                                <br />
+                            </div>
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                                <span style="font-family: Verdana; float: right; margin-right: 10px; font-size: 17px; color: #00387b;">@carro.ValorTotal.ToString("C2") </span>
+                                <br />
+                                <br />
+                            </div>    
+                        }
+                    </div>
+                }
+                @if (Model.Atividade.Where(p => p.Comprar).Count() > 0)
+                {
+                    <div style="padding-bottom: 20px; height: auto; margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <div class="icoTituloAtividade"></div>
+                            <span class="TituloMenuPacote">Detalhes do Serviço</span>
+
+                            <br />
+                            <hr class="hrMenuPacote">
+                            @foreach (var atividade in Model.Atividade)
+                            {
+                                foreach (var Passeio in atividade.Passeio.Where(p => p.Comprar))
+                                {
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Passeio', @Passeio.CodigoAtividade)" />
+                                <br />
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">PASSEIOS</span><br />
+                                    <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@Passeio.NomeAtividade</span><br />
+                                    <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Passeio.dtEmbarque).ToString("dd/MM/yyyy")</span><br />
+                                </div>   
+                                
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR :</span>
+                                    <span style="font-family: Verdana; float: right; margin-right: 10px; font-size: 17px; color: #00387b;">@(FTV.Conv.ToDecimal(Passeio.ValorTotal).ToString("C2"))</span>
+                                    <br />
+                                    <br />
+                                </div>
+                                }
+                                foreach (var Restaurante in atividade.Restaurante.Where(p => p.Comprar))
+                                {
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Restaurante', @Restaurante.CodigoAtividade)" />
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">RESTAURANTES</span><br />
+                                    <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@Restaurante.NomeAtividade</span><br />
+                                    <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Restaurante.dtEmbarque).ToString("dd/MM/yyyy")</span><br />
+                                </div>   
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR :</span>
+                                    <span style="font-family: Verdana; float: right; margin-right: 10px; font-size: 17px; color: #00387b;">@(FTV.Conv.ToDecimal(Restaurante.ValorTotal).ToString("C2"))</span>
+                                    <br />
+                                    <br />
+                                </div>
+                                }
+                                foreach (var Ingresso in atividade.Ingresso.Where(p => p.Comprar))
+                                {
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Ingresso', @Ingresso.CodigoAtividade)" />
+                                <div style="margin-bottom: 5px; margin-top: 5px;">
+                                    <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">INGRESSOS</span><br />
+                                    <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@Ingresso.NomeAtividade</span><br />
+                                    <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Ingresso.dtEmbarque).ToString("dd/MM/yyyy")</span><br />
+                                </div>   
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR :</span>
+                                    <span style="font-family: Verdana; float: right; margin-right: 10px; font-size: 17px; color: #00387b;">@(FTV.Conv.ToDecimal(Ingresso.ValorTotal).ToString("C2"))</span>
+                                    <br />
+                                    <br />
+                                </div>
+                                }
+                                foreach (var Translados in atividade.Transfer.Where(p => p.Comprar))
+                                {
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Translados', @Translados.CodigoAtividade)" />
+                     
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">TRASLADOS</span><br />
+                                    <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@Translados.NomeAtividade</span><br />
+                                    <span class="SubTitulo">Data:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@Translados.dtEmbarque).ToString("dd/MM/yyyy")</span><br />
+                                </div>   
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR :</span>
+                                    <span style="font-family: Verdana; float: right; margin-right: 10px; font-size: 17px; color: #00387b;">@(FTV.Conv.ToDecimal(Translados.ValorTotal).ToString("C2"))</span>
+                                    <br />
+                                    <br />
+                                </div>
+                                }
+                                foreach (var AssistenciaViagem in atividade.AssistenciaViagem.Where(p => p.Comprar))
+                                {
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('AssistenciaViagem', @AssistenciaViagem.CodigoAtividade)" />
+                     
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">ASSISTENCIA VIAGEM</span><br />
+                                    <span class="SubTitulo">Nome:</span> <span class="ConteudoSubtitulo">@AssistenciaViagem.NomeAtividade</span><br />
+                                    <span class="SubTitulo">Período:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@AssistenciaViagem.dtEmbarque).ToString("dd/MM/yyyy") <span class="SubTitulo">a </span>@Convert.ToDateTime(@AssistenciaViagem.dtRetorno).ToString("dd/MM/yyyy") </span>
+                                    <br />
+                                </div>      
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <div style="margin-bottom: 5px; margin-top: 20px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                                    <span style="font-family: Verdana; float: right; font-size: 17px; color: #00387b; margin-right: 10px;">@(FTV.Conv.ToDecimal(AssistenciaViagem.ValorTotal).ToString("C2"))  </span>
+                                    <br />
+                                    <br />
+                                </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                @if (Model.Hotel.Where(p => p.Comprar).Count() > 0)
+                {
+                    <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                        <div class="icoTituloHotel"></div>
+                        <span class="TituloMenu">Detalhes da Hospedagem</span>
+                        <br />
+                        <hr class="hrMenu">
+                        @foreach (var HotelItens in Model.Hotel.Where(p => p.Comprar))
+                        {
+                            <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor: pointer" title="Remover item do carrinho" onclick="removerItemCarrinho('Hotel', @HotelItens.CodigoHotel) ; window.location.reload();" />
+                            <br />
+                       
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span class="SubTitulo">Hotel:</span>
+                                <span class="ConteudoSubtitulo">@HotelItens.NomeHotel</span>
+                                <br />
+                                <span class="SubTitulo">Quantidade de noites:</span>
+                                <span class="ConteudoSubtitulo">
+                                    @{
+                            var dias = 0;
+                            try
+                            {
+                                var saida = Convert.ToDateTime(HotelItens.Checkin);
+                                var retorno = Convert.ToDateTime(HotelItens.Checkout);
+                                dias = (retorno - saida).Days;
+
+
+                                foreach (var tarifaModel in HotelItens.Acomodacoes[0].Tarifas)
+                                {
+                                    if (tarifaModel != null)
+                                    {
+                                        nomeRegimeAlimentacao = tarifaModel.NomeRegimeAlimentacao;
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                throw;
+                            }
+                                    }
+                                    @dias
+                                </span>
+                                <br />
+                                <span class="SubTitulo">Check-in:</span>
+                                <span class="ConteudoSubtitulo">@HotelItens.Checkin</span>
+                                <br />
+                                <span class="SubTitulo">Check-out:</span>
+                                <span class="ConteudoSubtitulo">@HotelItens.Checkout</span>
+                                <br />
+                                <span class="SubTitulo">Tipo de Apartamento:</span>
+                                <span class="ConteudoSubtitulo">@HotelItens.Acomodacoes[0].NomeAcomodacao</span>
+                                <br />
+                                <span class="SubTitulo">Regime de Alimentação:</span>
+                                <span class="ConteudoSubtitulo">@nomeRegimeAlimentacao</span>
+                                <hr style="height: 1px; margin-left: 20px; margin-right: 20px; background-color: #d6d6d6;">
+                            </div>
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold; margin-right: 5px;" class="iconeMala">VALOR:</span>
+                                @{decimal valorTotal = 0;}
+                                @if (HotelItens.ValorTotal.HasValue)
+                                {
+                                    valorTotal = HotelItens.ValorTotal.Value;
+                                }
+                                <label id="lblTotHotel" name="lblToHotel" style="font-family: Verdana; float: right; font-size: 17px; margin-right: 10px; color: #00387b;">@FTV.Conv.ToDecimal(valorTotal).ToString("C2")</label>
+                                <br />
+                                <br />
+                            </div>
+                        }
+                    </div>
+                }
+                @foreach (var aereo in Model.Aereo.Where(p => p.Comprar))
+                {
+                    int counterVoo = 0;
+                    <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                        <div class="icoTituloAereo"></div>
+                        <span class="TituloMenu">Detalhes da Passagem</span>
+                        <br />
+                        <br />
+                        <hr class="hrMenu">
+                        @foreach (var AereoItens in aereo.Trechos)
+                        {     <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor:pointer" title="Remover item do carrinho"  onclick="removerItemCarrinho('Aereo', @aereo.CodigoTarifa)" />
+           
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                @if (counterVoo == 0)
+                                {
+                                    if (aereo.Trechos.Count == 2)
+                                    {
+                                    <div class="icoTituloPacoteAereoIda"></div>                                    
+                                    <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">IDA</span>
+                                    }
+                                    else
+                                    {
+                                    <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">TRECHO @(counterVoo + 1)</span>
+                                    }
+                                }
+                                else
+                                {
+                                    if (aereo.Trechos.Count == 2)
+                                    {
+                                    <div class="icoTituloPacoteAereoVolta"></div>
+                                    <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">VOLTA</span> 
+                                    }
+                                    else
+                                    {
+                                    <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">TRECHO @(counterVoo + 1)</span>
+                                    }
+                                }
+                                <img  style="width: 35px;height: 20px;float: right;margin-right: 21px;" src="@AereoItens.UrlLogoCia" />
+                                <br />
+                                <br />
+                                <span class="SubTitulo">Saída</span><br />
+                                <span class="ConteudoSubtitulo">@AereoItens.NomeCidadeOrigem  , </span>
+                                <span class="SubTitulo">@AereoItens.NomeAeroportoOrigem (@AereoItens.SiglaAeroportoOrigem) </span>
+                                <br />
+                                <span class="ConteudoSubtitulo">@AereoItens.DataOrigem.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataOrigem.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm") </span>
+                                <br />
+                                <span class="SubTitulo">Voo</span>
+                                <span class="ConteudoSubtitulo">@AereoItens.Seguimentos[0].NumeroVoo </span>
+                                @*<span style="font-family: Verdana; color: #666666; font-size: 10px;" class="iconeMala">/ Classe</span>
+                                <span class="ConteudoSubtitulo">@AereoItens.Seguimentos[0].Cabine 122 </span>*@
+                            </div>
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span class="SubTitulo">Chegada</span><br />
+                                <span class="ConteudoSubtitulo">@AereoItens.NomeCidadeDestino , </span>
+                                <span class="SubTitulo">@AereoItens.NomeAeroportoDestino (@AereoItens.SiglaAeroportoDestino) </span>
+                                <br />
+                                <span class="ConteudoSubtitulo">@AereoItens.DataDestino.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataDestino.ToString("dd/MM/yyyy") as @AereoItens.DataDestino.ToString("HH:mm")</span>
+                            </div>
+                            <hr class="hrMenu">
+                                counterVoo = counterVoo + 1;
+                        }
+                        <div style="margin-top: 10px; margin-right: 10px; margin-bottom: 5px; margin-left: 20px;">
+                            <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR TAXAS:</span>
+                            <span style="font-family: Verdana; float: right; font-size: 17px; color: #00387b;">@aereo.ValorTaxa.ToString("C2") </span>
+                            <br />
+                        </div>
+                        <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                            <span style="font-family: Verdana; color: #666666; font-size: 11px; margin-right: 10px; font-weight: bold;" class="iconeMala">VALOR:</span>
+                            <span id="lblTotAereo1" style="font-family: Verdana; margin-right: 10px; float: right; font-size: 17px; color: #00387b;">@aereo.Valor.ToString("C2")</span>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                }
+                @if (Model.Pacote.Where(p => p.Comprar).Count() > 0)
+                {
+                    <div style="margin: 7px; background-color: #ffffff; border-radius: 10px;">
+                        @foreach (var PacoteItem in Model.Pacote.Where(p => p.Comprar))
+                        {
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <div class="icoTituloPacote"></div>
+                                <span class="TituloMenuPacote">Detalhes do Pacote</span>
+                                <img src="~/Images/botao_fechar.png" style="float: right; margin-right: 10px; cursor:pointer" title="Remover item do carrinho"  onclick="removerItemCarrinho('Pacote', @PacoteItem.CodigoPacote); window.location.reload();" />
+                                <br />
+                                <br />
+                                <hr class="hrMenuPacote">
+                                <span style="font-family: Verdana; color: #CE6D21; font-size: 10px;" class="iconeMala">Pacote</span><br />
+                                <span style="font-family: Verdana; color: #CE6D21; font-weight: bold; font-size: 12px;">@PacoteItem.NomePacote.Replace("-", " ") </span>
+                            </div>
+                            <hr class="hrMenu">
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span class="SubTitulo">Destino:</span>
+                                <span class="ConteudoSubtitulo">@PacoteItem.NomeCidade </span>
+                                <br />
+
+                                <span class="ConteudoSubtitulo">Embarque em @Convert.ToDateTime(@PacoteItem.Hotel.OrderBy(h => Convert.ToDateTime(h.Checkin)).FirstOrDefault().Checkin).ToString("dd/MM/yyyy") </span>
+
+                            </div>  
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                @foreach (var PacoteItemServico in PacoteItem.PacoteDescricaoServico)
+                                {
+                                    <span class="ConteudoSubtitulo">@Html.Raw(PacoteItemServico.Descricao.Replace("-", "<br />"))</span><br />
+                                }
+                            </div>
+                            <br />
+                            <hr class="hrMenu">
+                                int counterVooPacote = 0;
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                <span style="font-family: Verdana; color: #bdbabd; font-size: 11px; font-weight: bold;" class="iconeMala">Serviços Incluidos:</span>
+                                <br />
+                                @foreach (var hotel in PacoteItem.Hotel)
+                                {
+                                    <span class="SubTitulo">HOSPEDAGEM</span>
+                                    <br />
+                                    <span class="SubTitulo">Nome Hotel:</span> <span class="ConteudoSubtitulo">@hotel.NomeHotel</span><br />
+                                    <span class="SubTitulo">Check-in:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@hotel.Checkin).ToString("dd/MM/yyyy")</span><br />
+                                    <span class="SubTitulo">Check-out:</span> <span class="ConteudoSubtitulo">@Convert.ToDateTime(@hotel.Checkout).ToString("dd/MM/yyyy")</span><br />
+                                    <span class="SubTitulo">Regime de Alimentação:</span> <span class="ConteudoSubtitulo">@hotel.RegimeAlimentacao</span><br />
+                                    <span class="SubTitulo">Tipo de Apartamento:</span> <span class="ConteudoSubtitulo">@hotel.TipoAcomodacao</span><br />                                    <br />
+                                }
+
+                                <br />
+                                <hr class="hrMenuPacote">
+                                @if (PacoteItem.Aereo != null && PacoteItem.Aereo.Count > 0)
+                                {
+                                    <br />
+                                    <span class="SubTitulo">VOO</span>
+                                    <br />
+                                    var counterAuxVoo = PacoteItem.Aereo.Count();
+                                    foreach (var Voo in PacoteItem.Aereo)
+                                    {
+                                    <div style="margin-bottom: 5px; margin-top: 5px;">
+                                        @if (counterVooPacote == 0)
+                                        {
+                                            <div class="icoTituloPacoteAereoIda"></div>
+                                            <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">IDA</span>
+                                        }
+                                        else
+                                            if (counterAuxVoo > 2)
+                                            {
+                                                if (counterVooPacote == 2 || counterVooPacote == 5)
+                                                {
+                                            <div class="icoTituloPacoteAereoVolta"></div>
+                                            <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">VOLTA</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                            <div class="icoTituloPacoteAereoVolta"></div>
+                                            <span style="font-family: Verdana; font-weight: bold; color: #CE6D21; font-size: 11px;" class="iconeMala">VOLTA</span>
+                                            }
+                                        <img  style="width: 35px;height: 20px;float: right;margin-right: 21px;" src="@Voo.FotoUrl" />
+                                        <br />
+                                        <br />
+                                        <span class="SubTitulo">Saída</span><br />
+                                        <span class="ConteudoSubtitulo">@Voo.OrigemNome   </span>
+                                        <span class="ConteudoSubtitulo">@Voo.DescricaoVoo</span>
+                                        <br />
+                                        <span class="ConteudoSubtitulo">@Convert.ToDateTime(Voo.DataEmbarque).ToString("dddd").Substring(0, 3).ToUpper(), @Convert.ToDateTime(Voo.DataEmbarque).ToString("dd/MM/yyyy") as  @Convert.ToDateTime(Voo.DataEmbarque).ToString("HH:mm") </span>
+                                        <br />
+                                        <div style="margin-bottom: 5px; margin-top: 5px;">
+                                            <span style="font-family: Verdana; color: #666666; font-size: 11px;" class="iconeMala">Chegada</span><br />
+                                            <span class="ConteudoSubtitulo">@Convert.ToDateTime(Voo.DataRetorno).ToString("dddd").Substring(0, 3).ToUpper(), @Convert.ToDateTime(Voo.DataRetorno).ToString("dd/MM/yyyy") as  @Convert.ToDateTime(Voo.DataRetorno).ToString("HH:mm") </span>
+                                        </div>
+                                    </div>
+                                        counterVooPacote = counterVooPacote + 1;
+                                    }
+                                }
+                            </div>    
+                            <hr style="height: 1px; margin-left: 20px; margin-right: 20px; background-color: #d6d6d6;">  
+                            <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                                @foreach (var Regime in PacoteItem.Regime)
+                                {
+                                    <div style="margin-right: 10px; margin-bottom: 5px;">
+                                        <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold;" class="iconeMala">VALOR TAXAS:</span>
+                                        <span style="font-family: Verdana; float: right; font-size: 17px; color: #00387b;">@Regime.Taxas.ToString("C2") </span>
+                                        <br />
+
+                                    </div>
+                                }
+                                <div style="margin-bottom: 10px; margin-right: 10px; height: 1px;">
+                                    <span style="font-family: Verdana; color: #666666; font-size: 11px; font-weight: bold; float: left;" class="iconeMala">VALOR:</span>
+                                    <span style="font-family: Verdana; float: right; margin-left: 75px; font-size: 17px; color: #00387b;">@PacoteItem.Regime[0].ValorTotal.ToString("C2") </span>
+                                </div>
+                                <br />
+                            </div>                                                      
+                        }
+                    </div>
+                    <br />
+                }
+                <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                    <span class="SubTitulo">VALOR:</span> <span class="ConteudoSubtitulo"></span>
+                    <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@Model.ValorTotalComprarSemTaxas.ToString("C2")<label id="lblTotalTax" name="lblTotal"></label></span>
+                    <br />
+                </div>
+                <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                    <span class="SubTitulo">VALOR DAS TAXAS:</span> <span class="ConteudoSubtitulo"></span>
+                    <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@Model.ValorTaxasComprar.ToString("C2")<label id="lblTotalTax" name="lblTotal"></label></span>
+                    <br />
+                </div>
+                <div style="margin-left: 20px; margin-bottom: 5px; margin-top: 5px;">
+                    <span style="font-family: Verdana; color: RED; font-size: 14px; font-weight: bold;" class="iconeMala">VALOR TOTAL:</span>
+                    <span style="font-family: Verdana; float: right; margin-right: 21px; font-size: 17px; color: #00387b;">@Model.ValorTotalComprar.ToString("C2")<label id="lblTotal" name="lblTotal"></label></span>
+                    <input id="hdnValorTotal" type="hidden" value ="@Model.ValorTotalComprar" />
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="agenciasMapa" id="agenciasMapaId">
+        <label class="labelMapaBusca">Pesquisar <small>(Endereço, Cidade, Cep, etc ... )</small></label>
+        <br />
+        <input class="inputMapa" id="txtBuscaMapa" type="text" />
+        <input class="btnMapaBuscar" value="Buscar" type="button" onclick="BuscarNoMapa($('#txtBuscaMapa').val())" />
+        <div id="mapa" style="height: 600px; width: 725px; border: 1px solid #CCC;">
+        </div>
+    </div>
+
+}
+@if (!string.IsNullOrEmpty(Model.MensagemErro))
+{
+    <script>
+        $(function () {
+            alert('@Model.MensagemErro');
+        });
+    </script>
+}

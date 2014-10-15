@@ -1,0 +1,82 @@
+﻿@model FT.Web.Model.Models.CarroPesquisaModel
+<script src="~/Scripts/Carro.js"></script>
+
+@using (Html.BeginForm("Index", "Carro", FormMethod.Post, new { id = "carroform" }))
+{
+    <div class="formAero">
+        <h3>Alugue um carro</h3>
+
+        <div class="">
+            <div id="divLocalRetirada">
+                @Html.LabelFor(model => model.LocalRetirada)<br />
+                @Html.TextBoxFor(model => model.LocalRetirada, new { @class = "inputdestino watermark", title = "Informe o local de retirada" })<br />
+                @Html.ValidationMessageFor(model => model.LocalRetirada)
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="BuscadorSetDate">
+            <div class="SetDate">
+                @Html.LabelFor(model => model.DataCheckIn)<br />
+                @Html.TextBoxFor(model => model.DataCheckIn)<br />
+                @Html.ValidationMessageFor(model => model.DataCheckIn)
+            </div>
+
+            <div class="carleft">
+                <div class="styled-select-form">
+                    @Html.DropDownListFor(model => model.HoraCheckInSelecionada, Model.HorasCheckIn)
+                </div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="BuscadorSetDate">
+            <div class="SetDate">
+                @Html.LabelFor(model => model.DataCheckOut)<br />
+                @Html.TextBoxFor(model => model.DataCheckOut, new { @onchange = "validarDataRetorno('DataCheckIn', 'DataCheckOut')" })<br />
+                @Html.ValidationMessageFor(model => model.DataCheckOut)
+            </div>
+
+            <div class="carleft">
+                <div class="styled-select-form">
+                    @Html.DropDownListFor(model => model.HoraCheckOutSelecionada, Model.HorasCheckOut)
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="clear"></div>
+        <br />
+
+        <div id="divLocalDiferente">
+            <div>
+               @* <script>
+                    uncheck();
+                    function uncheck() {
+                        document.getElementById("IsLocalDiferenteEntrega").checked = false;
+                    }
+                </script>*@
+                <input id="IsLocalDiferenteEntrega" type="checkbox" name="IsLocalDiferenteEntrega">
+                <label for="IsLocalDiferenteEntrega"><span><span></span></span>Local diferente para entrega</label>
+                @Html.ValidationMessageFor(model => model.IsLocalDiferenteEntrega)
+                @* @Html.CheckBoxFor(model => model.IsLocalDiferenteEntrega, new { id = "IsLocalDiferenteEntrega2", name = "IsLocalDiferenteEntrega2" })*@
+
+                <input type="hidden" id="hdnIsLocalDiferenteEntrega" name="hdnIsLocalDiferenteEntrega" />
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div id="divLocalDevolucao" style="display: none;">
+            @Html.LabelFor(model => model.LocalDevolucao)
+            <br />
+            @Html.TextBoxFor(model => model.LocalDevolucao, new { @class = "inputdestino watermark", title = "Informe o local de devolução" })<br />
+            @Html.ValidationMessageFor(model => model.LocalDevolucao)
+        </div>
+        <div>
+            <input type="submit" value="" class="btnPesquisar" onclick="return PostarFormCarro()" />
+        </div>
+    </div>
+}

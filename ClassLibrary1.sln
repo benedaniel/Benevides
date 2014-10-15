@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{16E265DA-39F9-4A3A-A4BE-4793AC201604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FT.Web.Site", "..\..\..\GitHub\EnsaioParaSite\FT.Web.Site.csproj", "{2DCF4F32-BAD1-4065-AF2D-10D99B73DB66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication1", "MvcApplication1\MvcApplication1.csproj", "{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,10 @@ Global
 		{16E265DA-39F9-4A3A-A4BE-4793AC201604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16E265DA-39F9-4A3A-A4BE-4793AC201604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16E265DA-39F9-4A3A-A4BE-4793AC201604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DCF4F32-BAD1-4065-AF2D-10D99B73DB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DCF4F32-BAD1-4065-AF2D-10D99B73DB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DCF4F32-BAD1-4065-AF2D-10D99B73DB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DCF4F32-BAD1-4065-AF2D-10D99B73DB66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,373 @@
+﻿.labelReserva {
+    font-family: Verdana;
+    font-weight: bold;
+    margin-left: 8px;
+    font-size: 12px;
+    color: #666666;
+}
+
+.icoTituloCarro {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 20px 0px;
+    margin-left: 20px;
+    margin-top: 9px;
+}
+
+.icoTituloPacote {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 101px 0px;
+    margin-top: 7px;
+}
+
+.icoTituloAtividade {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 101px -38px;
+    margin-top: 7px;
+}
+
+.icoTituloAssistenciaViagem {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -20px 0px;
+    margin-left: 20px;
+    margin-top: 7px;
+}
+
+.icoTituloIngresso {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 0px -40px;
+    margin-left: 20px;
+    margin-top: 7px;
+}
+
+.icoTituloMulta {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -80px -20px;
+    margin-left: 20px;
+    margin-top: 7px;
+}
+
+/*usar para circuito servico e passeio servico*/
+.icoTituloTransfer {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -60px 0px;
+    margin-left: 20px;
+    margin-top: 7px;
+}
+
+.icoTituloTaxa {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -60px -20px;
+    margin-top: 7px;
+}
+
+.icoTituloPacoteAereoVolta {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -40px -38px no-repeat;
+}
+
+.icoTituloPacoteAereoIda {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -19px -38px no-repeat;
+}
+
+.hrMenu {
+    height: 1px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #d6d6d6;
+}
+
+.hrMenuPacote {
+    height: 1px;
+    margin-right: 20px;
+    background-color: #d6d6d6;
+}
+
+.TituloMenu {
+    float: left;
+    margin: 11px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: #CE6D21;
+    font-size: 12px;
+}
+
+.TituloMenuPacote {
+    float: left;
+    margin: 11px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: #CE6D21;
+    font-size: 12px;
+}
+
+.icoTituloAereo {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 60px 0px;
+    margin-left: 20px;
+    margin-top: 9px;
+}
+
+
+.icoTituloHotel {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 0 -21px;
+    margin-left: 20px;
+    margin-top: 9px;
+}
+
+.SubTitulo {
+    font-family: Verdana;
+    color: #666666;
+    font-size: 11px;
+}
+
+.ConteudoSubtitulo {
+    font-family: Verdana;
+    color: #666666;
+    font-weight: bold;
+    font-size: 11px;
+    margin-right: 1px;
+}
+
+#DLAtendente, #DLState {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 190px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+
+#ddlPlanos {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 350px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+#divDadosCartao li {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#divDadosCartao ul {
+    margin-top: 15px;
+}
+
+.Medio {
+    -webkit-appearance: none;
+    color: #000;
+    width: 87px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+#divDadosCartao input {
+    -webkit-appearance: none;
+    color: #000;
+    width: 140px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+.inputReserva {
+    -webkit-appearance: none;
+    color: #000;
+    width: 147px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+.DataNascimento {
+    -webkit-appearance: none;
+    color: #000;
+    width: 97px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+
+
+
+.Validade {
+    -webkit-appearance: none;
+    color: #000;
+    width: 87px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+#grid1 {
+    width: 675px;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 10px 10px 10px 10px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+    padding: 15px 0 20px 0;
+    margin-left: 5px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+#lblTotCarro, #lblTotPacote, #lblToHotel, #lblTotAereo {
+    color: #00387B;
+    float: right;
+    font-family: Verdana;
+    font-size: 17px;
+    margin-right: 20px;
+}
+
+
+.cart_comprar {
+    display: block;
+    height: 40px;
+    float: right;
+    width: 88px;
+    background: url(../Images/cart_comprar.png);
+}
+
+.continue_comprando {
+    display: block;
+    height: 34px;
+    float: right;
+    width: 176px;
+    background: url(../Images/keep_buy.png);
+    margin-right: 5px;
+}
+
+.limpar_carrinho {
+    display: block;
+    height: 34px;
+    float: right;
+    width: 176px;
+    background: url(../Images/keep_buy.png);
+    margin-right: 5px;
+}
+
+
+.cart_top {
+    width: 100%;
+    height: 50px;
+    display: block;
+}
+
+.cart_total {
+    float: right;
+    margin-right: 5px;
+}
+
+    .cart_total span {
+        font-family: Verdana;
+        float: left;
+        font-size: 17px;
+        color: #00387b;
+    }
+
+#DivRightt {
+    background-color: #FFF;
+    border: 1px solid #E56B1E;
+    border-radius: 10px;
+    color: #FFFFFF;
+    float: left;
+    margin-left: -232px;
+    position: relative;
+    width: 800px;
+    z-index: 999999;
+    padding-bottom: 10px;
+}
+
+.content_cart_total {
+    margin: 7px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #CCC;
+}

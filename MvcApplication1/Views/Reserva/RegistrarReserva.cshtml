@@ -1,0 +1,64 @@
+﻿@model FT.Web.Model.Models.FlyTourModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.Btoc || (!string.IsNullOrEmpty(Model.MensagemErro)))
+{
+    <div id="DivPai2" style="float: left; margin-top: 10px; margin-left: 435px; width: 600px; height: auto; border: solid 1px #CCC; border-radius: 10px 10px 10px 10px; -moz-box-radius: 10px; -webkit-box-radius: 10px; padding: 15px 15px 20px 15px; overflow: hidden;">
+        @if (string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <label style="font-size: 26px; color: #008000;">Parabéns pela sua compra!</label>
+        }
+        else if (Model.CodigoFile != 0)
+        {
+            <label style="font-size: 26px; color: #D62929;">Desculpe, não foi possível confirmar todos os itens da sua reserva!</label>
+        }
+        else
+        {
+            <label style="font-size: 26px; color: #D62929;">Desculpe, ocorreram problemas ao criar a sua reserva!</label>
+        }
+        <br />
+        <br />
+        <label style="font-size: 12px; font-weight: bold;">Seguem abaixo informações sobre sua compra:</label>
+        <br />
+        <br />
+        @if (Model.CodigoFile != 0)
+        {
+            <label style="font-size: 17px; color: #00387B;">Codigo da Venda: @Model.CodigoFile</label>
+            <br />
+        }
+
+        <label style="color: #00387B;">Mensagem: @Model.MensagemErro</label>
+        <br />
+        @if (Model.Btoc)
+        {
+            <p class="button" style="float: left">
+                <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 175px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Minhas Reservas" onclick="window.location = '/Venda';">
+            </p> 
+        }
+        else
+        {
+            <p class="button" style="float: left">
+                <input type="submit" style="background-color: #00AE29; cursor: pointer; color: white; border-radius: 0px; border: none; font-weight: bold; width: 175px; line-height: 1.5em; font-family: verdana; height: 40px; font-size: 16px;" value="Minhas Reservas" onclick="window.location = '/PainelControle/Reserva';">
+            </p>
+        }
+    </div>
+}
+else
+{
+   
+    <div class="content">
+        <iframe id="iframeReserva" height="1000px" width="100%" src="@Html.Raw(Model.BtoBPath)"></iframe>
+    </div>
+@*
+    <script>
+        function gotoBtb(path) {
+            window.location.href = path;
+        }
+        $(function () {
+            gotoBtb("@Html.Raw(Model.BtoBPath)");
+        });
+
+    </script>*@
+}

@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Destino";
+}
+@model IList<FT.Web.Model.Models.DestinoModel>
+
+<h2>Destino</h2>
+ @if (Model != null)
+ {
+     foreach (FT.Web.Model.Models.DestinoModel item in Model)
+     {
+          <h2>@item.NomeCidade</h2>
+     
+        foreach (FT.Web.Model.Models.DestinoFoto fotos in item.Foto)
+         {
+             <input type="image" style="width:125px !important;height:75px !important" src="@fotos.DestinoFotoUrl"  >
+         }
+         
+          foreach (FT.Web.Model.Models.DestinoTopico topico in item.Topico)
+         {
+             <br /> <a href="">@topico.NomeDestinoTopico</a> <br />
+         }
+         
+          foreach (FT.Web.Model.Models.DestinoTopico topico in item.Topico)
+         {
+              <h1>@topico.NomeDestinoTopico</h1>
+
+             foreach (FT.Web.Model.Models.DestinoTopicoConteudo conteudo in topico.Conteudo)
+            {
+                 <h2 style="font-size:8pt">@conteudo.ConteudoTitulo</h2>
+                    <h2 style="font-size:8pt">@conteudo.ConteudoDescricao</h2>
+                
+            }
+         }
+     }
+ }

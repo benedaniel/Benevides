@@ -1,0 +1,663 @@
+﻿@model FT.Web.Model.Models.AereoModel
+
+<script src="~/Scripts/jquery/jquery.simplemodal.js"></script>
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+
+@*@if (Model.CompanhiaMatrix.Count() > 3)
+{
+    <script>
+        $(function () {
+           //showGrid();
+        });
+
+    </script>
+}*@
+
+<style>
+    .slidesjs-navigation {
+        float: left;
+        display: block;
+        font-family: verdana;
+        font-size: 12px;
+        color: #1C73C3;
+        font-weight: bold;
+    }
+
+    .divVervoo {
+        display: none;
+        width: 683px;
+        height: auto;
+        background-color: white;
+        border: 1px solid black;
+    }
+</style>
+
+@if (ViewBag.IsMontePacote == null)
+{
+    <link href="~/Content/ModalAereo.css" rel="stylesheet" />
+}
+
+<div id="DivPai2" style="float: left;">
+    <div class="aereo-cabecalho-1">
+        <div class="aereo-cabecalho-1-1">
+            <div class="icone-titulo"></div>
+            <p class="aereo-cabecalho-1-texto-1">Resultados da Pesquisa</p>
+            @if (ViewBag.IsMontePacote == null)
+            {
+                <select id="combo-ordenar" name="combo-ordenar" class="combo-ordenar" onchange="FiltrarLoad(this);">
+                    <option value="3">Preço - menor &gt; maior</option>
+                    @if (Model.Ordenar == "Maior")
+                    {
+                        <option selected="selected" value="4">Preço - maior &gt; menor</option>    
+                    }
+                    else
+                    {
+                        <option value="4">Preço - maior &gt; menor</option>    
+                    }
+                </select>
+            }
+            else
+            {
+                <select id="combo-ordenar" name="combo-ordenar" class="combo-ordenar" onchange="FiltrarLoadMontePacote(this);">
+                    <option value="3">Preço - menor &gt; maior</option>
+                    @if (Model.Ordenar == "Maior")
+                    {
+                        <option selected="selected" value="4">Preço - maior &gt; menor</option>    
+                    }
+                    else
+                    {
+                        <option value="4">Preço - maior &gt; menor</option>    
+                    }
+                </select>
+                <input type="hidden" value="1" id="hdnIsMontePacote" name="hdnIsMontePacote">
+            }
+
+            <p class="aereo-cabecalho-1-texto-2">Ordenar por</p>
+        </div>
+        <div class="loadingH" style="display: none;">
+            <img src="/Images/Loading_2.gif">
+        </div>
+        @if (Model.Tipo == "MultiTrecho")
+        {
+            <div class="aereo-cabecalho-1-2">
+                <p class="aereo-cabecalho-1-texto-3">
+                    Passagens para os <strong>Trechos</strong> @*<strong>*@
+                    @* <label id="lblPacotesPara" style="font-weight: bold;">@Model.DestinoNome </label>*@
+                    @*</strong>*@
+                </p>
+                <p class="aereo-cabecalho-1-texto-4">
+                    @if (Model.GrupoTarifas != null && Model.GrupoTarifas.Count > 0)
+                    {
+                        foreach (var trechosd in Model.GrupoTarifas.First().GrupoTarifaTrechos)
+                        {
+
+
+                            var destino = trechosd.TrechosTarifaCodigo.First().Trecho;
+                        
+                        <span>Saindo de </span>
+                        <strong>
+                            <label id="lblSaindo" style="font-weight: bold;">@destino.NomeCidadeOrigem (@destino.SiglaAeroportoOrigem)</label></strong>
+                        <span>para </span> 
+                        <strong>
+                            <label id="lblSaindo" style="font-weight: bold;">@destino.NomeCidadeDestino (@destino.SiglaAeroportoDestino)</label></strong>
+                        <span>em </span> 
+                        <strong>
+                            <label id="lblDatasaida" style="font-weight: bold;">@destino.DataOrigemAbrev</label></strong>
+                        <br />
+                        
+                        }
+                    }
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="aereo-cabecalho-1-2">
+                <p class="aereo-cabecalho-1-texto-3">
+                    Passagens para <strong>
+                        <label id="lblPacotesPara" style="font-weight: bold;">@Model.DestinoNome </label>
+                    </strong>
+                </p>
+                <p class="aereo-cabecalho-1-texto-4">
+                    Saindo de <strong>
+                        <label id="lblSaindo" style="font-weight: bold;">@Model.OrigemNome</label></strong>, em <strong>
+                            <label id="lblDatasaida" style="font-weight: bold;">@Model.DataEmbarqueExtenso</label></strong>
+                </p>
+            </div>
+        }
+    </div>
+
+    @if (Model.GrupoTarifas == null || Model.GrupoTarifas.Count == 0)
+    {
+        Html.RenderPartial("NoDataFound", false);
+    }
+    else
+    {
+        var duasparadas = false;
+
+        if (Model.MenorPrecoDuasParadas.ToString("n2") != "0,00")
+        {
+            duasparadas = true;
+        }
+        
+        
+
+        <div class="the-matrix" style="padding-bottom: 10px">
+            <ul class="the-matrix-first-col">
+                <li class="the-matrix-first-row"></li>
+                <li>Voo direto</li>
+                <li>1 Parada</li>
+                @if (duasparadas)
+                {<li>2+ Paradas</li>}
+
+            </ul>
+            <div class="the-matrix-all-other-cols" id="divMatrix">
+                <ul>
+                    <li class="the-matrix-first-row">
+                        <img src="~/Images/melhores-precos.jpg" />
+                    </li>
+                    <li><a href='javascript:' onclick="FiltrarLoadValor(@Model.MenorPrecoDireto.ToString("n2"))">@if (Model.MenorPrecoDireto.ToString("n2") != "0,00")
+                                                                                                                 {@Model.MenorPrecoDireto.ToString("n2") }</a></li>
+                    <li><a href='javascript:' onclick="FiltrarLoadValor(@Model.MenorPrecoUmaParada.ToString("n2"))">@if (Model.MenorPrecoUmaParada.ToString("n2") != "0,00")
+                                                                                                                    { @Model.MenorPrecoUmaParada.ToString("n2");
+                                                                                                                    }</a></li>
+                    @if (duasparadas)
+                    {
+                        <li>
+                            <a href='javascript:' onclick="FiltrarLoadValor(@Model.MenorPrecoDuasParadas.ToString("n2"))">
+                                @if (Model.MenorPrecoDuasParadas.ToString("n2") != "0,00")
+                                { 
+                                    @Model.MenorPrecoDuasParadas.ToString("n2");
+                                }
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div id="slidesCompanias">
+                    @{var cont = 1;}
+                    @for (int i = 0; i < Model.CompanhiaMatrix.Count(); i++)
+                    {
+                        if (cont == 1)
+                        {
+                        @Html.Raw("<div>");
+                        }
+                      
+                        <ul>
+                            <li class="the-matrix-first-row">
+                                @if (!String.IsNullOrEmpty(Model.CompanhiaMatrix[i].UrlCia))
+                                {
+                                    @Html.Raw("<img class='logocia' style='float:none' src='" + Model.CompanhiaMatrix[i].UrlCia + "'/>");
+                                }
+                                else
+                                {
+                                    @Html.Raw(Model.CompanhiaMatrix[i].Nome);
+                                }
+                            </li>
+                            <li>
+                                @if (Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2") != "0,00")
+                                {
+                                    <a href='javascript:' onclick="FiltrarLoadValor(@Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2")</a>
+                                }
+                            </li>
+                            <li>
+                                @if (Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2") != "0,00")
+                                {
+                                    <a href='javascript:' onclick="FiltrarLoadValor(@Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2")</a>
+                                }
+                            </li>
+                            @if (duasparadas)
+                            {
+                                <li>
+                                    @if (Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2") != "0,00")
+                                    {
+                                        <a href='javascript:' onclick="FiltrarLoadValor(@Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2")</a>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    
+                            if (cont == 3 || i == Model.CompanhiaMatrix.Count() - 1)
+                            {
+
+                                if (Model.CompanhiaMatrix.Count() < 3)
+                                {
+                                    for (int j = 0; j < 3 - Model.CompanhiaMatrix.Count(); j++)
+                                    {
+                        <ul>
+                            <li class="the-matrix-first-row">
+                                @* @if (!String.IsNullOrEmpty(Model.CompanhiaMatrix[i].UrlCia))
+                                                    {
+                                                        @Html.Raw("<img src='" + Model.CompanhiaMatrix[i].UrlCia + "'/>");
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.Raw(Model.CompanhiaMatrix[i].Nome);
+                                                    }*@
+                            </li>
+                            <li>
+                                @* @if (Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2") != "0,00")
+                                                    {
+                                                        <a href='javascript:' onclick="SelectPrice(@Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[0].Preco.ToString("n2")</a>
+                                                    }*@
+                            </li>
+                            <li>
+                                @*  @if (Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2") != "0,00")
+                                                    {
+                                                        <a href='javascript:' onclick="SelectPrice(@Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[1].Preco.ToString("n2")</a>
+                                                    }*@
+                            </li>
+                            @if (duasparadas)
+                            {
+                                <li>
+                                    @*@if (Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2") != "0,00")
+                                                    {
+                                                        <a href='javascript:' onclick="SelectPrice(@Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2"))">@Model.CompanhiaMatrix[i].Celulas[2].Preco.ToString("n2")</a>
+                                                    }*@
+                                </li>
+                            }
+                        </ul>
+                                    }
+                                }
+
+                                cont = 0;
+                        @Html.Raw("</div>");
+                            }
+                            { cont++; }
+                    }
+
+                    @if (Model.CompanhiaMatrix.Count() > 3)
+                    {
+                        <a href="javascript:" class="slidesjs-previous slidesjs-navigation nav-grid-back" style="margin-left: 224px;"><  voltar |</a>
+                        <a href="javascript:" class="slidesjs-next slidesjs-navigation nav-grid-next" style="margin-left: 5px">mais resultados > </a>
+                    }
+                </div>
+            </div>
+        </div>@*
+         if (Model.CompanhiaMatrix.Count() < 3)
+         {
+            <div style="display:block; height:10px"></div>
+         }*@
+    }
+    @{ int inds = 0;}
+    @{ int Grupo = 0;}
+    @foreach (FT.Web.Model.Models.GrupoTarifa grupo in Model.GrupoTarifas)
+    {
+        var visible = true;
+        if (grupo.GrupoTarifaTrechos.Count() > 1)
+        {
+            if (grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.Where(p => p.Visible == true).Count() == 0)
+            {
+                visible = false;
+            }
+            if (grupo.GrupoTarifaTrechos[1].TrechosTarifaCodigo.Where(p => p.Visible == true).Count() == 0)
+            {
+                visible = false;
+            }
+
+        }
+        else if (grupo.GrupoTarifaTrechos.Count() == 1)
+        {
+            if (grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.Where(p => p.Visible == true).Count() == 0)
+            {
+                visible = false;
+            }
+        }
+
+        if (Model.Tipo == "MultiTrecho")
+        {
+            foreach (var trechos in grupo.GrupoTarifaTrechos)
+            {
+                if (trechos.TrechosTarifaCodigo.Count(p => p.Visible == true) == 0)
+                {
+                    visible = false;
+                }
+            }
+        }
+        if (visible)
+        {
+        <div class="tudo">
+            <div class="grupo">
+                @{int i = 0;}
+                @foreach (var trecho in grupo.GrupoTarifaTrechos)
+                {
+                    //foreach (var codigo in trecho.TrechosTarifaCodigo)
+                    //{
+
+
+                    if (Model.Tipo == "MultiTrecho")
+                    {
+                    <div class="idaevolta">
+                        <div class="vooida"></div>
+                        <span class="tituloAereo">TRECHO </span>
+                        <span class="tituloAereo" style="color: #2f78ad !important">@trecho.TrechosTarifaCodigo[0].Trecho.DataOrigemAbrev</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeOrigem (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoOrigem)</span>
+                        <span class="tituloAereo">para</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeDestino (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoDestino)</span>
+                    </div>
+                    }
+
+                    if ((Model.Tipo == "IdaeVolta" || Model.Tipo == "SomenteIda") && i == 0)
+                    {
+                    <div class="idaevolta">
+                        <div class="vooida"></div>
+                        <span class="tituloAereo">IDA </span>
+                        <span class="tituloAereo" style="color: #2f78ad !important">@trecho.TrechosTarifaCodigo[0].Trecho.DataOrigemAbrev</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeOrigem (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoOrigem)</span>
+                        <span class="tituloAereo">para</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeDestino (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoDestino)</span>
+                    </div>
+                    }
+                    else if (Model.Tipo == "IdaeVolta" && i == 1)
+                    {                        
+                    <div class="idaevolta" style="border-top: 1px solid silver">
+                        <div class="voovolta"></div>
+                        <span class="tituloAereo">VOLTA </span>
+                        <span class="tituloAereo" style="color: #2f78ad !important">@trecho.TrechosTarifaCodigo[0].Trecho.DataOrigemAbrev</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeOrigem (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoOrigem)</span>
+                        <span class="tituloAereo">para</span>
+                        <span class="tituloAereo">@trecho.TrechosTarifaCodigo[0].Trecho.NomeCidadeDestino (@trecho.TrechosTarifaCodigo[0].Trecho.SiglaAeroportoDestino)</span>
+                    </div>
+                    }
+                    <div class="conteudo">
+
+                        @if (grupo.GrupoTarifaTrechos.Count() > 1 || i == 0)
+                        {
+                            foreach (FT.Web.Model.Models.TrechoTarifaCodigo trechoTarifa in trecho.TrechosTarifaCodigo.Where(p => p.Visible == true))
+                            {
+                            <div id="DivRadio-@Grupo">
+                                <ul>
+
+                                    @{ var trechos = ""; }
+                                    @foreach (FT.Web.Model.Models.TarifaCodigo tarifa in trechoTarifa.Tarifas)
+                                    {
+                                        trechos += tarifa.CodigoTarifa + ";";
+                                    }
+                                    <li id="@trechoTarifa.Trecho.DataOrigem.Hour.ToString()-@inds.ToString()"  style="font-size: 12px;">
+                                        @Html.RadioButton("rdbSelected" + i, trechos, new { @class = "radioAereo" })
+                                        <span class="saida">Saida: </span><span style="font-family: verdana; color: #7b7b7b; font-size: 11px;">@Html.Label(trechoTarifa.Trecho.DataOrigem.ToString("HH:mm"))</span>
+                                        @{
+                                    string c = FT.Web.Business.Aereo.AereoBusiness.HoraTotal(trechoTarifa.Trecho.DataDestino, trechoTarifa.Trecho.DataOrigem);
+
+                                            <span class="chegada">Chegada: </span>
+                                            <span style="font-family: verdana; color: #7b7b7b; font-size: 11px;">@Html.Label(trechoTarifa.Trecho.DataDestino.ToString("HH:mm"))</span>
+                                            <span class="duracao">Duração: </span>
+                                            <span style="font-family: verdana; color: #7b7b7b; font-size: 11px;">@Html.Label(c)</span>
+                                        }
+                                        @if (trechoTarifa.Trecho.QuantidadeConexao == 0)
+                                        {
+                                            if (ViewBag.IsMontePacote == null)
+                                            {
+                                            <a class="parada" onclick="VerVooAereo('div-@inds.ToString()');">Voo Direto</a>
+                                            }
+                                            else
+                                            {
+                                            <a class="parada MP_div-@inds.ToString()" onclick="VerVooMP('@trechos.Replace(';', 'a')@inds.ToString()', 'MP_@trechos.Replace(';', 'a')@inds.ToString()');">Voo Direto
+                                                        <img class="imgavResult imgMP_div-@inds.ToString()" src="/Images/avas.jpg">
+                                            </a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (ViewBag.IsMontePacote == null)
+                                            {
+                                            <span class="parada" onclick="VerVooAereo('div-@inds.ToString()');">@trechoTarifa.Trecho.QuantidadeConexao.ToString()  Parada(s)</span>
+                                            }
+                                            else
+                                            {
+                                            <span class="parada MP_div-@inds.ToString()"  onclick="VerVooMP('@trechos.Replace(';', 'a')@inds.ToString()', 'MP_@trechos.Replace(';', 'a')@inds.ToString()');">
+                                                @trechoTarifa.Trecho.QuantidadeConexao.ToString()  Parada(s)
+                                                        <img class="imgavResult imgMP_div-@inds.ToString()" src="/Images/avas.jpg">
+                                            </span>
+
+                                            }
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="div-@inds.ToString()" class="divVervoo">
+                                @{ inds = inds + 1; }
+                                @{ DateTime HoraAnterior = new DateTime(); }
+                                @foreach (var seguimento in trechoTarifa.Trecho.Seguimentos)
+                                {
+                                    if (trechoTarifa.Trecho.Seguimentos.First().CodigoSegmento != seguimento.CodigoSegmento)
+                                    {
+                                        var f = FT.Web.Business.Aereo.AereoBusiness.HoraTotal(seguimento.DataOrigem, HoraAnterior);
+                                    <div style="margin-left: 20px; width: 656px; height: 55px; text-align: center; background-color: #E7EFFA; border: 1px solid darkblue;">
+                                        <div style="margin-top: 15px; margin-right: 10px; margin-left: 30px; float: left;">
+                                            <img src="~/Images/bgs-novo-resultado.png" />
+                                        </div>
+                                        <div style="float: left; margin-top: 7px;">
+                                            <div style="float: left; margin-right: 60px; margin-top: 10px;">
+                                                <span style="font-size: 12px; color: darkblue; font-weight: bold;">Tempo de Espera</span>
+                                                <span style="font-size: 12px; color: #777; margin-top: 10px;">@f</span>
+                                            </div>
+                                            <div style="float: left; margin-top: 5px;">
+                                                <img src="~/Images/troca.png" />
+                                            </div>
+                                            <div style="float: left; margin-left: 5px; margin-top: 10px;">
+                                                <span style="font-size: 12px; color: darkblue; font-weight: bold;">Troca:</span>
+                                                <span style="font-size: 12px; color: #777; margin-top: 10px;">Necessita troca de aeronave</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                    var d = FT.Web.Business.Aereo.AereoBusiness.HoraTotal(seguimento.DataDestino, seguimento.DataOrigem);
+
+                                    <div id="todoIdaDetalhes" style="height: 115px; width: auto; padding: 20px">
+                                        <div id="logoIdaDetalhes" style="height: 90px; width: 115px; float: left">
+                                            @if (Model.Tipo == "MultiTrecho")
+                                            {
+
+                                            }
+                                            else if (i == 0 || grupo.GrupoTarifaTrechos.Count() == 1)
+                                            {
+                                                <img src="~/Images/idaDetalheVoo.png" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Images/voltaDetalheVoo.png" />
+                                            }
+                                            <img class="logocia" src="@trechoTarifa.Trecho.UrlLogoCia" />
+                                        </div>
+                                        <div id="detalhesVooIdaSaida" style="margin-right: 10px; height: auto; width: 200px; float: left;">
+                                            <span style="font-size: 10px; color: #777;">Saida</span>
+                                            <br />
+                                            <span style="color: #0b3766; font-size: 12px; font-weight: bold">@seguimento.NomeCidadeOrigem</span>
+                                            <br />
+                                            <span style="color: #0b3766; font-size: 12px;">@seguimento.NomeAeroportoOrigem (@seguimento.SiglaAeroportoOrigem)</span>
+                                            <br />
+                                            <span style="font-size: 10px; color: #777;">@seguimento.DataOrigemDescr as @seguimento.DataOrigem.ToString("HH:mm")</span>
+                                        </div>
+                                        <div id="detalhesVooIdaChagada" style="margin-right: 10px; height: auto; width: 195px; float: left;">
+                                            <span style="font-size: 10px; color: #777;">Chegada</span>
+                                            <br />
+                                            <span style="color: #0b3766; font-size: 12px; font-weight: bold">@seguimento.NomeCidadeDestino</span>
+                                            <br />
+                                            <span style="color: #0b3766; font-size: 12px;">@seguimento.NomeAeroportoDestino (@seguimento.SiglaAeroportoDestino)</span>
+                                            <br />
+                                            <span style="font-size: 10px; color: #777;">@seguimento.DataDestinoDescr as @seguimento.DataDestino.ToString("HH:mm")</span>
+                                        </div>
+                                        <div id="detalhesVooIda" style="height: auto; width: auto; float: left; font-size: 12px; color: #777;">
+                                            <span>Voo:     @seguimento.NumeroVoo</span>
+                                            <br />
+                                            <span>Classe:  @seguimento.Cabine</span>
+                                            <br />
+                                            <span>Duração: @d</span>
+                                        </div>
+
+                                    </div>
+                                    
+                                    
+                                            foreach (var legs in seguimento.Legses)
+                                            {
+
+                                    <div style="margin-bottom: 15px; padding-top: 8px; height: 28px; text-align: center; width: 656px; background-color: rgba(219, 218, 218, 0.44); margin-left: 20px; border: 1px solid #C0C0C0;">
+                                        <span style="font-size: 12px; color: #777;">Escala de @legs.Duration.TotalMinutes minutos em @legs.LegCity.</span>
+                                    </div>
+
+                                            }
+                                    
+                                    <div style="margin-bottom: 15px; padding-top: 8px; height: 28px; text-align: center; width: 656px; background-color: rgba(219, 218, 218, 0.44); margin-left: 20px; border: 1px solid #C0C0C0;">
+                                        <span style="font-size: 12px; color: #777;">Não há informações sobre atrasos deste voo </span>
+                                    </div>
+
+                                            HoraAnterior = seguimento.DataDestino;
+
+
+                                }
+
+                                @* <div id="todoVoltaDetalhes" style="height:200px; width:auto; border: 1px solid black; padding:20px">
+                                    <div id="logoVoltaDetalhes" style="height: 90px; width: 130px; border: 1px solid black; float:left">
+                                        <img src="~/Images/idaDetalheVoo.png" />
+                                        <img class="logocia" src="@grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.First().Trecho.UrlLogoCia" />
+                                    </div>
+                                    <div id="detalhesVooVoltaSaida" style="height:auto; width:175px; border: 1px solid black; float:left">
+                                         Saida
+                                        <br />
+                                        @trechoTarifa.Trecho.Seguimentos.Last().NomeAeroportoOrigem;
+                                        <br />
+                                        @trechoTarifa.Trecho.Seguimentos.Last().DataOrigem;
+                                    </div>
+                                    <div id="detalhesVooVoltaChagada" style="height:auto; width:175px; border: 1px solid black; float:left">
+                                         Chagada
+                                        <br />
+                                        @trechoTarifa.Trecho.Seguimentos.Last().NomeAeroportoDestino;
+                                        <br />
+                                        @trechoTarifa.Trecho.Seguimentos.Last().DataDestino;
+                                    </div>
+                                     <div id="detalhesVooVolta" style="height:auto; width:auto; border: 1px solid black; float:left">
+                                         @trechoTarifa.Trecho.Seguimentos.Last().NumeroVoo;
+                                    </div>
+                                </div>*@
+
+
+                            </div>
+
+                               
+                            
+                            }
+                        }
+                    </div>@*
+                        if ((Model.Tipo == "MultiTrecho") && @grupo.GrupoTarifaTrechos.Count() < 3)
+                        {
+                    <div class="parcelamento" style="height: 10px">
+                    </div>
+                        }
+                        if (Model.Tipo != "MultiTrecho" && @grupo.GrupoTarifaTrechos.Count() == 1 && @grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.Where(p => p.Visible).Count() < 4 && i == 0)
+                        {
+                    <div class="parcelamento" style="height: 52px">
+                    </div>
+                            if (Model.Tipo != "MultiTrecho" && grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.Where(p => p.Visible == true).Count() < 3)
+                            {
+                    <div class="parcelamento" style="height: 44px">
+                    </div>
+                            }
+                        }
+                        if ((Model.Tipo != "MultiTrecho" && @grupo.GrupoTarifaTrechos.Count() > 1) && i == 1 && (@grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.Where(p => p.Visible).Count() < 3 && @grupo.GrupoTarifaTrechos[1].TrechosTarifaCodigo.Where(p => p.Visible).Count() < 3))
+                        {
+                    <div class="parcelamento">
+                    </div>
+                        }*@
+                        i++;
+                    //}
+                }
+
+            </div>
+
+            <div class="tarifa">
+                <img class="logocia" src="@grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.First().Trecho.UrlLogoCia" />
+                <input type="hidden" value ="@grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.First().Trecho.SiglaCia"/>
+                <div class="cia">
+                    <span class="nomecia">@grupo.GrupoTarifaTrechos[0].TrechosTarifaCodigo.First().Trecho.NomeCia</span>
+                </div>
+                <ul>
+                    <br />
+                    @if (Model.Tipo == "IdaeVolta")
+                    {
+                        <li class="idaeVolta" style="padding-top: 20px !important">* Inclui ida e volta</li>
+                    }
+                    <li class="idaeVolta">* Preço por adulto</li>
+                    <br />
+                    <li class="valor"><span class="rs">R$</span> @grupo.Valor.ToString("n2")</li>
+                    <br />
+                    @{
+                    FT.Web.Model.Models.AereoModel modelAux = new FT.Web.Model.Models.AereoModel();
+                    FT.Web.Core.Util.Validation.ConvertMethod.EntityToEntity<FT.Web.Model.Models.AereoModel, FT.Web.Model.Models.AereoModel>(Model, ref modelAux);
+                    modelAux.Valor = FTV.Conv.ToDecimal(@grupo.Valor.ToString("n2"));
+                    }
+                    @if (ViewBag.IsMontePacote == null)
+                    {
+                        if (grupo.TarifaOperador)
+                        {
+                        <li>
+                            <img src="~/Images/selo-tarifa-operadora.png" />
+                        </li>
+                        }
+                        <a class="button_comprar_aereo" onclick="Registrar(@Grupo, @Html.Raw(Json.Encode(modelAux)), true, '@grupo.TarifaOperador')">Comprar
+                        </a>
+                        <div>
+                            <img style="height: 31px; margin-left: -9px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="Registrar(@Grupo, @Html.Raw(Json.Encode(modelAux)), false, '@grupo.TarifaOperador')"/>
+                        </div>
+                        <a style="display:block;  cursor: pointer;" onclick="AdicionarOrcamento(@Grupo, @Html.Raw(Json.Encode(modelAux)))">
+                            <div class="aereo-comprar" style="display: none;">
+                            </div>
+                        </a>
+                        <a onclick="VerPrecoParcelas(@Grupo, @Html.Raw(Json.Encode(modelAux)), '@grupo.ValorCusto')" class="btnTesteAzul">Formas de pagamento</a>
+                        <div class="@Grupo-Parcelas tbsParcela">
+                            <div>
+                                <img src="~/Images/loading_transparent.gif" />
+                            </div>
+                            <a onclick="FecharPrecoParcelas(@Grupo,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+                        </div>
+                    }
+                    else
+                    {
+                        if (Model.Tipo == "MultiTrecho")
+                        {
+                        <a style="cursor: pointer;" class="addMPSucess" onclick="AdicionarAereoMontePacoteMulti(@Grupo, @Html.Raw(Json.Encode(modelAux)), '@modelAux.Tipo', @Model.Destinos.Count)">Adicionar ao pacote
+                        </a>
+                        }
+                        else if (Model.Tipo == "IdaeVolta")
+                        {
+                        <a style="cursor: pointer;" class="addMPSucess" onclick="AdicionarAereoMontePacote(@Grupo, @Html.Raw(Json.Encode(modelAux)), '@modelAux.Tipo')">Adicionar ao pacote
+                        </a>
+                        }
+                        else if (Model.Tipo == "SomenteIda")
+                        {
+                        <a style="cursor: pointer;" class="addMPSucess" onclick="AdicionarAereoMontePacoteIda(@Grupo, @Html.Raw(Json.Encode(modelAux)), '@modelAux.Tipo')">Adicionar ao pacote
+                        </a>
+                        }
+                    }
+
+                    @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                    { 
+                        <br />
+                        <div class="clear"></div>
+                        <a href="javascript:"  style="display:block; cursor: pointer;" onclick="AdicionarOrcamento(@Grupo, @Html.Raw(Json.Encode(modelAux)))">
+                            <img src="@string.Format("/Images/bot_orcamento.png")" />
+                        </a>
+                    }
+                </ul>
+
+            </div>
+        </div>
+        <br />
+                    Grupo = Grupo + 1;
+
+                    if (ViewBag.IsMontePacote == null)
+                    {
+                        if (grupo.TarifaOperador)
+                        {
+        <div style="border-bottom: solid 1px #666; font-size: 10px; padding-bottom: 12px; width: 112%">
+            <p style="color: red; width: 446px; padding: 5px; font-size: 10px;">
+                Esta tarifa só pode ser vendida junto a serviços terrestres. Consulte as regras.
+            </p>
+        </div>
+                        }
+                    }
+        }
+
+    }
+</div>
+

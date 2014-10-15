@@ -1,0 +1,385 @@
+﻿@model FT.Web.Model.Models.Venda.VendaModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Destalhe</title>
+</head>
+<body>
+    <div>
+        @foreach (var Reserva in Model.TB_RESERVA.Where(p => p.ID_TIPO_SERVICO == (decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Hotel))
+        {
+            <div class="divReservaHotel">
+                @if (FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Hotel == (FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico)Reserva.ID_TIPO_SERVICO)
+                {
+
+                    <fieldset class="area-reserva">
+                        <legend class="marginLeft17">Hotel</legend>
+                        @foreach (var hotel in Reserva.TB_HOTEL)
+                        {
+                            <div class="cart_item">
+                                <div class="icoTituloHotel"></div>
+                                <span class="TituloMenu">Detalhes da Hospedagem</span>
+                                <br>
+                                <br>
+                                <hr class="hrMenu">
+                                <div class="divItens">
+                                    <span class="SubTitulo">Hotel:</span>
+                                    <span class="ConteudoSubtitulo">@Reserva.DS_SERVICO</span>
+                                    <br>
+                                    <span class="SubTitulo">Check-in:</span>
+                                    <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_INICIAL)</span>
+                                    <br>
+                                    <span class="SubTitulo">Check-out:</span>
+                                    <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_FINAL)</span>
+                                    <br>
+                                    <hr class="hrMenu">
+                                    <br>
+                                    <span class="SubTitulo">Acomodações:</span>
+                                    <span class="ConteudoSubtitulo">@hotel.DS_ACOMODACAO</span>
+                                    <br />
+                                    <span class="SubTitulo"></span>
+                                    <span class="ConteudoSubtitulo">@hotel.NM_CIDADE</span>
+                                    <br />
+                                    <span class="SubTitulo">Regime de Alimentação:</span>
+                                    <span class="ConteudoSubtitulo">@hotel.DS_REGIME_ALIMENTACAO</span>
+                                    <br />
+                                    <fieldset class="fieldSetPassageiro">
+                                        <legend class="item-reserva">Apartamento</legend>
+                                        @foreach (var pax in Reserva.TB_PAX)
+                                        {
+                                            <div>@pax.DS_NOME @pax.DS_SOBRENOME</div>
+                                        }
+                                    </fieldset>
+                                    <br />
+                                    <hr class="hrMenu">
+                                    <div class="regionValores">
+                                        <span class="labelValorTotal">VALOR TOTAL:</span>
+                                        <span class="valorTotal">R$ @Reserva.VL_TOTAL
+                                            
+                                        </span>
+                                        <br>
+                                        <br>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        }
+                    </fieldset>
+
+                }
+            </div>
+        }
+
+        @foreach (var Reserva in Model.TB_RESERVA.Where(p => p.ID_TIPO_SERVICO == (decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Aereo))
+        {
+            
+            <fieldset class="area-reserva">
+                <legend class="marginLeft17">Aéreo</legend>
+
+                <div class="cart_item widthDivAereo">
+                    <div class="icoTituloAereo"></div>
+                    <span class="TituloMenu">Detalhes da Passagem</span>
+                    <br>
+                    <br>
+                    <hr class="hrMenu">
+                    <div class="divItens">
+
+                        <span class="SubTitulo" /><span class="ConteudoSubtitulo">
+
+                            <table  cellspacing="0" cellpadding="0"  class="tabelaAereo">
+                                <th colspan="4">Segmento/Conexão</th>
+                                <tr>
+                                    <td>CIA
+                                    </td>
+                                    <td>Saindo de 
+                                    </td>
+                                    <td>Chegando em
+                                    </td>
+                                    <td>Voo
+                                    </td>
+
+                                </tr>
+                                @foreach (var aereo in Reserva.TB_AEREO)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(aereo.DS_URL_FOTO_CIA))
+                                            {
+                                                @aereo.NM_CIA
+                                            }
+                                            else
+                                            {
+                                                <img src="@aereo.DS_URL_FOTO_CIA" class="imgCiaAerea" title="@aereo.NM_CIA"/>
+                                            }
+                                        </td>
+                                        <td>
+                                            @aereo.SG_AEROPORTO_EMBARQUE
+                                        </td>
+                                        <td>
+                                            @aereo.SG_AEROPORTO_CHEGADA
+                                        </td>
+                                        <td>
+                                            @aereo.NR_VOO
+                                        </td>
+
+                                    </tr>
+                                }
+                            </table>
+
+                        </span>
+
+                        <br>
+
+                        <hr class="hrMenu">
+                        <br />
+                        <fieldset class="fieldSetPassageiro">
+                            <legend class="item-reserva" >Passageiros</legend>
+                            @foreach (var pax in Reserva.TB_PAX)
+                            {
+                                <div>@pax.DS_NOME @pax.DS_SOBRENOME</div>
+                            }
+                        </fieldset>
+                        <br />
+                        <hr class="hrMenu">
+                        <div class="regionValores">
+                            <span class="labelValores">VALOR :</span>
+                            <span class="Valores">R$ @Reserva.VL_VENDA</span>
+                            <br />
+                            <span class="labelValores">TAXA :</span>
+                            <span class="Valores">R$ @Reserva.VL_TAXA</span>
+                            <br />
+                            <span class="labelValorTotal">VALOR TOTAL:</span>
+                            <span class="valorTotal">R$ @Reserva.VL_TOTAL
+                                <label id="lblTotal" name="lblTotal"></label>
+                            </span>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+
+            </fieldset>
+             
+        }
+
+        @foreach (var Reserva in Model.TB_RESERVA.Where(p => p.ID_TIPO_SERVICO == (decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Locadora))
+        {
+            <fieldset class="area-reserva">
+                <legend class="marginLeft17">Locadora</legend>
+                @foreach (var carro in Reserva.TB_CARRO)
+                {
+                    <div class="cart_item">
+                        <div class="icoTituloCarro"></div>
+                        <span class="TituloMenu">Detalhes da Locação</span>
+                        <br>
+                        <br>
+                        <hr class="hrMenu">
+                        <div class="divItens">
+                            <span class="SubTitulo"></span>
+                            <span class="ConteudoSubtitulo">@Reserva.DS_SERVICO</span>
+                            <br>
+                            <span class="SubTitulo">Data Retirada:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_INICIAL)</span>
+                            <br>
+                            <span class="SubTitulo">Data Devolução:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_FINAL)</span>
+                            <br>
+                            <hr class="hrMenu">
+                            <br>
+                            <fieldset class="fieldSetPassageiro">
+                                <legend class="item-reserva" >Condutor</legend>
+                                @foreach (var pax in Reserva.TB_PAX)
+                                {
+                                    <div>@pax.DS_NOME @pax.DS_SOBRENOME</div>
+                                }
+                            </fieldset>
+                            <br />
+                            <hr class="hrMenu">
+                            <div class="regionValores">
+                                <span class="labelValorTotal">VALOR TOTAL:</span>
+                                <span class="valorTotal">R$ @Reserva.VL_TOTAL
+                                    <label id="lblTotal" name="lblTotal"></label>
+                                </span>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            </fieldset>     
+        }
+
+        @foreach (var Reserva in Model.TB_RESERVA.Where(p => p.ID_TIPO_SERVICO == (decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Circuito))
+        {
+            <fieldset class="area-reserva">
+                <legend class="marginLeft17">Circuito</legend>
+                @foreach (var circuito in Reserva.TB_CIRCUITO)
+                {
+                    <div class="cart_item">
+                        <div class="icoTituloHotel"></div>
+                        <span class="TituloMenu">Detalhes do Circuito</span>
+                        <br>
+                        <br>
+                        <hr class="hrMenu">
+                        <div class="divItens">
+                            <span class="SubTitulo"></span>
+                            <span class="ConteudoSubtitulo">@Reserva.DS_SERVICO</span>
+                            <br>
+                            <span class="SubTitulo">Data Inicial:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_INICIAL)</span>
+                            <br>
+                            <span class="SubTitulo">Data Final:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_FINAL)</span>
+                            <br>
+                            <hr class="hrMenu">
+                            <br>
+                            <fieldset class="fieldSetPassageiro">
+                                <legend class="item-reserva" >Passageiro(s)</legend>
+                                @foreach (var pax in Reserva.TB_PAX)
+                                {
+                                    <div>@pax.DS_NOME @pax.DS_SOBRENOME</div>
+                                }
+                            </fieldset>
+                            <br />
+                            <hr class="hrMenu">
+                            <div class="regionValores">
+                                <span class="labelValorTotal">VALOR TOTAL:</span>
+                                <span class="valorTotal">R$ @Reserva.VL_TOTAL
+                                    <label id="lblTotal" name="lblTotal"></label>
+                                </span>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            </fieldset>
+        }
+
+        @{
+            List<decimal> lstEnunsServico = new List<decimal>();
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Assistencia_Viagem);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Circuito_Servico);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Ingresso);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Multas);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Passeio_Servico);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Restaurante);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Taxas);
+            lstEnunsServico.Add((decimal)FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Transfer);
+        }
+
+        @foreach (var group in Model.TB_RESERVA.Where(p => lstEnunsServico.Contains(Convert.ToDecimal(p.ID_TIPO_SERVICO))).GroupBy(p => p.ID_TIPO_SERVICO).ToList())
+        {
+            <fieldset class="area-reserva">
+                <legend class="marginLeft17">@group.FirstOrDefault().DS_TIPO_SERVICO</legend>
+                @foreach (var Reserva in group)
+                {
+                    foreach (var atv in Reserva.TB_ATIVIDADE)
+                    {
+                    <div class="cart_item">
+                        @switch ((FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico)Reserva.ID_TIPO_SERVICO)
+                        {
+                            case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Pacote:
+                                {
+                            <div class="icoTituloPacote"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Assistencia_Viagem:
+                                {
+                            <div class="icoTituloAssistenciaViagem"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Circuito_Servico:
+                                {
+                            <div class="icoTituloTransfer"></div>
+                                    break;
+                                }
+                                 case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Ingresso:
+                                {
+                            <div class="icoTituloIngresso"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Multas:
+                                {
+                            <div class="icoTituloMulta"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Passeio_Servico:
+                                {
+                            <div class="icoTituloTransfer"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Taxas:
+                                {
+                            <div class="icoTituloTaxa"></div>
+                                    break;
+                                }
+                                case FT.Web.Model.Models.Venda.ReservaVendaModel.EnumTipoServico.Transfer:
+                                {
+                            <div class="icoTituloTransfer"></div>
+                                    break;
+                                }
+                               
+                                
+                            default:
+                                break;
+                        }
+
+                        <span class="TituloMenu">Detalhes da Taxa</span>
+                        <br>
+                        <br>
+                        <hr class="hrMenu">
+                        <div class="divItens">
+                            <span class="SubTitulo"></span>
+                            <span class="ConteudoSubtitulo">@Reserva.DS_SERVICO</span>
+                            <br>
+                            <span class="SubTitulo">Data Inicial:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_INICIAL)</span>
+                            <br>
+                            <span class="SubTitulo">Data Final:</span>
+                            <span class="ConteudoSubtitulo">@string.Format("{0:dd/MM/yyyy}", Reserva.DT_FINAL)</span>
+                            <br>
+                            <hr class="hrMenu">
+                            <br>
+                            <fieldset class="fieldSetPassageiro">
+                                <legend class="item-reserva" >Passageiro(s)</legend>
+                                @foreach (var pax in Reserva.TB_PAX)
+                                {
+                                    <div>@pax.DS_NOME @pax.DS_SOBRENOME</div>
+                                }
+                            </fieldset>
+                            <br />
+                            <hr class="hrMenu">
+                            <div class="regionValores">
+                                <span class="labelValorTotal">VALOR TOTAL:</span>
+                                <span class="valorTotal">R$ @Reserva.VL_TOTAL
+                                    <label id="lblTotal" name="lblTotal"></label>
+                                </span>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    }
+                }
+            </fieldset>    
+        }
+
+    </div>
+</body>
+</html>

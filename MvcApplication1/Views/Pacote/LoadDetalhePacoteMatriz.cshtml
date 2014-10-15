@@ -1,0 +1,446 @@
+﻿@using System.Linq;
+
+@model IList<FT.Web.Model.Models.PacoteModel>
+@{
+    ViewBag.Title = "Detalhe Pacote - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos ";
+}
+<script src="~/Scripts/PacoteDetalhe.js"></script>
+<script src="~/Scripts/fancybox/jquery.fancybox.pack.js"></script>
+<link href="~/Content/PacoteX.css" rel="stylesheet" />
+<link href="~/Content/jquery/jquery.fancybox.css" rel="stylesheet" />
+<link href="~/Content/HotelResult.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery.fancybox.js"></script>
+<script src="~/Scripts/jquery/jquery.simplemodal.js"></script>
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="~/Scripts/WithLabel.js"></script>
+
+<style>
+    .preco div#slider-range {
+        background-color: #CCCCCC;
+        border: solid 1px #666;
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+
+    .preco {
+        width: 206px;
+        height: 85px;
+    }
+</style>
+
+<div id="orcamentocontent">
+</div>
+@using (Ajax.BeginForm("LoadDetalhePacoteMatriz", "Pacote", new AjaxOptions { UpdateTargetId = "DivPai", HttpMethod = "Post" }, new { id = "frmFiltros" }))
+{
+    RouteValueDictionary tRVD = new RouteValueDictionary(ViewContext.RouteData.Values);
+    if (Model.Count > 0)
+    {
+        foreach (FT.Web.Model.Models.PacoteModel PacoteMatriz in Model)
+        {    
+    <div style="margin: auto; width: 990px;" id="DivPai">
+
+        <div style="width: 260px; float: left;" id="divFiltros">
+
+            <div id="divFiltrosContent">
+                <div id="headerResultados" class="clearfix" style="margin: 10px;">
+                    <span style="font-family: Verdana; color: white; font-size: 20px;" class="iconeMala">Pesquisar</span>
+                </div>
+                <div id="divRefazerBusca">
+                    <div id="divCidade">
+                        <br />
+                        <ul>
+                            <li>
+                                <span class="lblFiltro">Cidade de Embarque</span>
+                            </li>
+                            <li>
+                                <input type="hidden" name="hdnCidadesEmbarquePacDest"  id="hdnCidadesEmbarquePacDest" value="@PacoteMatriz.CodigoEmbarque" />
+                                <input type="hidden" name="hdnCidadesDestinoPacDest"  id="hdnCidadesDestinoPacDest" value="@PacoteMatriz.CodigoDestino" />
+                                <select id="ddlCidadesEmbarquePacDest" name="ddlCidadesEmbarquePacDest" class="selectPacote">
+                                    @foreach (FT.Web.Model.Models.PaisModel Paises in PacoteMatriz.Pais)
+                                    {
+                                        foreach (FT.Web.Model.Models.CidadeModel Cidades in Paises.Cidade)
+                                        {  
+                                        <option value="@Cidades.ID_CIDADE">@Cidades.NM_CIDADE</option>
+                                        }
+                                    }
+                                </select>
+                                <br />
+                            </li>
+                            <li style="margin-top: 10px;"><span class="lblFiltro">Mês/Ano</span></li>
+                            <li>
+                                <select id="ddlDataViagem" name="ddlDataViagem" class="selectPacote">
+                                    <option>@PacoteMatriz.DataSaidaSiteCombo</option>
+                                </select><br />
+                            </li>
+                            <li style="margin-top: 10px;"><span class="lblFiltro">Data de Saída</span></li>
+                            <li>
+                                <select id="ddlDataViagemDia" name="ddlDataViagemDia" class="selectPacote">
+                                    <option>@PacoteMatriz.DataSaidaPadraoDetalhe</option>
+                                </select>
+                                <br />
+                            </li>
+                        </ul>
+                    </div>
+                    <hr style="color: #f75918" />
+                    <div id="chamada" class="clearfix">
+                        <hr style="height: 1px; margin: 20px; background-color: #f75918;" />
+                        <div id="chamadaLeft">
+                            <input type="button" class="buttonPacote" value="" onclick="mudar();" />
+                            <input type="button" class="buttonPacoteRemover" value="" onclick="remover();" />
+                            <span style="font-family: Verdana; font-weight: bold; font-size: 12px; color: #00387b;">Adicionar Quarto:</span>
+                            <br />
+                            @{
+                                    int TotalPassageiro = 0;}
+                            @if (PacoteMatriz.Apartamentos.Count > 0)
+                            {
+                                int counterApartamento = 1;
+                                int counterPassageiro = 0;
+                                int counterCrianca = 0;
+                                foreach (FT.Web.Model.Models.ApartamentoModel Apartamento in PacoteMatriz.Apartamentos.OrderBy(p => p.ValorTotal))
+                                {
+                                <hr style="height: 1px; margin: 20px; background-color: #d6d6d6;" id="hrQuarto@{@counterApartamento}" name="hrQuarto@{@counterApartamento}">
+                                    counterPassageiro = 0;
+                                <div id="agrpQuarto@{@counterApartamento}" name="agrpQuarto@{@counterApartamento}">
+                                    <span style="font-family: Verdana; font-weight: bold; margin-left: 20px; font-size: 12px; color: #00387b;">Quarto 0@{@counterApartamento}</span>
+                                    <br />
+                                    @{
+                                    counterPassageiro = Apartamento.Passageiros.Where(p => p.IdadePassageiro > 12).Count();
+                                    TotalPassageiro = Apartamento.Passageiros.Count();
+                                    }
+                                    <div class="quants">
+                                        <label>Adultos</label><br>
+                                        <div>
+                                            <a href="javascript:" class="plus" onclick="Mais('ddlQ@{@counterApartamento}Adulto')"></a>
+                                            <input value="@{@counterPassageiro}" data-val="true" data-val-number="The field QuantidadeAdulto must be a number." data-val-required="The QuantidadeAdulto field is required." id="ddlQ@{@counterApartamento}Adulto" name="ddlQ@{@counterApartamento}Adulto" onkeypress="return isNumberKey(event)" type="text">
+                                            <a href="javascript:" class="minus" onclick="Menos('ddlQ@{@counterApartamento}Adulto')"></a>
+                                        </div>
+                                    </div>
+                                    @{
+                                    counterCrianca = 0;
+                                    counterCrianca = Apartamento.Passageiros.Where(p => p.IdadePassageiro < 12).Count();
+                                    }
+                                    <div class="quants">
+                                        <label>Crianças</label><br>
+                                        <div>
+                                            <a href="javascript:" class="plus" onclick="aumentarIdade('ddlQ@{@counterApartamento}crianca', 'mais',@counterApartamento)" ></a>
+                                            <input value="@{@counterCrianca}" data-val="true" data-val-number="The field QuantidadeAdulto must be a number." data-val-required="The QuantidadeAdulto field is required." id="ddlQ@{@counterApartamento}crianca" name="ddlQ@{@counterApartamento}crianca" onkeypress="return isNumberKey(event)" type="text">
+                                            <a href="javascript:" class="minus" onclick="aumentarIdade('ddlQ@{@counterApartamento}crianca', 'menos',@counterApartamento)"></a>
+                                        </div>
+                                    </div>
+                                    @if (counterCrianca != 0)
+                                    {
+                                        <div class="quants">
+                                            <label id="lblidades@{@counterApartamento}" name="lblidades@{@counterApartamento}">Idades</label><br>
+                                            <div name="divIdadecrianca@{@counterApartamento}" id="divIdadecrianca@{@counterApartamento}">
+                                                @foreach (FT.Web.Model.Models.PassageiroModel Criancas in Apartamento.Passageiros)
+                                                {
+                                                    if (Convert.ToInt32(Criancas.IdadePassageiro) < 12)
+                                                    {
+                                                    <a href="javascript:" class="plus" onclick="Mais('ddlQ@{@counterApartamento}crianca@{@counterCrianca}')" ></a>
+                                                    <input value="@Criancas.IdadePassageiro" data-val="true" data-val-number="The field QuantidadeAdulto must be a number." data-val-required="The QuantidadeAdulto field is required." id="ddlQ@{@counterApartamento}crianca@{@counterCrianca}" name="ddlQ@{@counterApartamento}crianca@{@counterCrianca}" onkeypress="return isNumberKey(event)" type="text">
+                                                    <a href="javascript:" class="minus" onclick="Menos('ddlQ@{@counterApartamento}crianca@{@counterCrianca}')"></a>
+                                            
+                                                        counterCrianca = counterCrianca + 1;
+
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div> 
+                                    counterPassageiro = 1;
+                                    counterApartamento = counterApartamento + 1;
+                                }
+                                <input type="hidden" value="@PacoteMatriz.Apartamentos.Count()" id="qtdQuartos" name="qtdQuartos">
+                            }
+                            else
+                            {
+                                <div id="agrpQuarto1" name="agrpQuarto1">
+                                    <span style="font-family: Verdana; font-weight: bold; margin-left: 20px; font-size: 12px; color: #00387b;">Quarto 01</span>
+                                    <br />
+                                    <div class="quants">
+                                        <label>Adultos</label><br>
+                                        <div>
+                                            <a href="javascript:" class="plus" onclick="Mais('ddlQ1Adulto')"></a>
+                                            <input value="2" data-val="true" data-val-number="The field QuantidadeAdulto must be a number." data-val-required="The QuantidadeAdulto field is required." id="ddlQ1Adulto" name="ddlQ1Adulto" onkeypress="return isNumberKey(event)" type="text">
+                                            <a href="javascript:" class="minus" onclick="Menos('ddlQ1Adulto')"></a>
+                                        </div>
+                                    </div>
+                                    <div class="quants">
+                                        <label>Criancas</label><br>
+                                        <div>
+                                            <a href="javascript:" onclick="aumentarIdade('ddlQ1crianca', 'mais',1)" class="plus"></a>
+                                            <input value="0" data-val="true" data-val-number="The field QuantidadeAdulto must be a number." data-val-required="The QuantidadeAdulto field is required." id="ddlQ1crianca" name="ddlQ1crianca" onkeypress="return isNumberKey(event)" type="text">
+                                            <a href="javascript:" onclick="aumentarIdade('ddlQ1crianca', 'menos',1)" class="minus"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="1" id="qtdQuartos" name="qtdQuartos">
+                            }
+                            @if (PacoteMatriz.Apartamentos.Count > 0)
+                            {
+                                <input type="hidden" name="hdnTotalPassageiro" id ="hdnTotalPassageiro" value="@{@TotalPassageiro}" />
+                            }
+                            else
+                            {
+                                <input type="hidden" name="hdnTotalPassageiro" id="hdnTotalPassageiro" value="2" />
+                            }
+                        </div>
+                        <div id="chamadaRight">
+                            <input type="hidden" value="@tRVD["nome"]" name="nomeGet" id="nomeGet"/>
+                            <input type="hidden" value="@tRVD["id"]" name="idGet" id="idGet"/>
+                            <input type="hidden" value="@tRVD["data"]" name="dataGet" id="dataGet"/>
+                            <input type="hidden" value="@tRVD["origem"]" name="origemGet" id="origemGet"/>
+                        </div>
+                    </div>
+                    <a class="button_voltar_pacote" onclick="history.go(-1);">< Voltar </a>
+                    <input class="buttonPacoteRefazer" name="btnSubmit" id="btnSubmit" type="button" value="Refazer Busca" />
+                    <hr style="color: #d6d6d6;" />
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+
+            <div id="divFiltroPacote"> 
+                <div id="divFiltroPacoteContent">
+                    <div id="headerFiltroPacote" class="clearfix">
+                        <span class="subTituloFiltro" class="iconeMala">Filtrar</span>
+                    </div>
+                    <input type="hidden" id="hdnIsFiltro" name="hdnIsFiltro" value="0" />
+
+                    <div id="divBackgroundFiltroPacote">
+                        <div style="margin-left: 20px;">
+                            <br />
+                            <ul>
+                                <li>
+                                    <span class="lblFiltro">Nome do Hotel</span>
+                                </li>
+                                <li>
+                                    <input type="text" style="width: 200px;" id="txtNome" name="txtNome" onkeyup="SearchHotelName();" />
+                                </li>
+                                <li>
+                                    <span class="lblFiltro">Faixa de preço (valor + taxas)</span>
+                                </li>
+                                <li>
+
+                                    <div class="preco">
+                                        <p>
+                                            <input type="text" id="amount" name="amount" class="inputFiltro" style="color: #f6931f; font-weight: bold; width: 200px;" />
+                                        </p>
+                                        <div id="slider-range"></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <label class="lblFiltro">Estrelas</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" value="3" name="stars" id="radio1" />
+                                    <label for="radioEstrela3">
+                                        <div class="estrela1"></div>
+                                    </label>
+                                    <br />
+                                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio2" name="stars" value="4">
+                                    <label for="radio2">
+                                        <div class="estrela2"></div>
+                                    </label>
+                                    <br />
+                                    <input type="checkbox" class="buscadorlabel numeroestrelas" checked="checked" id="radio3" name="stars" value="5">
+                                    <label for="radio3">
+                                        <div class="estrela3"></div>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="DivPai2" style="float: left; width: 688px; margin-top: 10px; margin-left: 10px;">
+            <div class="pacote-detalhes">
+                <div class="pacote-detalhes-cabecalho">
+                    <div class="pacote-detalhes-left">
+                        <div class="pacote-detalhes-ico-titulo"></div>
+                        <p class="pacote-detalhes-titulo">@PacoteMatriz.NomePacote.Replace("-", " ")</p>
+                        <div class="clear"></div>
+                        <div class="pacote-detalhes-inclui">
+
+
+
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Aereo) > 0)
+                            {
+                                <div class="matriz-inclui-passagem">
+                                    <div class="matriz-inclui-passagem-img"></div>
+                                    <p class="matriz-inclui-passagem-p">Passagem</p>
+                                </div>
+                            }
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Hotel) > 0)
+                            {
+                                <div class="matriz-inclui-hotel">
+                                    <div class="matriz-inclui-hotel-img"></div>
+                                    <p class="matriz-inclui-hotel-p">Hotel</p>
+                                </div>
+                            }
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Locadora) > 0)
+                            {  
+                                <div class="matriz-inclui-carro">
+                                    <div class="matriz-inclui-carro-img"></div>
+                                    <p class="matriz-inclui-carro-p">Carro</p>
+                                </div>
+                            }
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Transfer) > 0)
+                            {
+                                <div class="matriz-inclui-traslado">
+                                    <div class="matriz-inclui-traslado-img"></div>
+                                    <p class="matriz-inclui-traslado-p">Traslados</p>
+                                </div>
+                            }
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.PasseioServiço) > 0)
+                            {
+                                <div class="matriz-inclui-traslado">
+                                    <div class="matriz-inclui-traslado-img"></div>
+                                    <p class="matriz-inclui-traslado-p">Passeio</p>
+                                </div>
+                            }
+                            @if (PacoteMatriz.PacoteServico.Count(p => p.idServico == (long)FT.Web.Model.Models.EnumPacoteTipoServico.Ingresso) > 0)
+                            {
+                                <div class="matriz-inclui-ingresso">
+                                    <div class="matriz-inclui-ingresso-img"></div>
+                                    <p class="matriz-inclui-ingresso-p">Ingresso</p>
+                                </div>
+                            }
+
+                            <div class="clear"></div>
+                        </div>
+                        <p class="pacote-detalhes-saindode">
+                            Saindo de <strong>
+                                <label id="LocalSaidaDestaque" style="font-weight: bold">@PacoteMatriz.LocalSaida</label></strong>, em <strong>
+                                    <label id="DataSaidaDestaque" name="DataSaidaDestaque" style="font-weight: bold">@PacoteMatriz.DataSaidaSite</label></strong>
+                        </p>
+                        <input type = "hidden" id="hdnMesDefault" name="hdnMesDefault" value="@PacoteMatriz.Mes" />
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div>
+                    @{int counter = 1;}
+                    <div class="pacote-detalhes-destino">
+                        @foreach (FT.Web.Model.Models.DestinoModel Destino in PacoteMatriz.DadosDestino)
+                        {
+                            <div class="galeria-detalhes-pacote">
+                                @foreach (FT.Web.Model.Models.DestinoFoto DestinoFoto in Destino.Foto)
+                                {
+                                    if (counter == 1)
+                                    {
+                                    <div class="galeria-detalhes-pacote-exibir">
+                                        <img width="285px" height="210px" src="@DestinoFoto.DestinoFotoUrl" />
+                                    </div>
+                                    }
+                                    <div class="galeria-detalhes-pacote-min">
+                                        <a  class="grouped_elements"  rel="group1" id="single_image" href="@DestinoFoto.DestinoFotoUrl">
+                                            <img  width="40px" height="40px" src="@DestinoFoto.DestinoFotoUrl" /></a>
+                                    </div>
+                                    { counter = counter + 1; }
+                                }
+                            </div>
+                            <div class="pacote-detalhes-destino-texto">
+                                <p class="pacote-detalhes-destino-texto-1">Sobre o Destino</p>
+                                <p style="font-family: Verdana; font-size: 0.8em; text-align: justify;">@Destino.DescricaoDestino</p>
+                            </div>
+                        }
+                        <div class="clear"></div>
+                    </div>
+                    <div id="tabs" class="pacote tabs">
+                        <ul style="margin-left: 5px;">
+                            <li><a href="#tabs-1">Opções de Hospedagem</a></li>
+                            <li><a href="#tabs-2">Serviços Inclusos</a></li>
+                            <li><a href="#tabs-3">Roteiro Dia Dia</a></li>
+                            <li><a href="#tabs-4">Outros</a></li>
+                            <li style="border-bottom: 1px solid #f05c18; height: 40px; width: 133px; float: left;"><span></span></li>
+                        </ul>
+                        <div class="clear"></div>
+                        <div id="mensagemRefazer" style="display: none; border: 1px solid red; border-radius: 10px; margin: 15px; padding: 19px; color: red;">
+                            O dados da busca foram alterados, será necessário refazer a busca!
+                        </div>
+                        <div id="GridDetalhePacoteMatriz">
+                        </div>
+                        <div id="tabs-2">
+                            <div class="pacotes-detalhes-hospedagem">
+                                <div class="conteudo-pacote">
+                                    <p class="pacotes-detalhes-titulo">Detalhes do Pacote - <strong>Serviços Inclusos</strong></p>
+                                    <ul class="pacotes-detalhes-servicos-inclusos">
+                                        @foreach (FT.Web.Model.Models.PacoteDescricaoServicoModel DescricaoServico in PacoteMatriz.PacoteDescricaoServico.Where(p => p.Descricao != ""))
+                                        {
+                                            @Html.Raw("<li>" + @DescricaoServico.Descricao.Replace(";", "</li><br/><li>") + "</li>")
+                                        }
+                                    </ul>
+                                </div>
+                                <hr class="pacote-detalhes-separacao">
+                            </div>
+                        </div>
+                        <div id="tabs-3">
+                            <div class="pacotes-detalhes-hospedagem">
+                                <div class="conteudo-pacote">
+                                    <p class="pacotes-detalhes-titulo">Detalhes do Pacote - <strong>Dia a Dia</strong></p>
+                                    @foreach (FT.Web.Model.Models.RoteiroModel Roteiro in PacoteMatriz.Roteiro)
+                                    {
+                                        <p class="pacotes-detalhes-roteiro">
+                                            <strong>@Roteiro.DiaRoteiro Dia - @Roteiro.TituloRoteiro</strong><br>
+                                            @Roteiro.DescricaoRoteiro
+                                        </p>
+                                    }
+                                </div>
+                                <hr class="pacote-detalhes-separacao">
+                            </div>
+                        </div>
+                        <div id="tabs-4">
+                            <div class="pacotes-detalhes-hospedagem">
+                                <div class="conteudo-pacote">
+                                    <p class="pacotes-detalhes-titulo">Detalhes do Pacote - <strong>Observações</strong></p>
+                                    @foreach (FT.Web.Model.Models.PacoteDescricaoModel Descricao in PacoteMatriz.PacoteDescricao)
+                                    {
+                                        <p class="pacotes-detalhes-observacoes"><strong>@Descricao.Titulo</strong></p>
+                                        <ul class="pacotes-detalhes-observacoes-lista">
+                                            @if (Descricao.Descricao != null)
+                                            {
+                                                if (Descricao.Descricao.Contains('*'))
+                                                {
+                                                    string[] parts = Descricao.Descricao.Split('*');
+                                                    foreach (var PaccDes in parts)
+                                                    {
+                                                        if (PaccDes != "")
+                                                        {
+                                                <li>@PaccDes</li>
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                @Html.Raw("<li>" + @Descricao.Descricao.Replace(";", "</li><br/><li>") + "</li>")
+                                                }
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                                <hr class="pacote-detalhes-separacao">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="gridCarrinho" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>    
+        }
+    }
+    else
+    {
+    <h2>Pacote Não Encontrado</h2>
+    <br />
+    <label>Volte para nosso site acessando o Link  http://www.flytourviagens.com.br</label>
+    }
+}

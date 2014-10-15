@@ -1,0 +1,114 @@
+﻿@model FT.Web.Model.Models.ConsultaPacoteRetorno
+
+@{int j = 0; string back2 = string.Empty;}
+<div class="idaevoltapacote" style="margin-top: 0; width: 664px; padding-top: 0; min-height: 30px; background-color: #7580A8; color: #FFF; font-weight: normal !important; border-top-right-radius: 10px; border-top-left-radius: 10px;">
+    <div class="labelaereo" style="width: 120px; margin-right: 10px;"><span class="tituloAereoPacote">Nome Hotel</span></div>
+    <div class="labelaereo" style="width: 80px; margin-right: 10px;"><span class="tituloAereoPacote">Categoria</span></div>
+    <div class="labelaereo" style="width: 90px; margin-right: 10px;"><span class="tituloAereoPacote">Regime</span></div>
+    <div class="labelaereo" style="width: 10px; margin-right: 10px;"><span class="tituloAereoPacote">D</span></div>
+    <div class="labelaereo" style="width: 100px; margin-right: 10px;">
+        <span class="tituloAereoPacote">Preço por pessoa
+            <div class="labelaereo" style="width: 100px"><span class="tituloAereoPacote">(apto. duplo)</span></div>
+        </span>
+    </div>
+    <div class="labelaereo" style="width: 70px"><span class="tituloAereoPacote"></span></div>
+    <img style="float: right; margin-right: 5px; margin-top: 2px; cursor: pointer" src="~/Content/images/btnfechar.png" onclick="esconderPacotesVenda()" />
+</div>
+@if (Model != null && Model.ListaAereoPacote != null && Model.ListaAereoPacote.Count > 0 && Model.ListaAereoPacote.Any(p => p.ValorReferencia > 0))
+{
+    <div></div>
+   
+    foreach (var pacote in Model.ListaAereoPacote)
+    {
+        if (pacote.ValorReferencia > 0)
+        {
+            if (j % 2 == 0) { back2 = "background-color: #EFF0FF;"; } else { back2 = "background-color: white;"; }
+    <div style="width: 676px; height: auto; margin-bottom: 5px; @back2">
+        <label style="margin-top: 35px; margin-left: 10px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 120px; margin-right: 10px;">
+            @pacote.NomeHotel
+        </label>
+        <label style="margin-top: 35px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 80px; margin-right: 10px;">
+            @pacote.DescricaoAcomodacao
+        </label>
+        <label style="margin-top: 35px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 90px; margin-right: 10px;">
+            @pacote.DescricaoRegimeAlimentacao
+        </label>
+        <label style="margin-top: 35px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 10px; margin-right: 10px;">
+            @pacote.QuantidadeApartamentoDisponivel
+        </label>
+        <label style="margin-top: 35px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 70px; margin-right: 10px;">
+            @if (pacote.Acomodacoes.Count > 0 && pacote.Acomodacoes.Any(p => p.NumeroPax == 2))
+            {
+                <label>@pacote.SiglaMoeda @((pacote.Acomodacoes.First(p => p.NumeroPax == 2).ValorVenda).ToString("n2"))</label>
+            }
+           @* @if (pacote.Acomodacoes.Count > 0 && pacote.Acomodacoes.Any(p => p.NumeroPax == 2))
+            {
+                <label style="margin-top: 5px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 70px;">
+                    @pacote.SiglaMoeda @pacote.ValorTaxa.ToString("n2")
+                </label>
+            }
+            else
+            {
+                <label style="margin-top: 5px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 70px;">
+                    R$ 0.00
+                </label>
+            }*@
+        </label>
+        <div id="divcalcular-@pacote.CodigoPacote" style=" color: #7B7B7B; font-size: 10px !important; margin-bottom: 5px; width: 120px; margin-left: 0px; margin-top: 22px; float: left;">
+           <div style="width:80px; margin-top:8px;"> <a id="calcular-@pacote.CodigoPacote" style=" cursor:pointer; text-decoration:underline;" onclick="CalcularPrecoPacote(@pacote.CodigoPacote)">Calcular Total da Viagem</a></div>
+        </div>
+        <div style="width: 125px; float: left;">
+            <a class="button_ver_pacote" style="padding:0; font-size: 11px !important; margin-bottom: 5px; margin-left: 0px; margin-top: 0px;" onclick="VerPrecoParcelasAP(@pacote.CodigoPacote)">Formas de Pagamento</a>
+            <a class="button_ver_pacote" style="padding:0; font-size: 11px !important; margin-bottom: 5px; margin-left: 0px; margin-top: 0px;" onclick="VerPrecoAP(@pacote.CodigoPacote,'Preco')">Outras Acomodações</a>
+            <a class="button_ver_pacote" style="padding:0; color:#F05C18; font-size: 11px !important; margin-bottom: 5px; width: 85px; margin-left: 0px; margin-top: 0px;" onclick="AdicionarCarrinhoPA(@pacote.CodigoPacote, false)">Carrinho</a>
+            @if (pacote.QuantidadeApartamentoDisponivel > 0)
+            {
+                <a class="button_ver_pacote" style="padding:0; color:#428340;font-size: 11px !important; margin-bottom: 5px; margin-left: 0px; margin-top: 0px;" onclick="AdicionarCarrinhoPA(@pacote.CodigoPacote, true)">Comprar</a>
+            }
+            else
+            {
+                <a class="button_ver_pacote" style="padding:0; color:#F05C18;font-size: 11px !important; margin-bottom: 5px; margin-left: 0px; margin-top: 0px;" onclick="AdicionarCarrinhoPA(@pacote.CodigoPacote, true)">Solicitar</a>
+            }
+
+            <div class="@pacote.CodigoPacote-Preco" style="margin-top: -129px;position: absolute;padding: 10px 20px;box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);border: 1px solid #F37736;border-radius: 8px 8px 8px 8px;background: #F5F8FA;display:none;border-radius: 10px 10px 10px 10px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbDetalhePreco">
+                    <tbody>
+
+                        @foreach (var PassageiroPacote in pacote.Acomodacoes)
+                        {
+                            <tr>
+                                <td>@PassageiroPacote.DescricaoTipoAcomodacao</td>
+                                <td>@pacote.SiglaMoeda @PassageiroPacote.ValorVenda.ToString("n2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a onclick="FecharPrecoAP(@pacote.CodigoPacote,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+            </div>
+
+            <div class="@pacote.CodigoPacote-Parcelas tbsParcela">
+                <div>
+                    <img src="~/Images/loading_transparent.gif" />
+                </div>
+                <a onclick="FecharPrecoParcelasAP(@pacote.CodigoPacote,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+            </div>
+        </div>
+
+        <div style="clear: both"></div>
+
+    </div>
+    
+                        j++;
+        }
+    }
+}
+else
+{ 
+    <div style="width: 676px; height: auto; margin-bottom: 5px; @back2">
+        <div style="height: 20px; width: 1px;">
+            <label style="margin-top: 5px; margin-left: 10px; float: left; font-family: verdana; color: #7B7B7B; font-size: 11px; width: 350px;">
+                Não foram encontrados pacotes para esta consulta!
+            </label>
+        </div>
+    </div>
+}

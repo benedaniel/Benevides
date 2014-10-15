@@ -1,0 +1,95 @@
+﻿@model List<FT.Web.Model.Models.PacoteDestaqueModel>
+<script>
+    $(function () {
+        $('#slidesPacotesNacionais').slidesjs({
+            width: 500,
+            height: 420,
+            play: {
+                active: false,
+                effect: "slide",
+                interval: 20000,
+                auto: true,
+                swap: true,
+                pauseOnHover: true
+            }
+        });
+    });
+</script>
+@if (Model.Count() > 4)
+{
+    @Html.Raw(" <div class='container'>");
+    @Html.Raw(" <div id='slidesPacotesNacionais'>");
+}
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    if (i % 4 == 0 && i != 0)
+    {
+    @Html.Raw("</div>");
+    }
+    if (i % 4 == 0 || i == 0)
+    {
+    @Html.Raw("<div>");
+    }
+    <a href="~/Pacote/LoadDetalhePacoteMatriz/@Model[i].CodigoPacote/@Model[i].DataInicio.ToString("yyyy-MM-dd")/@Model[i].CodigoCidadeOrigem" onclick="$('.loadingDefault').show();">
+        <div class="box-pacotes-left">
+            <div class="box-pacotes-img">
+                @for (int j = 0; j < Model[i].Fotos.Count(); j++)
+                {
+                    if (Model[i].Fotos[j].Altura == 68 && Model[i].Fotos[j].Largura == 188)
+                    {
+                    <img src='@Model[i].Fotos[j].UrlImagem@Model[i].Fotos[j].NomeImagem' width='188' height='68' alt=''>
+                    }
+                }
+            </div>
+            <div class="box-pacotes-titulo-nacional">
+                <h3><strong>@Model[i].NomeCidadeDestino</strong></h3>
+            </div>
+            <div class="box-pacotes-valor">
+                <div class="box-pacotes-apartirde">a partir de</div>
+                @if (Model[i].ValorEntrada == 0 && Model[i].QuantidadeParcela == 0)
+                {
+                    <div class="box-pacotes-linha-1">
+                        <div class="box-pacotes-parcelas-nacional"></div>
+                        <div class="box-pacotes-valor-nacional">R$ @String.Format("{0:0.00}", (Model[i].ValorReferencia / 2).ToString("n2"))</div>
+                        <div class="box-pacotes-semjuros-nacional"></div>
+                    </div>
+                    <div class="box-pacotes-linha-2">
+                        <div class="box-pacotes-entrada">preço por pessoa.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="box-pacotes-linha-1">
+                        <div class="box-pacotes-parcelas-nacional">@Model[i].QuantidadeParcela@Html.Raw("X")</div>
+                        <div class="box-pacotes-valor-nacional">R$ @String.Format("{0:0.00}", (Model[i].ValorParcela / 2).ToString("n2"))</div>
+                        <div class="box-pacotes-semjuros-nacional">sem juros</div>
+                    </div>
+                    <div class="box-pacotes-linha-2">
+                        @if (Model[i].ValorEntrada == 0)
+                        {
+                            <div class="box-pacotes-entrada">à vista R$ @String.Format("{0:0.00}", (Model[i].ValorReferencia / 2).ToString("n2"))</div>
+                        }
+                        else
+                        {
+                            <div class="box-pacotes-entrada">+ entrada R$  @String.Format("{0:0.00}", (Model[i].ValorEntrada / 2).ToString("n2")) | à vista R$  @String.Format("{0:0.00}", (Model[i].ValorReferencia / 2).ToString("n2"))</div>
+                        }
+                        <div class="box-pacotes-entrada" style="text-align: right; float:left;">preço por pessoa.</div>
+                    </div>
+                }
+                <div class="clear"></div>
+                <div class="box-pacotes-saindode">Saindo de @Model[i].NomeCidadeOrigem</div>
+            </div>
+        </div>
+    </a>
+                if (i == 11)
+                {
+    @Html.Raw("</div>");
+                }
+}
+
+@if (Model.Count() > 4)
+{
+    @Html.Raw("</div>");
+    @Html.Raw("</div>");
+}

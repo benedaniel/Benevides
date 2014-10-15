@@ -1,0 +1,103 @@
+﻿@model FT.Web.Model.Models.Venda.FiltroVendaModel
+@{
+    ViewBag.Title = "Index";
+    var retornoVenda = ViewBag.lstVenda;
+    List<FT.Web.Model.Models.Venda.VendaModel> lstVenda = new List<FT.Web.Model.Models.Venda.VendaModel>();
+    if (retornoVenda != null)
+    {
+        lstVenda = retornoVenda;
+    }
+    
+}
+<link href="~/Content/Venda.css" rel="stylesheet" />
+<script src="~/Scripts/Venda.js"></script>
+<div class="content">
+    @{Html.RenderAction("Menu", "PainelControle", new { @titulo = "Reservas do Cliente" });}
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @using (Ajax.BeginForm("Consulta", "Venda", new AjaxOptions { UpdateTargetId = "divResultadoConsultaVenda", HttpMethod = "Post", OnSuccess = null }, new { @id = "formConsultaVenda" }))
+    {
+        <div id="divFiltro">
+            <div id="subdivFiltro">
+                <fieldset class="filedsetData">
+                    <legend>Data da Reserva</legend>
+                    <div class="blocoCampo">
+                        <div class="labelForm">
+                            @Html.LabelFor(p => p.DataFileInicial)
+                        </div>
+                        <div class="campoForm">
+                            @Html.TextBoxFor(p => p.DataFileInicial)
+                            @Html.ValidationMessageFor(p => p.DataFileInicial)
+                        </div>
+                    </div>
+
+                    <div class="blocoCampo">
+                        <div class="labelForm">
+                            @Html.LabelFor(p => p.DataFileFinal)
+                        </div>
+                        <div class="campoForm">
+                            @Html.TextBoxFor(p => p.DataFileFinal)
+                            @Html.ValidationMessageFor(p => p.DataFileFinal)
+                        </div>
+                    </div>
+                </fieldset>
+
+                <input type="button" value="Pesquisar" id="btnPesqusa" class="bg-btn-height39" />
+            </div>
+            <br />
+        </div>    
+    }
+    <input class="bg-btn-height39 filtrar-consulta" type="button" onclick="javascript: showhideFiltre()"  style="display:none" value="Filtrar Consulta" />
+    <br />
+    <div id="divResultadoConsultaVenda">@{Html.RenderPartial("Consulta", lstVenda);}</div>
+
+</div>
+
+
+
+
+
+@*        <fieldset class="filedsetData">
+            <legend>Data Saída</legend>
+        <div class="blocoCampo">
+            <div class="labelForm">
+                @Html.LabelFor( p => p.DataSaidaInicial)
+            </div>
+            <div class="campoForm">
+                @Html.TextBoxFor( p => p.DataSaidaInicial)
+            </div>
+        </div>
+        
+        <div class="blocoCampo">
+            <div class="labelForm">
+                @Html.LabelFor( p => p.DataSaidaFinal)
+            </div>
+            <div class="campoForm">
+                @Html.TextBoxFor( p => p.DataSaidaFinal)
+            </div>
+        </div>
+        </fieldset>
+        
+        <fieldset class="filedsetData">
+            <legend>Data Voucher</legend>
+        <div class="blocoCampo">
+            <div class="labelForm">
+                @Html.LabelFor( p => p.DataVoucherInicial)
+            </div>
+            <div class="campoForm">
+                @Html.TextBoxFor( p => p.DataVoucherInicial)
+            </div>
+        </div>
+        
+         <div class="blocoCampo">
+            <div class="labelForm">
+                @Html.LabelFor( p => p.DataVoucherFinal)
+            </div>
+            <div class="campoForm">
+                @Html.TextBoxFor( p => p.DataVoucherFinal)
+            </div>
+        </div>
+            </fieldset>*@

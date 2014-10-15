@@ -1,0 +1,1385 @@
+﻿@charset "utf-8";
+/* CSS Document */
+input[type=checkbox],
+input[type=radio ] {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    box-shadow: none;
+    color: #FFF;
+    font-size: 0.8em;
+    margin: 0px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    height: 10px;
+    opacity: 0;
+}
+
+
+.AlertaTotal {
+    background-color: white;
+    border-radius: 0px 10px 10px 10px;
+    border: 1px solid #ee5c29;
+    width: 355px !important;
+    margin: 150px;
+}
+
+
+.AlertaTotalSpan {
+    font-family: Verdana;
+    color: #ee5c29;
+    font-weight: bold;
+    margin: 8px;
+    font-size: 14px;
+}
+
+.pacotes-detalhes-hotel-1 select {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 192px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+#divDestinoAtividade .inputdestino {
+    -webkit-appearance: none;
+    color: #000;
+    width: 197px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+input[type=checkbox]:not(old),
+input[type=radio ]:not(old) {
+    width: 21px;
+    margin: 0;
+    padding: 0;
+}
+
+    input[type=checkbox]:not(old) + label,
+    input[type=radio ]:not(old) + label {
+        display: inline-block;
+        margin-left: -28px;
+        padding-left: 28px;
+        background: url('../Images/checks.png') no-repeat 0 0;
+        line-height: 24px;
+        color: #FFF;
+        font-family: Verdana;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    input[type=checkbox]:not(old):checked + label,
+    input[type=radio]:not(old):checked + label {
+        background-position: 0 -25px;
+    }
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+body {
+}
+
+.clear {
+    clear: both;
+}
+
+.grouped_elements {
+    color: #287dcf !important;
+}
+
+
+.estrela1 {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas1.png);
+}
+
+
+.estrela2 {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas2.png);
+}
+
+.estrela3 {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas3.png);
+}
+
+.estrela4 {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas4.png);
+}
+
+.estrela5 {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas.png);
+}
+
+.moldura-laranja {
+    width: 690px;
+    height: auto;
+    border: solid 1px #ee5c29;
+    border-radius: 10px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+    margin: 100px;
+    padding: 30px;
+}
+
+#chamadaRight label {
+    font-family: Verdana;
+    font-weight: bold;
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+
+div.BuscadorSetDate {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.SetDate {
+    float: left;
+    padding-right: 25px;
+}
+
+
+.buttonPacoteRefazer {
+    background: url(../Images/images_pacote/bot_refazer_busca.png) no-repeat;
+    margin: 20px;
+    cursor: pointer;
+    width: 146px;
+    height: 34px;
+    padding: 0px 0px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 84px;
+}
+
+
+.buttonPacoteMatriz {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 165px;
+    height: 46px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+    background-color: #c2ecff;
+}
+
+.buttonPacote {
+    background: url(../Images/images_pacote/add_quarto.png) no-repeat;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 23px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+}
+
+
+.buttonPacoteRemover {
+    background: url(../Images/images_pacote/del_quarto.png) no-repeat;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 23px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+}
+
+.buttonPacote:hover {
+    background: url(../Images/images_pacote/add_quarto.png) no-repeat;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 23px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+}
+
+.selectAtividadeFiltro {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 192px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.ui-datepicker-trigger {
+    display:none;
+}
+
+.selectPacote {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 200px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.selectPacoteMatriz {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 165px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+
+#chamadaLeft select {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 45px;
+    padding: 5px;
+    border: solid 1px #bb410a;
+    border-top: solid 1px #7f2f00;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+#chamadaRight select {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 45px;
+    padding: 5px;
+    border: solid 1px #bb410a;
+    border-top: solid 1px #7f2f00;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #0f6dc7;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.selectPacoteNumerico {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 45px;
+    padding: 5px;
+    border: solid 1px #bb410a;
+    border-top: solid 1px #7f2f00;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+
+
+
+
+
+.pacote {
+    width: 680px;
+    height: auto;
+}
+
+input[type="radio"] {
+    -webkit-appearance: radio;
+    box-sizing: border-box;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+     height: 40px;
+    font-size: 0.95em;
+    line-height: 40px;
+    background: #DDD!important;
+    color: #00387b!important;
+    border: solid 1px #CCC;
+    border-bottom: solid 0px #CCC;
+    float: left;
+    font-weight: bold;
+    padding: 1px 8px;
+    margin: 0 1px 0 0;
+    border-radius: 0px 0px 0 0 !important;
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+}
+
+.ui-state-default ui-corner-top a:link, .ui-state-default ui-corner-top a:visited {
+    color: white;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+    font-size: 0.96em;
+    color: #00387b;
+    text-decoration: none;
+}
+
+.ui-corner-active a, .ui-corner-active a:link, .ui-corner-active a:visited {
+    color: #FFF !IMPORTANT;
+    text-decoration: none;
+}
+
+.ui-corner-top {
+    height: 40px;
+    font-size: 0.95em;
+    line-height: 40px;
+    background: #f2f2f2!important;
+    color: #CCC!important;
+    border: solid 1px #CCC;
+    border-bottom: solid 0px #CCC;
+    float: left;
+    padding: 1px 8px;
+    margin: 0 1px 0 0;
+    border-radius: 0px 0px 0 0 !important;
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+}
+
+
+/* ---------------------------- At� aqui, Excluir */
+
+
+/* ---------------------------- Cabe�alho Matrizes */
+.pacote-cabecalho-1 {
+    width: 675px;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 10px;
+    margin-left: 5px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+}
+
+.pacote-cabecalho-1-1 {
+    height: 50px;
+    background: #DDD;
+    border-bottom: solid 1px #CCC;
+    border-radius: 10px 10px 0 0;
+    -moz-box-radius: 10px 10px 0 0;
+    -webkit-box-radius: 10px 10px 0 0;
+}
+
+.pacote-cabecalho-1-2 {
+    height: auto;
+    background: #f2f2f2;
+    border-top: solid 1px #FFF;
+    border-radius: 0 0 10px 10px;
+    -moz-box-radius: 0 0 10px 10px;
+    -webkit-box-radius: 0 0 10px 10px;
+    padding: 0 0 15px 0;
+}
+
+.pacote-cabecalho-1-texto-1 {
+    display: block;
+    float: left;
+    height: 40px;
+    line-height: 43px;
+    padding: 5px 0 5px 5px;
+    color: #0b5bb4;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.pacote-cabecalho-1-texto-2 {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.7em;
+    margin: 18px 6px 0 0;
+    color: #666;
+    float: right;
+}
+
+.pacote-cabecalho-1-texto-3 {
+    font-size: 1.5em;
+    margin: 15px 0 0 20px;
+    color: #ee5c28;
+}
+
+.pacote-cabecalho-1-texto-4 {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.8em;
+    margin: 5px 0 0 20px;
+    color: #777;
+}
+
+    .pacote-cabecalho-1-texto-4 strong {
+        font-weight: normal;
+        color: #000;
+    }
+
+.icone-titulo {
+    width: 40px;
+    height: 21px;
+    float: left;
+    background: url(../images/icon-atividade.png);
+    margin: 16px 9px 5px 15px;
+}
+
+.combo-ordenar {
+    height: 20px;
+    width: 140px;
+    padding: 1px;
+    color: black;
+    float: right;
+    margin: 16px 10px 0 0;
+    font-family: Arial, Helvetica, Verdana, sans-serif;
+    font-size: 0.7em;
+    border: solid 1px #DDD;
+}
+
+
+
+
+
+/* ---------------------------- Pacotes Matrizes */
+.pacote-matriz {
+    width: 700px;
+    height: auto;
+    margin: 20px 0;
+    border: solid 1px #CCC;
+    border-radius: 10px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+    overflow: hidden;
+}
+
+.pacote-matriz-left {
+    width: 510px;
+    float: left;
+}
+
+
+.pacote-matriz-left-1 {
+    background: url(../Images/images_pacote/bg1_matriz.gif) top repeat-x;
+}
+
+.pacote-matriz-left-2 {
+}
+
+.pacote-matriz-left-1-img {
+    width: 128px;
+    height: 128px;
+    border: solid 1px #FFF;
+    background: #CCC;
+    margin: 20px 20px 10px 20px;
+    float: left;
+}
+
+.pacote-matriz-left-1-produto {
+}
+
+.pacote-matriz-left-1-titulo {
+    display: block;
+    width: 320px;
+    margin: 20px 20px 0 0;
+    float: right;
+    color: #ee5c28;
+    text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.pacote-matriz-left-1-inclui {
+    display: block;
+    width: 320px;
+    margin: 10px 20px 0 0;
+    float: right;
+}
+
+.pacote-matriz-left-2 {
+}
+
+.pacote-matriz-left-2-data {
+    display: block;
+    border: solid 1px #FFF;
+    width: 128px;
+    height: 38px;
+    margin: 0 20px 20px 20px;
+    float: left;
+    background: #215eab;
+    color: #FFF;
+    font-size: 0.7em;
+    padding: 5px 0 0 0;
+}
+
+    .pacote-matriz-left-2-data:hover {
+        background: #4c8de0;
+    }
+
+    .pacote-matriz-left-2-data img {
+        float: left;
+        margin: 0 5px 0 3px;
+    }
+
+.pacote-matriz-left-2-encontradas {
+    display: block;
+    border: solid 1px #DDD;
+    width: 298px;
+    height: 35px;
+    margin: 0 20px 20px 0;
+    float: left;
+    font-size: 11px;
+    padding: 4px 10px;
+    color: #999;
+}
+
+.matriz-inclui-passagem {
+    float: left;
+    margin: 0 0 7px 0;
+}
+
+.matriz-inclui-passagem-img {
+    width: 20px;
+    height: 15px;
+    float: left;
+    background: url(../Images/images_pacote/ico_Servicos.png) -22px -3px;
+    margin: 1px 0 0 0;
+}
+
+.matriz-inclui-passagem-p {
+    float: left;
+    font-size: 12px;
+    margin: 0 10px 0 2px;
+    color: #215eab;
+}
+
+.matriz-inclui-hotel {
+    float: left;
+    margin: 0 0 7px 0;
+}
+
+.matriz-inclui-hotel-img {
+    width: 20px;
+    height: 15px;
+    float: left;
+    background: url(../Images/images_pacote/ico_Servicos.png) 1px -3px;
+    margin: 1px 0 0 0;
+}
+
+.matriz-inclui-hotel-p {
+    float: left;
+    font-size: 12px;
+    margin: 0 10px 0 2px;
+    color: #215eab;
+}
+
+.matriz-inclui-traslado {
+    float: left;
+    margin: 0 0 7px 0;
+}
+
+.matriz-inclui-traslado-img {
+    width: 20px;
+    height: 15px;
+    float: left;
+    background: url(../Images/images_pacote/ico_Servicos.png) -60px -3px;
+    margin: 1px 0 0 0;
+}
+
+.matriz-inclui-traslado-p {
+    float: left;
+    font-size: 12px;
+    margin: 0 10px 0 2px;
+    color: #215eab;
+}
+
+.matriz-inclui-carro {
+    float: left;
+    margin: 0 0 7px 0;
+}
+
+.matriz-inclui-carro-img {
+    width: 20px;
+    height: 15px;
+    float: left;
+    background: url(../Images/images_pacote/ico_Servicos.png) -41px -3px;
+    margin: 1px 0 0 0;
+}
+
+.matriz-inclui-carro-p {
+    float: left;
+    font-size: 12px;
+    margin: 0 10px 0 2px;
+    color: #215eab;
+}
+
+
+
+.pacote-matriz-right {
+    width: 188px;
+    height: 225px;
+    float: right;
+    border-left: solid 1px #EEE;
+    border-radius: 0 10px 10px 0;
+    -moz-box-radius: 0 10px 10px 0;
+    -webkit-box-radius: 0 10px 10px 0;
+    background: url(../Images/bg2_matriz.jpg);
+}
+
+.pacote-matriz-valor {
+    height: 100px;
+}
+
+.pacote-matriz-apartirde {
+    display: block;
+    width: 60px;
+    margin: 20px 0 0 10px;
+    font-size: 0.7em;
+    text-align: right;
+    font-family: Arial, Verdana, sans-serif;
+    color: #999;
+}
+
+.pacote-matriz-parcelas {
+    display: block;
+    width: 60px;
+    margin: 0 0 0 10px;
+    font-size: 1.2em;
+    text-align: right;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0b407f;
+}
+
+.pacote-matriz-semjuros {
+    display: block;
+    width: 60px;
+    margin: -3px 0 0 10px;
+    font-size: 0.7em;
+    text-align: right;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0b407f;
+}
+
+.pacote-matriz-valor-parcela {
+    display: block;
+    width: auto;
+    margin: -32px 0 0 78px;
+    font-size: 1.8em;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    letter-spacing: -1px;
+    color: #df2a00;
+}
+
+    .pacote-matriz-valor-parcela b {
+        font-weight: normal;
+        font-size: 0.7em;
+    }
+
+.matriz-verdetalhe {
+    width: 140px;
+    height: 75px;
+    margin: 0 0 0 25px;
+    background: url(../images/images_pacote/pacote_matriz_ver_detalhe.png);
+}
+
+    .matriz-verdetalhe:hover {
+        opacity: 0.85;
+    }
+
+.matriz-preco-pessoa {
+    font-size: 0.7em;
+    letter-spacing: -1px;
+    text-align: center;
+    color: #666;
+    margin: 5px 0 0 0;
+}
+
+.pacote-matriz-entrada {
+    font-size: 0.55em;
+    color: #666;
+    margin: 5px 0 0 20px;
+}
+
+
+
+.ui-widget-content a {
+    color: #00387b;
+}
+
+
+
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited {
+    font-size: 0.96em;
+    text-decoration: underline;
+}
+
+
+.ui-state-default ui-corner-top ui-tabs-active ui-state-active a {
+    color: orange !important;
+}
+
+/* ---------------------------- Detalhes do Pacote */
+.pacote-detalhes {
+    width: 687px;
+    height: auto;
+    padding: 0 0 5px 0;
+}
+
+.pacote-detalhes-cabecalho {
+    background: url(../Images/images_pacote/bg3_cabecalho_detalhes_pacote.gif) bottom repeat-x;
+    border-bottom: solid 1px #DDD;
+    border-radius: 10px 10px 0 0;
+    -moz-box-radius: 10px 10px 0 0;
+    -webkit-box-radius: 10px 10px 0 0;
+    overflow: hidden;
+    margin: 10px;
+    font-weight: bold;
+    color: #00387b;
+    font-family: verdana;
+    font-size: 18px;
+}
+
+.pacote-detalhes-Checkin-Checkout {        
+    overflow: hidden;
+    font-weight: bold;
+    color: #00387b;
+    font-family: verdana;
+    font-size: 12px;    
+}
+
+
+.pacote-detalhes-left {
+    height: auto;
+    float: left;
+}
+
+.pacote-detalhes-right {
+    width: 250px;
+    height: auto;
+    float: right;
+}
+
+.pacote-detalhes-ico-titulo {
+    width: 40px;
+    height: 40px;
+    background: url(../Images/images_pacote/icones_titulo_laranja.png);
+    float: left;
+    margin: 5px 10px;
+}
+
+.pacote-detalhes-titulo {
+    display: block;
+    float: left;
+    width: 625px;
+    height: auto;
+    margin: 8px 0 0 0;
+    padding: 5px 0 5px 0;
+    color: #ee5c29;
+    text-transform: uppercase;
+    font-size: 1.3em;
+}
+
+.pacote-detalhes-inclui {
+    height: auto;
+    margin: 0 0 0 60px;
+}
+
+.pacote-detalhes-saindode {
+    display: block;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.8em;
+    margin: 10px 0 10px 60px;
+    color: #777;
+}
+
+    .pacote-detalhes-saindode strong {
+        font-weight: normal;
+        color: #000;
+    }
+
+
+.pacote-detalhes-destino {
+    padding: 20px 0;
+}
+
+.galeria-detalhes-pacote {
+    width: 287px;
+    height: 260px;
+    float: left;
+    margin: 0 0 0 20px;
+}
+
+.galeria-detalhes-pacote-exibir {
+    width: 285px;
+    height: 210px;
+    background: #CCC;
+    border: solid 1px #DDD;
+}
+
+.galeria-detalhes-pacote-min {
+    width: 40px;
+    height: 40px;
+    background: #CCC;
+    border: solid 1px #DDD;
+    float: left;
+    margin: 7px 7px 0 0;
+}
+
+.galeria-detalhes-pacote-min-r {
+    width: 40px;
+    height: 40px;
+    background: #CCC;
+    border: solid 1px #DDD;
+    float: left;
+    margin: 7px 0 0 0;
+}
+
+
+
+.pacote-detalhes-destino-texto {
+    width: 350px;
+    height: 260px;
+    float: left;
+    margin: 0 0 0 20px;
+}
+
+.pacote-detalhes-destino-texto-1 {
+    font: Verdana, Arial, Geneva, sans-serif;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    color: #ee5c29;
+}
+
+.pacote-detalhes-destino-texto-2 {
+    font: Verdana, Arial, Geneva, sans-serif;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    text-align: justify;
+    color: #444;
+}
+
+    .pacote-detalhes-destino-texto-2 b {
+        font-weight: normal;
+        color: #3885dd;
+        font-size: 0.9em;
+    }
+
+    .pacote-detalhes-destino-texto-2:hover b {
+        font-weight: normal;
+        color: #60c4fe;
+    }
+
+.pacotes-detalhes-hospedagem {
+    background: url(../Images/images_pacote/bg1_matriz.gif) top repeat-x;
+    width: 675px;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 0px 0px 0px 0px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+    padding: 15px 0 20px 0;
+    margin-left: 5px;
+    margin-top: 4px;
+    overflow: hidden;
+    float: left;
+}
+
+.pacotes-detalhes-hospedagem-p-l {
+    width: 270px;
+    height: auto;
+    float: left;
+    margin-left: 8px;
+}
+
+.pacotes-detalhes-hospedagem-p-r {
+    width: 300px;
+    height: auto;
+    float: left;
+    margin: 0 0 5px 18px;
+}
+
+.pacotes-detalhes-hospedagem-p-l-img {
+    width: 135px;
+    height: 100px;
+    background: #CCC;
+    margin: 0 20px 0 20px;
+}
+
+.pacotes-detalhes-hospedagem-foto-hotel {
+    float: left;
+    width: 124px;
+    height: 16px;
+    margin: 3px 0 0 3px;
+    font-size: 0.7em;
+    color: #134486;
+}
+
+.pacotes-detalhes-hospedagem-foto-hotel-ico {
+    float: left;
+    height: 16px;
+    width: 16px;
+    margin: 3px 0 0 20px;
+    background: url(../Images/images_pacote/pacotes_detalhes_hospedagem.gif);
+}
+
+.pacotes-detalhes-hospedagem-hotel-mapa {
+    float: left;
+    width: 124px;
+    height: 16px;
+    margin: 3px 0 0 3px;
+    font-size: 0.7em;
+    color: #287dcf;
+}
+
+.pacotes-detalhes-hospedagem-hotel-mapa-ico {
+    float: left;
+    height: 16px;
+    width: 16px;
+    margin: 3px 0 0 20px;
+    background: url(../Imagesimages_pacote//pacotes_detalhes_hospedagem.gif) 16px 0;
+}
+
+.pacotes-detalhes-hospedagem-hotel-mapa:hover, .pacotes-detalhes-hospedagem-foto-hotel:hover {
+    text-decoration: underline;
+}
+
+.pacotes-detalhes-hospedagem-texto-1 {
+    font-size: 0.8em;
+    padding: 0 20px 5px 0;
+    color: #666;
+}
+
+.pacotes-detalhes-hospedagem-texto-2 {
+    font-size: 0.9em;
+    padding: 0 20px 0 0;
+    color: #ee5c29;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.pacotes-detalhes-hospedagem-texto-3 {
+    font-size: 0.75em;
+    padding: 10px 20px 0 0;
+    color: #333;
+    text-align: justify;
+}
+
+.pacotes-detalhes-hospedagem-estrelas {
+    width: 80px;
+    height: 16px;
+    background: url(../Images/images_pacote/estrelas.png);
+}
+
+.pacotes-detalhes-hospedagem-mais a {
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #5dc4ff;
+}
+
+    .pacotes-detalhes-hospedagem-mais a:hover {
+        color: #257dd7;
+    }
+
+.pacotes-detalhes-hotel {
+    width: 344px;
+    margin: 5px;
+    height: auto;
+    border: solid 1px #DDD;
+    padding: 7px;
+    float: left;
+}
+
+.pacotes-detalhes-hotel-1 {
+    float: left;
+    width: 200px;
+    min-height: 110px;
+    font-size: 0.75em;
+    color: #666;
+    border-right: solid 1px #DDD;
+}
+
+.pacotes-detalhes-hotel-texto {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+
+.pacotes-detalhes-hotel-texto_quarto {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin-top: 33px;
+    font-weight: bold;
+}
+
+.pacotes-detalhes-hotel-1 b {
+    font-size: 0.9em;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.pacotes-detalhes-aereo {
+    float: left;
+    width: 115px;
+    min-height: 110px;
+    border-right: solid 1px #DDD;
+}
+
+.pacotes-detalhes-aereo-logo {
+    width: 50px;
+    height: 30px;
+    margin: 6px 25px;
+    background: #CCC;
+}
+
+
+.pacotes-detalhes-aereo-voo {
+    text-align: center;
+    line-height: 0.6em;
+    display: block;
+    margin-top: 15px;
+}
+
+    .pacotes-detalhes-aereo-voo a {
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        font-size: 0.7em;
+        color: #999;
+        margin-bottom: 12px;
+    }
+
+        .pacotes-detalhes-aereo-voo a:hover {
+            text-decoration: underline;
+        }
+
+.pacotes-detalhes-valor {
+    float: left;
+    width: 165px;
+    margin: 20px 0 0 2px;
+}
+
+.pacotes-detalhes-comprar {
+    float: left;
+    width: 120px;
+    height: 57px;
+    background: url(../Images/images_pacote/Botoes_01.png) no-repeat;
+    margin: 25px 0 0 15px;
+}
+
+    .pacotes-detalhes-comprar:hover {
+        opacity: 0.8;
+    }
+
+.pacotes-detalhes-lotado {
+    float: left;
+    width: 120px;
+    height: 57px;
+    background: url(../Images/images_pacote/Botoes_01.png)0 -169px no-repeat;
+    margin: 25px 0 0 15px;
+}
+
+    .pacotes-detalhes-lotado:hover {
+        opacity: 0.8;
+    }
+
+
+
+.pacotes-detalhes-solicitar {
+    float: left;
+    width: 120px;
+    height: 57px;
+    background: url(../Images/images_pacote/Botoes_01.png) 0 -54px no-repeat;
+    margin: 25px 0 0 15px;
+}
+
+    .pacotes-detalhes-solicitar:hover {
+        opacity: 0.8;
+    }
+.pacote-detalhes-apartirde {
+    color: #999999;
+    display: block;
+    font-family: Arial,Verdana,sans-serif;
+    font-size: 0.9em;
+    margin: 0 0 0 -3px;
+    text-align: right;
+    width: 90px;
+}
+
+.pacote-detalhes-titulo-Checkin-Checkout {
+    width: 32px;    
+    font-size: 0.9em;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    color: #999;
+}
+
+
+.pacote-detalhes-parcelas {
+    display: block;
+    width: 60px;
+    margin: 0 0 0 10px;
+    font-size: 1.2em;
+    text-align: right;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0b407f;
+}
+
+.pacote-detalhes-semjuros {
+    display: block;
+    width: 60px;
+    margin: -3px 0 0 10px;
+    font-size: 0.7em;
+    text-align: right;
+    font-family: Arial, Verdana, sans-serif;
+    color: #0b407f;
+}
+
+.pacote-detalhes-valor-parcela {
+    display: block;
+    width: auto;
+    margin: -21px 0 0 78px;
+    font-size: 2.2em;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    letter-spacing: -1px;
+    color: #df2a00;
+}
+
+    .pacote-detalhes-valor-parcela b {
+        font-weight: normal;
+        font-size: 0.7em;
+        color: #df2a00;
+    }
+
+.pacote-detalhes-entrada {
+    font-size: 0.55em;
+    color: #666;
+    margin: 5px 0 0 20px;
+}
+
+hr.pacote-detalhes-separacao {
+    border: solid 2px #d6d6d6;
+    margin: 15px;
+}
+
+
+
+/* ---------------------------- Servi�os Inclusos, Roteiro Dia a Dia e Observa��es  */
+
+.pacotes-detalhes-roteiro {
+    display: block;
+    text-align: justify;
+    font-size: 13px;
+    color: #666;
+    margin: 30px 0 0 0;
+}
+
+    .pacotes-detalhes-roteiro strong {
+        text-align: justify;
+        font-size: 13px;
+        color: #ee5c28;
+    }
+
+.conteudo-pacote {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.pacotes-detalhes-titulo {
+    font-size: 15px;
+    color: #0975eb;
+    margin: 20px 0 0 0;
+}
+
+.pacotes-detalhes-servicos-inclusos {
+    display: block;
+    text-align: justify;
+    font-size: 13px;
+    color: #666;
+    margin: 16px 0 0 0;
+    padding: 0 0 0 20px;
+}
+
+    .pacotes-detalhes-servicos-inclusos li {
+        list-style-image: url(../Images/images_pacote/marcador_lista_01.png);
+        margin: 0 0 6px 0;
+    }
+
+.pacotes-detalhes-observacoes {
+    display: block;
+    text-align: justify;
+    font-size: 13px;
+    color: #666;
+}
+
+    .pacotes-detalhes-observacoes strong {
+        display: block;
+        font-size: 13px;
+        color: #ee5c28;
+        margin: 30px 0 10px 0;
+    }
+
+.pacotes-detalhes-observacoes-lista li {
+    font-size: 13px;
+    color: #666;
+    list-style: square;
+    margin: 7px 0 0;
+}
+
+.pacotes-detalhes-observacoes-lista {
+    padding: 0 0 0 20px;
+}
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {height:360px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
+#simplemodal-container .simplemodal-data {padding:8px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(../images/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container h3 {color:#84b8d9;}
+
+
+
+
+
+.btnTesteAzul {
+    background-color: #0B407F;
+    border: 1px solid #07264B;
+    border-radius: 3px;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    margin-left: 19px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    width: 106px;
+}
+
+    .btnTesteAzul:hover {
+        border: 1px solid #031121;
+        background-color: #072850;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#072850), to(#000000));
+        background-image: -webkit-linear-gradient(top, #072850, #000000);
+        background-image: -moz-linear-gradient(top, #072850, #000000);
+        background-image: -ms-linear-gradient(top, #072850, #000000);
+        background-image: -o-linear-gradient(top, #072850, #000000);
+        background-image: linear-gradient(to bottom, #072850, #000000);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#072850, endColorstr=#000000);
+    }
+
+    
+.tbsParcela {
+    background: none repeat scroll 0 0 #F5F8FA;
+    border: 1px solid #F37736;
+    border-radius: 10px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+    display: none;
+    margin-top: -112px;
+    padding: 10px 11px;
+    position: absolute;
+}
+
+.tbDetalhePreco td {
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.fecharDetalhePreco {
+    text-decoration: underline;
+    color: #f37736;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.fecharDetalhePreco {
+    color: #F37736;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+}

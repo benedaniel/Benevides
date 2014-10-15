@@ -1,0 +1,90 @@
+﻿@model FT.Web.Model.Models.FaleConoscoModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FaleConoscoFranchising</title>
+    @Scripts.Render("~/bundles/jquery-and-validations")
+    <link href="~/Content/Master.css" rel="stylesheet" />
+    <link href="~/Content/Estilo.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery/jquery-2.0.3.js"></script>
+    <script src="~/Scripts/CascadingEstadoParaCidade.js"></script>
+</head>
+<body>
+    <!-- Destaque Right-->
+    <div class="destaque-right-franchising">
+        <div class="destaque-right-titulo-1-franchising">
+            Entre em contato com o nosso departamento de franquias e relacionamento.
+        </div>
+
+        <div class="destaque-right-form-franchising">
+            @using (Html.BeginForm("EnvioEmail", "SitesGrupo", FormMethod.Post, new { id = "FranquiasForm" }))
+            {
+                @Html.HiddenFor(model => model.Assunto)
+                @Html.HiddenFor(model => model.DataDeNascimento)
+                @Html.HiddenFor(model => model.Sexo)
+                @Html.HiddenFor(model => model.Mensagem)
+                <label>
+                    <p>Nome*</p>
+                    @Html.TextBoxFor(model => model.Nome, new { @class = "input-01-Tel-Cel-mask-franchising  input-01-franchising" })
+                    @Html.ValidationMessageFor(model => model.Nome)
+                </label>
+                <label>
+                    <p>Email*</p>
+
+                    @Html.TextBoxFor(model => model.Email, new { @class = "input-01-Tel-Cel-mask-franchising input-01-franchising" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </label>
+                <label>
+                    <p>Telefone Fixo*</p>
+                    @Html.TextBoxFor(model => model.Telefone, new { @class = "input-01-Tel-Cel-mask-franchising phone-number-mask input-01-franchising" })
+                    @Html.ValidationMessageFor(model => model.Telefone)
+                </label>
+                <div class="clear"></div>
+                <label>
+                    <p>Telefone Celular*</p>
+                    @Html.TextBoxFor(model => model.Celular, new { @class = "input-01-Tel-Cel-mask-franchising cellphone-number-mask input-01-franchising" })
+                    @Html.ValidationMessageFor(model => model.Celular)
+                </label>
+                <div class="clear"></div>
+                <p class="destaque-right-titulo-2-franchising">Região de interesse</p>
+                <label class="destaque-right-estado-franchising">
+                    <p>Estado</p>
+                    @Html.DropDownListFor(model => model.Estado, (List<SelectListItem>)ViewBag.OpcoesParaEstados, new { @class = "select-01-franchising" })
+                </label>
+                <label class="destaque-right-cidade-franchising">
+                    <p>Cidade</p>
+                    @Html.DropDownListFor(model => model.Cidade, (List<SelectListItem>)ViewBag.OpcoesParaCidades, new { @class = "select-02-franchising" })
+                </label>
+                <div class="clear"></div>
+                <label class="destaque-right-estado-franchising">
+                    @Html.ValidationMessageFor(model => model.Estado)
+                </label>
+                <label class="destaque-right-cidade-franchising">
+                    @Html.ValidationMessageFor(model => model.Cidade)
+                </label>
+                <div class="clear"></div>
+                <input name="Enviar" type="submit" value="" class="destaque-right-enviar-franchising">    
+            }
+
+         
+                <p class="destaque-right-titulo-2-franchising" style="margin-left:23px;">
+                    @ViewBag.Mensagem
+                </p>
+                @{ViewBag.Mensagem = String.Empty;}
+         
+
+            <hr class="hr-destaque-right-franchising" />
+            <p class="destaque-right-txt-01-franchising">Contatos:</p>
+            <p class="destaque-right-txt-02-franchising">11 4502-2520</p>
+            <p class="destaque-right-txt-03-franchising">expansao@flytour.com.br</p>
+        </div>
+    </div>
+    <hr class="hr-01-franchising" />
+    <!-- Destaques Tags -->
+    <div class="clear"></div>
+</body>
+</html>

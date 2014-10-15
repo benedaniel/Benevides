@@ -1,0 +1,85 @@
+﻿@model FT.Web.Model.Models.ConsultaFinanRetornoModel
+
+<script>
+    $(function () {
+        $("#tabs-@ViewBag.cartaoIndice").tabs();
+
+    });
+</script>
+
+<div id="tabs-@ViewBag.cartaoIndice" style="margin: 20px;" class="pacote tabs">
+    @{int counter = 1;}
+    @{int counterAux = 1;}
+    <span style="font-family: Verdana; font-weight: bold; color: #666666; font-size: 12px;">Click em uma forma de pagamento abaixo:</span><br />
+    <br />
+    @foreach (var Modalidade in Model.Modalidade)
+    {   
+        <ul>
+            @foreach (var Operacao in Modalidade.Operacoes)
+            {
+                <li>
+                    <ul style="">
+                        <li style="float: left"><a href="#tabs-@ViewBag.cartaoIndice-@counter">
+                            <img style="width:45px;height:33px;" onclick="selectPlano(@ViewBag.cartaoIndice, $('#ddlPlanos-@ViewBag.cartaoIndice-@counter').val(), '');" src="@Operacao.LinkLogo" /></a></li>
+                    </ul>
+                </li>
+                  
+                { counter = counter + 1; }
+
+            }
+            <li>
+                <label class="labelReserva" style="margin-left: 21px;">Valor</label><br />
+                <input class="valorPagamento inputReserva" style="margin-left: 20px;" id="valor-@ViewBag.cartaoIndice" name="valor-@ViewBag.cartaoIndice" type="text" value="@Model.Valor.ToString("N")" />
+                <input id="hdnValDif-@ViewBag.cartaoIndice" type="hidden" value="@((Model.Valor - Model.ValorDif).ToString("N"))" />
+                <script>
+                    $(function () {
+               
+                        $("#valor-@ViewBag.cartaoIndice").change(function () {
+                            if ($("#valor-@ViewBag.cartaoIndice").val() != "") {
+                                var quant = $("#cartoesAdicionais li.liAdd").length;
+                        
+                                atualizarModalidade(quant, @ViewBag.cartaoIndice, $("#valor-@ViewBag.cartaoIndice").val());
+                    }
+                        });
+                    });
+                </script>
+            </li>
+        </ul>
+    }
+
+    @foreach (var Modalidade in Model.Modalidade)
+    {
+        foreach (var Operacao in Modalidade.Operacoes)
+        {
+        <div id="tabs-@ViewBag.cartaoIndice-@counterAux">
+            <span style="margin-top: 20px; float: left; font-family: Verdana; font-weight: bold; color: #666; font-size: 12px;">Cartão de Crédito escolhido:</span>
+            <br />
+            <label style="margin-left: 10px; margin-bottom: 4px;">@Operacao.DescricaoOperacao</label>
+            <br />
+            <select id="ddlPlanos-@ViewBag.cartaoIndice-@counterAux" class="ddlPlanos" style="margin-top: 5px;">
+                @foreach (var Planos in Operacao.Planos)
+                { 
+                    <option value="@Planos.CodigoPlanoParcela-@Planos.Parcelas.First().DataVencimento" >@Planos.DescricaoPlano</option>
+                }
+            </select>
+        </div> 
+                   
+        <script>
+
+            $(function () {
+                $("#ddlPlanos-@ViewBag.cartaoIndice-@counterAux").change(function () {
+                    if ($("#ddlPlanos-@ViewBag.cartaoIndice-@counterAux").val() != "") {
+                        selectPlano(@ViewBag.cartaoIndice, $("#ddlPlanos-@ViewBag.cartaoIndice-@counterAux").val(), "");
+                    }
+                });
+            });
+
+        </script> 
+                { counterAux = counterAux + 1; }
+        }
+    }
+    @* <script>
+                                    selectPlano($("#ddlPlanos-1").val(), "");
+                                </script>*@
+
+</div>

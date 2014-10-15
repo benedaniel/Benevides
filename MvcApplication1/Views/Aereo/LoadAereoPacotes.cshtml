@@ -1,0 +1,561 @@
+﻿@model FT.Web.Model.Models.AereoModel
+@using System.Web.Helpers
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<script src="~/Scripts/AereoAP.js"></script>
+<link href="~/Content/Buscadores.css" rel="stylesheet" />
+<link href="~/Content/Home.css" rel="stylesheet" />
+<link href="~/Content/Aereo.css" rel="stylesheet" />
+<script>
+    $(function() {
+        $( document ).tooltip();
+    });
+</script>
+<style>
+    .control-cotizacao, #div-loading-cotizacao {
+        margin: 10px auto auto !important;
+    }
+
+    .lblquantquartos {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+
+    .field-validation-error {
+        margin-top: 2px;
+        display: none;
+        padding-left: 15px;
+        background: url(../images/xis.png) left no-repeat;
+    }
+
+    .contentBusca {
+        padding: 10px;
+    }
+
+    div.SetDate .ui-datepicker-trigger {
+        background: url("../Images/calendario_input.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+        border: 0 none !important;
+        float: right;
+        height: 35px;
+        margin-top: 8px;
+        outline: medium none;
+        text-decoration: none;
+        text-indent: -9999px;
+        width: 35px;
+    }
+
+    .quantsQuartosAereo {
+        margin-top: 20px;
+    }
+
+    div.quants div a.plus {
+        background: url("../Images/icon_up.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    }
+
+    div.quants div a.minus {
+        background: url("../Images/icon_down.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+        margin-top: -18px;
+    }
+
+    div.SetDate {
+        float: left;
+        padding-right: 39px !important;
+    }
+
+    div.quants {
+        padding-right: 0px;
+    }
+
+    .div.quantsContent {
+        padding-right: 25px !important;
+        width: 230px !important;
+    }
+
+    .btnPesquisar {
+        background: url("../Images/botao_Pesquisar.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+        cursor: pointer;
+        display: block;
+        height: 55px;
+        margin-left: 0px !important;
+        margin-top: 15px;
+        width: 160px;
+    }
+
+    .buttonPacote {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background: url("../Images/images_pacote/add_quarto.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border-color: #7F2F00 #BB410A #BB410A;
+        border-image: none;
+        border-style: solid;
+        border-width: 0;
+        color: #063D75;
+        cursor: pointer;
+        font-family: Verdana;
+        font-size: 19px;
+        height: 23px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        margin-left: 20px;
+        padding: 3px 6px;
+        vertical-align: middle;
+        width: 24px;
+    }
+
+    .buttonPacoteRemover {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background: url("../Images/images_pacote/del_quarto.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border-color: #7F2F00 #BB410A #BB410A;
+        border-image: none;
+        border-style: solid;
+        border-width: 0;
+        color: #063D75;
+        cursor: pointer;
+        font-family: Verdana;
+        font-size: 19px;
+        height: 23px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        padding: 3px 6px;
+        vertical-align: middle;
+        width: 24px;
+    }
+
+    .lblqtdcri {
+        font-size: 11px;
+    }
+
+
+    #DivRadio label {
+        color: #FFFFFF;
+        font-family: Verdana;
+        font-size: 12px;
+        font-weight: bold;
+    }
+</style>
+<div id="orcamentocontent">
+</div>
+<div style="clear: both; margin: auto; padding: 0 0 20px; width: 980px;">
+
+    @*<form id="FormAereoBusca" action="/Aereo/LoadAereo" method="post" style="margin-left: 10px;">*@
+    <div style="margin: auto; width: 980px;" id="DivPai">
+        <div id="buscas" style="float: left; width: 270px;">
+            @if (Model.Tipo == "MultiTrecho")
+            {
+                <script>
+                    $(function () {
+                        removerTrecho();
+                        for (var i = 0; i < (@Model.Destinos.Count - 1); i++) {
+                            adicionarTrecho();
+                        }
+                    });
+                    $(document).ready(function () {
+                        $("#hdnOrigemAereoCodigo").val("@Model.Origem");
+                        $("#hdnDestinoAereoCodigo").val("@Model.Destino");
+                    });
+                </script>
+            }
+            @using (Html.BeginForm("LoadAereoPacotes", "Aereo", FormMethod.Post, new { id = "loadAereoForm" }))
+            { 
+                <div style="float: left; color: white; background-color: #f05c18; width: 255px; margin-left: 10px; margin-top: 10px; border-radius: 10px;">
+                    <div id="headerResultados" class="clearfix" style="margin: 10px;">
+                        <span style="font-family: Verdana; color: white; font-size: 20px;" class="iconeMala">Pesquisar</span>
+                    </div>
+                    <div class="contentBusca">
+                        <div id="DivRadio">
+                            @Html.RadioButtonFor(p => p.Tipo, "IdaeVolta", new { Checked = "checked", @class = "buscadorlabel", @id = "radio2" })
+                            <label for="radio2">Ida e volta</label><br />
+                            @* @Html.RadioButtonFor(p => p.Tipo, "SomenteIda", new { @class = "buscadorlabel", @id = "radio1" })
+                        <label for="radio1">Somente ida</label><br />
+                        @Html.RadioButtonFor(p => p.Tipo, "MultiTrecho", new { @class = "buscadorlabel", @id = "radio3" })
+                        <label for="radio1">Multi Trecho</label>*@
+                        </div>
+                        <div class="clear"></div>
+                        <br />
+
+                        <div id="Divtitulo" class='roomTitle' style="display: none">
+                            <br />
+                            <label style="font-size: 16px; font-weight: bold;">Trecho 1</label>
+                            <br />
+                            <div style="margin-bottom: -10px;">
+                            </div>
+                            <label>___________________________________________________________</label>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="BuscadorSet">
+                            <div>
+                                @Html.LabelFor(p => p.Origem, new { @class = "buscadorlabel" })
+                                <div id="divOrigem">
+                                    @Html.TextBoxFor(p => p.Origem, new { @id = "OrigemAereo", @class = "watermarkAereo inputdestinoAereo", title = "Informe sua origem" })<br />
+                                    @Html.ValidationMessageFor(p => p.Origem)
+                                </div>
+                            </div>
+                            @Html.LabelFor(p => p.Destino, new { @class = "buscadorlabel" })
+                            <div id="divDestino">
+                                @Html.TextBoxFor(p => p.Destino, new { @id = "DestinoAereo", @class = "watermarkAereo inputdestinoAereo", title = "Informe seu destino", onchange = "selectCidade(1, this)" })<br />
+                                @Html.ValidationMessageFor(p => p.Destino)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="clear"></div>
+                        <div class="BuscadorSetDate">
+                            <div class="SetDate">
+                                @Html.LabelFor(p => p.DataEmbarque, "Inicio", new { @class = "buscadorlabel" })<br />
+                                @Html.TextBoxFor(p => p.DataEmbarque, new { @class = "txtStartDate" })
+                                @Html.ValidationMessageFor(p => p.DataEmbarque)
+                            </div>
+                            <br />
+                            <br />
+                            <div id="destinoDiv" class="SetDate">
+                                @Html.LabelFor(p => p.DataRetorno, "Fim", new { @class = "buscadorlabel" })<br />
+                                @Html.TextBoxFor(p => p.DataRetorno, new { @class = "txtEndDate" })
+                                @Html.ValidationMessageFor(p => p.DataRetorno)
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#hdnOrigemAereoCodigo").val('@Model.Origem');
+                                $("#hdnDestinoAereoCodigo").val('@Model.Destino');
+                                $("#hdnDestinoAereoCodigoCidade").val('@Model.CodigoCidadeDestino');
+                                $('#OrigemAereo').attr('title', '');
+                                $('#DestinoAereo').attr('title', '');
+                            });
+                        </script>
+                        <ul id="trechosAdicionais">
+                        </ul>
+                        <div class="clear"></div>
+                        <div id="divAddtrecho" style="display: none; margin-bottom: 10px;">
+                            <label>___________________________________________________________</label><br />
+                            <p class="BuscadorSet">
+                                @Html.Label("Acrescentar destino", new { @class = "buscadorlabel" })
+                                <input type="button" id="plusRooms" onclick="adicionarTrecho()" class="buttonPacote" />
+                                <input type="button" id="minusRooms" onclick="removerTrecho()" class="buttonPacoteRemover" />
+                            </p>
+                        </div>
+                        <div class="quantsContent">
+                            <div class="clear"></div>
+                            <style>
+                                .agrpQuarto1 {
+                                    min-height: 86px;
+                                    display: block;
+                                }
+                            </style>
+                            <div class="quartos">
+                                 @{Html.RenderPartial("Quartos", Model.Apartamentos); }
+                               
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+                        @if (Model.BloquearPassageiros)
+                        {
+                            <script>
+                                $('#qtAdultos').attr('disabled', 'disabled');
+                                $('#plusAdt').attr('disabled', 'disabled');
+                                $('#minusAdt').attr('disabled', 'disabled');
+                                $('#qtCriancas').attr('disabled', 'disabled');
+                                $('#plusCri').attr('disabled', 'disabled');
+                                $('#minusCri').attr('disabled', 'disabled');
+                                $('#qtBebes').attr('disabled', 'disabled');
+                                $('#plusbb').attr('disabled', 'disabled');
+                                $('#minusbb').attr('disabled', 'disabled');
+                            </script>
+                        }
+                        <div class="clear"></div>
+                        <br />
+                        
+                        <div class="clear"></div>
+                        <input type="submit" id="btnBuscarAereos" value="" onclick="return validarDataMaxima()" class="btnPesquisar" />
+                        @Html.ValidationMessageFor(p => p.Tipo)
+                    </div>
+                </div>
+                <input type="hidden" name="hdnOrigemCodigoOld" value="@Model.Origem" />
+                <input type="hidden" name="hdnDestinoCodigoOld" value="@Model.Destino" />
+                <input type="hidden" name="hdnDestinoNomeOld" value="@Model.DestinoNome" />
+                <input type="hidden" name="hdnOrigemNomeOld" value="@Model.OrigemNome" />
+            }
+            <br />
+            @if (Model.GrupoTarifas != null && Model.GrupoTarifas.Count > 0)
+            {
+                using (Ajax.BeginForm("FiltrarAereoPacote", null, new AjaxOptions { UpdateTargetId = "conteudo", HttpMethod = "Post", OnSuccess = "conteudoShow(" + @Model.CompanhiaMatrix.Count() + ")" }, new { id = "filterAereoForm" }))
+                {
+                <input type="hidden" name="hdnTipoFiltro" value="@Model.Tipo" />
+                <input type="hidden" id="hdnValorSelecionado" name="hdnValorSelecionado" />
+                <div style="float: left; color: white; background-color: #f05c18; width: 255px; margin-left: 10px; margin-top: 10px; border-radius: 10px;">
+                    <div id="headerResultados1" class="clearfix" style="margin: 10px;">
+                        <span style="font-family: Verdana; color: white; font-size: 20px;" class="iconeMala">Filtrar</span>
+                    </div>
+                    <div style="margin: 2px; height: auto; padding-bottom: 30px; background-color: #eeeeee; border-radius: 10px;">
+                        <div style="margin-left: 20px;">
+                            <br />
+                            <div>
+                                <label class="labelbuscadorFiltro">Faixa de preço</label>
+                                <script>
+                                    $(function () {
+                                        $("#slider-range").slider({
+                                            range: true,
+                                            change: function (event, ui) { Filtrar(this); },
+                                            min: @FTV.Conv.ToInt32(Model.GrupoTarifas.Min(p => p.Valor)),
+                                            max: @FTV.Conv.ToInt32(Model.GrupoTarifas.Max(p => p.Valor)),
+                                            values: [@FTV.Conv.ToInt32(Model.GrupoTarifas.Min(p => p.Valor)), @FTV.Conv.ToInt32(Model.GrupoTarifas.Max(p => p.Valor))],
+                                            slide: function (event, ui) {
+                                                $("#amount").val("R$" + ui.values[0] + " - R$" + ui.values[1]);
+                                            }
+                                        });
+                                        $("#amount").val("R$" + $("#slider-range").slider("values", 0) +
+                                            " - R$" + $("#slider-range").slider("values", 1));
+
+
+                                    });
+                                </script>
+                                <div class="preco">
+                                    <p>
+                                        <input type="text" id="amount" name="amount" class="inputFiltro" style="color: #f6931f; font-weight: bold;" />
+                                    </p>
+                                    <div id="slider-range"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="DivRadio2">
+                                <div>
+                                    @if (Model.Tipo == "IdaeVolta" || Model.Tipo == "SomenteIda")
+                                    {
+                                        <label class="labelbuscadorFiltro">Horário Ida</label>
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 0 && x.Trecho.DataOrigem.Hour < 6)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaMadrugada' name="HorarioIdaMadrugada" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Madrugada</label>
+                                            <label class="labelbuscadorHoras">12am - 6am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 6 && x.Trecho.DataOrigem.Hour < 12)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaManha' name="HorarioIdaManha" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Manha</label>
+                                            <label class="labelbuscadorHoras">6am - 12pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 12 && x.Trecho.DataOrigem.Hour < 18)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaTarde' name="HorarioIdaTarde" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Tarde</label>
+                                            <label class="labelbuscadorHoras">12pm - 6pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 18 && x.Trecho.DataOrigem.Hour < 23)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaNoite' name="HorarioIdaNoite" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Noite</label>
+                                            <label class="labelbuscadorHoras">6pm - 12am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <label class="labelbuscadorFiltro">Horário Ida</label>
+                                        if (Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 0 && x.Trecho.DataOrigem.Hour < 6)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaMadrugada' name="HorarioIdaMadrugada" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Madrugada</label>
+                                            <label class="labelbuscadorHoras">12am - 6am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 6 && x.Trecho.DataOrigem.Hour < 12)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaManha' name="HorarioIdaManha" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Manha</label>
+                                            <label class="labelbuscadorHoras">6am - 12pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 12 && x.Trecho.DataOrigem.Hour < 18)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaTarde' name="HorarioIdaTarde" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Tarde</label>
+                                            <label class="labelbuscadorHoras">12pm - 6pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 18 && x.Trecho.DataOrigem.Hour < 23)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioIdaNoite' name="HorarioIdaNoite" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Noite</label>
+                                            <label class="labelbuscadorHoras">6pm - 12am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        <br />
+                                    }
+                                    @if (Model.Tipo == "IdaeVolta")
+                                    {
+                                        <label class="labelbuscadorFiltro">Horário Volta</label>
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 0 && x.Trecho.DataOrigem.Hour < 6)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioVoltaMadrugada' name="HorarioVoltaMadrugada" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Madrugada</label>
+                                            <label class="labelbuscadorHoras">12am - 6am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 6 && x.Trecho.DataOrigem.Hour < 12)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioVoltaManha' name="HorarioVoltaManha" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Manha</label>
+                                            <label class="labelbuscadorHoras">6am - 12pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 12 && x.Trecho.DataOrigem.Hour < 18)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioVoltaTarde' name="HorarioVoltaTarde" onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Tarde</label>
+                                            <label class="labelbuscadorHoras">12pm - 6pm</label>
+                                            <br />
+                                        </div>
+                                        }
+                                        if (Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).Any(p => p.TrechosTarifaCodigo.Any(x => x.Trecho.DataOrigem.Hour >= 18 && x.Trecho.DataOrigem.Hour < 23)))
+                                        {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='HorarioVoltaNoite' name='HorarioVoltaNoite' onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Noite</label>
+                                            <label class="labelbuscadorHoras">6pm - 12am</label>
+                                            <br />
+                                        </div>
+                                        }
+                                    }
+                                </div>
+                                <br />
+                                <div>
+                                    <label class="labelbuscadorFiltro">Escala</label>
+                                    @if (Model.MenorPrecoDireto.ToString("n2") != "0,00")
+                                    {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='EscalaVooDireto' name='EscalaVooDireto' onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">Voo Direto</label><label class="labelbuscadorHoras">R$ @Model.MenorPrecoDireto.ToString("n2")</label>
+                                            <br />
+                                        </div>
+                                    }
+                                    @if (Model.MenorPrecoUmaParada.ToString("n2") != "0,00")
+                                    {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='EscalaUmaParada' name='EscalaUmaParada' onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">1 Parada</label><label class="labelbuscadorHoras">R$ @Model.MenorPrecoUmaParada.ToString("n2")</label>
+                                            <br />
+                                        </div>
+                                    }
+                                    @if (Model.MenorPrecoDuasParadas.ToString("n2") != "0,00")
+                                    {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='EscalaDuasParadas' name='EscalaDuasParadas' onclick="Filtrar(this);" checked="checked" class="opcoes">
+                                            <label for="ck_facilidade01">2+ Paradas</label><label class="labelbuscadorHoras">R$ @Model.MenorPrecoDuasParadas.ToString("n2")</label>
+                                            <br />
+                                        </div>
+                                    }
+                                </div>
+                                <br />
+                                <div>
+                                    <label class="labelbuscadorFiltro">Companhias</label>
+                                    @foreach (var matrix in Model.CompanhiaMatrix)
+                                    {
+                                        <div class="listaFiltro">
+                                            <input type='checkbox' id='Companhias-@matrix.Nome.Trim()' name='Companhias-@matrix.Nome.Trim()' onclick="Filtrar(this);" checked="checked" class="opcoes"  >
+                                            <label for="ck_facilidade01" style="color: #FFF; margin-right: -10px;">-</label>
+                                            <img src="@matrix.UrlCia" style="height: 15px; width: 30px;"/>
+                                            <label class="labelbuscador">@matrix.Nome</label>
+                                            <label class="labelbuscadorHoras">R$ @matrix.Celulas.Where(p => p.Preco > 0).Min(p => p.Preco).ToString("n2")</label>
+                                            <br />
+                                        </div>  
+                                    }
+                                </div>
+                                <br />
+                                @if (Model.Tipo == "IdaeVolta" || Model.Tipo == "SomenteIda")
+                                {
+                                    <div>
+                                        <label class="labelbuscadorFiltro">Aeroporto de Partida</label>
+                                        @foreach (var item in Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).SelectMany(p => p.TrechosTarifaCodigo).GroupBy(P => P.Trecho.SiglaAeroportoOrigem))
+                                        {
+                                            var title = @Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.First()).SelectMany(p => p.TrechosTarifaCodigo).First(p => p.Trecho.SiglaAeroportoOrigem == item.Key).Trecho;
+                                            <div id="aeroporto" class="listaFiltro">
+                                                <input type='checkbox' id='AeroportoPartida-@item.Key' title="@title.NomeAeroportoOrigem" name='AeroportoPartida-@item.Key' onclick="Filtrar(this);" checked="checked" class="opcoes"  >
+                                                <label title="@title.NomeAeroportoOrigem" for="ck_facilidade01">@item.Key - @title.NomeCidadeOrigem</label>
+                                                <br />
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <label class="labelbuscadorFiltro">Aeroportos</label>
+                                        @foreach (var item in Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).SelectMany(p => p.TrechosTarifaCodigo).GroupBy(P => P.Trecho.SiglaAeroportoOrigem))
+                                        {
+                                            var title = @Model.GrupoTarifas.SelectMany(p => p.GrupoTarifaTrechos).SelectMany(p => p.TrechosTarifaCodigo).First(p => p.Trecho.SiglaAeroportoOrigem == item.Key).Trecho;
+                                            <div id="aeroporto" class="listaFiltro">
+                                                <input type='checkbox' id='AeroportoPartida-@item.Key' title="@title.NomeAeroportoOrigem" name='AeroportoPartida-@item.Key' onclick="Filtrar(this);" checked="checked" class="opcoes"  >
+                                                <label title="@title.NomeAeroportoOrigem" for="ck_facilidade01">@item.Key - @title.NomeCidadeOrigem</label>
+                                                <br />
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <br />
+                                @if (Model.Tipo == "IdaeVolta")
+                                {
+                                    <div>
+                                        <label class="labelbuscadorFiltro">Aeroporto de Destino</label>
+                                        @foreach (var item in Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).SelectMany(p => p.TrechosTarifaCodigo).GroupBy(P => P.Trecho.SiglaAeroportoOrigem))
+                                        {
+                                            var title = @Model.GrupoTarifas.Select(p => p.GrupoTarifaTrechos.Last()).SelectMany(p => p.TrechosTarifaCodigo).First(p => p.Trecho.SiglaAeroportoOrigem == item.Key).Trecho;
+                                            <div id="aeroporto" class="listaFiltro">
+                                                <input type='checkbox' id='AeroportoDestino-@item.Key' title="@title.NomeAeroportoOrigem" name='AeroportoDestino-@item.Key' onclick="Filtrar(this);" checked="checked" class="opcoes"  >
+                                                <label title="@title.NomeAeroportoOrigem" for="ck_facilidade01">@item.Key - @title.NomeCidadeOrigem</label>
+                                                <br />
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="hdnCombo" name="hdnCombo" />
+                <input type="hidden" id="hdnIsMontePacote" name="hdnIsMontePacote" />
+            
+                }
+            }
+        </div>
+    </div>
+    <div id="conteudo">
+        @{Html.RenderPartial("AereoPacoteResultado");}
+        @if (Model.CompanhiaMatrix.Count() > 3)
+        {
+            <script>
+                $(function () {
+                    showGrid();
+                });
+            </script>
+        }
+    </div>
+</div>

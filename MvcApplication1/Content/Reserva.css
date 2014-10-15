@@ -1,0 +1,463 @@
+﻿body {
+}
+
+.labelReserva {
+    font-family: Verdana;
+    font-weight: bold;
+    margin-left: 8px;
+    font-size: 12px;
+    color: #666666;
+}
+
+.icoTituloCarro {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 20px 0px;
+    margin-left: 20px;
+    margin-top: 9px;
+}
+
+.buttonPacote {
+    background: url(../Images/images_pacote/add_quarto.png) no-repeat;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 23px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+}
+
+.adicionarCartao {
+    color: #00387B;
+    font-weight: bold;
+    height: 35px;
+    float: right;
+    margin-right: 25px;
+    margin-top: 10px;
+}
+
+.BuscadorSet {
+    height: 35px;
+    float: right;
+    margin-right: 25px;
+}
+
+.buttonPacoteRemover {
+    background: url(../Images/images_pacote/del_quarto.png) no-repeat;
+    margin-bottom: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 23px;
+    padding: 3px 6px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: #063d75;
+    font-size: 19px;
+}
+
+.icoTituloPacote {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 101px 0px;
+    margin-top: 7px;
+}
+
+.icoTituloAtividade {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 101px -38px;
+    margin-top: 7px;
+}
+
+.icoTituloPacoteAereoVolta {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -40px -38px no-repeat;
+}
+
+.icoTituloPacoteAereoIda {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) -19px -38px no-repeat;
+}
+
+.hrMenu {
+    height: 1px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #d6d6d6;
+}
+
+.hrMenuPacote {
+    height: 1px;
+    margin-right: 20px;
+    background-color: #d6d6d6;
+}
+
+.TituloMenu {
+    float: left;
+    margin: 11px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: #CE6D21;
+    font-size: 12px;
+}
+
+.TituloMenuPacote {
+    float: left;
+    margin: 11px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: #CE6D21;
+    font-size: 12px;
+}
+
+.icoTituloAereo {
+    width: 20px;
+    height: 20px;
+    float: left;
+    background: url(../images/sprite_ico_pagamento.png) 60px 0px;
+    margin-left: 20px;
+    margin-top: 9px;
+}
+
+.icoTituloHotel {
+    background: url("../images/sprite_ico_pagamento.png") repeat scroll 100px 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 20px;
+    margin-left: 20px;
+    margin-top: 9px;
+    width: 20px;
+}
+
+.warning {
+    border-color: #F00 !important;
+}
+
+.labelMapaBusca {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.inputMapa {
+    width: 200px;
+}
+
+.btnMapaBuscar {
+    background-color: #FFA500;
+    font-weight: bold;
+    font-size: 14px;
+    color: #FFF;
+    width: 80px;
+    height: 40px;
+}
+
+.SubTitulo {
+    margin-left: 0px;
+    font-family: Verdana;
+    color: #666666;
+    font-size: 11px;
+}
+
+.ConteudoSubtitulo {
+    font-family: Verdana;
+    color: #666666;
+    font-weight: bold;
+    font-size: 11px;
+    margin-right: 1px;
+}
+
+#DLAtendente, #DLState {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 190px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.ddlPlanos {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 350px;
+    padding: 5px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    font-size: 1em;
+    background: none;
+    color: #FFF;
+}
+
+#DivPai2 li {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.LiEndereco {
+    width: 575px;
+    margin-bottom: 15px;
+}
+
+#divEndCobranca input[type='checkbox'] {
+    width: 15px;
+    height: 20px;
+}
+
+#divEndCobranca li {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#divDadosCartao li {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#divDadosCartao ul {
+    margin-top: 15px;
+}
+
+.Medio {
+    -webkit-appearance: none;
+    color: #000;
+    width: 40px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+#divDadosCartao input {
+    -webkit-appearance: none;
+    color: #000;
+    width: 140px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+.inputReserva {
+    -webkit-appearance: none;
+    color: #000;
+    width: 147px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+.DataNascimento {
+    -webkit-appearance: none;
+    color: #000;
+    width: 97px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+
+
+
+.Validade {
+    -webkit-appearance: none;
+    color: #000;
+    width: 87px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    background-color: #efefef;
+    height: 20px;
+    line-height: 1.5em;
+}
+
+#grid1 {
+    width: 675px;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 10px 10px 10px 10px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+    padding: 15px 0 20px 0;
+    margin-left: 5px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+    color: #f05c18;
+    font-weight: bold;
+    font-family: Verdana;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    width: 45px;
+    background: none;
+    padding: 0 8px;
+    font-size: 1em;
+    line-height: 40px;
+    color: #f05c18;
+    float: left;
+    border: 1px solid orange;
+    border-radius: 0px;
+}
+
+.map-content {
+    height: auto;
+}
+
+.ui-corner-top {
+    height: 60px;
+    font-size: 1em;
+    line-height: 40px;
+    background: none;
+    color: #0056af;
+    float: left;
+    padding: 0 8px;
+    margin: 0 5px 0 0;
+    border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+}
+
+/* Overlay */
+#simplemodal-overlay {
+    background-color: #000;
+}
+
+/* Container */
+#simplemodal-container {
+    height: 710px;
+    width: 760px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 12px;
+}
+
+    #simplemodal-container .simplemodal-data {
+        padding: 8px;
+    }
+
+    #simplemodal-container code {
+        background: #141414;
+        border-left: 3px solid #65B43D;
+        color: #bbb;
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+        padding: 4px 6px 6px;
+    }
+
+    #simplemodal-container a {
+        color: #ddd;
+    }
+
+        #simplemodal-container a.modalCloseImg {
+            background: url(../images/x.png) no-repeat;
+            width: 25px;
+            height: 29px;
+            display: inline;
+            z-index: 3200;
+            position: absolute;
+            top: -15px;
+            right: -16px;
+            cursor: pointer;
+        }
+
+    #simplemodal-container h3 {
+        color: #84b8d9;
+    }
+
+.agenciasMapa {
+    display: none;
+}
+
+.ckCondutor {
+    width: 15px;
+    height: 15px;
+    margin: 8px;
+}
+
+.cmbSexo {
+    height: 28px;
+    width: 160px;
+    margin: 8px 0;
+    border: solid 1px #D6D6D6;
+    border-top: solid 1px #D6D6D6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #EFEFEF;
+    color: #00387B;
+}

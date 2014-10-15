@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "ListarOrcamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+<link href="~/Content/Orcamento.css" rel="stylesheet" />
+<script src="~/Scripts/Orcamento.js"></script>
+
+<div class="content-orcamento">
+    <h2>Orçamentos</h2>
+
+    <div class="orcamento-busca">
+        <div class="orcamento-busca-left">
+            <div class="div-start-date">
+                <label>Data Inicial:</label>
+                <br />
+                <input type="text" value="" name="DataInicial" id="DataInicial" class="txtStartDate">
+            </div>
+            <br />
+            <div class="div-end-date">
+                <label>Data Final:</label>
+                <br />
+                <input type="text" value="" name="DataFinal" id="DataFinal" class="txtEndtDate">
+            </div>
+        </div>
+
+        <div class="orcamento-busca-right">
+            <div class="div-number-orcamento">
+                <label>Número do Orçamento:</label>
+                <br />
+                <input type="text" value="" name="DataFinal" id="NumOrcamento" class="NumOrcamento">
+            </div>
+
+            <br />
+            <br />
+            <div class="div-find-orcamento">
+                <input type="button" value="" class="btnPesquisar" id="btnFind">
+            </div>
+        </div>
+    </div>
+
+    <div class="orcamento-resultado">
+        <img src="~/Images/loading.gif" style="display:none; margin: auto auto auto 280px;  width: 325px;" />
+    </div>
+</div>

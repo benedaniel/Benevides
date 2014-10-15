@@ -1,0 +1,406 @@
+﻿@{
+    ViewBag.Title = "Serviços - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+}
+@{
+    var idPlusAdults = "plusAdults" + ViewBag.Indice;
+    var idMinusAdults = "minusAdults" + ViewBag.Indice;
+}
+
+@model FT.Web.Model.Models.AtividadeModel
+<style>
+    .error {
+        background: url("../images/bgErro.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border-radius: 5px 5px 5px 5px;
+        color: #D20000;
+        display: block;
+        font-size: 11px;
+        margin: 3px 0 0;
+        padding: 5px;
+        width: 175px;
+        position: absolute;
+    }
+
+    .erroDrop {
+        background: url("../images/xis.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+        margin-top: 2px;
+        padding-left: 15px;
+    }
+</style>
+
+@using (Html.BeginForm("LoadDetalheAtividade", "Atividade", FormMethod.Post, new { @id = "atividadeForm" }))
+{ 
+
+    <script>
+
+        function MaisAtividade(eu) {
+            var qua = $('#' + eu).val();
+            if (qua < 9) {
+                $('#' + eu).val(parseInt($('#' + eu).val(), 10) + 1);
+            }
+        }
+
+        function MenosAtividade(eu) {
+            if (parseInt($('#' + eu).val()) - 1 >= 1) {
+                $('#' + eu).val(parseInt($('#' + eu).val(), 10) - 1);
+            }
+        }
+
+        $(document).ready(function () {
+
+            /* This is basic - uses default settings */
+
+            $("a#single_image").fancybox();
+
+            /* Using custom settings */
+
+            $("a#inline").fancybox({
+                'hideOnContentClick': true
+            });
+
+            /* Apply fancybox to multiple items */
+
+            $("a.group").fancybox({
+                'transitionIn': 'elastic',
+                'transitionOut': 'elastic',
+                'speedIn': 600,
+                'speedOut': 200,
+                'overlayShow': false
+            });
+
+        });
+
+        function aumentarIdadeAtividade(eu, sinal, quartoid) {
+            var qua = $('#' + eu).val();
+            if (qua < 9) {
+                for (var i = 0; i < 99; i++) {
+                    var elem = document.getElementById(eu + i);
+                    if (elem != null)
+                        elem.parentNode.removeChild(elem);
+                }
+
+                var elem2 = document.getElementById('Atvlblidades' + quartoid);
+                if (elem2 != null)
+                    elem2.parentNode.removeChild(elem2);
+
+
+                var elem3 = document.getElementById('AtvdivIdadecrianca' + quartoid);
+                if (elem3 != null)
+                    elem3.parentNode.removeChild(elem3);
+
+
+                var qtd;
+                qtd = $('#' + eu).val();
+
+
+                if (sinal == 'mais') {
+                    qtd = parseInt(qtd) + 1;
+                    $('#' + eu).val(parseInt($('#' + eu).val(), 10) + 1);
+                } else {
+                    qtd = parseInt(qtd) - 1;
+                    if (parseInt($('#' + eu).val()) - 1 >= 0) {
+                        $('#' + eu).val(parseInt($('#' + eu).val(), 10) - 1);
+                    }
+                }
+
+
+                if (qtd > 0) {
+                    $('<label/>', {
+                        text: 'Idades: ',
+                        id: 'Atvlblidades' + quartoid,
+                        name: 'Atvlblidades' + quartoid,
+                        style: 'line-height: 4.7em;'
+                    }).appendTo('#AtvagrpQuarto' + quartoid);
+
+
+                }
+
+                if (parseInt($('#' + eu).val()) >= 0) {
+                    for (var i = 0; i < qtd; i++) {
+                        $('<select/>', {
+                            id: eu + i,
+                            name: eu + i,
+                            style: "border: solid 1px #d6d6d6;width: 55px;margin-top: 8px;margin-left: 5px;"
+                        }).appendTo('#AtvagrpQuarto' + quartoid);
+
+
+                        $('<option/>', { value: "0", text: "0" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "1", text: "1" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "2", text: "2" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "3", text: "3" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "4", text: "4" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "5", text: "5" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "6", text: "6" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "7", text: "7" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "8", text: "8" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "9", text: "9" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "10", text: "10" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "11", text: "11" }).appendTo('#' + eu + i);
+                        $('<option/>', { value: "12", text: "12" }).appendTo('#' + eu + i);
+                        $('<br/>').appendTo('#' + eu + i);
+                        $('<br/>').appendTo('#Atvlbl' + quartoid);
+                    }
+
+                }
+            }
+        }
+
+
+        function removerAtividade() {
+            var elem3 = document.getElementById('AtvhrQuarto' + $("#qtdQuartos").val());
+
+            if (elem3 != null)
+                elem3.parentNode.removeChild(elem3);
+
+            var elem = document.getElementById('AtvagrpQuarto' + $("#qtdQuartos").val());
+            if (elem != null && $("#AtvqtdQuartos").val() != 1) {
+                elem.parentNode.removeChild(elem);
+                $("#AtvqtdQuartos").val(parseInt($("#AtvqtdQuartos").val()) - 1)
+            }
+
+
+        }
+        function mudarAtividade() {
+            $('.pacotes-detalhes-comprar').css('display', 'none');
+            $('.pacotes-detalhes-solicitar').css('display', 'none');
+            $('.pacotes-detalhes-lotado').css('display', 'none');
+
+            var qtdQ = parseInt($("#AtvqtdQuartos").val()) + 1;
+
+            $('<hr/>', {
+                style: "height: 1px; width: 375px; background-color: none;", id: "hrQuarto" + qtdQ,
+                name: "hrQuarto" + qtdQ
+            }).appendTo('#chamadaRight');
+
+            $('<div/>', { id: "AtvagrpQuarto" + qtdQ, name: "AtvagrpQuarto" + qtdQ, class: "agrpQuarto1" }).appendTo('#chamadaRight');
+            $('<label/>', { text: 'Quarto 0' + qtdQ, id: 'AtvQUARTO' + qtdQ, style: 'font-weight:bold;' }).appendTo('#agrpQuarto' + qtdQ);
+            $('<br/>').appendTo('#' + 'AtvQUARTO' + qtdQ);
+            $('<div/>', { id: "Atvquants" + qtdQ, name: "Atvquants" + qtdQ, class: 'quants' }).appendTo('#agrpQuarto' + qtdQ);
+            $('<label/>', { text: 'Adultos ' }).appendTo('#Atvquants' + qtdQ);
+            $('<div/>', { id: "AtvquantsAux" + qtdQ, name: "AtvquantsAux" + qtdQ }).appendTo('#Atvquants' + qtdQ);
+            $('<a/>', { href: 'javascript:', class: 'plus', onclick: "MaisHotel('AtvddlQ" + qtdQ + "Adulto')" }).appendTo('#AtvquantsAux' + qtdQ);
+
+
+            $('<input/>', {
+                type: "text",
+                value: "2",
+                id: 'ddlQ' + qtdQ + 'Adulto',
+                name: 'ddlQ' + qtdQ + 'Adulto'
+            }).appendTo('#quantsAux' + qtdQ);
+
+            $('<a/>', { href: 'javascript:', class: 'minusHotel', onclick: "MenosHotel('AtvddlQ" + qtdQ + "Adulto')" }).appendTo('#AtvquantsAux' + qtdQ);
+
+
+            $('<div/>', {
+                id: "AtvquantsCri" + qtdQ,
+                name: "AtvquantsCri" + qtdQ,
+                class: 'quants'
+            }).appendTo('#agrpQuarto' + qtdQ);
+
+            $('<label/>', {
+                text: 'Crianças '
+            }).appendTo('#quantsCri' + qtdQ);
+
+
+            $('<div/>', {
+                id: "AtvquantsCriAux" + qtdQ,
+                name: "AtvquantsCriAux" + qtdQ
+            }).appendTo('#quantsCri' + qtdQ);
+
+            $('<a/>', { href: 'javascript:', class: 'plusHotel', onclick: "aumentarIdadeHotel('AtvddlQ" + qtdQ + "Crianca','mais'," + qtdQ + ")" }).appendTo('#AtvquantsCriAux' + qtdQ);
+
+            $('<input/>', {
+                type: "text",
+                value: "0",
+                id: 'AtvddlQ' + qtdQ + 'Crianca',
+                name: 'AtvddlQ' + qtdQ + 'Crianca'
+            }).appendTo('#quantsCriAux' + qtdQ);
+
+            $('<a/>', { href: 'javascript:', class: 'minusHotel', onclick: "aumentarIdadeHotel('AtvddlQ" + qtdQ + "Crianca','menos'," + qtdQ + ")" }).appendTo('#AtvquantsCriAux' + qtdQ);
+
+            $('<br/>').appendTo('#agrpQuarto' + qtdQ);
+            $("#AtvqtdQuartos").val(parseInt($("#AtvqtdQuartos").val()) + 1)
+        }
+
+
+    </script>
+    <script src="~/Scripts/Atividade.js"></script>
+    <div class="content-pacote">
+        <h3 style="margin-bottom: 16px;">Procure um Serviço</h3>
+
+        <div class="content-pacote-destino">
+            <label class="lblPacote">Destino</label>
+            <div id="divDestinoAtividade">
+                @Html.TextBoxFor(model => model.DestinoAtividade, new { @class = "inputdestino watermark", title = "Informe seu destino" })
+                @Html.ValidationMessageFor(model => model.DestinoAtividade)
+            </div>
+
+        </div>
+
+        <div class="BuscadorSetDate">
+            <div class="SetDate">
+                @Html.LabelFor(p => p.dtEmbarque, new { @class = "buscadorlabel" })<br />
+                @Html.TextBoxFor(p => p.dtEmbarque, new { @class = "txtStartDate" })
+                @Html.ValidationMessageFor(p => p.dtEmbarque)
+            </div>
+            <div class="SetDate">
+                @Html.LabelFor(p => p.dtRetorno, new { @class = "buscadorlabel" })<br />
+                @Html.TextBoxFor(p => p.dtRetorno, new { @class = "txtEndDate", @onchange="validarDataRetorno('dtEmbarque', 'dtRetorno')" })
+                @Html.ValidationMessageFor(p => p.dtRetorno)
+            </div>
+        </div>
+        <div class="clear"></div>
+        <br />
+
+
+        @if (Model.Apartamento != null && Model.Apartamento.Count > 0)
+        {
+
+            int TotalPassageiro = 0;
+            int counterApartamento = 1;
+            int counterPassageiro = 0;
+            int counterCrianca = 0;
+            
+            
+            <div>
+                @foreach (FT.Web.Model.Models.ApartamentoModel Apartamento in Model.Apartamento)
+                {
+                    <hr style="height: 1px; width: 375px; background-color: none;" id="AtvhrQuarto3" name="AtvhrQuarto3">
+                    <div id="AtvagrpQuarto@{@counterApartamento}" name="AtvagrpQuarto@{@counterApartamento}">
+
+
+                        @foreach (FT.Web.Model.Models.PassageiroModel Adultos in Apartamento.Passageiros)
+                        {
+                            if (Convert.ToInt32(Adultos.IdadePassageiro) > 12)
+                            {
+                                counterPassageiro = counterPassageiro + 1;
+                            }
+                            TotalPassageiro = TotalPassageiro + 1;
+                        }
+
+                        @foreach (FT.Web.Model.Models.PassageiroModel Criancas in Apartamento.Passageiros)
+                        {
+                            if (Convert.ToInt32(Criancas.IdadePassageiro) <= 12)
+                            {
+                                counterCrianca = counterCrianca + 1;
+                            }
+                        }
+
+                    </div>
+                
+                        counterApartamento = counterApartamento + 1;
+
+                }
+
+                <div class="quants">
+                    <label class='buscadorlabel'>Adultos @Request.Form["txtAdultos"]</label>
+                    <div>
+                        <a  href="javascript:" id="@idPlusAdults" class="plusHotel" onclick=""></a>
+                        <input readonly="readonly" id="AtvddlQ0Adulto" name="AtvddlQ1Adulto" type="text" class='QuantAdultos' value="@{@counterPassageiro}" onkeypress="return isNumberKey(event)" >
+                        <a href="javascript:" id="@idMinusAdults" class="minusHotel" onclick=""></a>
+                    </div>
+                </div>
+
+                <div class="quants">
+                    <label style="font-family: Verdana; font-weight: bold; font-size: 12px;">Crianças</label>
+                    <div style="width: 60px; padding-top: 8px;">
+                        <a href="javascript:" class="plusHotel" onclick="" ></a>
+                        <input readonly="readonly" class="UtilizaApartamento" style="width:19px;" value="@{@counterCrianca}" id="AtvddlQ1crianca" name="AtvddlQ1crianca" onkeypress="return isNumberKey(event)" type="text">
+                        <a href="javascript:" class="minusHotel" onclick=""></a>
+                    </div>
+                </div>
+
+                <br>
+                <label style="font-family: Verdana;font-size: 12px;background-color: none" id="Atvlblidades1" name="Atvlblidades1">Idades: </label>
+
+                @if (counterCrianca != 0)
+                {
+                    counterCrianca=0;
+
+                    foreach (FT.Web.Model.Models.ApartamentoModel Apartamento2 in Model.Apartamento)
+                    {
+                        foreach (FT.Web.Model.Models.PassageiroModel Criancas in Apartamento2.Passageiros)
+                        {
+                            if (Convert.ToInt32(Criancas.IdadePassageiro) <= 12)
+                            {
+                        
+                    <select class="UtilizaApartamento" style="border: solid 1px #d6d6d6;width: 55px;margin-top: 8px;margin-left: 5px;"   id="AtvddlQ1crianca@{@counterCrianca}" name="AtvddlQ1crianca@{@counterCrianca}" onkeypress="return isNumberKey(event)" type="text">
+                        <option value="@Criancas.IdadePassageiro">@Criancas.IdadePassageiro</option>
+                    </select>
+                        
+                                            
+                                counterCrianca = counterCrianca + 1;
+
+                            }
+                        }
+                    }
+                }
+
+                <input type="hidden" id="AtvqtdAdultos" name="AtvqtdAdultos" value="@counterPassageiro" />
+
+
+            </div>
+            
+            if (Session["UtilizaApartamentos"] == "S")
+            {
+             <script>
+                 $('.buttonPacote').attr('disabled', 'disabled');
+                 $('.buttonPacoteRemover').attr('disabled', 'disabled');
+                 $('.plusHotel').attr('onclick', '');
+                 $('.minusHotel').attr('onclick', '');
+                 $('.QuantAdultos').attr('readonly', 'readonly');
+                 $('.UtilizaApartamento').attr('readonly', 'readonly');
+                 $('.minus').attr('onclick', '');
+                 $('.plus').attr('onclick', '');
+                 $('.minus').attr('disabled', 'disabled');
+                 $('.plus').attr('disabled', 'disabled');                 
+            </script>
+            }
+        }
+        else
+        {
+              <div>
+        <div class='roomTitle'>
+            <label style="font-weight: bold;"></label>
+        </div>
+        <div id="AtvagrpQuarto1" name="AtvagrpQuarto1" class="agrpQuarto1">
+
+            <br />
+
+
+            <div class="quants">
+                <label>Adultos</label><br>
+                <div>
+                    <a href="javascript:" class="plusHotel" onclick="MaisAtividade('AtvddlQ1Adulto')"></a>
+                    <input value="2" id="AtvddlQ1Adulto" name="AtvddlQ1Adulto" onkeypress="return isNumberKey(event)" type="text">
+                    <a href="javascript:" class="minusHotel" onclick="MenosAtividade('AtvddlQ1Adulto')"></a>
+                </div>
+            </div>
+
+
+            <div class="quants">
+                <label>Criancas</label><br>
+                <div>
+                    <a href="javascript:" onclick="aumentarIdadeAtividade('AtvddlQ1crianca', 'mais',1)" class="plusHotel"></a>
+                    <input value="0" id="AtvddlQ1crianca" name="AtvddlQ1crianca" onkeypress="return isNumberKey(event)" type="text">
+                    <a href="javascript:" onclick="aumentarIdadeAtividade('AtvddlQ1crianca', 'menos',1)" class="minusHotel"></a>
+                </div>
+            </div>
+            <br />
+
+
+        </div>
+
+        <input type="hidden" value="1" id="AtvqtdQuartos" name="AtvqtdQuartos">
+    </div>
+        
+        }
+    </div>
+    
+    <div id="button">
+        <br />
+        <br />
+    </div>    
+    
+    <input type="submit" class="btnPesquisar" value="" onclick="return validar()"/>
+    
+}

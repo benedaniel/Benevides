@@ -1,0 +1,111 @@
+﻿@model List<FT.Web.Model.Models.Venda.VendaModel>
+<div id="divRegiaoResultado">
+    @for (int num = 0; num < Model.Count(); num++)
+    {
+        if (Model.Count() == 0)
+        {
+        <script>
+            $(document).ready(function () {
+                $(".divRegiaoResultado").html("<h3><center>Nenhuma Venda foi encontrada!</center></h3>");
+            });
+        </script>
+        }
+        else if (Model.Count() == 1 && !string.IsNullOrEmpty(Model[0].DS_ERRO))
+        {
+        <script>
+            $(document).ready(function () {
+                $(".divRegiaoResultado").html("<h3><center>Nenhuma Venda foi encontrada!</center></h3>");
+            });
+        </script>
+        }
+        else
+        {
+            var textVoucher = "";
+            var venda = Model[num];
+        <fieldset class="divResultado">
+            @*@if (Model[num].TB_RESERVA.Count > 0)
+            {
+                <legend class="titulo-fieldset">Código: @Model[num].ID_FILE - @Model[num].TB_RESERVA.First().TB_PAX.First().DS_NOME @Model[num].TB_RESERVA.First().TB_PAX.First().DS_SOBRENOME</legend>
+            }
+            else
+            {
+           // } *@
+            <legend class="titulo-fieldset">Código: @Model[num].ID_FILE</legend>
+            @if (!string.IsNullOrEmpty(@venda.IN_VOUCHER_LIBERADO))
+            {
+                if (@venda.IN_VOUCHER_LIBERADO.ToLower().Equals("s"))
+                {
+                    textVoucher = "Voucher Liberado";
+                    var url = ViewBag.urlVoucher + "&p_id_file=" + venda.ID_FILE;
+                <script>
+                    $(document).ready(function () {
+                        $('#divVoucher_@num').html('<a href="javascript:popUpNewWindow(\'@url\');">Imprimir Voucher</a>');
+                        $('#divVoucher_@num').css("background-color", "#7BBEDE");
+                    });
+                </script>
+                }
+                else
+                {
+                    textVoucher = "Voucher Indisponivel";
+                <script>
+                    $(document).ready(function () {
+                        $('#divVoucher_@num').html('<a href="javascript:">@textVoucher</a>');
+                        $('#divVoucher_@num').css("background-color", "red");
+                    });
+                </script>
+                }
+            }
+            <div title="@textVoucher" class="divVoucher" id="divVoucher_@num"></div>
+            <a href="javascript:detalheVenda()" title="Click Para Mais Detalhes...">
+                <table cellpadding="0" cellspacing="0" class="tabela">
+                    <tr>
+                        <td class="coluna-Width-90"><span class="spanLabel">Agência:</span> </td>
+                        <td colspan="3">@venda.NM_PESSOA_AGENCIA</td>
+                        <td class="coluna-Width-90"><span class="spanLabel">Fone:</span> </td>
+                        <td class="coluna-Width-120" colspan="2">@venda.NR_TELEFONE_DISTRIBUIDOR </td>
+                        <td class="coluna-Width-120"><span class="spanLabel">Status:</span> @venda.DS_FILE_STATUS</td>
+                    </tr>
+                    <tr>
+                        <td><span class="spanLabel">Data:</span>  </td>
+                        <td>@string.Format("{0:dd/MM/yyyy}", venda.DT_FILE)</td>
+                        <td><span class="spanLabel">Validade:</span> </td>
+                        <td>@string.Format("{0:dd/MM/yyyy}", @venda.DT_VALIDADE)</td>
+                        <td class="coluna-Width-90"><span class="spanLabel">Atendente:</span> </td>
+                        <td colspan="3">@venda.NM_PESSOA_ATENDENTE</td>
+                    </tr>
+                    <tr>
+                        <td><span class="spanLabel">Saída:</span> </td>
+                        <td>@string.Format("{0:dd/MM/yyyy}", @venda.DT_INICIAL)</td>
+                        <td><span class="spanLabel">Retorno:</span> </td>
+                        <td>@string.Format("{0:dd/MM/yyyy}", @venda.DT_FINAL)</td>
+                        <td><span class="spanLabel">Passageiros:</span></td>
+                        <td colspan="3">
+                            @{System.Text.StringBuilder lstNomes = new System.Text.StringBuilder();}
+                            @foreach (var reserva in venda.TB_RESERVA)
+                            {
+                                foreach (var pax in reserva.TB_PAX)
+                                {
+                                    string nomecompleto = pax.DS_NOME.Trim() + " " + pax.DS_SOBRENOME;
+                                    if (!lstNomes.ToString().Contains(nomecompleto))
+                                    {
+                                        lstNomes.Append(nomecompleto + ", ");
+                                    }
+                                }
+                            }
+                            @if (lstNomes.Length > 0)
+                            {
+                                <label>@lstNomes.ToString().TrimEnd().Remove(@lstNomes.ToString().TrimEnd().ToString().Length - 1, 1)</label>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="spanLabel">Valor Venda:</span> </td>
+                        <td colspan="7">R$ @venda.VL_VENDA</td>
+                    </tr>
+                </table>
+            </a>
+        </fieldset>
+        }
+    }
+</div>
+<div id="divDetalheConsultaVenda"></div>

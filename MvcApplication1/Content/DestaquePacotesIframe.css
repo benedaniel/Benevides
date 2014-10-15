@@ -1,0 +1,283 @@
+﻿/* ------------------------------ Pacotes */
+* {
+    border: 0 none;
+    list-style: none outside none;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    text-decoration: none;
+}
+.pacotes-destaque {
+    clear: both;
+    width: 480px;
+    height: auto;
+    padding: 30px 0 30px 0;
+}
+
+.pacotes-destaque-header {
+    height: 42px;
+    width: 480px;
+}
+
+.pacotes {
+    display: block;
+    height: 400px;
+    width: 484px;
+    margin: 8px 0 0 0;
+    font-family: Tahoma, Verdana, Geneva, sans-serif;
+}
+
+.ico-pacotes-nacionais {
+    float: left;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    background: url(../images/ico_pacotes_nacionais_internacionais.gif) no-repeat;
+}
+
+.ico-pacotes-internacionais {
+    float: left;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    background: url(../images/ico_pacotes_nacionais_internacionais.gif) -50px 0 no-repeat;
+}
+
+.pacotes-destaque-titulo-nacionais {
+    display: block;
+    font-weight: normal;
+    font-size: 1.5em;
+    line-height: 55px;
+    margin: 0 0 10px 60px;
+    color: #004a9a;
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+}
+
+.pacotes-destaque-titulo-internacionais {
+    display: block;
+    font-weight: normal;
+    font-size: 1.5em;
+    line-height: 55px;
+    margin: 0 0 10px 60px;
+    color: #f05c18;
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+}
+
+
+.box-pacotes-left {
+    float: left;
+    width: 210px;
+    height: 184px;
+    background: #ececec;
+    border: solid 1px #DDD;
+    margin: 15px;
+}
+
+    .box-pacotes-left:hover {
+        border: solid 1px #BBB;
+    }
+
+.box-pacotes-right {
+    float: left;
+    width: 210px;
+    height: 184px;
+    background: #f3f3f3;
+    border: solid 1px #DDD;
+    margin: 15px 0 15px 15px;
+}
+
+    .box-pacotes-right:hover {
+        border: solid 1px #BBB;
+    }
+
+.box-pacotes-img {
+    width: 188px;
+    height: 68px;
+    margin: 10px 10px 0 10px;
+    background: #999;
+    overflow: hidden;
+    border: solid 1px #FFF;
+}
+
+.box-pacotes-titulo-nacional {
+    width: 190px;
+    margin: 5px 10px 0 10px;
+    text-align: center;
+    line-height: 1em;
+    text-transform: uppercase;
+    color: #004a9a;
+}
+
+.box-pacotes-titulo-internacional {
+    width: 190px;
+    margin: 5px 10px 0 10px;
+    text-align: center;
+    line-height: 1em;
+    text-transform: uppercase;
+    color: #f05c18;
+}
+
+    .box-pacotes-titulo-nacional h3, .box-pacotes-titulo-internacional h3 {
+        display: block;
+        height: 22px;
+        font-weight: normal;
+        font-size: 0.8em;
+        font-family: Tahoma, Verdana, Geneva, sans-serif;
+    }
+
+.box-pacotes-apartirde {
+    margin: 0 0 0 7px;
+    font-size: 0.6em;
+    color: #999;
+}
+
+.box-pacotes-entrada {
+    display: block;
+    margin: 0 0 0 7px;
+    font-size: 0.6em;
+    color: #666;
+}
+
+.box-pacotes-linha-1 {
+    width: 210px;
+    margin: 0 0 10px 7px;
+}
+
+.box-pacotes-parcelas-nacional {
+    float: left;
+    font-size: 1em;
+    margin: 0 3px 0 0;
+    color: #004a9a;
+}
+
+.box-pacotes-parcelas-internacional {
+    float: left;
+    font-size: 1em;
+    margin: 0 3px 0 0;
+    color: #f05c18;
+}
+
+.box-pacotes-valor-nacional {
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    color: #f05c18;
+}
+
+.box-pacotes-valor-internacional {
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    color: #004a9a;
+}
+
+.box-pacotes-semjuros-nacional {
+    float: left;
+    font-size: 0.7em;
+    margin: 5px 0 0 5px;
+    color: #004a9a;
+}
+
+.box-pacotes-semjuros-internacional {
+    float: left;
+    font-size: 0.7em;
+    margin: 5px 0 0 5px;
+    color: #f05c18;
+}
+
+.box-pacotes-linha-2 {
+    clear: both;
+    padding: 3px 0 0 0;
+}
+
+
+.box-pacotes-saindode {
+    clear: both;
+    margin: 6px 0 0 7px;
+    font-size: 0.6em;
+    color: #999;
+}
+
+
+
+.box-pacotes-entrada {
+    display: block;
+    margin: 0 0 0 7px;
+    font-size: 0.6em;
+    color: #666;
+    min-height: 12px;
+    float: left;
+}
+
+
+.box-pacotes-linha-1 {
+    width: 210px;
+    margin: 0 0 10px 7px;
+}
+
+div#slidesPacotesNacionais div.slidesjs-container, div#slidesPacotesInternacionais div.slidesjs-container {
+    height: 420px !important;
+}
+
+div#slidesPacotesNacionais div.slidesjs-control, div#slidesPacotesInternacionais div.slidesjs-control {
+    width: 500px !important;
+}
+
+div#slidesPacotesNacionais ul.slidesjs-pagination, div#slidesPacotesInternacionais ul.slidesjs-pagination {
+    margin-left: 420px;
+    position: absolute;
+    margin-top: -450px;
+}
+
+div#slidesPacotesInternacionais ul.slidesjs-pagination {
+    margin-left: 420px;
+    position: absolute;
+    margin-top: -450px;
+}
+
+
+    div#slidesPacotesNacionais ul.slidesjs-pagination li, div#slidesPacotesInternacionais ul.slidesjs-pagination li {
+        float: left;
+    }
+
+        div#slidesPacotesNacionais ul.slidesjs-pagination li a, div#slidesPacotesInternacionais ul.slidesjs-pagination li a {
+            display: block;
+            background: url(../images/bullets_slide_02.png) center no-repeat;
+            height: 17px;
+            width: 17px;
+            background-position: 0px 0px;
+            line-height: 0;
+            font-size: 0;
+            color: transparent;
+        }
+
+            div#slidesPacotesNacionais ul.slidesjs-pagination li a.active, div#slidesPacotesInternacionais ul.slidesjs-pagination li a.active {
+                background-position: 0px -20px;
+            }
+
+            div#slidesPacotesNacionais ul.slidesjs-pagination li a:hover, div#slidesPacotesInternacionais ul.slidesjs-pagination li a:hover {
+                background-position: 0px -40px;
+            }
+
+        div#slidesPacotesInternacionais ul.slidesjs-pagination li a {
+            display: block;
+            background: url(../images/bullets_slide_02.png) center no-repeat;
+            height: 17px;
+            width: 17px;
+            background-position: -20px 0px;
+            line-height: 0;
+            font-size: 0;
+            color: transparent;
+        }
+
+            div#slidesPacotesInternacionais ul.slidesjs-pagination li a.active {
+                background-position: -20px -20px;
+            }
+
+            div#slidesPacotesInternacionais ul.slidesjs-pagination li a:hover {
+                background-position: -20px -40px;
+            }
+
+.slidesjs-navigation {
+    display: none;
+}

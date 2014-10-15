@@ -1,0 +1,191 @@
+﻿@model FT.Web.Model.Models.CarroPesquisaModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Carro.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="~/Scripts/Carro.js"></script>
+<script src="~/Scripts/Validations.js"></script>
+
+<style>
+    .control-cotizacao, #div-loading-cotizacao {
+        margin: 10px auto auto !important;
+    }
+</style>
+<div id="orcamentocontent">
+</div>
+<div class="content">
+    <div class="content-left filtros-left">
+        @using (Html.BeginForm("Resultado", "Carro", FormMethod.Post, new { id = "FiltroLateralCarro" }))
+        {
+            var modelo = Model;
+            
+            <div id="headerResultados" class="titulo-filtros-left">
+                <span class="iconeMala" style="">Pesquisar</span>
+            </div>
+            <div class="divcampos-filtros-left">
+                <div id="divLocalRetirada">
+                    <p>
+                        @Html.LabelFor(model => model.LocalRetirada, new { @class = "label-filtros-left" })
+                        @Html.TextBoxFor(model => model.LocalRetirada, new { @class = "campos-filtros-left" })
+
+                    </p>
+                    <p><b>@Html.ValidationMessageFor(model => model.LocalRetirada)</b></p>
+                </div>
+
+                <br />
+
+                <div>
+                    <div>
+                        @Html.LabelFor(model => model.DataCheckIn, new { @class = "label-filtros-left" })
+                    </div>
+
+                    <div class="BuscadorSetDate">
+                        <div class="SetDate picker-text">
+                            @Html.TextBoxFor(model => model.DataCheckIn, new { @class = "text-data-filtro-left" })
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(model => model.HoraCheckInSelecionada, Model.HorasCheckIn, new { @class = "dropdown-hora-filtros-left" })
+                        </div>
+                        <p><b>@Html.ValidationMessageFor(model => model.DataCheckIn)</b></p>
+                    </div>
+                </div>
+                <div>&nbsp;</div>
+
+                <div>
+                    <div>
+                        <br />
+                        <br />
+                        @Html.LabelFor(model => model.DataCheckOut, new { @class = "label-filtros-left" })
+                    </div>
+
+                    <div class="BuscadorSetDate">
+                        <div class="SetDate picker-text">
+                            @Html.TextBoxFor(model => model.DataCheckOut, new { @class = "text-data-filtro-left" })
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(model => model.HoraCheckOutSelecionada, Model.HorasCheckOut, new { @class = "dropdown-hora-filtros-left" })
+                        </div>
+                        <p><b>@Html.ValidationMessageFor(model => model.DataCheckOut)</b></p>
+                    </div>
+                </div>
+
+                <div>
+                    @if (Model.IsLocalDiferenteEntrega)
+                    {
+                        <input id="IsLocalDiferenteEntrega" type="checkbox" name="IsLocalDiferenteEntrega">
+                        <label for="IsLocalDiferenteEntrega"><span><span></span></span>Local diferente para entrega</label>
+                        <input type="hidden" id="hdnIsLocalDiferenteEntrega" name="hdnIsLocalDiferenteEntrega" value="@Model.IsLocalDiferenteEntrega" />
+                    }
+                    else
+                    {
+                        <script>
+                            $(function () {
+                                uncheck();
+                            });
+                            function uncheck() {
+                                document.getElementById("IsLocalDiferenteEntrega").checked = false;
+                            }
+                        </script>
+                        <input id="IsLocalDiferenteEntrega" type="checkbox" name="IsLocalDiferenteEntrega">
+                        <label for="IsLocalDiferenteEntrega"><span><span></span></span>Local diferente para entrega</label>
+                        <input type="hidden" id="hdnIsLocalDiferenteEntrega" name="hdnIsLocalDiferenteEntrega" value="@Model.IsLocalDiferenteEntrega" />
+                    }
+                </div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div id="divLocalDevolucao" style="display: none;">
+                    <div>
+                        @Html.LabelFor(model => model.LocalDevolucao, new { @class = "label-filtros-left" })
+                    </div>
+                    <div>
+                        @if (Model.LocalDevolucao == "Informe o local de devolução" || Model.LocalDevolucao == "" || Model.LocalDevolucao == null)
+                        {
+                            @Html.TextBoxFor(model => model.LocalDevolucao, new { @class = "campos-filtros-left watermark marked", title = "Informe o local de devolução" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.LocalDevolucao, new { @class = "campos-filtros-left", title = "Informe o local de devolução" })
+                        }
+                    </div>
+                    <p><b>@Html.ValidationMessageFor(model => model.LocalDevolucao)</b></p>
+                </div>
+                <br />
+                <div>
+                    <input type="button" value="Pesquisar" class="buttonRefazerPesquisa-filtros-left" />
+                </div>
+            </div>        
+        }
+    </div>
+    <div class="content-resultado-right">
+        
+
+        <div id="divresultado">
+            @if (Model.LocalRetirada != null)
+            { Html.RenderAction("Resultado", "Carro", Model); }
+        </div>
+    </div>
+</div>
+
+@{
+    var localRetiradaCodigo = Request.Params["hdnLocalRetiradaCodigo"];
+    var localDevolucaoCodigo = Request.Params["hdnLocalDevolucaoCodigo"];
+    bool IsLocalRetiradaDiferente = Model.IsLocalDiferenteEntrega;
+    bool IsLocalRetiradaDiferente2 = Request.Params["hdnIsLocalDiferenteEntrega"] != "" ? Convert.ToBoolean(Request.Params["hdnIsLocalDiferenteEntrega"]) : false;
+
+    //if (Session["MontePacoteAntigo"] != null)
+    //{
+    //    if (!String.IsNullOrEmpty(localRetiradaCodigo))
+    //{
+    //    localRetiradaCodigo = ((List<FT.Web.Model.Models.MontePacoteModel>)Session["MontePacoteAntigo"]).Last().CodigoCidadeOrigem;
+    //}
+
+    //    if (String.IsNullOrEmpty(localDevolucaoCodigo) && Session["MontePacoteAntigo"] != null)
+    //{
+    //    localDevolucaoCodigo = ((List<FT.Web.Model.Models.MontePacoteModel>)Session["MontePacoteAntigo"]).Last().CodigoCidadeDestino;
+    //}
+    //}
+    if (!String.IsNullOrEmpty(localRetiradaCodigo))
+    {
+    <script>
+        $(document).ready(function () {
+            $("#hdnLocalRetiradaCodigo").val(@localRetiradaCodigo);
+            $("#hdnLocalDevolucaoCodigo").val(@localDevolucaoCodigo);
+        });
+    </script>
+    
+        if (IsLocalRetiradaDiferente || (Model.LocalDevolucao != "" && Model.LocalDevolucao != "Informe o local de devolução"))
+        {
+    <script>
+        $("#IsLocalDiferenteEntrega").attr("checked", true);
+    </script>
+        }
+        else
+        {
+    <script>
+        $("#IsLocalDiferenteEntrega").attr("checked", false);
+    </script>
+        }
+
+    
+    <script>
+
+        $(document).ready(function () {
+
+            if ($("#LocalDevolucao").val() != "" && $("#LocalDevolucao").val() != "Informe o local de devolução") {
+                $("#IsLocalDiferenteEntrega").attr("checked", true);
+            }
+
+            if ($("#IsLocalDiferenteEntrega").is(':checked')) {
+                $("#divLocalDevolucao").show();
+            }
+            else {
+                $("#divLocalDevolucao").hide();
+            }
+        });
+
+    </script>
+    
+    }    
+}

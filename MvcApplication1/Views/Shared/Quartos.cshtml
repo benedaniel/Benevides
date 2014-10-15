@@ -1,0 +1,186 @@
+﻿@model IList<FT.Web.Model.Models.ApartamentoModel>
+@{
+    var idPlusAdults = String.Format("{0}{1}", "plusAdults", ViewBag.Indice);
+    var idMinusAdults = String.Format("{0}{1}", "minusAdults", ViewBag.Indice);
+}
+
+<script src="~/Scripts/QtrIE.js"></script>
+<div>
+    <label class="buscadorlabel" for="QuantQuartos" style="display: inline;">Quantidade de quartos</label>
+    <input type="button" class="buttonPacote" value="" onclick="mudarHotel();" />
+    <input type="button" class="buttonPacoteRemover" value="" onclick="removerHotel();" />
+</div>
+
+@if (Model != null && Model.Count > 0)
+{
+    int TotalPassageiro = 0;
+    int counterApartamento = 1;
+    int counterPassageiro = 0;
+    int counterCrianca = 0;
+    <input id="qtdQuartos" name="qtdQuartos" type="hidden" value="@Model.Count" />
+    <div class="agrpQuarto1">
+        @foreach (FT.Web.Model.Models.ApartamentoModel Apartamento in Model)
+        {
+            counterPassageiro = 0;
+            counterCrianca = 0;
+            <hr style="height: 1px; width: 375px; background-color: none;" id="hrQuarto3" name="hrQuarto3">
+            <div id="agrpQuarto@{@counterApartamento}" name="agrpQuarto@{@counterApartamento}" class="agrpQuarto1">
+                <label class="lblquantquartos">
+                    Quarto @{@counterApartamento}
+                    <br>
+                </label>
+                @{
+            counterPassageiro = Apartamento.Passageiros.Where(p => p.IdadePassageiro > 12).Count();
+            TotalPassageiro = Apartamento.Passageiros.Count;
+            counterCrianca = Apartamento.Passageiros.Where(p => p.IdadePassageiro <= 12).Count();
+                }
+                <div class="quants">
+                    <label class='buscadorlabel'>Adultos @Request.Form["txtAdultos"]</label>
+                    <div>
+                        <a href="javascript:" id="@idPlusAdults" class="plusHotel" onclick="MaisHotel('ddlQ@{@counterApartamento}Adulto')"></a>
+                        <input id="ddlQ@{@counterApartamento}Adulto" name="ddlQ@{@counterApartamento}Adulto" type="text" class='QuantAdultos' value="@{@counterPassageiro}" onkeypress="return isNumberKey(event)">
+                        <a href="javascript:" id="@idMinusAdults" class="minusHotel" onclick="MenosHotel('ddlQ@{@counterApartamento}Adulto')"></a>
+                    </div>
+                </div>
+                <div class="quants">
+                    <label style="font-family: Verdana; font-weight: bold; font-size: 12px;">Crianças</label>
+                    <div style="">
+                        <a href="javascript:" class="plusHotel" onclick="aumentarIdadeHotel('ddlQ@{@counterApartamento}crianca', 'mais',@counterApartamento)" ></a>
+                        <input class="UtilizaApartamento" style="" value="@{@counterCrianca}" id="ddlQ@{@counterApartamento}crianca" name="ddlQ@{@counterApartamento}crianca" onkeypress="return isNumberKey(event)" type="text">
+                        <a href="javascript:" class="minusHotel" onclick="aumentarIdadeHotel('ddlQ@{@counterApartamento}crianca', 'menos',@counterApartamento)"></a>
+                    </div>
+                </div>
+                <br />
+                @if (counterCrianca != 0)
+                {
+                    { counterCrianca = 0; }
+                    <br>
+                    <label style="font-family: Verdana;font-size: 12px;background-color: none" id="lblidades@{@counterApartamento}" name="lblidades@{@counterApartamento}">Idades: </label>
+                    foreach (FT.Web.Model.Models.PassageiroModel Criancas in Apartamento.Passageiros)
+                    {
+                        if (Convert.ToInt32(Criancas.IdadePassageiro) <= 12)
+                        {
+                    <select class="UtilizaApartamento" style="border: solid 1px #d6d6d6;width: 55px;margin-top: 8px;margin-left: 5px;"  id="ddlQ@{@counterApartamento}crianca@{@counterCrianca}" name="ddlQ@{@counterApartamento}crianca@{@counterCrianca}" onchange="ChangeSlct('ddlQ@{@counterApartamento}crianca@{@counterCrianca}')" onkeypress="return isNumberKey(event)" type="text">
+
+                        @if (Criancas.IdadePassageiro == 0)
+                        {<option value="@Criancas.IdadePassageiro" selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        { <option value="0">0</option>}
+
+                        @if (Criancas.IdadePassageiro == 1)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="1">1</option> }
+
+                        @if (Criancas.IdadePassageiro == 2)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="2">2</option> }
+
+                        @if (Criancas.IdadePassageiro == 3)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="3">3</option> }
+
+                        @if (Criancas.IdadePassageiro == 4)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        { <option value="4">4</option>}
+
+                        @if (Criancas.IdadePassageiro == 5)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="5">5</option> }
+
+                        @if (Criancas.IdadePassageiro == 6)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="6">6</option> }
+
+                        @if (Criancas.IdadePassageiro == 7)
+                        { <option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option>}
+                        else
+                        {<option value="7">7</option> }
+
+                        @if (Criancas.IdadePassageiro == 8)
+                        {<option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="8">8</option> }
+
+                        @if (Criancas.IdadePassageiro == 9)
+                        { <option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option>}
+                        else
+                        {<option value="9">9</option> }
+
+                        @if (Criancas.IdadePassageiro == 10)
+                        { <option value="@Criancas.IdadePassageiro"  selected="selected">@Criancas.IdadePassageiro</option>}
+                        else
+                        { <option value="10">10</option>}
+
+                        @if (Criancas.IdadePassageiro == 11)
+                        {<option value="@Criancas.IdadePassageiro" selected="selected">@Criancas.IdadePassageiro</option> }
+                        else
+                        {<option value="11">11</option> }
+
+                        @if (Criancas.IdadePassageiro == 12)
+                        { <option value="@Criancas.IdadePassageiro" selected="selected">@Criancas.IdadePassageiro</option>}
+                        else
+                        { <option value="12">12</option>}
+
+                    </select>
+                        counterCrianca = counterCrianca + 1;
+                        }
+                    }
+                }
+            </div>
+                counterPassageiro = 1;
+                counterApartamento = counterApartamento + 1;
+        }
+    </div>
+}
+else
+{
+    <div>
+        <div class='roomTitle'>
+            <label style="font-weight: bold;">Quarto 01 </label>
+        </div>
+        <div id="agrpQuarto1" name="agrpQuarto1" class="agrpQuarto1">
+            <br />
+            <div class="quants">
+                <label>Adultos</label><br>
+                <div>
+                    <a href="javascript:" class="plusHotel" onclick="MaisHotel('ddlQ1Adulto')"></a>
+                    <input value="2" id="ddlQ1Adulto" name="ddlQ1Adulto" onkeypress="return isNumberKey(event)" type="text">
+                    <a href="javascript:" class="minusHotel" onclick="MenosHotel('ddlQ1Adulto')"></a>
+                </div>
+            </div>
+            <div class="quants">
+                <label>Criancas</label><br>
+                <div>
+                    <a href="javascript:" onclick="aumentarIdadeHotel('ddlQ1crianca', 'mais',1)" class="plusHotel"></a>
+                    <input value="0" id="ddlQ1crianca" name="ddlQ1crianca" onkeypress="return isNumberKey(event)" type="text">
+                    <a href="javascript:" onclick="aumentarIdadeHotel('ddlQ1crianca', 'menos',1)" class="minusHotel"></a>
+                </div>
+            </div>
+            <br />
+        </div>
+        <input type="hidden" value="1" id="qtdQuartos" name="qtdQuartos">
+    </div>
+}
+<div id="chamadaRight">
+</div>
+@if (Session["UtilizaApartamentos"] == "S")
+{ 
+    <script>
+        $('.buttonPacote').attr('disabled', 'disabled');
+        $('.buttonPacoteRemover').attr('disabled', 'disabled');
+        $('.plusHotel').attr('onclick', '');
+        $('.minusHotel').attr('onclick', '');
+        $('.QuantAdultos').attr('readonly', 'readonly');
+        $('.UtilizaApartamento').attr('readonly', 'readonly');
+        $('.minus').attr('onclick', '');
+        $('.plus').attr('onclick', '');
+        $('.minus').attr('disabled', 'disabled');
+        $('.plus').attr('disabled', 'disabled');
+    </script>
+}

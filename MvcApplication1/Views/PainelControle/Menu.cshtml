@@ -1,0 +1,123 @@
+﻿@model FT.Web.Model.Models.PessoaModel
+<link href="~/Content/MenuPainelControle.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "";
+    Layout = "";
+}
+<script src="~/Scripts/MenuPainelControle.js"></script>
+@if (Session["Usuario"] != null)
+{
+    string perfil = (Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER;
+    <script>
+        $(document).ready(function  (){
+            @*ControleExibicaoItenMenu('@perfil');*@
+            ControleExibicaoMenu();
+        });
+    </script>
+    if (!(Session["Usuario"] as FT.Web.Model.Models.PessoaModel).B2B)
+    {
+    <script>
+        $(document).ready(function () {
+            MenuExibicaoB2C("s");
+        });
+    </script>
+    }
+
+}
+<div style="display: block">
+    <img src="~/Images/MenuPainel.png" class="imgMenuPainel" />
+    @if (Model.ID_PESSOA != 0 && Model.ID_PESSOA != null)
+    {
+        <div id="divMenuPainelControle">
+            <ul>
+                <li>
+                    <div id="divMenuPrincipal">
+                        <a href="/PainelControle">Painel de Controle
+                    <img src="~/Images/seta-branca-baixo.png" /></a>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="divItenMenu meucadastro M C" style="display:none;">
+                                @using (Html.BeginForm("DadosUsuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_Meu" }))
+                                {
+                
+                                    @Html.HiddenFor(p => p.ID_PESSOA)
+                                    @Html.HiddenFor(p => p.ID_EMPRESA)
+                                    @Html.HiddenFor(p => p.ID_PERFIL)
+                                    <input type="hidden" name="pag" value="m"/>
+                                    <div>
+                                        <img src="~/Images/painel_controle/iconeMeuCadastro.png" /><a href="javascript:FormUsuario_Meu.submit();">Meu Cadastro</a>
+                                    </div>
+                                }
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                        <li>
+                            @{var idAgencia = @Model.ID_PESSOA_AGENCIA;}
+                            <div class="divItenMenu dadosdaagencia M" id="divAgencia" style="display:none;">
+                                @using (Html.BeginForm("MinhaAgencia", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_Agencia" }))
+                                {
+                
+                                    @Html.Hidden("ID_PESSOA", @idAgencia)
+                                    @Html.HiddenFor(p => p.ID_EMPRESA)
+                                    @Html.Hidden("ID_PERFIL", "0")
+                                    <input type="hidden" name="pag" value="a"/>
+                    
+                                    <div>
+                                        <img src="~/Images/painel_controle/iconeDadosAgencia.png" /><a href="javascript: FormUsuario_Agencia.submit();">Dados da Agência</a>
+                                    </div>
+                                }
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="divItenMenu adicionarusuario M" id="divNovo" style="display:none;">
+                                @using (Html.BeginForm("UsuarioNovo", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_Novo" }))
+                                {
+                                    <input type="hidden" name="pag" value="n"/>
+                                    <div>
+                                        <img src="~/Images/painel_controle/iconeAddUsuarios.png" /><a href="javascript:FormUsuario_Novo.submit();">Adicionar Usuários</a>
+                                    </div>
+                                }
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="divItenMenu listadeusuarios M" id="divUsuarios" style="display:none;">
+                                <div>
+                                    <img src="~/Images/painel_controle/iconeListagemUsuarios.png" /><a href="/PainelControle/ListaUsuario">Listagem de Usuários</a>
+                                </div>
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="divItenMenu reservasdocliente M A" id="divReservas" style="display:none;">
+                                <div>
+                                    <img src="~/Images/painel_controle/iconeReservaAgencia.png" /><a id="lnkReserva" href="/PainelControle/Reserva">Reservas da Agência</a>
+                                </div>
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="divItenMenu extrato M" id="divExtrato" style="display:none;">
+                                <div>
+                                    <img src="~/Images/painel_controle/iconExtrato.png" /><a href="/PainelControle/Extrato">Extrato</a>
+                                </div>
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                         <li>
+                            <div class="divItenMenu orcamento M A" id="divOrcamento" style="display:none;">
+                                <div>
+                                    <img src="~/Images/painel_controle/iconeOrcamento.png" /><a href="/Orcamento/ListarOrcamento">Orçamento</a>
+                                </div>
+                                <hr class="hrItenMenu">
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    }
+    <div class="divTitlePagina">@ViewBag.titulo </div>
+</div>

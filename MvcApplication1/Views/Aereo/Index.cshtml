@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "ConsultaAereos";
+    Layout = null;
+}
+<script src="~/Scripts/jquery/jquery-2.0.3.js"></script>
+<script src="~/Scripts/jquery/jquery-ui.js"></script>
+
+<link href="~/Content/jquery/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+<script src="~/Scripts/Aereo.js"></script>
+<script src="~/Scripts/Site.js"></script>
+
+@model FT.Web.Model.Models.AereoModel
+
+<h2>ConsultaAereos</h2>
+
+@using (Html.BeginForm("LoadAereo", "Aereo", FormMethod.Post))
+{ 
+    <div class="contentBusca">
+        @Html.RadioButtonFor(p => p.Tipo, "SomenteIda") Somente Ida
+        @Html.RadioButtonFor(p => p.Tipo, "IdaeVolta") Ida e Volta
+        <br />
+        @Html.LabelFor(p => p.Origem)
+        <div id="origemDiv"></div>
+        <br />
+        @Html.LabelFor(p => p.Destino)
+        @Html.TextBoxFor(p => p.Destino)
+        <br />
+        @Html.LabelFor(p => p.DataEmbarque)
+        @Html.TextBoxFor(p => p.DataEmbarque, new {id = "txtAereoStartDate" })
+        <br />
+        @Html.LabelFor(p => p.DataRetorno)
+        @Html.TextBoxFor(p => p.DataRetorno, new {id = "txtAereoEndDate" })
+        <br />
+        @Html.LabelFor(p => p.QuantidadeAdulto)
+        @Html.DropDownList("ddlAdultos", ViewData["Adultos"] as SelectList)
+        <br />
+        @Html.LabelFor(p => p.QuantidadeCrianca)
+        @Html.DropDownList("ddlCriancas", ViewData["Criancas"] as SelectList)
+        <br />
+        @Html.LabelFor(p => p.QuantidadeBebe)
+        @Html.DropDownList("ddlBebes", ViewData["Bebes"] as SelectList)
+        <br />
+        <input type="submit" id="btnBuscarAereos" value="Buscar Voos" />
+    </div>
+
+}
+<div id="gridContainer" style="display: none;">
+</div>
+<div id="gridCarrinho" style="display: none;">
+</div>

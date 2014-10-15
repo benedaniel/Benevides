@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FT.Web.Model.Models.PessoaModel>
+@{
+    ViewBag.Title = "ListaUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Error = ViewBag.Error == null ? "" : ViewBag.Error;
+}
+<link href="~/Content/PainelControle.css" rel="stylesheet" />
+<script src="~/Scripts/ListaUsuario.js"></script>
+<div class="content font-12">
+    @{Html.RenderAction("Menu", "PainelControle", new { @titulo = "Lista de Usuários" });}
+
+    <br />
+    <br />
+    <br />
+    <div class="text-align-right"><b>@Model.Count() usuários cadastrados </b></div>
+    <br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr class="table-titulo font-color-white">
+            <th class="table-border-top table-border-bottom table-border-left">Nome </th>
+            <th class="table-border-top table-border-bottom ">Email</th>
+            <th class="table-border-top table-border-bottom ">Tipo</th>
+            <th class="table-border-top table-border-bottom ">Status</th>
+            <th class="table-border-top table-border-bottom table-border-right "></th>
+        </tr>
+        @{int i = 0;}
+        @foreach (FT.Web.Model.Models.PessoaModel pessoaModel in Model)
+        {
+           
+            string classL = "";
+            if ((i % 2) == 0)
+            {
+                classL = "table-linha-alternat-colorS";
+            }
+            else
+            {
+                classL = "table-linha-alternat-colorN";
+            }
+            <tr>
+                <td class="@classL font-12 font-color-gray table-border-left " id="colNome">@pessoaModel.NM_PESSOA </td>
+                <td class="@classL font-12 font-color-gray" id="colEmail">@if (string.IsNullOrEmpty(pessoaModel.DS_CONTATO_EMAIL))
+                                                            { @pessoaModel.USUARIO}
+                                                            else
+                                                            {@pessoaModel.DS_CONTATO_EMAIL}</td>
+                <td class="@classL font-12 font-color-gray" id="colPerfil">@if (pessoaModel.IN_PERFIL_MASTER == "S") { Write("Master"); } else { Write("Atendente"); }</td>
+                <td class="@classL font-12 font-color-gray" id="colStatus">@if (pessoaModel.STATUS == "A") { Write("Ativo"); } else { Write("Inativo"); }</td>
+
+                <td class="@classL font-12 font-color-gray table-border-right text-align-right" id="colEditar">
+
+                    <a href="javascript:AlteraStatusUsuario(@pessoaModel.ID_PESSOA, '@pessoaModel.NM_PESSOA', @pessoaModel.ID_EMPRESA);" class="link-button float-left">@if (pessoaModel.STATUS == "A") { Write("Desativar"); } else { Write("Ativar"); } </a>
+
+                    @using (Html.BeginForm("Usuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_" + @i }))
+                    {
+                        @Html.Hidden("ID_PESSOA", pessoaModel.ID_PESSOA)
+                        @Html.Hidden("ID_EMPRESA", pessoaModel.ID_EMPRESA)
+                        @Html.Hidden("ID_PERFIL", pessoaModel.ID_PERFIL)
+
+                        <a href="javascript:$('#FormUsuario_@i').submit();" class = "link-button float-right" >Editar </a>
+                    }
+                </td>
+            </tr>
+                    i++;
+        }
+    </table>
+</div>

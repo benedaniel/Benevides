@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Pacote - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+}
+
+@model FT.Web.Model.Models.PacoteModel
+
+@using (Html.BeginForm("LoadPacoteMatriz", "Pacote", FormMethod.Post))
+{
+
+    <script src="~/Scripts/Pacote.js"></script>
+    <br />
+    <legend>Informações sobre a origem</legend>
+    <br />
+    <br />
+    <div id="DivRadio">
+        <ul id="" class="semMargem">
+            <li>
+                <label class="small">
+                    <span class="isNational">
+                        <input type="radio" name="rdbOrigem" value="S" checked="checked" tabindex="1"></span>
+                    Pacotes Nacionais
+                </label>
+            </li>
+            <li>
+                <label class="small">
+                    <span class="isInterNational">
+                        <input type="radio" name="rdbOrigem" value="N" tabindex="1"></span>
+                    Pacotes Internacionais
+                </label>
+            </li>
+        </ul>
+        <br />
+    </div>    
+    <ul class="fixAltura">
+
+        <li id="liLoadingDeparture_0" class="">
+            <label for="ddlDeparture" id="lblEmquarque">Local de Embarque</label>
+            <select name="ddlCidadesEmbarque" id="ddlCidadesEmbarque">
+                <option value="" dt="teste">Selecione</option>
+            </select><br />
+            <br />
+        </li>
+        <li id="liLoadingDeparture_1" class="">
+            <label for="ddlDeparture" id="lblDestino">Destino</label>
+            <select name="ddlCidadesDestino" id="ddlCidadesDestino">
+                <option value="" dt="teste">Selecione o Destino</option>
+            </select><br />
+            <br />
+        </li>
+        <li id="liLoadingData" class="">
+            <label for="ddlDeparture" id="lblData">Destino</label>
+            <select name="ddlDataVIagem" id="ddlDataVIagem">
+                <option value="">Selecione </option>
+            </select><br />
+            <br />
+        </li>
+    </ul>
+     
+    <div id="button">
+        <br />
+        <br />
+
+
+
+    </div>    
+    <div class="box-bottom">
+        <input type="submit" value="Enviar" /></div>
+   
+}

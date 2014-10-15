@@ -1,0 +1,284 @@
+﻿.blocoCampo {
+    float: left;
+    color: #666;
+    margin: 0 10px;
+}
+
+.labelForm {
+    font-size: small;
+}
+
+.campoForm {
+    margin-top: 5px;
+}
+
+.filedsetData {
+    width: 450px;
+    margin: 5px;
+    border: 1px solid #D6D6D6;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: large;
+    color: orangered;
+}
+
+.ui-datepicker-trigger {
+    background: url("../Images/calendario_input-silver.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none !important;
+    float: right;
+    height: 35px;
+    margin-left: -36px;
+    margin-top: 8px;
+    outline: medium none;
+    position: absolute;
+    text-decoration: none;
+    width: 35px;
+}
+
+input {
+    border: 1px solid #CCC;
+}
+
+legend {
+    color: orangered;
+}
+
+#divFiltro {
+    background-color: #FDFDFD;
+    border-color: #666666;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    padding: 10px;
+}
+
+#subdivFiltro {
+    display: inline-block;
+}
+
+.filtrar-consulta {
+    float: right;
+    margin-top: 0px;
+    height: 25px;
+    font-size: 10px;
+    width: 99px;
+}
+
+.spanLabel {
+    font-weight: bold;
+}
+
+.divResultado {
+    background-color: none;
+    border: 1px solid #666666;
+    border-radius: 5px;
+    font-size: small;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+    .divResultado:hover {
+        background-color: #EFEFEF;
+    }
+
+.tabela {
+    margin: 0;
+    width: 89%;
+}
+
+.coluna-Width-90 {
+    width: 90px;
+}
+
+.coluna-Width-120 {
+    width: 120px;
+}
+
+tr:hover {
+    background-color: #EFEFEF;
+}
+
+
+#simplemodal-overlay {
+    background-color: #000000;
+}
+
+#simplemodal-container {
+    background-color: #FFF;
+    border: 4px solid #444444;
+    color: #BBBBBB;
+    height: 360px;
+    padding: 12px;
+    width: 600px;
+}
+
+    #simplemodal-container .simplemodal-data {
+        padding: 8px;
+    }
+
+    #simplemodal-container code {
+        background: none repeat scroll 0 0 #141414;
+        border-left: 3px solid #65B43D;
+        color: #BBBBBB;
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+        padding: 4px 6px 6px;
+    }
+
+    #simplemodal-container a {
+        color: #DDDDDD;
+    }
+
+        #simplemodal-container a.modalCloseImg {
+            background: url("../images/x.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            cursor: pointer;
+            display: inline;
+            height: 29px;
+            position: absolute;
+            right: -16px;
+            top: -15px;
+            width: 25px;
+            z-index: 3200;
+        }
+
+    #simplemodal-container h3 {
+        color: #84B8D9;
+    }
+
+.divResultado a {
+    color: #666;
+}
+
+.title-detalhe {
+    background-color: #f75918;
+    color: #FFFFFF;
+    display: list-item;
+    font-size: medium;
+    font-weight: bold;
+    height: 20px;
+    margin: -12px -12px 10px;
+    padding: 6px 11px;
+}
+
+.area-reserva {
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.item-reserva {
+    color: #CE6D21;
+    margin-left: 17px;
+}
+
+.cart_item {
+    margin: 7px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #CCC;
+    width: 400px;
+    float: left;
+}
+
+.divVoucher {
+    /*background-color: #7BBEDE;*/
+    border-bottom: 1px solid #5EA2C1;
+    border-radius: 5px;
+    border-right: 1px solid #5EA2C1;
+    color: #FFFFFF;
+    float: right;
+    font-size: 14px;
+    height: 50px;
+    padding: 15px 2px 2px;
+    text-align: center;
+    width: 100px;
+}
+
+    .divVoucher a {
+        color: white;
+    }
+
+#divDetalheConsultaVenda {
+    background-color: white;
+    overflow-x: hidden;
+    display: none;
+}
+
+.divItens {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.fieldSetPassageiro {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 16px;
+    padding: 10px;
+    margin: 4px 15px;
+}
+
+.marginLeft17 {
+    margin-left: 17px;
+}
+
+.valorTotal {
+    font-family: Verdana;
+    float: right;
+    margin-right: 21px;
+    font-size: 17px;
+    color: #00387b;
+}
+
+.labelValorTotal {
+    font-family: Verdana;
+    color: RED;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.Valores {
+    font-family: Verdana;
+    float: right;
+    margin-right: 21px;
+    font-size: 14px;
+    color: #00387b;
+}
+
+.labelValores {
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.regionValores {
+    margin-left: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.widthDivAereo {
+    width: 650px;
+}
+
+.tabelaAereo {
+    margin-left: 20px;
+    width: 610px;
+}
+
+    .tabelaAereo th {
+        border-bottom: 1px solid #CCC;
+        background-color: #EEE;
+        height: 20px;
+    }
+
+    .tabelaAereo td {
+        border-bottom: 1px dotted #CCC;
+    }
+
+.imgCiaAerea {
+    width: 30px;
+}
+
+.titulo-fieldset {
+    font-weight:bold;
+}

@@ -1,0 +1,55 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+
+@{
+    var idPlusAdults = "plusAdultsMPMulti" + ViewBag.Indice;
+    var idMinusAdults = "minusAdultsMPMulti" + ViewBag.Indice;
+
+    var indice = 1;
+    if (ViewBag.IndiceMulti != null)
+    {
+        indice = ViewBag.IndiceMulti;
+    }
+
+}
+
+<style>
+    styled-select-form-small {
+        width:60px !important;
+    }
+</style>
+
+<li>
+    <div class='roomTitle'>
+        <label >Quarto  @indice</label>
+    </div>
+
+    <div class='roomAdults'>
+        <label class='buscadorlabel'>Adultos</label>
+        <br />
+        <div class="quartosmm">
+            <a href="javascript:" id="multi_@idPlusAdults" class="plusHotel" onclick="addMP('@idPlusAdults', 'multi')"></a>
+            <input id="txtAdultos" type="text" class='QuantAdultos QuartosMulti' value="1" onkeypress="return isNumberKey(event)"  class="valid">
+            <a href="javascript:" id="multi_@idMinusAdults" class="minusHotel" onclick="removeQtdAdultosMP('@idMinusAdults', 'multi')"></a>
+        </div>
+    </div>
+
+    <div class='roomChil'>
+        <label class='buscadorlabel'>Crianças</label>
+        <br />
+        <select class='QuantCriancas' style="width:65px; height: 36px;" onchange="qtCriancas(this, @indice, 'multi')">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+    </div>
+    <br />
+
+    <div class="roomChilAge" id='multi_roomChilAge_@indice' style="margin-top: -22px;">
+        <label class='buscadorlabel'>Idades</label>
+        <div class="clear"></div>
+        <div id="multi_criancas_@indice" class="criancas">
+        </div>
+    </div>    
+</li>

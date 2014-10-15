@@ -1,0 +1,11 @@
+﻿@model List<FT.Web.Model.Models.HotelDestaqueModel>
+@if (Model != null)
+{ 
+    <div class="">
+        <p><strong>Hotéis:</strong></p>
+        @foreach (var item in Model)
+        {
+            <a href='~/Hotel/@item.CodigoCidade/@DateTime.Now.ToString("dd-MM-yyyy")/@DateTime.Now.AddDays(7).ToString("dd-MM-yyyy")'>Hotel em  @item.NomeCidade</a>
+        }
+    </div>
+}

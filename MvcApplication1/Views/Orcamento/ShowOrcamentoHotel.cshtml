@@ -1,0 +1,106 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+@foreach (var item in Model.Hotel)
+{
+    <div class="orcamento-hotel">
+        <div class="orcamento-hotel-left">
+            @if (item.HotelFotos.Count > 0)
+            {
+                <img width="125" height="100" src="@item.HotelFotos.FirstOrDefault().HotelFotoUrl" class="img-inf-hotel">
+                }
+                else
+                {
+             <img src="~/Images/no-image.png" alt="Hotel sem imagem."  width="100" style="float:left"/>    
+            }
+            <label class="hotel-title">@item.NomeHotel</label>
+            <br />
+            <span>Estrelas </span>
+            <span style="float:right;"><img src="@string.Format("/Images/images_pacote/estrela" + Convert.ToString(item.NumeroEstrelas) + ".png")" /></span>
+            <br />
+             
+            <span class="inf-address">@item.Endereco </span>
+            <br>
+            <span class="inf-zipcode">zip code: @item.Cep</span>
+        </div>
+
+        <div class="orcamento-hotel-right">
+            <a class="linkRemover" onclick="removerItemOrcamento('@item.CodigoHotel', @Model.CodigoOrcamento, 1)">Remover</a>
+            <br />
+            <div class="hotel-periodo">
+                <label>Período: <strong>de @item.Checkin a @item.Checkout </strong></label>
+            </div>
+            <div class="hotel-acomodacao">
+                
+                <br />
+
+                @foreach (var acomodacao in item.Apartamentos)
+                {
+                    if (acomodacao.Passageiros.Count > 0)
+                    {
+
+                        if (@acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() == 1)
+                        {
+                    <strong>Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() Adulto
+                    </strong>
+                        }
+                        else
+                        {
+                    <strong>Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro >= 12).Count() Adultos
+                    </strong>
+                        }
+
+                        if (acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() > 0)
+                        {
+                            if (@acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() == 1)
+                            {
+                    <strong>e @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() criança
+                    </strong>
+                            }
+                            else
+                            {
+                    <strong>Apartamento: @acomodacao.Passageiros.Where(p => p.IdadePassageiro < 12).Count() crianças
+                    </strong>
+                            }
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+
+        <br />
+        <div class="clear">
+        </div>
+
+        <div class="datagrid">
+            <table class="table-list-regime">
+                <tbody>
+                    <tr>
+                        <td class="regime-hotel-check">
+                            
+                        </td>
+                        <td class="regime-hotel-title"><b>Quarto</b></td>
+                        <td class="regime-hotel-title"><b>Regime</b></td>
+                        <td class="regime-hotel-title"><b>Diária Média</b></td>
+                        <td class="regime-hotel-title"><b>Total do período</b></td>
+                    </tr>
+                    @foreach (var tarifa in item.Acomodacoes.SelectMany(p => p.Tarifas).OrderBy(p => p.ValorTotal).ToList())
+                    {
+                        string valorCheckBox = String.Format("{0}_{1}_{2}", tarifa.NomeAcomodacao, tarifa.NomeRegimeAlimentacao, Model.Hotel.IndexOf(item));
+                        
+                        
+                        <tr>
+                            <td class="regime-hotel-check">
+                                <input type="checkbox" checked="checked" value="@valorCheckBox" class="checkBoxTarifasSelecionadas">
+                            </td>
+                            <td class="regime-hotel-item">@tarifa.NomeAcomodacao</td>
+                            <td class="regime-hotel-item">@tarifa.NomeRegimeAlimentacao</td>
+                            <td class="regime-hotel-item">R$ @String.Format("{0:0.00}", (tarifa.ValorDiariaMedia).ToString("n2"))</td>
+                            <td class="regime-hotel-item">R$ @String.Format("{0:0.00}", (tarifa.ValorTotal).ToString("n2"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

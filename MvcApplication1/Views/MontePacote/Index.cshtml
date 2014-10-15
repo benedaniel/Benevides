@@ -1,0 +1,1002 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal totalMonteSeuPacote = 0;
+}
+@using FT.Web.Model.Models;
+@*<script src="~/Scripts/MultiMP.js"></script>*@
+
+
+<link href="~/Content/MontePacote.css" rel="stylesheet" />
+<link href="~/Content/Buscadores.css" rel="stylesheet" />
+<link href="~/Content/Home.css" rel="stylesheet" />
+<link href="~/Content/MpIndex.css" rel="stylesheet" />
+<link href="~/Content/jquery/stylesheet-image-based.css" rel="stylesheet" />
+
+<link href="~/Content/jquery/jquery-ui.css" rel="stylesheet" />
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+<script src="~/Scripts/WithLabel.js"></script>
+<script src="~/Scripts/Mapa.js"></script>
+
+<style>
+    div.BuscadorSetDate div.SetDate input {
+        width: 175px !important;
+    }
+
+    div.SetDate {
+        float: left;
+        padding-right: 25px;
+        width: 224px;
+    }
+</style>
+<div class="content">
+    @if (Model == null || Model.Destinos.Count == 0)
+    { 
+        <h2 style="color: #F27540; line-height: 68px; margin-left: 13px;">Monte seu pacote</h2>
+    }
+    @if (Model == null || Model.Destinos.Count == 0)
+    {  <div class="MontePacoteDivPrincipal">
+        @try
+        {
+            Html.RenderAction("MPFormMulti", "MontePacote");
+        }
+        catch (Exception ex)
+        {
+            FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction MontePacote");
+            //FTV.Shared.Business.TRACER_BL.AddException(FTV.Shared.Business.EnumProcesso.WebSite, null, ex, "RenderAction MontePacote"); 
+        }
+    </div>
+    }
+
+    <br />
+    @{
+        if (Model != null && Model.Destinos.Count > 0)
+        {
+            <script src="~/Scripts/MontePacote.js"></script>
+        <h2 style="color: #F27540; line-height: 68px; margin-left: 13px;">Resumo do pacote</h2>
+        <div class="MontePacoteDivResumoDestino">
+
+            <div style="float: right;">
+                <ul>
+                    @for (int i = 0; i < Model.Apartamentos.Count; i++)
+                    {
+                        int indiceQuarto = i + 1;
+                        int totalAdultos = Model.Apartamentos[i].Passageiros.Where(p => p.IdadePassageiro == 30).Count();
+                        int totalCriancas = Model.Apartamentos[i].Passageiros.Where(prop => prop.IdadePassageiro < 30).Count();
+                        var idadeCriancas = Model.Apartamentos[i].Passageiros.Where(prop => prop.IdadePassageiro < 30).ToList();
+                        <li>
+                            <div class="quantquar">
+                                Quarto @indiceQuarto:
+                            <br />
+                                <br />
+                                Adultos: @totalAdultos
+                                <br />
+                                <ul>
+                                    @for (int c = 0; c < idadeCriancas.Count; c++)
+                                    {
+                                        int indiceCrianca = c + 1;
+                                        <li>Criança @indiceCrianca: @idadeCriancas[c].IdadePassageiro anos.</li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+
+            <div class="destinos">
+                @{int counterItem = 0;}
+                @foreach (DestinoMontePacoteModel destinoMontePacote in Model.Destinos)
+                {
+                    <p class="item_@counterItem">
+                        @destinoMontePacote.NomeCidadeOrigem.Replace(",", ", ") - @destinoMontePacote.NomeCidadeDestino.Replace(",", ", ") de @destinoMontePacote.Saida a @destinoMontePacote.Retorno
+                        <input type="button" class="removedestino" value="X" onclick="RemoverDestino(@Model.Destinos.IndexOf(destinoMontePacote), @counterItem)" />
+                    </p> 
+                    counterItem++;
+                }
+                <br />
+                <a href="~/MontePacote" class="button_exampleBacj">Redefinir busca</a>
+            </div>
+
+
+
+            <br />
+            <br />
+            <br />
+            <div class="clear"></div>
+            @if (Model.Destinos.Count > 0)
+            {
+                @* Bloco de passagens - início  *@
+                <div class="icoTituloAereo"></div>
+                <span class="TituloMenu">Detalhes da passagem</span>
+                <br />
+                <div class="clear"></div>
+                
+                
+                <br />
+                <div class="datagrid">
+                    <table>
+                        @if (Model.OpcoesAereo.Count > 0 && Model.Aereo.Count <= 0)
+                        {
+                            <tr class="title_tabs">
+                                <th></th>
+                                <th>Cidade origem</th>
+                                <th>Cidade destino</th>
+                                <th>Data de saída</th>
+                                <th>Data de retorno</th>
+                                <th>Tipo de passagem</th>
+                            </tr>
+                            foreach (var opcaoVoo in Model.OpcoesAereo)
+                            { 
+                            <tr>
+                                <td>
+                                    <div class="content-pacote-nasc_inter" id="DivRadio">
+                                        <input type="checkbox" id="radioTrechoSelecionado_@Model.OpcoesAereo.IndexOf(opcaoVoo)" class="radioTrechoSelecionado" name="rdbOrigem" value="S" checked="checked">
+                                        @* <label for="rdbOrigemNasc">.</label>*@
+                                    </div>
+                                </td>
+                                <td>@opcaoVoo.NomeCidadeOrigem</td>
+                                <td>@opcaoVoo.NomeCidadeDestino</td>
+                                <td>@opcaoVoo.Saida</td>
+                                <td>@opcaoVoo.Retorno</td>
+                                <td>
+                                    <div class="content-pacote-nasc_inter" id="DivRadio2">
+                                        @if (Model.OpcoesAereo.Count <= 1)
+                                        {
+                                            <input type="checkbox" id="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" class="radioIdaVolta" checked="checked" name="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" onclick="VerificarIdaVolta(@Model.OpcoesAereo.IndexOf(opcaoVoo))">
+                                            <label for="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" style="color: black;">Ida e volta</label>
+                                            <input type="checkbox" id="radioSomenteIda_@Model.OpcoesAereo.IndexOf(opcaoVoo)" class="radioIda" name="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" onclick="TratarSomenteIda(@Model.OpcoesAereo.IndexOf(opcaoVoo))" />
+                                            <label for="radioSomenteIda_@Model.OpcoesAereo.IndexOf(opcaoVoo)" style="color: black;">Somente ida</label>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" class="radioIdaVolta" name="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" onclick="VerificarIdaVolta(@Model.OpcoesAereo.IndexOf(opcaoVoo))">
+                                            <label for="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" style="color: black;">Ida e volta</label>
+                                            <input type="checkbox" id="radioSomenteIda_@Model.OpcoesAereo.IndexOf(opcaoVoo)" class="radioIda" name="radioIdaVolta_@Model.OpcoesAereo.IndexOf(opcaoVoo)" checked="checked" onclick="TratarSomenteIda(@Model.OpcoesAereo.IndexOf(opcaoVoo))" />
+                                            <label for="radioSomenteIda_@Model.OpcoesAereo.IndexOf(opcaoVoo)" style="color: black;">Somente ida</label>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>                    
+                            }
+                        }
+                    </table>
+                </div>
+                        if (Model.Aereo.Count > 0 && Model.Aereo.First().CodigoTarifa > 0 && Model.Aereo.First().Trechos.Count > 0)
+                        {
+                <div class="datagrid">
+                    <table>
+                        <tr class="title_tabs">
+
+                            <th></th>
+                            <th>Companhia</th>
+                            <th>Nome cidade origem</th>
+                            <th>Nome aeroporto origem</th>
+                            <th>Data de saída</th>
+                            <th></th>
+                            <th>Nome cidade destino</th>
+                            <th>Nome aeroporto destino</th>
+                            <th>Data de chegada</th>
+                            <th>Valor da taxa / Valor total
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var aereo in Model.Aereo)
+                        {
+                            if (aereo.Tipo == "MultiTrecho")
+                            {
+                                int counterVoo = 0;
+                                string valor = aereo.Valor.ToString().Replace(',', '.');
+
+                                foreach (var AereoItens in aereo.Trechos)
+                                {
+                                   
+                            <tr>
+                                <td style="width: 60px;">TRECHO @counterVoo</td>
+                                <td>@AereoItens.NomeCia</td>
+                                <td>@AereoItens.NomeCidadeOrigem</td>
+                                <td>@AereoItens.NomeAeroportoOrigem (@AereoItens.SiglaAeroportoOrigem)</td>
+                                <td>@AereoItens.DataOrigem.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataOrigem.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm")</td>
+                                <td>Chegada</td>
+                                <td>@AereoItens.NomeCidadeDestino</td>
+                                <td>@AereoItens.NomeAeroportoDestino (@AereoItens.SiglaAeroportoDestino)</td>
+                                <td>@AereoItens.DataDestino.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataDestino.ToString("dd/MM/yyyy") as @AereoItens.DataDestino.ToString("HH:mm")</td>
+
+                                @if (counterVoo == 0)
+                                {
+                                    <td rowspan="@aereo.Trechos.Count()">@aereo.ValorTaxa.ToString("c") / @aereo.Valor.ToString("c")</td>
+                                           
+                                    <td rowspan="@aereo.Trechos.Count()"><a href="#" class="removeItens" onclick="RemoverAereoMontePacote()">Remover</a></td>
+                                }
+                                @{counterVoo = counterVoo + 1;}
+                            </tr>
+                                    
+
+                                }
+                            }
+                            else
+                            {
+                                int counterVoo = 0;
+                                string valor = aereo.Valor.ToString().Replace(',', '.');
+
+                                foreach (var AereoItens in aereo.Trechos)
+                                {
+                                    if (counterVoo == 0)
+                                    { 
+                            <tr>
+                                <td>IDA</td>
+                                <td>@AereoItens.NomeCia</td>
+                                <td>@AereoItens.NomeCidadeOrigem</td>
+                                <td>@AereoItens.NomeAeroportoOrigem (@AereoItens.SiglaAeroportoOrigem)</td>
+                                <td>@AereoItens.DataOrigem.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataOrigem.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm")</td>
+                                <td>Chegada</td>
+                                <td>@AereoItens.NomeCidadeDestino</td>
+                                <td>@AereoItens.NomeAeroportoDestino (@AereoItens.SiglaAeroportoDestino)</td>
+                                <td>@AereoItens.DataDestino.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataDestino.ToString("dd/MM/yyyy") as @AereoItens.DataDestino.ToString("HH:mm")</td>
+                                @{counterVoo = 1;}
+                                <td rowspan="2">@aereo.ValorTaxa.ToString("c") / @((aereo.Valor + aereo.ValorTaxa).ToString("c"))</td>
+                                <td rowspan="2"><a href="#" class="removeItens" onclick="RemoverAereoMontePacote()">Remover</a></td>
+                            </tr>
+                                    }
+                                    else
+                                    {
+                            <tr>
+                                <td>VOLTA</td>
+                                <td>@AereoItens.NomeCia</td>
+                                <td>@AereoItens.NomeCidadeOrigem</td>
+                                <td>@AereoItens.NomeAeroportoOrigem (@AereoItens.SiglaAeroportoOrigem)</td>
+                                <td>@AereoItens.DataOrigem.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataOrigem.ToString("dd/MM/yyyy") as @AereoItens.DataOrigem.ToString("HH:mm")</td>
+                                <td>Chegada</td>
+                                <td>@AereoItens.NomeCidadeDestino</td>
+                                <td>@AereoItens.NomeAeroportoDestino (@AereoItens.SiglaAeroportoDestino)</td>
+                                <td>@AereoItens.DataDestino.ToString("dddd").Substring(0, 3).ToUpper(), @AereoItens.DataDestino.ToString("dd/MM/yyyy") as @AereoItens.DataDestino.ToString("HH:mm")</td>
+                                @{counterVoo = 1;}
+                            </tr>
+                                    }
+
+                                }
+                            }
+
+                            totalMonteSeuPacote = totalMonteSeuPacote + aereo.Valor + aereo.ValorTaxa;
+                        }
+
+                    </table>
+
+                </div>
+                        }
+
+                        if (Model.Aereo.Count <= 0 || Model.Aereo[0].CodigoTarifa <= 0)
+                        {
+                            
+                <h3 style="color: #104984; font-size: 12px; margin-bottom: 14px; margin-left: 21px;">Mantenha selecionado apenas os trechos que deseja voar.</h3>
+                            
+                            if (Model.OpcoesAereo.Count > 1)
+                            {
+                <input type="button" class="adicionarMP" value="Adicionar" onclick="AdicionarAereoMultiTrecho()" />
+                            }
+                            else
+                            { 
+                <input type="button" class="adicionarMP" value="Adicionar" onclick="AdicionarAereo(0)" />
+                            }
+
+
+
+
+                        }
+@*Bloco de passagens - fim*@    
+                <br />
+                <br />
+                <div class="icoTituloHotel"></div>
+                <span class="TituloMenu">Detalhes da hospedagem</span><br />
+                <br />
+                <div class="datagrid">
+
+                    @foreach (DestinoMontePacoteModel destino in Model.Destinos)
+                    {<table>
+                        <tr>
+                            <td><strong>@destino.NomeCidadeDestino</strong></td>
+                            @if (String.IsNullOrEmpty(destino.Hotel.NomeHotel))
+                            {
+                                <td>
+                                    @if (Model.Aereo.FirstOrDefault() != null && Model.Aereo.FirstOrDefault().Trechos.Count > 0)
+                                    {
+                                        <input type="button" class="adicionarMP addright" value="Adicionar" onclick="VerificarHorariosHotel(@Model.Destinos.IndexOf(destino), '@destino.Saida    ', '@destino.Retorno    ')" />    
+                                    }
+                                    else
+                                    {
+                                        <input type="button" class="adicionarMP addright" value="Adicionar" onclick="AdicionarHotel(@Model.Destinos.IndexOf(destino), '@destino.Saida','@destino.Retorno')" />
+                                    }
+
+                                </td>
+                            }
+                        </tr>
+                        @if (destino.Hotel != null && !String.IsNullOrEmpty(destino.Hotel.CodigoTarifa))
+                        {
+                            int qtdNoites = Convert.ToDateTime(destino.Hotel.Checkout).Subtract(Convert.ToDateTime(destino.Hotel.Checkin)).Days;
+
+                            AcomodacaoModel acomodacaoHotel = destino.Hotel.Acomodacoes.Where(p => p.NomeAcomodacao == destino.NomeAcomodacaoHotel).FirstOrDefault();
+
+                            var codigoTarifaConvertido = Convert.ToInt64(destino.Hotel.CodigoTarifa);
+
+                            TarifaModel tarifa = destino.Hotel.Acomodacoes.SelectMany(p => p.Tarifas.Where(t => t.CodigoTarifa == codigoTarifaConvertido)).FirstOrDefault(); //acomodacaoHotel.Tarifas.Where(t => t.CodigoTarifa == codigoTarifaConvertido).FirstOrDefault();                            
+                            
+                            <tr>
+                                <td class="divinside">
+                                    <div class="datagrid">
+                                        <table>
+                                            <tr class="title_tabs">
+                                                <th>Hotel</th>
+                                                <th>Quantidade de noites</th>
+                                                <th>Check-in</th>
+                                                <th>Check-out</th>
+                                                <th>Valor do período</th>
+                                                <th>Acomodação</th>
+                                                <th>Regime de alimentação</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td>@destino.Hotel.NomeHotel</td>
+                                                <td>@qtdNoites</td>
+                                                <td>@destino.Hotel.Checkin</td>
+                                                <td>@destino.Hotel.Checkout</td>
+                                                @{decimal valorTotal = 0;}
+
+                                                @if (destino.Hotel.ValorTotal.HasValue)
+                                                {
+                                                    valorTotal = destino.Hotel.ValorTotal.Value;
+                                                }
+                                                <td>@valorTotal.ToString("c2")</td>
+
+                                                <td>@acomodacaoHotel.NomeAcomodacao</td>
+                                                <td>@tarifa.NomeRegimeAlimentacao</td>
+                                                <td>
+                                                    <a href="#" class="removeItens" onclick="RemoverHotelMontePacote(@destino.Hotel.CodigoTarifa, @Model.Destinos.IndexOf(destino))">Remover</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>                            
+                                                totalMonteSeuPacote = totalMonteSeuPacote + (destino.Hotel.ValorTotal.HasValue ? destino.Hotel.ValorTotal.Value : 0);
+                        }
+                        </table>
+                        <br />
+                    }
+                </div>
+@*Bloco de hoteis - fim*@
+                <br />
+@*Bloco de atividades - início*@
+                <div class="icoTituloAtividade"></div>
+                <span class="TituloMenuPacote">Detalhes dos serviços</span><br />
+            
+                <br />
+                <div class="datagrid">
+
+                    @foreach (DestinoMontePacoteModel destino in Model.Destinos)
+                    {<table>
+                        <tr>
+                            <td><strong>@destino.NomeCidadeDestino</strong></td>
+                            <td>
+                                <input type="button" class="adicionarMP addright" value="Adicionar" onclick="AdicionarAtividade(@Model.Destinos.IndexOf(destino))" />
+                            </td>
+                        </tr>
+                        @if (destino.Opcionais.Count > 0)
+                        { 
+                            <tr>
+                                <td class="divinside" colspan="2">
+                                    <div class="datagrid">
+                                        <table>
+                                            <tr class="title_tabs">
+                                                <th></th>
+                                                <th>Nome</th>
+                                                <th>Data</th>
+                                                <th>Valor</th>
+                                                <th></th>
+                                            </tr>
+                                            @foreach (var atividade in destino.Opcionais)
+                                            {
+                                                foreach (var traslados in atividade.Transfer)
+                                                { 
+                                                <tr>
+                                                    <td>TRASLADOS</td>
+                                                    <td>@traslados.NomeAtividade</td>
+                                                    <td>@Convert.ToDateTime(@traslados.dtEmbarque).ToString("dd/MM/yyyy")</td>
+                                                    <td>@traslados.ValorTotal.ToString("c")</td>
+                                                    <td>
+                                                        <a href="#" class="removeItens" onclick="RemoverTraslado(@traslados.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + traslados.ValorTotal;
+                                                }
+                                                foreach (var assistenciaViagem in atividade.AssistenciaViagem)
+                                                {
+                                                <tr>
+                                                    <td>ASSISTENCIA VIAGEM</td>
+                                                    <td>@assistenciaViagem.NomeAtividade</td>
+                                                    <td>@assistenciaViagem.TarifasItem.First().DataInicial</td>
+                                                    <td>@assistenciaViagem.ValorTotal.ToString("c")</td>
+                                                    <td>
+                                                        <a href="#"  class="removeItens" onclick="RemoverAssistenciaViagem(@assistenciaViagem.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + assistenciaViagem.ValorTotal;
+                                                }
+                                                foreach (var passeio in atividade.Passeio)
+                                                {
+                                                <tr>
+                                                    <td>PASSEIO</td>
+                                                    <td>@passeio.NomeAtividade</td>
+                                                    <td>@Convert.ToDateTime(passeio.dtEmbarque).ToString("dd/MM/yyyy")</td>
+                                                    <td>@passeio.ValorTotal.ToString("c")</td>
+                                                    <td>
+                                                        <a href="#"  class="removeItens" onclick="RemoverPasseio(@passeio.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + passeio.ValorTotal;
+                                                }
+                                                foreach (var ingresso in atividade.Ingresso)
+                                                {
+                                                <tr>
+                                                    <td>INGRESSO</td>
+                                                    <td>@ingresso.NomeAtividade</td>
+                                                    <td>@Convert.ToDateTime(ingresso.dtEmbarque).ToString("dd/MM/yyyy")</td>
+                                                    <td>@ingresso.ValorTotal.ToString("c")</td>
+                                                    <td>
+                                                        <a href="#"  class="removeItens" onclick="RemoverIngresso(@ingresso.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + ingresso.ValorTotal;
+                                                }
+                                                foreach (var pacoteAtividade in atividade.PacoteAtividade)
+                                                {
+                                                <tr>
+                                                    <td>PACOTE ATIVIDADE</td>
+                                                    <td>@pacoteAtividade.NomeAtividade</td>
+                                                    <td>@Convert.ToDateTime(pacoteAtividade.dtEmbarque).ToString("dd/MM/yyyy")</td>
+                                                    <td>@pacoteAtividade.ValorTotal.ToString("c")
+                                                    </td>
+                                                    <td>
+                                                        <a href="#"  class="removeItens" onclick="RemoverPacoteAtividade(@pacoteAtividade.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + pacoteAtividade.ValorTotal;
+                                                }
+                                                foreach (var restaurante in atividade.Restaurante)
+                                                {
+                                                <tr>
+                                                    <td>RESTAURANTE</td>
+                                                    <td>@restaurante.NomeAtividade</td>
+                                                    <td>@Convert.ToDateTime(restaurante.dtEmbarque).ToString("dd/MM/yyyy")</td>
+                                                    <td>@restaurante.ValorTotal.ToString("c")</td>
+                                                    <td>
+                                                        <a href="#"  class="removeItens" onclick="RemoverRestaurante(@restaurante.CodigoAtividade, @Model.Destinos.IndexOf(destino), @destino.Opcionais.IndexOf(atividade))">Remover</a>
+                                                    </td>
+                                                </tr>
+                                                    totalMonteSeuPacote = totalMonteSeuPacote + restaurante.ValorTotal;
+                                                }
+                                            }
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                        <br />
+                    }
+                </div>
+@*Bloco de atividades - fim *@
+                <br />
+@*Bloco de carros - início *@
+                <div class="icoTituloCarro"></div>
+                <span class="TituloMenu">Aluguel de carro</span><br />
+                <br />
+                <div class="datagrid">
+                    <script>
+                        $(function () {
+                            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+                            $.datepicker.regional['pt-BR'] = {
+                                closeText: 'Fechar',
+                                prevText: '&#x3c;Anterior',
+                                nextText: 'Pr&oacute;ximo&#x3e;',
+                                currentText: 'Hoje',
+                                monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                weekHeader: 'Sm',
+                                dateFormat: 'dd/mm/yy',
+                                firstDay: 0,
+                                isRTL: false,
+                                showMonthAfterYear: false,
+                                yearSuffix: '',
+                                showOn: "both",
+                                changeFirstDay: false
+                            };
+                            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+                            $('.calendar').datepicker({
+                                showOn: "both",
+                                numberOfMonths: 2,
+                                minDate: 0,
+                                onSelect: function (dateText, inst) {
+                                },
+                                beforeShow: function () {
+                                    setTimeout(function () {
+                                        $('.ui-datepicker').css('z-index', 99999999999999);
+                                    }, 0);
+                                }
+                            });
+                        });
+
+                    </script>
+
+
+                    @foreach (FT.Web.Model.Models.DestinoMontePacoteModel destino in Model.Destinos)
+                    { 
+                        <table>
+                            <tr id="tba_@Model.Destinos.IndexOf(destino)">
+                                <td style="padding: 20px 42px;">
+                                    @*<script>
+                                        $(document).ready(function () {
+                                            autoComplete(9, "LocalRetirada_@Model.Destinos.IndexOf(destino)");
+                                        });
+                                    </script>*@
+                                    <div id="divLocalRetirada">
+                                        <label for="combo_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Local de retirada: </label>
+                                        <select id="combo_@Model.Destinos.IndexOf(destino)" style="width:254px !important;">
+                                            @foreach (FT.Web.Model.Models.DestinoMontePacoteModel destino2 in Model.Destinos)
+                                            {
+                                                if (Model.Destinos.IndexOf(destino) == Model.Destinos.IndexOf(destino2))
+                                                {
+                                                <option value="@destino2.CodigoCidadeDestino" selected="selected">@destino2.NomeCidadeDestino</option>
+                                                }
+                                                else
+                                                {
+                                                <option value="@destino2.CodigoCidadeDestino">@destino2.NomeCidadeDestino</option>
+                                                }
+                                            }
+                                        </select>
+
+                                        @* <label for="LocalRetirada_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Local de retirada: </label>
+                                        <br />
+                                        <input type="text" value="@destino.NomeCidadeDestino" style="width: 240px; font-size: 13px;" title="Informe o local de devolução" name="LocalDevolucao" id="LocalRetirada_@Model.Destinos.IndexOf(destino)" class="inputdestino watermark ui-autocomplete-input" autocomplete="off" />
+                           *@
+
+                                    </div>
+
+                                    <div class="clear"></div>
+                                    <div class="BuscadorSetDate">
+                                        <div class="SetDate">
+                                            <label style="color: #7D7D7D;">Data de retirada: </label>
+                                            <br />
+                                            <input type="text" value="@destino.Saida"  id="DataEmbarqueCodigoCmpMP_@Model.Destinos.IndexOf(destino)" class="calendar txtStartDate SaidaMulti calendar_@Model.Destinos.IndexOf(destino)" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="clear"></div>
+                                    <label for="ddlHoraRetirada_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Horário de retirada</label><br />
+                                    <div class="carleft">
+                                        <select name="ddlHoraRetirada_@Model.Destinos.IndexOf(destino)" id="ddlHoraRetirada_@Model.Destinos.IndexOf(destino)" style="display: block;   width: 255px !important;">
+                                            <option value="00:00">00:00</option>
+                                            <option value="00:15">00:15</option>
+                                            <option value="00:30">00:30</option>
+                                            <option value="00:45">00:45</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="01:15">01:15</option>
+                                            <option value="01:30">01:30</option>
+                                            <option value="01:45">01:45</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="02:15">02:15</option>
+                                            <option value="02:30">02:30</option>
+                                            <option value="02:45">02:45</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="03:15">03:15</option>
+                                            <option value="03:30">03:30</option>
+                                            <option value="03:45">03:45</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="04:15">04:15</option>
+                                            <option value="04:30">04:30</option>
+                                            <option value="04:45">04:45</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="05:15">05:15</option>
+                                            <option value="05:30">05:30</option>
+                                            <option value="05:45">05:45</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="06:15">06:15</option>
+                                            <option value="06:30">06:30</option>
+                                            <option value="06:45">06:45</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="07:15">07:15</option>
+                                            <option value="07:30">07:30</option>
+                                            <option value="07:45">07:45</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:15">08:15</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="08:45">08:45</option>
+                                            <option selected="selected" value="09:00">09:00</option>
+                                            <option value="09:15">09:15</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="09:45">09:45</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:15">11:15</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="11:45">11:45</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:15">12:15</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="12:45">12:45</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:15">13:15</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="13:45">13:45</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:15">14:15</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="14:45">14:45</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="14:15">14:15</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="14:45">14:45</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:15">15:15</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="15:45">15:45</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:15">16:15</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="16:45">16:45</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:15">17:15</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="17:45">17:45</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:15">18:15</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="18:45">18:45</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:15">19:15</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="19:45">19:45</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="20:15">20:15</option>
+                                            <option value="20:30">20:30</option>
+                                            <option value="20:45">20:45</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="21:15">21:15</option>
+                                            <option value="21:30">21:30</option>
+                                            <option value="21:45">21:45</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="22:15">22:15</option>
+                                            <option value="22:30">22:30</option>
+                                            <option value="22:45">22:45</option>
+                                            <option value="23:00">23:00</option>
+                                            <option value="23:15">23:15</option>
+                                            <option value="23:30">23:30</option>
+                                            <option value="23:45">23:45</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px 42px;">
+                                    @* <script>
+                                        $(document).ready(function () {
+                                            autoComplete(9, "LocalDevolucao_@Model.Destinos.IndexOf(destino)");
+                                        });
+                                    </script>*@
+                                    <div id="divLocalDiferente">
+                                        @* <label for="LocalDevolucao_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Local de devolução: </label>
+                                        <br />
+                                        <input type="text" value="@destino.NomeCidadeDestino" style="width: 240px; font-size: 13px;" title="Informe o local de devolução" name="LocalDevolucao" id="LocalDevolucao_@Model.Destinos.IndexOf(destino)" class="inputdestino watermark ui-autocomplete-input" autocomplete="off" />
+                              *@
+                                        <label for="combod_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Local de devolução: </label>
+
+                                        <select id="combod_@Model.Destinos.IndexOf(destino)"  style="width:254px !important;">
+                                            @foreach (FT.Web.Model.Models.DestinoMontePacoteModel destino2 in Model.Destinos)
+                                            {
+                                                if (Model.Destinos.IndexOf(destino) == Model.Destinos.IndexOf(destino2))
+                                                {
+                                                <option value="@destino2.CodigoCidadeDestino" selected="selected">@destino2.NomeCidadeDestino</option>
+                                                }
+                                                else
+                                                {
+                                                <option value="@destino2.CodigoCidadeDestino">@destino2.NomeCidadeDestino</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <div class="BuscadorSetDate">
+                                        <div class="SetDate">
+                                            <label style="color: #7D7D7D;">Data de devolução: </label>
+                                            <br />
+                                            <input type="text" value="@destino.Retorno" id="DataRetornoCmpMP_@Model.Destinos.IndexOf(destino)" class="calendar txtEndDate RetornoMP calendar_@Model.Destinos.IndexOf(destino)" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="clear"></div>
+                                    <label for="ddlHoraDevolucao_@Model.Destinos.IndexOf(destino)" style="color: #7D7D7D;">Horário de devolução</label><br />
+                                    <div class="carleft">
+                                        <select name="ddlHoraDevolucao_@Model.Destinos.IndexOf(destino)" id="ddlHoraDevolucao_@Model.Destinos.IndexOf(destino)" style="display: block;   width: 255px !important;">
+                                            <option value="00:00">00:00</option>
+                                            <option value="00:15">00:15</option>
+                                            <option value="00:30">00:30</option>
+                                            <option value="00:45">00:45</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="01:15">01:15</option>
+                                            <option value="01:30">01:30</option>
+                                            <option value="01:45">01:45</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="02:15">02:15</option>
+                                            <option value="02:30">02:30</option>
+                                            <option value="02:45">02:45</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="03:15">03:15</option>
+                                            <option value="03:30">03:30</option>
+                                            <option value="03:45">03:45</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="04:15">04:15</option>
+                                            <option value="04:30">04:30</option>
+                                            <option value="04:45">04:45</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="05:15">05:15</option>
+                                            <option value="05:30">05:30</option>
+                                            <option value="05:45">05:45</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="06:15">06:15</option>
+                                            <option value="06:30">06:30</option>
+                                            <option value="06:45">06:45</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="07:15">07:15</option>
+                                            <option value="07:30">07:30</option>
+                                            <option value="07:45">07:45</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:15">08:15</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="08:45">08:45</option>
+                                            <option selected="selected" value="09:00">09:00</option>
+                                            <option value="09:15">09:15</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="09:45">09:45</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:15">11:15</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="11:45">11:45</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:15">12:15</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="12:45">12:45</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:15">13:15</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="13:45">13:45</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:15">14:15</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="14:45">14:45</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="14:15">14:15</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="14:45">14:45</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:15">15:15</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="15:45">15:45</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:15">16:15</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="16:45">16:45</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:15">17:15</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="17:45">17:45</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:15">18:15</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="18:45">18:45</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:15">19:15</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="19:45">19:45</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="20:15">20:15</option>
+                                            <option value="20:30">20:30</option>
+                                            <option value="20:45">20:45</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="21:15">21:15</option>
+                                            <option value="21:30">21:30</option>
+                                            <option value="21:45">21:45</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="22:15">22:15</option>
+                                            <option value="22:30">22:30</option>
+                                            <option value="22:45">22:45</option>
+                                            <option value="23:00">23:00</option>
+                                            <option value="23:15">23:15</option>
+                                            <option value="23:30">23:30</option>
+                                            <option value="23:45">23:45</option>
+                                        </select>
+                                    </div>
+
+                                </td>
+                                @if (String.IsNullOrEmpty(destino.ReservaCarro.CodigoTarifa))
+                                {
+                                    <td>
+                                        <input type="button" class="adicionarMP" value="Adicionar" onclick="AdicionarCarro(@Model.Destinos.IndexOf(destino))" />
+                                    </td>
+                                }
+                            </tr>
+                            @if (destino.ReservaCarro != null && !String.IsNullOrEmpty(destino.ReservaCarro.CodigoTarifa))
+                            {
+                                <tr>
+
+                                    <td class="divinside" colspan="5">
+                                        <style>
+                                            #tba_@Model.Destinos.IndexOf(destino) {
+                                                display: none;
+                                            }
+                                        </style>
+                                        <div class="datagrid">
+                                            <table>
+                                                <tr class="title_tabs">
+                                                    <th>Local retirada</th>
+                                                    <th>Data de retirada</th>
+                                                    <th>Horário de retirada</th>
+                                                    <th>Local retorno</th>
+                                                    <th>Data de retorno</th>
+                                                    <th>Horário de retorno</th>
+                                                    <th>Locadora</th>
+                                                    <th>Modelo de referência</th>
+                                                    <th>Valor</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        @if (String.IsNullOrEmpty(destino.ReservaCarro.LocaisRetirada.FirstOrDefault().NomeCidade))
+                                                        {
+                                                            <span>
+                                                                @destino.ReservaCarro.LocaisRetirada.FirstOrDefault().NomeLocadoraLoja
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>
+                                                                @destino.ReservaCarro.LocaisRetirada.FirstOrDefault().NomeCidade
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                    <td>@destino.ReservaCarro.DataCheckIn</td>
+                                                    <td>@destino.ReservaCarro.HoraCheckInSelecionada</td>
+                                                    <td>
+                                                        @if (String.IsNullOrEmpty(destino.ReservaCarro.LocaisDevolucao.FirstOrDefault().NomeCidade))
+                                                        {
+                                                            <span>
+                                                                @destino.ReservaCarro.LocaisDevolucao.FirstOrDefault().NomeLocadoraLoja
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>
+                                                                @destino.ReservaCarro.LocaisDevolucao.FirstOrDefault().NomeCidade
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                    <td>@destino.ReservaCarro.DataCheckOut</td>
+                                                    <td>@destino.ReservaCarro.HoraCheckOutSelecionada</td>
+                                                    <td>@destino.ReservaCarro.DescricaoLocadora</td>
+                                                    <td>@destino.ReservaCarro.ModeloReferencia</td>
+                                                    <td>@destino.ReservaCarro.ValorVenda.ToString("c")</td>
+                                                    <td><a href="#" class="removeItens" onclick="javascript:RemoverCarroMontePacote(@Model.Destinos.IndexOf(destino))">Remover</a></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                                        totalMonteSeuPacote = totalMonteSeuPacote + destino.ReservaCarro.ValorVenda;
+                            }
+                        </table>
+                        <br />
+                    }
+                </div>
+@*Bloco de carros - fim*@
+                <br />
+
+                    if (Model.Aereo.Count > 0)
+                    {
+                <div class="valuetaxas">
+                    <label class="lblvalortaxas">Total de taxas: </label>
+                    <p class="valorTotalTaxas">@Model.Aereo[0].ValorTaxa.ToString("c")</p>
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                    }
+                <div class="valuego">
+                    <label class="lblvalor">Valor total:</label>
+                    <p class="valorTotal">@totalMonteSeuPacote.ToString("c")</p>
+                    <br />
+                    <input type="button" class="button_finalizar" value="Finalizar" onclick="return finalizarMontePacote(@totalMonteSeuPacote)" />
+                    @if (Session["Usuario"] != null)
+                    {
+                        
+                        
+                        <br />
+                        <style>
+                            .bbtnOrca {
+                                background-color: #92CFDE;
+                                background-image: linear-gradient(to bottom, #92CFDE, #76BDD1);
+                                border: 1px solid #67BCD1;
+                                border-radius: 3px;
+                                color: #FFFFFF;
+                                display: inline-block;
+                                font-family: arial,helvetica,sans-serif;
+                                font-size: 12px;
+                                font-weight: bold;
+                                margin-bottom: 30px;
+                                padding: 10px;
+                                text-align: center;
+                                text-decoration: none;
+                                text-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+                                width: 169px;
+                            }
+
+                                .bbtnOrca:hover {
+                                    border: 1px solid #44adc6;
+                                    background-color: #6bbed2;
+                                    background-image: -webkit-gradient(linear, left top, left bottom, from(#6bbed2), to(#50abc4));
+                                    background-image: -webkit-linear-gradient(top, #6bbed2, #50abc4);
+                                    background-image: -moz-linear-gradient(top, #6bbed2, #50abc4);
+                                    background-image: -ms-linear-gradient(top, #6bbed2, #50abc4);
+                                    background-image: -o-linear-gradient(top, #6bbed2, #50abc4);
+                                    background-image: linear-gradient(to bottom, #6bbed2, #50abc4);
+                                    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#6bbed2, endColorstr=#50abc4);
+                                }
+                        </style>
+                        <div class="clear"></div>
+                        <label for="txtorcamento" style="color: #104984; font-size: 14px; font-weight: bold;">
+                            Nome do orçamento:</label><br />
+                        <input type="text" style="width: 176px;" id="txtorcamento" /><br />
+                        <a href="javascript:" class="bbtnOrca"  onclick="OrcamentoMontePacote(@totalMonteSeuPacote)">Orçamento
+                        </a>
+                    }
+                    <br />
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+        }    
+    }
+
+    <input type="hidden" id="hdnIndiceSelecionado" name="hdnIndiceSelecionado" />
+    <input type="hidden" id="hdnNovaDataCheckOut" name="hdnNovaDataCheckOut" />
+    <input type="hidden" id="hdnNovaDataCheckIn" name="hdnNovaDataCheckIn" />
+    <div id="divModal">
+        <div id="FiltroMP">
+        </div>
+        <div class='loadingMP' style='display: none;'>
+            <img src='~/Images/Loading_2.gif' />
+        </div>
+    </div>
+    <div id="divModalAdicionarNoiteHotel" style="display: none;">
+        <div id="divPerguntaCheckIn" style="display: none;">
+            <p class="quation">A hora de chegada é inferior a hora de check-in do hotel escolhido, deseja antecipar a data de check-in?</p>
+            <p id="botoesSimENao">
+                <input type="button" class="btnSim" value="Sim" onclick="AdicionarDiaCheckin()" />
+                @*<input type="button" value="Não" class="btnNao" onclick="NaoAlterarDatas()" />*@
+                <input type="button" value="Não" class="btnNao" onclick="NaoAlterarDatas()" />
+            </p>
+        </div>
+        <div id="divPerguntaCheckOut" style="display: none;">
+            <p class="quation">A hora de retorno é superior a hora de check-out do hotel escolhido, deseja adiar a data de check-out?</p>
+            <p id="botoesSimENao">
+                <input type="button" class="btnSim" value="Sim" onclick="AdicionarDiaCheckout()" />
+                <input type="button" value="Não" class="btnNao" onclick="NaoAlterarDatas()" />
+            </p>
+        </div>
+    </div>
+</div>

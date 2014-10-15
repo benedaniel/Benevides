@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Erro500";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/NoDataFound.css" rel="stylesheet" />
+
+<div class="content">
+    <div class="totalNoDataFound" style="margin-left:130px;margin-top:80px;">
+        <div class="imgNoDataFound">
+            <img src="~/Images/ico_resultado_nao_encontrado.png" />
+        </div>
+        <div class="textNoDataFound">
+            <span class="desculpeNoDataFound">Desculpe,</span>
+            <br />
+            <span class="NaoEncontradoNoDataFound">Não Foi possível processar a página.</span>
+            <br />
+            <span class="PorFavorNoDataFound">Por favor, tente refazer a busca utilizando novas informações.</span>
+            <br />
+            <br />
+            <span class="obrigadoNoDataFound">Obrigado!</span>
+        </div>
+    </div>
+    
+    <a class="button_back" href="javascript:history.go(-1)" style="width:135px; height:25px;margin-bottom:100px;padding-top:2px;margin-left:400px;">Voltar</a>
+
+</div>
+
