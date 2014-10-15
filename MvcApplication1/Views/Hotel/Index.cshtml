@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Hóteis - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model FT.Web.Model.Models.HotelModel
+
+<h2>Index</h2>
+<link href="~/Content/Hotel.css" rel="stylesheet" />
+<script src="~/Scripts/Hotel.js"></script>
+
+@{RouteValueDictionary route = new RouteValueDictionary(ViewContext.RouteData.Values);}
+
+@using (Html.BeginForm("Resultado", "Hotel", route, FormMethod.Post))
+{
+    <div class="contentBuscaHotel">
+        <p>
+@*            @Html.LabelFor(model => model.Destino)
+            @Html.TextBoxFor(model => model.Destino)
+            @Html.ValidationMessageFor(model => model.Destino)*@
+        </p>
+        <br />
+        <p>
+            @Html.LabelFor(model => model.Checkin)
+            @Html.TextBoxFor(model => model.Checkin, new { id = "txtStartDate" })
+            @Html.ValidationMessageFor(model => model.Checkin)
+        </p>
+        <br />
+        <p>
+            @Html.LabelFor(model => model.Checkout)
+            @Html.TextBoxFor(model => model.Checkout, new { id = "txtEndDate" })
+            @Html.ValidationMessageFor(model => model.Checkout)
+        </p>
+        <br />
+        <p>
+            @Html.LabelFor(model => model.QuantQuartos)
+           
+            @Html.ValidationMessageFor(model => model.QuantQuartos)
+        </p>
+        <br />
+        <p>
+            @Html.LabelFor(model => model.QuantAdultos)
+            @Html.DropDownListFor(model => model.QuantAdultos, ViewBag.ComboAdultos as IEnumerable<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.QuantAdultos)
+        </p>
+        <br />
+        <p>
+            @Html.LabelFor(model => model.QuantCriancas)
+            @Html.DropDownListFor(model => model.QuantCriancas, ViewBag.ComboCriancas as IEnumerable<SelectListItem>)
+            @Html.ValidationMessageFor(model => model.QuantCriancas)
+
+            <div class="criancas">
+            </div>
+        </p>
+        <br />
+        <p>
+            <a href="#" id="clickme">Mais opções+</a>
+        </p>
+        <br />
+        <div id="moreoptions" style="display: none">
+            <p>
+                @Html.LabelFor(model => model.Estrelas)
+                @Html.DropDownListFor(model => model.Estrelas, ViewBag.ComboClasses as IEnumerable<SelectListItem>)
+                @Html.ValidationMessageFor(model => model.Estrelas)
+            </p>
+            <br />
+            <p>
+                @Html.LabelFor(model => model.NomeHotel)
+                @Html.TextBoxFor(model => model.NomeHotel)
+                @Html.ValidationMessageFor(model => model.NomeHotel)
+            </p>
+            <br />
+            <p>
+                @Html.LabelFor(model => model.TipoReserva)
+                @Html.DropDownListFor(model => model.TipoReserva, ViewBag.ComboConfirmacoes as IEnumerable<SelectListItem>)
+                @Html.ValidationMessageFor(model => model.TipoReserva)
+            </p>
+            <br />
+        </div>
+        <input id="origem" name="origem" type="hidden" />
+        <input type="submit" value="Send sub"  onclick="SendToServer()"  />
+    </div>
+}
+
+

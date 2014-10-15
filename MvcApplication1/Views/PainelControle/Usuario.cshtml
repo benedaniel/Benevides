@@ -1,0 +1,303 @@
+﻿@model FT.Web.Model.Models.PessoaModel
+@{
+    ViewBag.Title = "Usuario";
+    string novo = ViewBag.novo;
+}
+@{
+    List<SelectListItem> lstSexo = new List<SelectListItem> 
+    { 
+        new SelectListItem { Text = "Selecione", Value="", Selected = true }, 
+        new SelectListItem { Text = "Feminino", Value = "F" }, 
+        new SelectListItem { Text = "Masculino", Value = "M" } 
+    };
+
+    List<SelectListItem> lstNacional = ViewBag.lstNacional as List<SelectListItem>;
+
+    List<SelectListItem> lstPerfil = ViewBag.lstPerfil as List<SelectListItem>;
+    
+}
+<link href="~/Content/Usuario.css" rel="stylesheet" />
+<script src="~/Scripts/funcoes.js"></script>
+<script src="~/Scripts/Usuario.js"></script>
+@{
+    var title = "";
+    if (string.IsNullOrEmpty(Model.NM_PESSOA))
+    {
+        title = "Cadastro de Usuário";
+    }
+    else
+    {
+        if (string.IsNullOrEmpty(Model.DS_PERFIL))
+        {
+            title = "Dados da Agência";
+        }
+        else
+        {
+            title = "Dados do Usuário";
+        }
+    }
+}
+
+<div class="content">
+    @{Html.RenderAction("Menu", "PainelControle", new { @titulo = title });}
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm("SalvarUsuario", "PainelControle", FormMethod.Post, new { @id = "formUsuario", @autocomplete = "off" }))
+    {
+
+        if (!string.IsNullOrEmpty(Model.DS_ERRO))
+        { 
+        <script>
+            $(document).ready(function () {
+                showMensagem("@Html.Raw(title)", "@Html.Raw(Model.DS_ERRO.Replace("\n", "").Replace("\r", ""))", 500);
+                if ("@Html.Raw(Model.DS_ERRO)" == "Usuário salvo com sucesso!") {
+                    $(function () {
+                        $("#btnMsgOk").click(function () {
+                            window.location.href = "/PainelControle";
+                        });
+                    });
+                }
+            });
+        </script>
+        }
+        <fieldset>
+            <legend>&nbsp Dados Pessoais &nbsp</legend>
+            <input type="hidden" id="hdnTipo" value="@ViewBag.tipo"/>
+            @Html.HiddenFor(p => p.ID_PESSOA)
+            @Html.ValidationMessageFor(p => p.ID_PESSOA)
+            <div class="divCampo">
+                <div>
+                    <div>
+
+                        @Html.LabelFor(p => p.NM_PESSOA, new { @class = "label-campo-geral" })
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.TextBoxFor(p => p.NM_PESSOA, new { @class = "inputG", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.NM_PESSOA)
+                    </div>
+                </div>
+            </div>
+            <div class="divCampo">
+                <div>
+                    @Html.Label("Nacionalidade", new { @class = "label-campo-geral" })
+                </div>
+                <div>
+                    @Html.DropDownListFor(p => p.IN_NACIONAL, lstNacional as IEnumerable<SelectListItem>, new { @class = "inputP combo" })
+                    @Html.ValidationMessageFor(p => p.IN_NACIONAL)
+
+                </div>
+            </div>
+            <div class="divCampo">
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.NR_CPF_CNPJ, new { @class = "label-campo-geral" })
+                    </div>
+                </div>
+                <div>
+                    <div class="SetDate">
+                        @Html.TextBoxFor(p => p.NR_CPF_CNPJ, new { @class = "inputM", onkeydown = "return numeros(event.keyCode, event.which);", onkeyup = "MascaraCpfCnpj(this, event);", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.NR_CPF_CNPJ)
+                    </div>
+                </div>
+            </div>
+            <div class="divCampo" id="divDT_NASCIMENTO">
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.DT_NASCIMENTO, new { @class = "label-campo-geral" })
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.TextBoxFor(p => p.DT_NASCIMENTO, new { @class = "inputP", @onkeyup = "MascaraData(this,event);", onblur = "validaDataNascimento();", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.DT_NASCIMENTO)
+                    </div>
+                </div>
+            </div>
+            <div class="divCampo" id="divIN_SEXO">
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.IN_SEXO, new { @class = "label-campo-geral" })
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.DropDownListFor(p => p.IN_SEXO, lstSexo, new { @class = "inputP combo" })
+                        @Html.ValidationMessageFor(p => p.IN_SEXO)
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <br />
+
+        <fieldset>
+            <legend>&nbsp Dados Endereço &nbsp</legend>
+            <div class="divLinha">
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.NR_CEP, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.NR_CEP, new { @class = "inputP", @onkeyup = "return MascaraCep(this, event);", onkeydown = "return numeros(event.keyCode, event.which);", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.NR_CEP)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.DS_ENDERECO, new { @class = "label-campo-geral" })
+
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.DS_ENDERECO, new { @class = "inputG", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.DS_ENDERECO)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.NR_ENDERECO, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.NR_ENDERECO, new { @style = "width: 90px;", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.NR_ENDERECO)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.DS_COMPLEMENTO, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.DS_COMPLEMENTO, new { @class = "inputM", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.DS_COMPLEMENTO)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.DS_PAIS, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.DS_PAIS, new { @class = "inputP", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.DS_PAIS)
+                    </div>
+                </div>
+            </div>
+            <div class="divLinha">
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.DS_CIDADE, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        <div class="divCampo">
+                            @Html.TextBoxFor(p => p.ENDERECO.DS_CIDADE, new { @class = "inputM", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(p => p.ENDERECO.DS_CIDADE)
+                        </div>
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.ENDERECO.DS_BAIRRO, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.ENDERECO.DS_BAIRRO, new { @class = "inputM", @disabled = "disabled", @style = "background-color:whitesmoke", @autocomplete = "off" })
+                        @Html.ValidationMessageFor(p => p.ENDERECO.DS_BAIRRO)
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <br />
+        <fieldset>
+            <legend>&nbsp Contato &nbsp</legend>
+            <div class="divCampo">
+                <div>
+                    @Html.LabelFor(p => p.NR_TELEFONE, new { @class = "label-campo-geral" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(p => p.NR_TELEFONE, new { @class = "inputM", @onkeyup = "return MascaraTelefone(this, event);", onkeydown = "return numeros(event.keyCode, event.which);", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(p => p.NR_TELEFONE)
+                </div>
+            </div>
+            <div class="divCampo">
+                <div>
+                    @Html.LabelFor(p => p.NR_TELEFONE_CEL, new { @class = "label-campo-geral" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(p => p.NR_TELEFONE_CEL, new { @class = "inputM", @onkeyup = "return MascaraTelefoneCelular(this, event);", onkeydown = "return numeros(event.keyCode, event.which);", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(p => p.NR_TELEFONE_CEL)
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <br />
+        <fieldset>
+            <legend>&nbsp Dados de Acesso &nbsp</legend>
+            <div class="divLinha">
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.USUARIO, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.USUARIO, new { @class = "inputM", @autocomplete = "off", @onblur = "validaCampoEmail(this);" })
+                        @Html.ValidationMessageFor(p => p.USUARIO)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.SENHA, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.PasswordFor(p => p.SENHA, new { @class = "inputM", @autocorrect = "off", @autocapitalize = "off", @autocomplete = "off", @onblur = "validaCampoSenha();" })
+                        @Html.ValidationMessageFor(p => p.SENHA)
+                    </div>
+                </div>
+                <div class="divCampo">
+                    <div>
+                        @Html.LabelFor(p => p.REDEFINIR_SENHA, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.PasswordFor(p => p.REDEFINIR_SENHA, new { @class = "inputM", @autocomplete = "off", @onblur = "validaCampoSenha();" })
+                        @Html.ValidationMessageFor(p => p.REDEFINIR_SENHA)
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(p => p.ID_PERFIL)
+            @Html.ValidationMessageFor(p => p.ID_PERFIL)
+            @Html.HiddenFor(p => p.DS_PERFIL)
+            @Html.ValidationMessageFor(p => p.DS_PERFIL)
+            <input type="hidden" value="@ViewBag.novo" id="hdnNovo" />
+            @{var usuarioLogado = Session["Usuario"] == null ? new FT.Web.Model.Models.PessoaModel() : (FT.Web.Model.Models.PessoaModel)Session["Usuario"];}
+            @*@if (usuarioLogado.IN_PERFIL_MASTER == "S" && usuarioLogado.ID_PESSOA != Model.ID_PESSOA)
+            {
+                *@<div class="divLinha">
+                    <div class="divCampo" id="idperfils">
+                        <div>
+                            @Html.LabelFor(p => p.IN_PERFIL_MASTER, new { @class = "label-campo-geral" })
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(p => p.IN_PERFIL_MASTER, lstPerfil, new { @class = "inputM combo", })
+                        </div>
+                    </div>
+                </div>
+            @*}*@
+        </fieldset>
+        <input type="submit" value="Salvar" id="btnSalvar" class="bg-btn-height39" style="height: 39px;" onclick="return validaForm();" />
+    
+
+    }
+</div>
+<h4 style="color: white">@Model.DS_ERRO</h4>
+<script>
+    autoCompletePais(7, "txtNacional");
+    autoCompletePais(7, "ENDERECO_DS_PAIS");
+    $(document).ready(function () {
+        $(".field-validation-valid").attr("style", "position:absolute");
+        $(".label-campo-geral").attr("style", "margin-top:20px");
+        datepickerCampo("DT_NASCIMENTO");
+    });
+
+</script>

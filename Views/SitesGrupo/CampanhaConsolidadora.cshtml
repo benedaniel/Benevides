@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+@model List<FT.Web.Model.Models.DestaqueModel>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="~/Scripts/jquery/jquery-2.0.3.js"></script>
+    <script src="~/Scripts/jquery/jquery.fancybox.js"></script>
+    <link href="~/Content/jquery/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Content/Campanhas.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery/jquery.fancybox.js"></script>
+        <script src="~/Scripts/Campanhas.js"></script>
+</head>
+<body>
+    <div class="content">
+        @foreach (var item in Model)
+        {
+            <div class="destino" style="background: url('http://www.advance.tur.br/img/campanhas/fortaleza.jpg');">
+                <a class="nasc fancybox-thumb" rel="fancybox-thumb" href="https://static.reservafacil.tur.br/_CAMPANHAS/2014/04_abril/AV/_imagens/avianca_28_03_ajustada.jpg" target="_parent"></a>
+            </div>
+        }
+    </div>
+</body>
+</html>

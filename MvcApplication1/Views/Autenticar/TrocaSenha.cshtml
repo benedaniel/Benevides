@@ -1,0 +1,83 @@
+﻿@model FT.Web.Model.Models.AlteraSenhaModel
+@{
+    ViewBag.Title = "Redefinir Senha - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string Error = Convert.ToString(ViewBag.Error);
+    string Hashkey = Convert.ToString(Request.Params["hashkey"]);
+    string Usuario = Convert.ToString(Request.Params["usuario"]);
+}
+<div class="content">
+    <br />
+    <div style="margin: auto; width: 250px;">
+        <h2 style="color: orangered; text-align: center;">Trocar Senha</h2>
+        <br />
+        @using (Html.BeginForm("ExecutaTrocaSenha", "Autenticar", FormMethod.Post, new { @id="formTrocaSenha" }))
+        {
+    
+            <div  style="width: 210px; margin: 0px auto;">
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.Senha)
+                    </div>
+                    <div>
+                        @Html.PasswordFor(p => p.Senha)
+                        @Html.ValidationMessageFor(p => p.Senha)
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.ConfirmarSenha)
+                    </div>
+                    <div>
+                        @Html.PasswordFor(p => p.ConfirmarSenha)
+                        @Html.ValidationMessageFor(p => p.ConfirmarSenha)
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <input type="hidden" value="@Hashkey" id="Hashkey" />
+                        <input type="hidden" value="@Usuario" id="Usuario" />
+                        
+                    </div>
+                </div>
+                <div>
+                    <input type="button" class="bg-btn-height39" value="confirmar" onclick="javascript:submitTrocarSenha();" />
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<script>
+
+    function submitTrocarSenha() {
+
+        if (validaForm('#formTrocaSenha')) {
+
+            var args = new Object();
+            args = {
+                Usuario: $("#Usuario").val(),
+                Senha: $("#Senha").val(),
+                ConfirmarSenha: $("#ConfirmarSenha").val(),
+                Hashkey: $("#Hashkey").val()
+            };
+
+            $.ajax({
+                url: '/Autenticar/ExecutaTrocaSenha',
+                type: 'POST',
+                data: JSON.stringify(args),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    showMensagem("Trocar Senha", data, 500);
+                },
+                erro: function (data) {
+                    showMensagem("Trocar Senha", data);
+                }
+            });
+        }
+    }
+</script>

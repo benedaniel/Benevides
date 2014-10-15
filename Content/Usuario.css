@@ -1,0 +1,184 @@
+﻿.divCampo {
+    float: left;
+    margin-right: 20px;
+}
+
+
+fieldset {
+    width: auto;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0px 25px 20px;
+    border-color: #D6D6D6;
+    font-weight: bold;
+}
+
+input {
+    color: #999999;
+    border-color: #D6D6D6;
+}
+
+select {
+    color: #999999;
+    border-color: #D6D6D6;
+}
+
+.inputP {
+    width: 130px;
+}
+
+.inputM {
+    width: 180px;
+}
+
+.inputG {
+    width: 210px;
+}
+
+.divLinha {
+    display: inline-block;
+}
+
+legend {
+    color: orange;
+}
+
+.combo {
+    margin: 8px 0;
+}
+
+.botao-logar {
+    background: url(../Images/linha_botao.png );
+    color: white;
+    line-height: 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.div-login {
+    width: 750px;
+    margin: 50px auto;
+}
+
+
+.radioescolha {
+    width: 18px;
+    vertical-align: 10px;
+    margin: 0px;
+    height: 18px;
+}
+
+.divradios {
+    float: left;
+    height: 150px;
+    width: 270px;
+}
+
+    .divradios fieldset {
+        border: 0;
+    }
+
+.textradio {
+    vertical-align: 15px;
+    font-size: 10px;
+}
+
+#dialog .botao-logar {
+    float: right;
+}
+
+
+#simplemodal-overlay {
+    background-color: #000000;
+}
+
+#simplemodal-container {
+    background-color: #FFFFFF;
+    border: 4px solid #444444;
+    color: #BBBBBB;
+    height: 230px;
+    padding: 12px;
+    width: 560px;
+}
+
+    #simplemodal-container .simplemodal-data {
+        padding: 8px;
+    }
+
+    #simplemodal-container code {
+        background: none repeat scroll 0 0 #141414;
+        border-left: 3px solid #65B43D;
+        color: #BBBBBB;
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+        padding: 4px 6px 6px;
+    }
+
+    #simplemodal-container a {
+        color: #DDDDDD;
+    }
+
+        #simplemodal-container a.modalCloseImg {
+            background: url("../images/x.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+            cursor: pointer;
+            display: inline;
+            height: 29px;
+            position: absolute;
+            right: -16px;
+            top: -15px;
+            width: 25px;
+            z-index: 3200;
+        }
+
+    #simplemodal-container h3 {
+        color: #84B8D9;
+    }
+
+
+
+.ui-datepicker-trigger {
+    background: url("../Images/calendario_input-silver.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none !important;
+    float: right;
+    height: 35px;
+    margin-left: -36px;
+    margin-top: 8px;
+    outline: medium none;
+    position: absolute;
+    text-decoration: none;
+    width: 35px;
+}
+
+.mensagem-erro {
+    text-align: center;
+    margin: auto;
+    width: 400px;
+    color: red;
+}
+
+.instrucoes {
+    float: left;
+    height: 200px;
+    width: 325px;
+    border: 1px solid #f05c18;
+    border-radius: 6px;
+    margin-left: 69px;
+    padding: 17px 78px 0px 20px;
+    color: rgb(117, 109, 109);
+}
+
+.botaoLojas {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 14px;
+    padding-left: 14px;
+    margin: 40px 0 0 0;
+    height: 35px;
+    border-radius: 5px;
+    width: 280px;
+    background-color: #026CBD;
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,189 @@
+﻿@model FT.Web.Model.Models.AtividadeModel
+@{
+    ViewBag.Title = "Detalhe Atividade - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos ";
+}
+<link href="~/Content/Atividade.css" rel="stylesheet" />
+
+<script src="~/Scripts/AtividadeDetalhe.js"></script>
+<style>
+    .control-cotizacao, #div-loading-cotizacao {
+        margin: 10px auto auto !important;
+    }
+
+    select {
+        border: 1px solid #D6D6D6 !important;
+        margin-top: 8px !important;
+    }
+
+    #ddlQ0Crianca0, #ddlQ0Crianca1, #ddlQ0Crianca2, #ddlQ0Crianca3, #ddlQ0Crianca4 {
+        margin-left: 72px !important;
+    }
+</style>
+<div id="orcamentocontent">
+</div>
+
+@using (Ajax.BeginForm("LoadDetalheAtividade", new AjaxOptions { UpdateTargetId = "DivPai", HttpMethod = "Post", OnSuccess = null }))
+{
+    RouteValueDictionary tRVD = new RouteValueDictionary(ViewContext.RouteData.Values);
+    <div style="margin: auto; width: 980px;" id="DivPai">
+        <div style="float: left; color: white; background-color: #f05c18; width: 255px; margin-left: 10px; margin-top: 10px; border-radius: 10px;">
+            <div id="headerResultados" class="clearfix" style="margin: 10px;">
+                <span style="font-family: Verdana; color: white; font-size: 20px;" class="iconeMala">Pesquisar</span>
+            </div>
+            <div style="margin: 2px; background-color: #eeeeee; border-radius: 10px;">
+                <div style="margin-left: 20px;">
+                    <br />
+                    <ul>
+                        <li><span style="font-family: Verdana; font-weight: bold; margin-left: 8px; color: #666666; font-size: 12px;">Local do Serviço</span></li>
+                        <li>
+                            <input type="hidden" id="hdnDestino" name="hdnDestino" value="@Request.Form["DestinoAtividade"]" />
+                            <input type="hidden" id="hdnDtEmbarque" name="hdnDtEmbarque" value="@Request.Form["dtEmbarque"]" />
+                            <input type="hidden" id="hdnDtRetorno" name="hdnDtRetorno" value="@Request.Form["dtRetorno"]" />
+                            <input type="hidden" id="hdnddlQ0crianca" name="hdnddlQ0crianca" value="@Request.Form["AtvddlQ1crianca"]" />
+                            <input type="hidden" id="hdnddlQ0crianca0" name="hdnddlQ0crianca0" value="@Request.Form["AtvddlQ1crianca0"]" />
+                            <input type="hidden" id="hdnddlQ0crianca1" name="hdnddlQ0crianca1" value="@Request.Form["AtvddlQ1crianca1"]" />
+                            <input type="hidden" id="hdnddlQ0crianca2" name="hdnddlQ0crianca2" value="@Request.Form["AtvddlQ1crianca2"]" />
+                            <input type="hidden" id="hdnddlQ0crianca3" name="hdnddlQ0crianca3" value="@Request.Form["AtvddlQ1crianca3"]" />
+                            <input type="hidden" id="hdnqtAdultos" name="hdnqtAdultos" value="@Request.Form["AtvddlQ1Adulto"]" />
+                            <div id="divDestinoAtividade">
+                                @Html.TextBoxFor(model => model.DestinoAtividade, new { @style = "border: solid 1px #D6D6D6; border-top: solid 1px #D6D6D6; width:200px" });
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;"><span style="font-family: Verdana; font-weight: bold; margin-left: 8px; font-size: 12px; color: #666666;">Data de Inicio</span></li>
+                        <li>
+                            @Html.TextBoxFor(p => p.dtEmbarque, new { @class = "selectPacote", @Value = Request.Form["dtEmbarque"] /*!= null ? Request.Form["dtEmbarque"] : Model.dtEmbarque */})
+                            <br />
+                        </li>
+                        <li style="margin-top: 10px;"><span style="font-family: Verdana; color: #666666; font-weight: bold; margin-left: 8px; font-size: 12px;">Data Fim</span></li>
+                        <li>
+                            @Html.TextBoxFor(p => p.dtRetorno, new { @class = "selectPacote", @Value = Request.Form["dtRetorno"]/* != null ? Request.Form["dtRetorno"] /*: Model.dtRetorno*/ })
+                            <br />
+                        </li>
+                    </ul>
+                </div>
+                <hr style="color: #f75918" />
+                <div id="chamada" class="clearfix">
+                    <hr style="height: 1px; margin: 20px; background-color: #f75918;" />
+                    <div id="chamadaLeft">
+
+                        <div id="agrpQuarto0" name="agrpQuarto0">
+
+                            <span style="font-family: Verdana; font-weight: bold; margin-left: 20px; font-size: 12px; color: #666666;">Adultos</span>
+                            <select class="selectPacoteNumerico" style="margin-bottom: 5px; border: solid 1px #d6d6d6;" id="ddlQ0Adulto" name="ddlQ0Adulto">
+                                <option value="1">1</option>
+                                <option selected value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+
+                            <span style="font-family: Verdana; font-weight: bold; font-size: 12px; color: #666666;">Crianças</span>
+
+                            <select onchange="aumentarIdadeLoad(this.name, this.value,0)" class="selectPacoteNumerico" style="border: solid 1px #d6d6d6;" id="ddlQ0crianca" name="ddlQ0crianca">
+                                <option selected value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <hr style="height: 1px; margin: 20px; background-color: #d6d6d6;" />
+
+                    </div>
+                    <div id="chamadaRight">
+                        <input type="hidden" value="@tRVD["nome"]" name="nomeGet" id="nomeGet"/>
+                        <input type="hidden" value="@tRVD["id"]" name="idGet" id="idGet"/>
+                        <input type="hidden" value="@tRVD["data"]" name="dataGet" id="dataGet"/>
+                        <input type="hidden" value="@tRVD["origem"]" name="origemGet" id="origemGet"/>
+                        <input type="hidden" value="1" id="qtdQuartos" name="qtdQuartos">
+                        <br />
+                    </div>
+                </div>
+                <input class="buttonPacoteRefazer" name="btnSubmit" id="btnSubmit" type="button" value="Refazer Busca" />
+                <hr style="color: #d6d6d6;" />
+            </div>
+        </div>
+        <div id="DivPai2" style="float: left; width: 688px; margin-top: 10px; margin-left: 10px;">
+            <div class="pacote-detalhes">
+                <div class="pacote-cabecalho-1">
+                    <div class="pacote-cabecalho-1-1">
+                        <div class="icone-titulo"></div>
+                        <p class="pacote-cabecalho-1-texto-1">Resultados da Pesquisa</p>
+                    </div>
+                    <div class="pacote-cabecalho-1-2">
+                        <p class="pacote-cabecalho-1-texto-3">
+                            Serviços para <strong>
+                                <label id="lblPacotesPara" style="font-weight: bold;">@Request.Form["DestinoAtividade"] </label>
+                            </strong>
+                        </p>
+                        <p class="pacote-cabecalho-1-texto-4">
+                            No período de  <strong>
+                                <label id="lblDatasaida" style="font-weight: bold">
+                                    @Request.Form["dtEmbarque"] à @Request.Form["dtRetorno"]</label>
+                            </strong>
+                        </p>
+
+                        <input type="hidden" value="@Request.Form["hdnDestinoAtividadeCodigo"]" id="hdnDestinosCodigo" name="hdnDestinosCodigo" />
+                    </div>
+                </div>
+                <div id="LoadGrid"></div>
+            </div>
+        </div>
+    </div>    
+   
+    
+    <script>
+
+        function aumentarIdadeLoad(eu, qtd, quartoid) {
+            eu = "ddlQ0Crianca";
+            for (var i = 0; i < 5 ; i++) {
+                var elem = document.getElementById(eu + i);
+                if (elem != null)
+                    elem.parentNode.removeChild(elem);
+            }
+
+
+            //if (elem != null)
+            //    elem.parentNode.removeChild(elem);
+
+            //elem = document.getElementById('ddlQ0crianca1');
+            //if (elem != null)
+            //    elem.parentNode.removeChild(elem);
+
+            //elem = document.getElementById('ddlQ0crianca2');
+            //if (elem != null)
+
+
+            //elem = document.getElementById('ddlQ0crianca3');
+            //if (elem != null)
+            //    elem.parentNode.removeChild(elem);
+
+            for (var i = 0; i < qtd ; i++) {
+                $('<select/>', {
+                    id: eu + i, name: eu + i, style: "margin-top:8px;margin-left:72px;border: solid 1px #d6d6d6;"
+                }).appendTo('#agrpQuarto' + quartoid);
+                
+                $('<option/>', { value: "0", text: "0" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "1", text: "1" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "2", text: "2" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "3", text: "3" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "4", text: "4" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "5", text: "5" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "6", text: "6" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "7", text: "7" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "8", text: "8" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "9", text: "9" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "10", text: "10" }).appendTo('#' + eu + i);
+                $('<option/>', { value: "11", text: "11" }).appendTo('#' + eu + i);
+                $('<br/>').appendTo('#' + eu + i);
+                $('<br/>').appendTo('#lbl' + quartoid);
+            }
+        }
+    </script> 
+}
+
+

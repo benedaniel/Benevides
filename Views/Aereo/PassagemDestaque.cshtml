@@ -1,0 +1,58 @@
+﻿@model List<FT.Web.Model.Models.HotelDestaqueModel>
+
+<div class="passagens-destaque-header">
+    <!-- Passagens -->
+    <p class="passagens-destaque-titulo">Reserve aqui o seu<strong> Hotel</strong><a href="#" class="passagens-destaque-vermais">Ver mais ></a></p>
+</div>
+<div class="apartirde">a partir de*</div>
+@foreach (var item in Model)
+{
+    if (item.DataInicial < DateTime.Now)
+    {
+    <a href='~/Hotel/@item.CodigoCidade/@DateTime.Now.ToString("dd-MM-yyyy")/@DateTime.Now.AddDays(7).ToString("dd-MM-yyyy")'>
+        <div class="linha-tabela-passagens">
+            <div class="passagens-destaque-destino">
+                <h4>Hotel em  <strong>@item.NomeCidade</strong></h4>
+            </div>
+            @if (item.QuantidadeParcela == null)
+            {
+                <div class="destaque-parcelas">@Html.Raw("à vista")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@item.ValorReferencia.Value.ToString("0.00")</div>
+            }
+            else
+            {
+                <div class="destaque-parcelas">@item.QuantidadeParcela@Html.Raw("x")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">@item.ValorParcela.Value.ToString("0.00")</div>
+            }
+        </div>
+    </a>
+    }
+    else
+    {
+    <a href='~/Hotel/@item.CodigoCidade/@item.DataInicial.ToString().Replace("/", "-").Replace("00:00:00", "").TrimEnd().Trim()/@item.DataFinal.ToString().Replace("/", "-").Replace("00:00:00", "").TrimEnd().Trim()'>
+        <div class="linha-tabela-passagens">
+            <div class="passagens-destaque-destino">
+                <h4>Hotel em  <strong>@item.NomeCidade</strong></h4>
+            </div>
+            @if (item.QuantidadeParcela == null)
+            {
+                <div class="destaque-parcelas">@Html.Raw("à vista")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">
+                    @item.ValorParcela.Value.ToString("0.00")
+                </div>
+            }
+            else
+            {
+                <div class="destaque-parcelas">@item.QuantidadeParcela@Html.Raw("x")</div>
+                <div class="passagens-destaque-moeda">R$</div>
+                <div class="passagens-destaque-valor">
+                   @item.ValorParcela.Value.ToString("0.00")
+                </div>
+            }
+        </div>
+    </a>
+    }
+}

@@ -1,0 +1,46 @@
+﻿@model IList<FT.Web.Model.Models.HotelModel>
+@{
+    var idPlusAdults = "plusAdults" + ViewBag.Indice;
+    var idMinusAdults = "minusAdults" + ViewBag.Indice;
+}
+@if (Model != null)
+{  
+ foreach (FT.Web.Model.Models.HotelModel HotelModel in Model)
+        {
+            @HotelModel.Cep;
+     
+        }
+}
+<li>
+    <div class='roomTitle'>
+        <label>Quarto @ViewBag.Indice</label>
+    </div>
+
+    <div class='roomAdults'>
+        <label class='buscadorlabel'>Adultos @Request.Form["txtAdultos"]</label>
+        <div class="quartosmm">
+            <a href="javascript:" id="@idPlusAdults" class="plusHotel" onclick="add('@idPlusAdults')"></a>
+                <input id="txtAdultos" type="text" class='QuantAdultos' value="1" onkeypress="return isNumberKey(event)" class="valid">
+            <a href="javascript:" id="@idMinusAdults" class="minusHotel" onclick="removeQtdAdultos('@idMinusAdults')"></a>
+        </div>
+    </div>
+
+    <div class='roomChil'>
+        <label class='buscadorlabel'>Crianças</label>
+        <div class='styled-select-form-medium'>
+            <select class='QuantCriancas' onchange="qtCriancas(this, @ViewBag.Indice)">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="roomChilAge" id='roomChilAge_@ViewBag.Indice'>
+        <p>idades</p>
+        <div id="criancas_@ViewBag.Indice" class="criancas">
+        </div>
+    </div>
+</li>

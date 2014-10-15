@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PacoteMenuForm</title>
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/Buscadores.css" rel="stylesheet" />
+    <link href="~/Content/Master.css" rel="stylesheet" />
+    <script src="~/Scripts/Pacote.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Validations.js"></script>
+    <style>
+        .slidesjs-slide {
+            -webkit-backface-visibility: visible !important;
+        }label {
+            color: #FFF;
+            font-family: Verdana;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" style="display: none;">
+        <img src="~/Images/Loading_2.gif" width="370" />
+    </div>
+    <div id="tabs-3">
+        <div class="buscador-campos">
+            @{
+                ViewBag.Title = "Pacote - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+            }
+            @model FT.Web.Model.Models.PacoteModel
+            <style>
+                .error {
+                    background: url("../images/bgErro.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+                    border-radius: 5px 5px 5px 5px;
+                    color: #D20000;
+                    display: block;
+                    font-size: 11px;
+                    margin: 3px 0 0;
+                    padding: 5px;
+                    width: 175px;
+                    position: absolute;
+                }
+
+                .erroDrop {
+                    background: url("../images/xis.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+                    margin-top: 2px;
+                    padding-left: 15px;
+                }
+            </style>
+            @using (Html.BeginForm("LoadPacoteMatriz", "Pacote", FormMethod.Post, new { id = "pacoteForm", target = "_top" }))
+            {
+                <div class="content-pacote">
+                    <h3>Procure o seu pacote de viagem</h3>
+                    <div class="content-pacote-nasc_inter" id="DivRadio">
+                        <input type="radio" class="radioPacote" name="rdbOrigem" value="S" checked="checked" tabindex="1">
+                        <label for="rdbOrigemNasc">Nacionais</label>
+
+                        <input type="radio" class="radioPacote" name="rdbOrigem" value="N" tabindex="1">
+                        <label for="rdbOrigemInter">Internacionais</label>
+                    </div>
+                    <div class="content-pacote-destino">
+                        <div class="BuscadorSet">
+                            <div>
+                                <label class="lblPacote">Origem</label>
+                                <div class="styled-select-form">
+                                    <input type="hidden" id="hdnCidadesEmbarqueTexto" name="hdnCidadesEmbarqueTexto" />
+                                    <select class="selectPacote" name="ddlCidadesEmbarque" id="ddlCidadesEmbarque">
+                                        <option value="" dt="teste">Sua origem</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="lblPacote">Destino</label>
+                                <div class="loader"></div>
+                                <div class="styled-select-form" id="content-pacote-destino-interno">
+                                    <input type="hidden" id="hdnCidadesDestinoTexto" name="hdnCidadesDestinoTexto" />
+                                    <select class="selectPacote" name="ddlCidadesDestino" id="ddlCidadesDestino">
+                                        <option value="" dt="teste">Selecione o Destino</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <br />
+                    <div class="content-pacote-data">
+                        <div class="BuscadorSet">
+                            <div>
+                                <label class="lblPacote">Data da viagem</label>
+                                <div class="loaderData"></div>
+                                <div class="styled-select-form" id="content-pacote-data-home">
+                                    <input type="hidden" id="hdnDataViagemTexto" name="hdnDataViagemTexto" />
+                                    <select class="selectPacote" name="ddlDataVIagem" id="ddlDataVIagem">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="lblPacote">Tipo de Produto</label>
+                                <div class="loaderData"></div>
+                                <div class="styled-select-form"  id="content-pacote-prd-home">
+                                    <input type="hidden" id="hdnprdTexto" name="hdnprdTexto" />
+
+
+                                    <select class="selectPacote" name="ddlTipoPrd" id="ddlTipoPrd">
+                                        <option value="">Selecione</option>
+                                        <option value="2">Aéreo + Terrestre</option>
+                                        <option value="1">Somente Terrestre</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="button">
+                    <br />
+                    <br />
+                </div>    
+                <div style="float: right; margin-top: 20px; margin-right: 10px;" class="box-bottom">
+                    <input type="submit" class="btnPesquisar" value="" onclick="return PacoteLoadingShow()" />
+                </div>
+            }
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('.slidesjs-slide').css('-webkit-backface-visibility', 'visible');
+        });
+    </script>
+</body>
+</html>

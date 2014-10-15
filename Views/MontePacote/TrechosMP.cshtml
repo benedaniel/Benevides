@@ -1,0 +1,118 @@
+﻿<li id="liMP-@ViewBag.IndiceTrechoMP">
+    <br />
+    <div class='roomTitle'>
+
+        <label style="font-size: 16px; font-weight: bold;">Destino @ViewBag.IndiceTrechoMP</label>
+        <br />
+        <div style="margin-bottom: -10px;"></div>
+        <label>___________________________________________________________</label>
+        <br />
+    </div>
+    <br />
+    <script>
+        $(function () {
+            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+            $.datepicker.regional['pt-BR'] = {
+                closeText: 'Fechar',
+                prevText: '&#x3c;Anterior',
+                nextText: 'Pr&oacute;ximo&#x3e;',
+                currentText: 'Hoje',
+                monthNames: ['Janeiro', 'Fevereiro', 'Mar&ccedil;o', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda-feira', 'Ter&ccedil;a-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                weekHeader: 'Sm',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                showOn: "both",
+                changeFirstDay: false
+            };
+            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+            $('.calendar').datepicker({
+                showOn: "both",
+                numberOfMonths: 2,
+                minDate: 0,
+                onSelect: function (dateText, inst) {
+                    CalculateDate();
+                    CalculateNights();
+                },
+                beforeShow: function () {
+                    setTimeout(function () {
+                        $('.ui-datepicker').css('z-index', 99999999999999);
+                    }, 0);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $(".plusMPMultiMP_@ViewBag.IndiceTrechoMP").click(function () {
+                var text = $(this).next(":text");
+                text.val(parseInt(text.val(), 10) + 1);
+                CalculateDate();
+            });
+
+            $(".minusMPMultiMP_@ViewBag.IndiceTrechoMP").click(function () {
+                var text = $(this).prev(":text");
+                if (text.val() != 1 && text.val() != 0) {
+                    text.val(parseInt(text.val(), 10) - 1);
+                    CalculateDate();
+                }
+            });
+            $('.calendar_@ViewBag.IndiceTrechoMP').val(getToday());
+            //$('.noites').val(1);
+        });
+    </script>
+    <div class="BuscadorSet">
+        <div>
+            <label class="buscadorlabel">Origem</label>
+            <div id="divOrigem">
+                <input type="text" id="OrigemCmpMP_@ViewBag.IndiceTrechoMP" class="watermarkAereo OrigenMulti" title="Informe sua origem"/>
+            </div>
+        </div>
+        <div>
+            <label class="buscadorlabel">Destino</label>
+            <div id="divDestino">
+                <input type="text" id="DestinoCmpMP_@ViewBag.IndiceTrechoMP" class="watermarkAereo DestinoMulti" title="Informe seu destino" onchange="selectCidade(@ViewBag.IndiceTrechoMP, this)"/>
+            </div>
+        </div>
+    </div>
+    <div class="BuscadorSetDate">
+        <div class="SetDate">
+            <label class="buscadorlabel">Data de saída</label><br />
+            <input type="text"  name="DataEmbarqueCodigoCmpMP_@ViewBag.IndiceTrechoMP" class="calendar txtStartDate SaidaMulti calendar_@ViewBag.IndiceTrechoMP" />
+        </div>
+        <div class="quants">
+            <label class="labelMontePacote">Noites</label><br class="saveSearch" />
+            <div>
+                <a href="javascript:" class="plusHotel plusMPMultiMP_@ViewBag.IndiceTrechoMP"></a>
+                <input class="noites" type="text" value="1" onkeypress="return isNumberKey(event)" onkeyup="changeNightsKey(this.value);" maxlength="2" />
+                <a href="javascript:" class="minusHotel minusMPMultiMP_@ViewBag.IndiceTrechoMP"></a>
+            </div>
+        </div>
+        <br />
+        <div class="clear"></div>
+        <div class="testeMPRe_@ViewBag.IndiceTrechoMP">
+            <div class="SetDate MPRetorno" style="width: 187px;">
+                <label class="buscadorlabel">Data de Retorno</label><br />
+                <input type="text" name="DataRetornoCmpMP_@ViewBag.IndiceTrechoMP" class="calendar txtEndDate RetornoMP calendar_@ViewBag.IndiceTrechoMP" />
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            documentWatermarkMP();
+            $('.watermarkAereo').watermarkAereo('clearWatermarks');
+            autoComplete(6, "OrigemCmpMP_@ViewBag.IndiceTrechoMP");
+            autoCompleteMultiMP(6, "DestinoCmpMP_@ViewBag.IndiceTrechoMP", @ViewBag.IndiceTrechoMP);
+            $('.watermarkAereo').watermarkAereo();
+        });
+    </script>
+    <br />
+    <div class="clear"></div>
+</li>

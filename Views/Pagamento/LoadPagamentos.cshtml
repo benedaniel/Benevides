@@ -1,0 +1,86 @@
+﻿<li class="liAdd" id="li-@ViewBag.cartaoIndice">
+    @model FT.Web.Model.Models.ConsultaFinanRetornoModel
+
+    @if (String.IsNullOrEmpty(Model.Mensagem))
+    {       
+        <div style="border: solid 1px #CCC; border-radius: 10px; float: left; color: black; background-color: white; width: 600px; margin-left: 5px; margin-bottom: 10px;">
+            <div id="gridPagamento-@ViewBag.cartaoIndice">
+                @if (Session["Usuario"] != null)
+                {
+                    if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).IN_PERFIL_MASTER == null)
+                    {
+                    <div>
+                        @if (Model.Modalidade.Count > 0)
+                        {
+                            <div class="loadingPartial">
+                                <img src="~/Images/loadingPartial.gif" />
+                            </div>
+                            <div id="modalidade-@ViewBag.cartaoIndice">
+                                @{Html.RenderPartial("Modalidade", Model);}
+                            </div>
+                            <div id="divDadosCartao">
+                                <div id="divDadosCartao-@ViewBag.cartaoIndice" style="float: left; color: white; border-radius: 10px; background-color: #EFEFEF; width: 600px;">
+                                    <ul>
+                                        <li>
+                                            @Html.Label("Número do Cartão", new { @class = "labelReserva" })<br />
+                                            <input type="text" id="txtNumeroCartao-@ViewBag.cartaoIndice" name="txtNumeroCartao-@ViewBag.cartaoIndice" style="width: 180px;" class="validar" onchange = "validate(this)"/>
+                                        </li>
+
+                                        <li>
+                                            @Html.Label("Cartão válido até", new { @class = "labelReserva" })<br />
+                                            <select id="txtValidadeCartaoMes-@ViewBag.cartaoIndice" name="txtValidadeCartaoMes-@ViewBag.cartaoIndice"  class="cmbSexo" style="width: 51px;background-color: #FFF;">
+                                                <option>01</option>
+                                                <option>02</option>
+                                                <option>03</option>
+                                                <option>04</option>
+                                                <option>05</option>
+                                                <option>06</option>
+                                                <option>07</option>
+                                                <option>08</option>
+                                                <option>09</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>12</option>
+                                            </select>
+                                            <label style="color:black;">/</label>
+                                            <select id="txtValidadeCartaoAno-@ViewBag.cartaoIndice" name="txtValidadeCartaoAno-@ViewBag.cartaoIndice"  class="cmbSexo" style="width: 67px;background-color: #FFF;">
+                                                <option>2014</option>
+                                                <option>2015</option>
+                                                <option>2016</option>
+                                                <option>2017</option>
+                                                <option>2018</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            @Html.Label("Codigo de Segurança", new { @class = "labelReserva" })<br />
+                                            <input type="text" id="txtCodSeguranca-@ViewBag.cartaoIndice" name="txtCodSeguranca-@ViewBag.cartaoIndice" style="width: 40px;" class="validar" onchange = "validate(this)"/>
+                                        </li>
+
+                                        <li>
+                                            @Html.Label("Nome ", new { @class = "labelReserva" })<br />
+                                            <input type="text" id="textNome-@ViewBag.cartaoIndice" name="textNome-@ViewBag.cartaoIndice" style="width: 180px;" class="validar" onchange = "validate(this)"/>
+                                        </li>
+
+                                        @*                            <li>
+                                @Html.Label("CPF", new { @class = "labelReserva" })<br />
+                                @Html.TextBox("txtCPFCartao", "")
+                            </li>*@
+                                    </ul>
+                                    <br />
+                                </div>
+                            </div>
+                            
+                        }
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <span>@Model.Mensagem</span>
+    }
+    <input type="hidden" id="hdnData-@ViewBag.cartaoIndice" name="hdnData-@ViewBag.cartaoIndice"/>
+    <input type="hidden" id="CodigoPlanoParcela-@ViewBag.cartaoIndice" name="CodigoPlanoParcela-@ViewBag.cartaoIndice"/>
+</li>

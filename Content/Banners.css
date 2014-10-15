@@ -1,0 +1,40 @@
+﻿body {
+    margin:0;
+}
+
+.slidesjs-control, .slidesjs-container {
+    height: 361.178px !important;
+    left: 0;
+    position: relative;
+    width: 634px !important;
+}
+
+ul.slidesjs-pagination {
+    float: right;
+    margin-top: -30px;
+    position: relative;
+}
+
+    ul.slidesjs-pagination li {
+        float: left;
+        list-style: none outside none;
+    }
+
+        ul.slidesjs-pagination li a {
+            display: block;
+            background: url(../Hotsites/template/images/bullets_slide_02.png) center no-repeat;
+            height: 17px;
+            width: 17px;
+            background-position: 0px 0px;
+            line-height: 0;
+            font-size: 0;
+            color: transparent;
+        }
+
+            ul.slidesjs-pagination li a.active {
+                background-position: 0px -20px;
+            }
+
+            ul.slidesjs-pagination li a:hover {
+                background-position: 0px -40px;
+            }

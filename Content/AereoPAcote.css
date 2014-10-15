@@ -1,0 +1,6 @@
+﻿@media (max-height:700px) {
+    #simplemodal-container {
+        height: auto !important;
+        margin-top: -450px !important;
+    }
+}

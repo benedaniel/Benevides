@@ -1,0 +1,202 @@
+﻿@model FT.Web.Model.Models.PessoaModel
+@using FT.Web.Business.Gerenciamento;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/PainelControle.css" rel="stylesheet" />
+<script src="~/Scripts/MenuPainelControle.js"></script>
+<div class="content" style="font-size: 14px;">
+    @{
+        
+        string saudacao = FT.Web.Core.Util.Validation.ConvertMethod.ToSaudacao(DateTime.Now);
+                /*
+                Dictionary<string, string> lstLinkds = new Dictionary<string, string>();
+                lstLinkds.Add("meucadastro", "/PainelControle/UsuarioMeuCadastro");
+                lstLinkds.Add("dadosdaagencia", "/PainelControle/UsuarioAgencia");
+                lstLinkds.Add("adicionarusuario", "/PainelControle/AddUsuario");
+                lstLinkds.Add("listadeusuarios", "/PainelControle/ListaUsuario");
+                lstLinkds.Add("reservasdocliente", "/PainelControle/Reserva");
+                lstLinkds.Add("extrato", "/PainelControle/Extrato");
+                lstLinkds.Add("orcamento", "/Orcamento/ListarOrcamento");
+                lstLinkds.Add("minhasreservas", "/Venda");
+
+                foreach (var item in lstLinkds)
+                {
+                    bool acesso = PainelControle.GetPermissaoPagina(Model, item.Value);
+                    if (!acesso)
+                    {
+                     <script>
+                         $(document).ready(function () {
+                             $(".@item.Key").hide();
+                         });
+                     </script>   
+                    }
+                }*/
+    }
+
+    <br />
+    <div style="text-align: center;">
+        <h2>
+            <t style="color: black">@saudacao !</t>
+            <t style="color: orange"> Este é o seu Painel de Controle.</t>
+        </h2>
+    </div>
+    <br />
+    <br />
+
+    @{bool agente = string.IsNullOrEmpty(Model.IN_PERFIL_MASTER) ? false : true;}
+    @if (agente)
+    {
+
+        Dictionary<string, string> lstLinkds = new Dictionary<string, string>();
+        lstLinkds.Add("/PainelControle/DadosUsuario", "M");
+        lstLinkds.Add("/PainelControle/MinhaAgencia", "M");
+        lstLinkds.Add("/PainelControle/UsuarioNovo", "M");
+        lstLinkds.Add("/PainelControle/ListaUsuario", "M");
+        lstLinkds.Add("/PainelControle/Reserva", "A");
+        lstLinkds.Add("/PainelControle/Extrato", "M");
+        lstLinkds.Add("/Orcamento/ListarOrcamento", "A");
+        lstLinkds.Add("/Venda", "M");
+
+        if (Model.IN_PERFIL_MASTER.Equals("N"))
+        {
+         @*   
+        <script>
+            $(document).ready(function () {
+                $(".A").show();
+            });
+        </script>
+            
+        }
+        else
+        {
+        <script>
+            $(document).ready(function () {
+                $(".M").show();
+            });
+        </script>   
+         *@
+        <script>
+           
+        </script>
+        }
+        
+        
+        
+        
+        <div class="divLinhaIcone">
+            @using (Html.BeginForm("DadosUsuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_0" }))
+            {
+                <div class="borda centerdiv meucadastro M C" style="display: none;">
+                    @Html.HiddenFor(p => p.ID_PESSOA)
+                    @Html.HiddenFor(p => p.ID_EMPRESA)
+                    @Html.HiddenFor(p => p.ID_PERFIL)
+
+                    <a href="javascript:FormUsuario_0.submit();">
+                        <div class="botao centerdiv">
+                            <img src="~/Images/painel_controle/iconeMeuCadastro.png" />
+                        </div>
+                        <div class="centerdiv">Meu Cadastro</div>
+                    </a>
+                </div>
+            }
+            @using (Html.BeginForm("MinhaAgencia", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_1" }))
+            {
+                var idAgencia = @Model.ID_PESSOA_AGENCIA;
+                <div class="borda centerdiv dadosdaagencia M" style="display: none;">
+
+                    @Html.Hidden("ID_PESSOA", @idAgencia)
+                    @Html.HiddenFor(p => p.ID_EMPRESA)
+                    @Html.Hidden("ID_PERFIL", "0")
+
+                    <a href="javascript:FormUsuario_1.submit();">
+                        <div class="botao centerdiv">
+                            <img src="~/Images/painel_controle/iconeDadosAgencia.png" />
+                        </div>
+                        <div class="centerdiv">Dados da Agência</div>
+                    </a>
+                </div>
+            }
+            @using (Html.BeginForm("UsuarioNovo", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_2" }))
+            {
+                <div class="borda centerdiv adicionarusuario M" style="display: none;">
+                    <input type="hidden" name="pag" value="n" />
+                    <a href="javascript:FormUsuario_2.submit();">
+                        <div class="botao centerdiv">
+                            <img src="~/Images/painel_controle/iconeAddUsuarios.png" />
+                        </div>
+                        <div class="centerdiv">Adicionar Usuários</div>
+                    </a>
+                </div>
+            }
+            <div class="borda centerdiv listadeusuarios M" style="display: none;">
+                <a href="/PainelControle/ListaUsuario">
+                    <div class="botao centerdiv margemLeft">
+                        <img src="~/Images/painel_controle/iconeListagemUsuarios.png" />
+                    </div>
+                    <div class="centerdiv">Lista de Usuários</div>
+                </a>
+            </div>
+            <div class="borda centerdiv reservasdocliente M A C" style="display: none;">
+
+                <a href="/PainelControle/Reserva">
+                    <div class="botao centerdiv">
+                        <img src="~/Images/painel_controle/iconeReservaAgencia.png" />
+                    </div>
+                    <div class="centerdiv">Reservas do Cliente</div>
+                </a>
+            </div>
+
+            <div class="borda centerdiv extrato M" style="display: none;">
+
+                <a href="/PainelControle/Extrato">
+                    <div class="botao centerdiv">
+                        <img src="~/Images/painel_controle/iconExtrato.png" />
+                    </div>
+                    <div class="centerdiv">Extrato</div>
+                </a>
+            </div>
+
+            <div class="borda centerdiv orcamento M A" style="display: none;">
+
+                <a href="/Orcamento/ListarOrcamento">
+                    <div class="botao centerdiv">
+                        <img src="~/Images/painel_controle/iconeOrcamento.png" />
+                    </div>
+                    <div class="centerdiv">Orçamento</div>
+                </a>
+            </div>
+        </div>
+            
+        
+        <iframe width="100%" height="400px" scrolling="no" src="~/Hotsites/itens-painel-agente.htm"></iframe>
+    }
+    else
+    {
+        <div class="divLinhaIcone">
+            @using (Html.BeginForm("Usuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_3" }))
+            {
+                <div class="borda centerdiv meucadastro">
+                    @Html.HiddenFor(p => p.ID_PESSOA)
+                    @Html.HiddenFor(p => p.ID_EMPRESA)
+                    @Html.HiddenFor(p => p.ID_PERFIL)
+                    <a href="javascript:FormUsuario_3.submit();">
+                        <div class="botao centerdiv">
+                            <img src="~/Images/painel_controle/iconeMeuCadastro.png" />
+                        </div>
+                        <div class="centerdiv">Meu Cadastro</div>
+                    </a>
+                </div>
+            }
+            <div class="borda centerdiv minhasreservas">
+                <a href="/Venda">
+                    <div class="botao centerdiv">
+                        <img src="~/Images/painel_controle/iconeReservaAgencia.png" />
+                    </div>
+                    <div class="centerdiv">Minhas Reservas</div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,94 @@
+﻿@model FT.Web.Model.Models.FaleConoscoModel
+
+@{
+    Layout = "~/Views/Shared/_Layout" + @ViewBag.Layout + ".cshtml";
+}
+  @Scripts.Render("~/bundles/jquery-and-validations")
+   
+    <link href="~/Content/Master.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" type="text/css" rel="stylesheet" />
+
+@if (!String.IsNullOrEmpty(ViewBag.MensagemDeErro))
+{
+<text>
+    <script type="text/javascript">
+        alert('@ViewBag.MensagemDeErro');
+    </script>
+</text>
+    ViewBag.MensagemDeErro = String.Empty;
+}
+
+<!-- Conteúdos -->
+<div class="conteudo-interna">
+<h2 class="titulo-3">Institucional</h2>
+<h1 class="titulo-1-@ViewBag.SiteCSS">Fale Conosco</h1>
+<hr class="hr-titulo-pagina"/>
+
+<p class="form-fale-conosco-txt-01">Escolha o assunto e mande-nos sua mensagem, em breve entraremos em contato.</p>    
+
+<div class="fale-conosco">
+@using (Html.BeginForm("Index", "FaleConosco", FormMethod.Post, new { @class = "form-fale-conosco" }))
+{
+    <label>
+        <p>@Html.LabelFor(model => model.Assunto)</p>
+        
+        @Html.DropDownListFor(model => model.Assunto, (List<SelectListItem>)ViewBag.OpcoesParaAssunto)
+        @Html.ValidationMessageFor(model => model.Assunto)
+    </label>
+
+    <label>
+        <p>@Html.LabelFor(model => model.Nome)</p>
+        @Html.EditorFor(model => model.Nome)
+        @Html.ValidationMessageFor(model => model.Nome)
+    </label>
+
+    <label>
+        <p>@Html.LabelFor(model => model.Sexo)</p>
+        
+        @Html.DropDownListFor(model => model.Sexo, (List<SelectListItem>)ViewBag.OpcoesParaSexo)
+        @Html.ValidationMessageFor(model => model.Sexo)
+    </label>
+
+    <label>
+        <p>@Html.LabelFor(model => model.DataDeNascimento)</p>
+        @Html.TextBoxFor(model => model.DataDeNascimento, new { @class = "input-150px date-mask" })
+        <p class="form-fale-conosco-txt-02">11/04/1980</p>
+        @Html.ValidationMessageFor(model => model.DataDeNascimento)
+    </label>
+    <label>
+        <p>@Html.LabelFor(model => model.Email)</p>
+        @Html.EditorFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </label>
+
+    <label>
+        <p>@Html.LabelFor(model => model.Telefone)</p>
+        @Html.TextBoxFor(model => model.Telefone, new { @class = "phone-number-mask" })
+        @Html.ValidationMessageFor(model => model.Telefone)
+    </label>
+
+    <label> 
+        <p>@Html.LabelFor(model => model.Cidade)</p>
+        @Html.EditorFor(model => model.Cidade)
+        @Html.ValidationMessageFor(model => model.Cidade)
+    </label>
+
+    <label>
+        <p>@Html.LabelFor(model => model.Mensagem)</p>
+        @Html.TextAreaFor(model => model.Mensagem)
+        @Html.ValidationMessageFor(model => model.Mensagem)
+    </label>
+
+    <p>
+        <input name="Enviar" type="submit" value="Enviar" class="bot-enviar-01">
+    </p>
+}
+
+</div>
+    <div class="clear"></div>
+</div>
+
+@*@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

@@ -1,0 +1,7 @@
+﻿@model FT.Web.Model.Models.UsuarioModel
+@{
+    ViewBag.Title = "LogOn - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+                        @{Html.RenderAction("LogIn", "Autenticar", Model);}
+

@@ -1,0 +1,549 @@
+﻿/*Padrão Buscadore*/
+
+
+.ui-tabs-anchor {
+    font-size: 11px;
+}
+
+input[type=checkbox],
+input[type=radio ] {
+    border-style: solid;
+    color: #FFF;
+    font-size: 0.8em;
+    margin: 0px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    height: 18px;
+    vertical-align:middle;
+}
+
+/*label {
+    color: #FFF;
+    font-family: Verdana;
+    font-size: 11px;
+}*/
+
+/*input[type=checkbox]:not(old),
+input[type=radio ]:not(old) {
+    width: 21px;
+    margin: 0;
+    padding: 0;
+}
+
+    input[type=checkbox]:not(old) + label,
+    input[type=radio ]:not(old) + label {
+        display: inline-block;
+        margin-left: -28px;
+        padding-left: 28px;
+        background: url('../Images/checks.png') no-repeat 0 0;
+        line-height: 24px;
+        color: #FFF;
+        font-family: Verdana;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    input[type=checkbox]:not(old):checked + label,
+    input[type=radio]:not(old):checked + label {
+        background-position: 0 -25px;
+    }*/
+
+.contentBusca h3 {
+    font-size: 16px;
+    color: #f7dfad;
+    margin-bottom: 15px;
+}
+
+
+.selectPacoteNumerico {
+    background: url(../Images/images_pacote/dropdown_arrow.png) no-repeat right #fff;
+    -webkit-appearance: none;
+    color: #000;
+    width: 45px;
+    padding: 5px;
+    margin-top: 8px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+    height: 37px;
+}
+
+#agrpQuarto0 {
+    width: 232px;
+    padding-top: 0px;
+}
+
+.formAero h3 {
+    font-size: 16px;
+    color: #f7dfad;
+    margin-bottom: 15px;
+}
+
+.contentBuscaHotel h3 {
+    font-size: 16px;
+    color: #f7dfad;
+    margin-bottom: 15px;
+}
+
+
+div.BuscadorSet {
+    float: left;
+}
+
+    div.BuscadorSet div {
+        float: left;
+        padding-right: 40px;
+        width: 172px;
+    }
+
+
+div.BuscadorSetDate {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.SetDate {
+    float: left;
+    padding-right: 25px;
+}
+
+div.BuscadorSetDate div.SetDate input {
+    border-radius: 5px 0 0 5px;
+    border-right: medium none;
+    width: 139px;
+}
+
+div.SetDate .ui-datepicker-trigger {
+    float: right;
+    background: url('../Images/calendario_input.png') no-repeat 0 0;
+    height: 35px;
+    width: 35px;
+    margin-top: 8px;
+    text-decoration: none;
+    border: 0 !important;
+    outline: none;
+    text-indent: -9999px;
+}
+
+.ui-widget button {
+    text-decoration: none;
+    border: 0 !important;
+    outline: none;
+}
+
+
+/*Buscador de Hotel  */
+
+
+div.quantsContent {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.quants {
+    float: left;
+    padding-right: 5px;
+}
+
+    div.quants label {
+        font-size: 10px;
+        color: #FFF;
+    }
+
+    div.quants div {
+        width: 68px;
+        padding-top: 8px;
+    }
+
+        div.quants div input {
+            border-radius: 5px 0 0 5px;
+            border-right: medium none;
+            width: 27px;
+            height: 34px;
+            line-height: 34px;
+            margin: 0;
+            padding: 0;
+            padding-left: 5px;
+            display: block;
+        }
+
+        div.quants div a {
+            float: right;
+            margin: 0;
+            padding: 0;
+            display: block;
+            width: 35px;
+            height: 18px;
+        }
+
+            div.quants div a.plus {
+                background: url('../Images/icon_up.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minus {
+                background: url('../Images/icon_down.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+            div.quants div a.plusHotel {
+                background: url('../Images/icon_up.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minusHotel {
+                background: url('../Images/icon_down.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+div.quartosmm {
+    width: 65px;
+}
+
+    div.quartosmm input {
+        border-radius: 5px 0 0 5px;
+        border-right: medium none;
+        display: block;
+        height: 34px;
+        line-height: 34px;
+        margin: 0;
+        padding: 0 0 0 5px;
+        width: 24px;
+    }
+
+.noitelab {
+    color: #FFF;
+}
+
+div.quartosmm a {
+    float: right;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 35px;
+    height: 18px;
+}
+
+    div.quartosmm a.plusHotel {
+        background: url('../Images/icon_up.png') no-repeat 0 0;
+    }
+
+    div.quartosmm a.minusHotel {
+        background: url('../Images/icon_down.png') no-repeat 0 0;
+        margin-top: -18px;
+    }
+
+
+
+.buscaAvancada {
+    color: #FFF !important;
+    line-height: 20px;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+    vertical-align: central;
+}
+
+    .buscaAvancada img {
+        line-height: 20px;
+        vertical-align: middle;
+    }
+
+#moreoptions label {
+    color: #FFF;
+    line-height: 30px;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.radio3 {
+    margin-top: 35px;
+}
+
+    .radio3 label {
+        line-height: 22px !important;
+    }
+
+.BuscadorSet div.styled-select-form {
+    background: url("../Images/cbl.gif") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 186px;
+    padding: 0;
+    margin: 0;
+}
+
+    .BuscadorSet div.styled-select-form select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 230px;
+    }
+
+
+        .BuscadorSet div.styled-select-form select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+
+/*Select padrão*/
+
+div.styled-select-form {
+    background: url("../Images/cbl.gif") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 186px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 215px;
+    }
+
+
+        div.styled-select-form select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+
+/*Select Medio*/
+
+div.styled-select-form-medium {
+    background: url("../Images/cbl_medium.gif") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 60px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form-medium select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 85px;
+    }
+
+
+        div.styled-select-form-medium select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+/*Select Pequeno*/
+
+
+div.styled-select-form-small {
+    background: url("../Images/cbl_small.gif") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 46px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form-small select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 71px;
+    }
+
+
+        div.styled-select-form-small select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+
+div.bar {
+    width: 100%;
+    height: 1px;
+    background-color: #FFF;
+    display: block;
+    margin-top: 11px;
+}
+
+div.quartos {
+}
+
+
+
+    div.quartos ul {
+        margin-top: 10px;
+    }
+
+        div.quartos ul li {
+            height: 60px;
+        }
+
+            div.quartos ul li div.roomTitle {
+                color: #D4D4D4;
+                float: left;
+                font-family: Verdana;
+                font-size: 12px;
+                font-weight: bold;
+                height: 33px;
+                width: 77px;
+            }
+
+                div.quartos ul li div.roomTitle label {
+                }
+
+            div.quartos ul li div.roomAdults {
+                height: 60px;
+                width: 65px;
+                float: left;
+            }
+
+            div.quartos ul li div.roomChil {
+                height: 60px;
+                width: 70px;
+                float: left;
+            }
+
+            div.quartos ul li div.roomChilAge {
+                display: none;
+                float: left;
+                height: 40px;
+                padding-top: 4px;
+                width: 193px;
+                margin-left: 5px;
+            }
+
+                div.quartos ul li div.roomChilAge p {
+                    color: #fff;
+                    font-family: Verdana;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+                div.quartos ul li div.roomChilAge label {
+                    height: 1px;
+                    width: 100%;
+                }
+
+                div.quartos ul li div.roomChilAge select {
+                    padding-right: 2px;
+                }
+
+
+.formAero label {
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.carleft {
+    float: left;
+    margin-top: 26px;
+    margin-left: 25px;
+}
+
+.content-pacote h3 {
+    font-size: 16px;
+    color: #f7dfad;
+}
+
+.content-pacote-nasc_inter {
+    padding-top: 13px;
+    padding-bottom: 17px;
+}
+
+.content-pacote-data {
+    padding-top: 20px;
+}
+
+.lblPacote {
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.selectPacote optgroup {
+    background-color: #FFF;
+}
+
+.btnPesquisar {
+    cursor: pointer;
+    display: block;
+    background: url("../Images/botao_Pesquisar.png") no-repeat scroll right center transparent;
+    margin-left: 270px;
+    width: 160px;
+    height: 55px;
+}
+
+.ui-datepicker-trigger {
+    border: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+.addTrecho {
+    margin-bottom: 10px;
+    margin-right: 14px;
+    margin-left: 230px;
+    cursor: pointer;
+    color: #FFF !important;
+    line-height: 20px;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+div.quants div a.minusCC {
+background: url('../Images/icon_down.png') no-repeat 0 0;
+margin-top: -18px;
+}

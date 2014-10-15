@@ -1,0 +1,115 @@
+﻿<li id="li-@ViewBag.IndiceTrecho">
+    <br />
+    <div class='roomTitle'>
+
+        <label style="font-size: 16px; font-weight: bold;">Trecho @ViewBag.IndiceTrecho</label>
+        <br />
+        <div style="margin-bottom: -10px;"></div>
+        <label>___________________________________________________________</label>
+        <br />
+
+    </div>
+    <br />
+    <script>
+        $('#DataEmbarque-@ViewBag.IndiceTrecho').datepicker({
+            numberOfMonths: 2,
+            minDate: 0,
+            onSelect: function (dateText, inst) {
+                $('#DataEmbarque-@(ViewBag.IndiceTrecho + 1)').datepicker("option", "minDate", dateText);
+            },
+            beforeShow: function () {
+                setTimeout(function () {
+                    $('.ui-datepicker').css('z-index', 99999999999999);
+                }, 0);
+            }
+        });
+    </script>
+    <div class="BuscadorSet">
+        <div>
+            <label class="buscadorlabel">Origem</label>
+            <div id="divOrigem">
+                @{
+                    if (ViewBag.aeroportoOrigem == null)
+                    {
+                    <input type="text" id="OrigemCmp_@ViewBag.IndiceTrecho" class="watermarkAereo" title="Informe sua origem"/>        
+                    }
+                    else
+                    {
+                    <input type="text" id="OrigemCmp_@ViewBag.IndiceTrecho" class="watermarkAereo" title="Informe sua origem" value="@ViewBag.aeroportoOrigem"/>
+                    }
+                }
+
+            </div>
+        </div>
+        <label class="buscadorlabel">Destino</label>
+        <div id="divDestino">
+            @{
+                if(ViewBag.aeroportoDestino == null)
+                {
+                    <input type="text" id="DestinoCmp_@ViewBag.IndiceTrecho" class="watermarkAereo" title="Informe seu destino" onchange="selectCidade(@ViewBag.IndiceTrecho, this)"/>        
+                }
+                else
+                {
+                    <input type="text" id="DestinoCmp_@ViewBag.IndiceTrecho" class="watermarkAereo" title="Informe seu destino" onchange="selectCidade(@ViewBag.IndiceTrecho, this)" value="@ViewBag.aeroportoDestino"/>
+                }
+            }
+            
+        </div>
+    </div>
+    <div class="BuscadorSetDate">
+        <div class="SetDate">
+            <label class="buscadorlabel">Data de Embarque</label><br />
+            @{
+                if(ViewBag.dataInicial == null)
+                {
+                    <input type="text" id="DataEmbarque-@ViewBag.IndiceTrecho" name="DataEmbarqueCodigoCmp_@ViewBag.IndiceTrecho" class="txtStartDate" />        
+                }
+                else
+                {
+                    <input type="text" id="DataEmbarque-@ViewBag.IndiceTrecho" name="DataEmbarqueCodigoCmp_@ViewBag.IndiceTrecho" class="txtStartDate" value="@ViewBag.dataInicial" />
+                }
+            }
+            
+        </div>
+        <div class="SetDate" style="visibility: hidden; width: 155px;">
+            <label class="buscadorlabel">Data de Retorno</label><br />
+            @{
+                if (ViewBag.dataFinal == null)
+                {
+                    <input type="text" id="DataRetorno-@ViewBag.IndiceTrecho" name="DataRetornoCmp_@ViewBag.IndiceTrecho" class="txtEndDate" />        
+                }
+                else
+                {
+                    <input type="text" id="DataRetorno-@ViewBag.IndiceTrecho" name="DataRetornoCmp_@ViewBag.IndiceTrecho" class="txtEndDate" value="@ViewBag.dataFinal" />
+                }
+            }
+            
+        </div>
+
+    </div>
+    @* <div id="divRemovetrecho" style="display: block">
+        <span class="addTrecho" style="margin-left: 298px;" onclick="removerTrecho('li-@ViewBag.IndiceTrecho')">- Remover trecho</span>
+    </div>*@
+
+    <script>
+        $(function () {
+            documentWatermark();
+            $('.watermarkAereo').watermarkAereo('clearWatermarks');
+            autoComplete(4, "OrigemCmp_@ViewBag.IndiceTrecho");
+            autoCompleteAereoDestino(5, "DestinoCmp_@ViewBag.IndiceTrecho", @ViewBag.IndiceTrecho);
+            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+           
+            
+            $('.watermarkAereo').watermarkAereo();
+
+            $("#hdnOrigemCmp_@ViewBag.IndiceTrecho" + "Codigo").val('@Html.Encode(ViewBag.codigoCidadeOrigem)');
+            $("#hdnDestinoCmp_@ViewBag.IndiceTrecho" + "Codigo").val('@Html.Encode(ViewBag.codigoCidadeDestino)');
+            
+            $("#hdnOrigemCmp_@ViewBag.IndiceTrecho" + "Text").val('@Html.Encode(ViewBag.aeroportoOrigem)');
+            $("#hdnDestinoCmp_@ViewBag.IndiceTrecho" + "Text").val('@Html.Encode(ViewBag.aeroportoDestino)');
+            
+            $("#hdnOrigemCmp_@ViewBag.IndiceTrecho" + "Nome").val('@Html.Encode(ViewBag.aeroportoOrigem)');
+            $("#hdnDestinoCmp_@ViewBag.IndiceTrecho" + "Nome").val('@Html.Encode(ViewBag.aeroportoDestino)');
+        });
+    </script>
+</li>

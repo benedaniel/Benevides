@@ -1,0 +1,183 @@
+﻿@model FT.Web.Model.Models.ReservaCarroModel
+<script src="~/Scripts/jquery/jquery.simplemodal.js"></script>
+<link href="~/Content/Carro.css" rel="stylesheet" />
+@*<script src="~/Scripts/Carro.js"></script>
+<script src="~/Scripts/MontePacote.js"></script>*@
+
+@{
+    FT.Web.Model.Models.CarroLocalModel localSelecionado = new FT.Web.Model.Models.CarroLocalModel();
+
+    if (String.IsNullOrEmpty(Model.NomeLocadoraLojaSelecionada))
+    {
+        localSelecionado = Model.LocaisRetirada.First();
+    }
+    else
+    {
+        localSelecionado = Model.LocaisRetirada.Where(l => l.NomeLocadoraLoja == Model.NomeLocadoraLojaSelecionada && l.ValorTotal == Convert.ToDecimal(Model.ValorLocalRetiradaSelecionado)).First();
+    }
+
+    if (String.IsNullOrEmpty(localSelecionado.SiglaAeroporto))
+    {
+        localSelecionado.SiglaAeroporto = "";
+    }
+
+
+    FT.Web.Model.Models.CarroLocalModel localDevolucaoSelecionado = new FT.Web.Model.Models.CarroLocalModel();
+
+    if (String.IsNullOrEmpty(Model.NomeLocadoraLoDevolucaojaSelecionada))
+    {
+        localDevolucaoSelecionado = Model.LocaisDevolucao.First();
+    }
+    else
+    {
+        localDevolucaoSelecionado = Model.LocaisDevolucao.Where(l => l.NomeLocadoraLoja == Model.NomeLocadoraLoDevolucaojaSelecionada && l.ValorTotal == Convert.ToDecimal(Model.ValorLocalDevolucaoSelecionado)).First();
+    }
+
+    decimal valorTotal = 0;
+
+    if (localSelecionado.ValorTotal > localDevolucaoSelecionado.ValorTotal)
+    {
+        valorTotal = Convert.ToDecimal(localDevolucaoSelecionado.ValorTotal);
+    }
+    else
+    {
+        valorTotal = Convert.ToDecimal(localSelecionado.ValorTotal);
+    }
+
+    string valorTotalExibicao = valorTotal.ToString("n2");
+    string valorInteiro = valorTotalExibicao.Substring(0, valorTotalExibicao.Length - 3);
+    string valorCentavos = valorTotalExibicao.Substring(valorTotalExibicao.Length - 2);
+    
+}
+
+
+@using (Ajax.BeginForm("LoadReservaFinalizada", new AjaxOptions { UpdateTargetId = "divDetalhesVeiculo", HttpMethod = "Post", OnSuccess = null }))
+{
+    <div class="divDetalhesVeiculo">
+        <div class="title-detalhe">Detalhe do Carro</div>
+        <div id="divCaracteristicas" class="regiao-caracteristica">
+            <span id="imageLocadora" class="image-locadora">
+                <img src="@Model.UrlLogoLocadora" title="@Html.DisplayFor(p => p.DescricaoLocadora)"/>
+            </span>
+            <h3 style="color: #f75918; display: block">@Model.ModeloReferencia</h3>
+
+            <div class="detalhe-caracteristica">
+                <br />
+                <p class="cor-descricao-detalhe">
+                    <b>@Html.DisplayFor(p => p.SIPPCode)</b>
+                    <br />
+                    @ViewBag.CaracteCarro
+                </p>
+            </div>
+            @if (Model.CarrosFoto != null && Model.CarrosFoto.Count > 0)
+            {
+                <div class="imagem-carro">
+                    <img src="@Model.CarrosFoto[0].CarroFotoLink" alt="@Model.CarrosFoto[0].CarroFotoTitulo" />
+                </div>
+            }
+            <div class="regiao-detalhe-comprar">
+                Preço total
+            <br>
+
+                <div class="moeda-simbolo carro-detalhe-valor">R$  </div>
+                <div class="valor-principal carro-detalhe-valor" style="padding-left: 10px">@valorInteiro </div>
+                <div class="centavo-principal">,@valorCentavos</div>
+
+                <br />
+                <br />
+                <br />
+
+                @if (ViewBag.IsMontePacote == null)
+                {
+                    <a href="javascript:AdicionarCarrinho(@Model.CodigoTarifa, true)" >
+                        <div class="carro-detalhe-botao-comprar"></div>
+                    </a>
+                    <div>
+                        <img style="height: 25px; margin-left: -27px; cursor: pointer;" src="../Images/adicionar-carrinho.png" onclick="AdicionarCarrinho(@Model.CodigoTarifa, false)"/>
+                    </div>
+                    <br />
+                    <a onclick="VerPrecoParcelas(@Model.CodigoTarifa)" class="btnTesteAzul">Formas de pagamento</a>
+                        
+                    <div class="@Model.CodigoTarifa-Parcelas tbsParcela">
+                        <div>
+                            <img src="~/Images/loading_transparent.gif" />
+                        </div>
+                        <a onclick="FecharPrecoParcelas(@Model.CodigoTarifa,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+                    </div>
+                }
+                else
+                {
+                    <a href="#" class="addMPSucess" onclick="javascript:AdicionarCarroMontePacote(@Model.CodigoTarifa)">Adicionar ao monte seu pacote
+                    </a>
+                    <br />
+                    <a class="newCar" href="javascript:callCar(@Session["IndiceAdicionarCarro"]);">Retornar aos resultados</a>
+                }
+                <br />
+                <br />
+                <br />
+                @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                { 
+                    <a style="cursor: pointer; margin-left: 37px !important;" href="javascript:AdicionarOrcamento(@Html.Raw(Json.Encode(@Model)))" >
+                        <img src="@string.Format("/Images/bot_orcamento.png")" />
+                    </a>
+                }
+            </div>
+        </div>
+
+        <br />
+        <div class="regiao-retirada-devolucao cor-descricao-detalhe">
+            
+            <div class="div-retirada">      
+            <span class="retirada-devolucao">Retirada do veículo</span>
+            <br />
+            Dia @Html.DisplayFor(p => p.DataCheckIn) às @Html.DisplayFor(p => p.HoraCheckInSelecionada), @localSelecionado.NomeCidade@*, @localSelecionado.NomePais - @localSelecionado.NomeLocadoraLoja*@
+            <br />
+            <br />
+
+            @Html.DropDownListFor(p => p.ValorLocalRetiradaSelecionado, Model.LocaisRetiradaCombo, new { @onchange = "alterarLocalRetirada(this.value, this," + @Html.Raw(Json.Encode(@Model)) + ")" })
+
+
+            <br />
+            <br />
+             </div>
+            <div class="div-devolucao">            
+
+                <span class="retirada-devolucao">Devolução do veículo</span>
+                <br />
+                Dia @Html.DisplayFor(p => p.DataCheckOut) às @Html.DisplayFor(p => p.HoraCheckOutSelecionada), @localDevolucaoSelecionado.NomeCidade@*, @localDevolucaoSelecionado.NomePais - @localSelecionado.NomeLocadoraLoja*@
+                <br />
+                <br />
+
+                @Html.DropDownListFor(prop => prop.ValorLocalDevolucaoSelecionado, Model.LocaisDevolucaoCombo, new { @onchange = "alterarLocalDevolucao(this.value, this, " + @Html.Raw(Json.Encode(@Model)) + ")" })
+
+                <br />
+                <br />
+                
+                
+            </div>
+
+        </div>
+        <br />
+        <div class="regiao-detalhes cor-descricao-detalhe">
+            <ul>
+                @foreach (var item in Model.CarroCaracteristicas)
+                {
+                    if (!string.IsNullOrEmpty(item.NomeCaracteristica))
+                    {
+                    <li>
+
+                        <img src="../../images/nav_footer_marcador.png" style="">
+                        <span style="line-height: 30px; vertical-align: text-bottom;">
+                            @item.NomeCaracteristica
+                        </span>
+
+                    </li>
+                    }
+                }
+            </ul>
+
+            <br />
+        </div>
+
+    </div>
+}

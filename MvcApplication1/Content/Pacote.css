@@ -1,0 +1,83 @@
+﻿ .preco {
+            padding-left: 50px;
+            vertical-align: middle;
+        }
+
+
+        .contentResultados {
+            font-size: 26px;
+            font-weight: bold;
+            color: #c01212;
+            padding-left: 50px;
+            vertical-align: middle;
+        }
+
+        #headerResultados {
+            height: 18px;
+            padding: 12px 15px;
+            background: url("http://www.flytourviagens.com.br/static/flyTourViagens/dtx/img/bgHeader.png") no-repeat;
+        }
+
+            #headerResultados h2 {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
+                color: #fff;
+            }
+
+        .chamadaPacote {
+            vertical-align: middle;
+            padding-left: 7px;
+        }
+
+            .chamadaPacote b {
+                margin-top: 15px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                color: #f37736;
+                vertical-align: middle;
+            }
+
+        #chamada h3 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #58595b;
+        }
+
+        #chamada {
+            padding: 15px 30px;
+            font-size: 15px;
+            color: #58595b;
+        }
+
+        #chamadaLeft {
+            width: 500px;
+        }
+
+        #chamadaRight select {
+            padding: 1px;
+            border: 1px solid #BBBBBB;
+        }
+
+        .btSelecionar {
+            width: 120px;
+            height: 34px;
+            border: none;
+            color: white;
+            color: white;
+            background: url("http://www.flytourviagens.com.br/static/flyTourViagens/dtx/img/bts-laranja.png") no-repeat scroll 0 0 transparent;
+        }
+
+            .btSelecionar:hover {
+                width: 120px;
+                height: 34px;
+                border: none;
+                color: white;
+                color: white;
+                background: url("http://www.flytourviagens.com.br/static/flyTourViagens/dtx/img/bts-laranja.png") no-repeat scroll 0 0 transparent;
+            }
+
+            

@@ -1,0 +1,290 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+@{
+    ViewBag.Title = "EditarOrcamento";
+}
+<link href="~/Content/OrcamentoShow.css" rel="stylesheet" />
+<link href="~/Content/datepicker.css" rel="stylesheet" />
+<link href="~/Content/Orcamento.css" rel="stylesheet" />
+<script src="~/Scripts/Orcamento.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".toggle_container").show();
+        $("h3.trigger").click(function () {
+            $(this).toggleClass("active").next().slideToggle("slow");
+            return false; //Prevent the browser jump to the link anchor
+            $("h3.trigger span").css({ "background-position": " 0 -18px !important" });
+        });
+    });
+
+    function ValidaForm() {
+        var retorno = false;
+
+        if ($("#inputname").val() == "") {
+            retorno = false;
+            alert("Prencha o nome do destinatário");
+        } else {
+            retorno = true;
+        }
+
+        if ($("#inputEmail").val() == "") {
+            retorno = false;
+            alert("Prencha o nome do destinatário");
+        } else {
+            retorno = true;
+        }
+
+        if ($("#inputAssunto").val() == "") {
+            retorno = false;
+            alert("Prencha o nome do destinatário");
+        } else {
+            retorno = true;
+        }
+
+        if ($("#inputMensagem").val() == "") {
+            retorno = false;
+            alert("Prencha o nome do destinatário");
+        } else {
+            retorno = true;
+        }
+
+        return retorno;
+    }
+
+    function EnviarOrcamento() {
+        if (ValidaForm()) {
+            $(".loading").show();
+            var args = new Object();
+
+            var acomodacoesSelecionadas = new Array();
+            $('.regime-hotel-check input:checked').each(function () {
+                acomodacoesSelecionadas.push($(this).attr('value'));
+            });
+
+            args = {
+                destino: $("#DestinoOrca").val(),
+                assunto: $("#inputAssunto").val(),
+                codigo: $("#codigoORcamento").text(),
+                mensagem: $("#inputMensagem").val(),
+                acomodacoesSelecionadas: acomodacoesSelecionadas
+            };
+
+            $.ajax({
+                url: '/Orcamento/OrcamentoEmail',
+                type: 'POST',
+                data: JSON.stringify(args),
+                dataType: 'html',
+                contentType: 'application/json',
+                success: function (data) {
+                    SendMail(data); $(".loading").hide();
+                },
+                error: function () {
+                    alert("Erro ao gerar o e-mail do orçamento");
+                    $(".loading").hide();
+                }
+            });
+        }
+    }
+
+    function SendMail(data) {
+        var assunto = $("#inputAssunto").val();
+        var email = $("#inputEmail").val();
+        var nome = $("#inputname").val();
+        var mensagem = $("#inputMensagem").val();
+        var codigo = $("#codigoORcamento").text();
+        var args = new Object();
+        args = {
+            html: data.toString(),
+            mensagem: mensagem,
+            nome: nome,
+            email: email,
+            assunto: assunto,
+            codigo: codigo
+        };
+
+        $.ajax({
+            url: '/Orcamento/noisqueta',
+            type: 'POST',
+            data: JSON.stringify(args),
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function (data) {
+                $(".loading").hide();
+                alert("Orçamento enviado com sucesso.");
+            },
+            error: function () {
+                alert("Erro ao enviar o orçamento.");
+            }
+        });
+    }
+</script>
+
+<div class="content-orcamento">
+    <h2>Editar Orçamentos</h2>
+
+    <div class="orcamento-editar">
+        <div class="orcamento-editar-top">
+            <div class="orcamento-editar-left">
+                <label class="orcamento-editar-left-titulo">@Model.Titulo</label>
+                <label class="orcamento-editar-info">
+                    Valores e disponibilidade sujeitos a alteração sem aviso prévio
+                </label>
+            </div>
+            <div class="orcamento-editar-right">
+                <label>orçamento nº:</label>
+                <strong class="orcamento-numero">
+                    <label name="codigoORcamento" id="codigoORcamento">@Model.CodigoOrcamento</label></strong>
+                <br>
+                <label>nome: @Model.NomeOrcamento</label>
+            </div>
+        </div>
+
+        <input type="hidden" name="hdncodigoORcamento" id="hdncodigoORcamento" value="@Model.CodigoOrcamento"/>
+        <div class="inf-hotel-destino">
+            <span class="title-destino">Destinos:</span>
+            <span class="name-destino">
+                <input type="hidden" value="@Session["Destino"]" id="DestinoOrca" name="DestinoOrca" /><br />
+                <label class="DestinoOrca">@Session["Destino"]</label><br />
+            </span>
+        </div>
+        <div class="clear"></div>
+        <a href="javascript:" onclick="window.print();" style="float: right;">
+            <img src="~/Images/botao_imprimir.gif" />
+        </a>
+        <div class="clear"></div>
+        <div class="orcamentos-itens-content">
+            <br />
+
+            @if (Model.Hotel.Count > 0)
+            { 
+                <h3 class="trigger">
+                    <span>Hotéis</span></h3>
+                <div class="toggle_container">
+                    @{
+                try
+                {
+                    Html.RenderAction("ShowOrcamentoHotel", "Orcamento", Model);
+                }
+                catch (Exception ex)
+                {
+                    FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction ShowOrcamentoHotel");
+                }
+                    }
+                </div>
+            }
+            @if (Model.Aereo.Count > 0)
+            { 
+                <h3 class="trigger">
+                    <span>Passagens aéreas</span></h3>
+                <div class="toggle_container">
+                    @{
+                try
+                {
+                    Html.RenderAction("ShowOrcamentoAereo", "Orcamento", Model);
+                }
+                catch (Exception ex)
+                {
+                    FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction ShowOrcamentoAereo");
+                }
+                    }
+                </div>
+            }
+            @if (Model.Carro.Count > 0)
+            { 
+                <h3 class="trigger">
+                    <span>Locação de carros</span></h3>
+                <div class="toggle_container">
+                    @{
+                try
+                {
+                    Html.RenderAction("ShowOrcamentoCarro", "Orcamento", Model);
+                }
+                catch (Exception ex)
+                {
+                    FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction ShowOrcamentoCarro");
+                }
+                    }
+                </div>
+            }
+
+            @if (Model.Pacote.Count > 0)
+            { 
+                <h3 class="trigger">
+                    <span>Pacotes</span></h3>
+                <div class="toggle_container">
+                    @{
+                try
+                {
+                    Html.RenderAction("ShowOrcamentoPacote", "Orcamento", Model);
+                }
+                catch (Exception ex)
+                {
+                    FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction ShowOrcamentoPacote");
+                }
+                    }
+                </div>
+            }
+
+            @if (Model.Atividade.Count > 0)
+            { 
+                <h3 class="trigger">
+                    <span>Atividades</span></h3>
+                <div class="toggle_container">
+                    @{
+                try
+                {
+                    Html.RenderAction("ShowOrcamentoAtividade", "Orcamento", Model);
+                }
+                catch (Exception ex)
+                {
+                    FT.Web.Core.Util.SiteTracer.Tracer.ArmazenarTracerErro(ex, "RenderAction ShowOrcamentoAtividade");
+                }
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="form-orcamento">
+            <div class="clear"></div>
+            <a href="javascript:" onclick="window.print();" style="float: right;">
+                <img src="~/Images/botao_imprimir.gif" />
+            </a>
+        <div class="clear"></div>
+            <div class="formulario-envio-cotizacao" id="divEnvioCotizacao">
+                <label class="title-form-orcamento">Enviar  Orçamento</label><br />
+                <label class="subtitle-form-orcamento">Preencha o formulário abaixo para enviar o orçamento.</label>
+                <br />
+                <div class="div-campos-envio">
+                    <div class="div-input-name">
+                        <span class="text-envio">Nome:</span>
+                        <input type="text" id="inputname" class="input-nomemail-cotizacao" value="@Model.NomeOrcamento">
+                    </div>
+                    <div class="div-input-email">
+                        <span class="text-envio">Email:</span>
+                        <input type="text" id="inputEmail" class="input-email-cotizacao" value="@Model.EmailDestinatario">
+                    </div>
+
+                    <div class="div-input-assunto">
+                        <span class="text-envio">Assunto:</span>
+                        <input type="text" id="inputAssunto" class="input-assunto-cotizacao" value="@Model.Assunto">
+                    </div>
+
+                    <div class="div-input-mensage">
+                        <span class="text-envio">Mensagem:
+                        </span>
+                        <textarea id="inputMensagem" class="input-mensage-cotizacao" cols="0" rows="0">@Model.Mensagem</textarea>
+                    </div>
+                </div>
+
+                <div class="div-buttons" id="divButtons">
+                    <div class="div-button-enviar">
+                        <a href="javascript:EnviarOrcamento()" class="button-enviar">ENVIAR ORÇAMENTO</a>
+                        <br />
+                        <a class="button-salvar-notsend" href="#">SALVAR E NÃO ENVIAR</a>
+                        <a class="button-closed-notsave" href="#">FECHAR SEM SALVAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

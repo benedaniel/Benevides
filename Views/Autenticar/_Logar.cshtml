@@ -1,0 +1,97 @@
+﻿@model FT.Web.Model.Models.UsuarioModel
+
+<style>
+    .divLogar {
+        padding-left: 20px;
+        padding-top: 15px;
+    }
+
+        .divLogar label {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .divLogar p.usuario input {
+            display: block;
+            height: 18px;
+            width: 151px;
+            line-height: 20px;
+        }
+
+        .divLogar p.senha input {
+            height: 18px;
+            width: 115px;
+            line-height: 20px;
+        }
+
+            .divLogar p.senha input.logar {
+                height: 25px;
+                width: 31px;
+                border: 0 none;
+                margin: 0;
+                padding: 0;
+                background: transparent;
+                overflow: visible;
+                box-shadow: none;
+                background: url(../Images/login_ok.gif ) no-repeat top #EA6209;
+            }
+
+    p.links_Login a {
+        font-size: 10px;
+        color: #666;
+        outline: none;
+        text-decoration: none;
+    }
+
+        p.links_Login a:hover {
+            font-size: 10px;
+            color: #666;
+            text-decoration: underline;
+        }
+
+    p.login_erro label {
+        color: #FF0000;
+        font-size: 9px;
+        line-height: 9px;
+        height: 13px;
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="divLogar">
+
+    @using (Html.BeginForm("Logar", "Autenticar", FormMethod.Post))
+    {
+        <p class="usuario">
+            @Html.LabelFor(p => p.Usuario, new { @autocorrect="off", @autocapitalize="off", @autocomplete="off"})
+            <br />
+            @Html.TextBoxFor(p => p.Usuario)
+        </p>
+        <p class="senha">
+
+            @Html.LabelFor(p => p.Senha)
+            <br />
+            @Html.PasswordFor(p => p.Senha)
+            <input class="logar" type="submit" value="" onclick="javascript: showdivLoad();" />
+        </p>
+    }
+    <p class="login_erro">
+    </p>
+
+    <div class="clear"></div>
+    <p class="links_Login">
+        @Html.ActionLink("Esqueci minha senha", "RecuperarSenha", "Autenticar")
+        <img src="~/Images/icon_log.gif" />
+    </p>
+    @using (Html.BeginForm("Usuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario" }))
+    {
+        @*<p class="links_Login">
+            <a href="javascript:FormUsuario.submit();">Quero me cadastrar</a>
+            <img src="~/Images/icon_log.gif" />
+        </p>*@
+    }
+
+
+</div>
+

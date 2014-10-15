@@ -1,0 +1,459 @@
+﻿@model IList<FT.Web.Model.Models.PacoteVendaModel>
+@{
+    ViewBag.Title = "Detalhe Pacote - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos ";
+}
+
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
+<link href="~/Content/PacoteX.css" rel="stylesheet" />
+
+@using System.Text
+@using System.Web.Helpers
+@{long? CodigoHotelAnterior = 0;}
+@{string Voo = "";}
+@{string auxVoo = "";}
+@{decimal ValorTaxa = 0;}
+
+@if (Model != null && Model.Count > 0)
+{
+    //if (ViewBag.IsFiltro == null)
+    {
+    <script>
+        $(function () {
+            try
+            {
+                var a = $("#slider-range").slider("values", 0);
+            }
+            catch(object){}
+            if(a == null)
+            {
+                $("#slider-range").slider({
+                    range: true,
+                    change: function (event, ui) { postarform(); },
+                    min: 0,
+                    max: @ViewBag.ValorMaximo,
+                    values: [@ViewBag.ValorMinimo, @ViewBag.ValorMaximo],
+                    slide: function (event, ui) {
+                        $("#amount").val("R$" + ui.values[0] + " - R$" + ui.values[1]);
+                    }
+                });
+            }
+            $("#amount").val("R$" + $("#slider-range").slider("values", 0) +
+                " - R$" + $("#slider-range").slider("values", 1));
+            $("#slider-range .ui-slider-handle").unbind('keydown');
+        });
+    </script>
+    }
+    <div id="tabs-1">
+        <div class="pacotes-detalhes-hospedagem">
+            @foreach (FT.Web.Model.Models.PacoteVendaModel item in Model)
+            {
+                int counter = 1;
+                int counterHotelImage = 1;
+                foreach (FT.Web.Model.Models.HotelModel Itens in item.Hotel)
+                {
+                    if (@Itens.CodigoHotel != CodigoHotelAnterior)
+                    {
+                        if (@Itens.CodigoHotel != 0)
+                        {
+                            if (@CodigoHotelAnterior != 0)
+                            {
+
+                            }
+                            { counterHotelImage = 1; }
+                            
+                            
+                <div class="pacotes-detalhes-hospedagem-p">
+                    <div class="pacotes-detalhes-hospedagem-p-l">
+                        <div class="pacotes-detalhes-hospedagem-p-l-img">
+                            @if (Itens.HotelFotos != null && Itens.HotelFotos.Count > 0)
+                            {
+                                <img style="width:135px !important;height:100px !important" src="@Itens.HotelFotos[0].HotelFotoUrl"  >
+                            }
+                        </div>
+                        <a href="#">
+                            <div class="pacotes-detalhes-hospedagem-foto-hotel-ico"></div>
+                            <div class="pacotes-detalhes-hospedagem-foto-hotel">
+                                @if (Itens.HotelFotos != null && Itens.HotelFotos.Count > 0)
+                                {
+                                    <a class="grouped_elements" id="single_image"  href="@Itens.HotelFotos[0].HotelFotoUrl"  rel="@Itens.CodigoHotel">Fotos do Hotel</a>
+                                }
+                                <div style="display: none">
+                                    <div id="data">
+                                        @foreach (FT.Web.Model.Models.HotelFotoModel FotosdoHotel in Itens.HotelFotos)
+                                        {
+                                            if (counterHotelImage != 1)
+                                            { 
+                                            <a  href="@FotosdoHotel.HotelFotoUrl" class="grouped_elements"   id="single_image"  rel="@Itens.CodigoHotel">
+                                                <img alt="@FotosdoHotel.HotelFotoTitulo" src="@FotosdoHotel.HotelFotoUrl" /></a>
+                                            }
+                                            { counterHotelImage = counterHotelImage + 1; }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div style="display: none;" class="pacotes-detalhes-hospedagem-hotel-mapa-ico"></div>
+                            <div style="display: none;" class="pacotes-detalhes-hospedagem-hotel-mapa">Hotel no Mapa</div>
+                        </a>
+                    </div>
+                    <div class="pacotes-detalhes-hospedagem-p-r">
+                        <div class="pacotes-detalhes-hospedagem-texto-1">@Itens.NomeCidade -  @Itens.NomeEstado -  @Itens.NomePais  </div>
+                        <div class="pacotes-detalhes-hospedagem-texto-2">@Itens.NomeHotel</div>
+                        <div>
+                            <img src="@string.Format("/Images/images_pacote/estrela{0}.png", Itens.Estrelas)" />
+                        </div>
+                        <div class="pacotes-detalhes-hospedagem-texto-3">@Itens.DescricaoHotel</div>
+
+                    </div>
+                </div>
+                <div class="clear"></div>  
+                                        { CodigoHotelAnterior = @Itens.CodigoHotel; }
+                        }
+                    }
+                    { counter = counter + 1; }
+                }
+                <div style="box-shadow: rgba(0, 0, 0, 0.498039) 0px 0px 13px;display:none;background-color: rgb(245, 248, 250);border-radius: 10px 10px 10px 10px;border: 1px solid #ee5c29;width:355px !important;" class="@item.CodigoPacote">
+                    <img style="margin: 8px;" width="35px" height="35px" src="/Images/images_pacote/aereo-button.jpg" />
+                    <span style="font-family: Arial, Helvetica, sans-serif; color: #ee5c29; font-weight: bold; margin-top: 17px; font-size: 14px; position: absolute;">DETALHES DO VOO   
+                    </span>
+                    <a onclick="FecharVoo(@item.CodigoPacote)">
+                        <img style="cursor: pointer; float: right; margin: 8px;" width="30px" height="30px" src="/Images/images_pacote/close-button-aereo.jpg" />
+                    </a>
+                    <br />
+                    <br />
+                    @if (item.Aereo.Count > 0)
+                    {
+                        foreach (FT.Web.Model.Models.AereoModel Aereo in item.Aereo)
+                        {
+                        <img style="margin-left: 10px;" src="@Aereo.FotoUrl" width="64"  height="28" /><br />
+                        <br />   
+                        
+                            var descricao = Aereo.DescricaoVoo.Split('-').ToList();
+
+                            var desaux = descricao.FirstOrDefault(p => p.Contains("Classe"));
+
+                            descricao.Remove(desaux);
+                            var sb = new StringBuilder();
+                            foreach (string s in descricao)
+                            {
+                                sb.Append(s);
+                            }
+                            var desc = sb.ToString();
+                                     
+                        <span style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-left: 8px; font-size: 12px;">
+                            @desc
+                        </span>
+                        <br />
+                        <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 8px; font-size: 11px;">Embarque:  @Aereo.DataEmbarque</span>
+                        <br />
+                        <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 8px; font-size: 11px;">Chegada:  @Aereo.DataRetorno</span>
+                        <br />
+                        <br />
+                            Voo = @Aereo.FotoUrl;
+                        }
+                    }
+                </div>
+                    foreach (FT.Web.Model.Models.RegimeModel Regime in item.Regime)
+                    {
+                <!--Para exibição apenas dos serviços de hotel e ocultar serviços de aereo, translado, etc-->
+                        if (Regime.TipoRegime != null)
+                        {
+                            auxVoo = "0";
+                            var check = Convert.ToDateTime(item.Hotel[0].Checkin).Date;
+                            var checkout = Convert.ToDateTime(item.Hotel[0].Checkout).Date;
+                            var noites = (checkout - check).Days;
+                            var noitesC = noites;
+
+                            if (item.Regime.Count() > 1)
+                            {
+                                var checkC = Convert.ToDateTime(item.Hotel[1].Checkin).Date;
+                                var checkoutC = Convert.ToDateTime(item.Hotel[1].Checkout).Date;
+                                noitesC = (checkoutC - checkC).Days;
+                            }
+                            else
+                            {
+                                var checkC = Convert.ToDateTime(item.Regime[0].Checkin).Date;
+                                var checkoutC = Convert.ToDateTime(item.Regime[0].Checkout).Date;
+                                noitesC = (checkoutC - checkC).Days;
+                            }
+                            
+                <div class="pacotes-detalhes-hotel">
+                    <div class="pacotes-detalhes-hotel-1">
+
+                        @if (Regime.NomeHotelConjugado != null)
+                        {
+                            <p class="pacotes-detalhes-hotel-texto"><b>@Regime.NomeHotelConjugado</b></p>
+                            <p class="pacotes-detalhes-hotel-texto">Quarto: @Regime.QuartoConjugado</p>
+                            <p class="pacotes-detalhes-hotel-texto">Noites: @Html.Raw(noites)</p>
+                            <p class="pacotes-detalhes-hotel-texto">Regime: @Regime.TipoRegimeConjugado</p>
+                            <p style="margin-bottom: 33px;" class="pacotes-detalhes-hotel-texto_quarto">
+                                Quartos Disponiveis: 
+                                @if (Regime.QuantidadeAparatamento >= 5)
+                                {
+                                    <span title="mais de 5 apartamentos" style="color: white; background-color: #f05c18; padding: 1px 3px;">+5</span>
+                                }
+                                else
+                                { 
+                                    <span style="color: white; background-color: #f05c18; padding: 1px 3px;">@Regime.QuantidadeAparatamento</span>
+                                }
+                            </p>
+                            <p></p>
+                        }
+                        <p class="pacotes-detalhes-hotel-texto"><b>@Regime.NomeHotel</b></p>
+                        <p class="pacotes-detalhes-hotel-texto">Quarto: @Regime.Quarto</p>
+
+                        <p class="pacotes-detalhes-hotel-texto">Noites: @Html.Raw(noitesC)</p>
+
+                        <p class="pacotes-detalhes-hotel-texto">Regime: @Regime.TipoRegime</p>
+                        <p class="pacotes-detalhes-hotel-texto_quarto">
+                            Quartos Disponiveis: 
+                            @if (Regime.QuantidadeAparatamento >= 5)
+                            {
+                                <span title="mais de 5 apartamentos" style="color: white; background-color: #f05c18; font-size: 13px; padding: 1px 3px;">+5</span> 
+                            }
+                            else
+                            {
+                                <span style="color: white; background-color: #f05c18; font-size: 13px; padding: 1px 3px;">@Regime.QuantidadeAparatamento</span> 
+                            }
+                        </p>
+                        <br />
+                        <p style="color: #F6931F; padding-bottom: 4px;">Você pesquisou:</p>
+                        <br />
+                        @if (item.Apartamento != null && item.Apartamento.Count > 0)
+                        {
+                            int counterAdultos = 0;
+                            int counterCriancas = 0;
+                            int counterAptos = item.Apartamento.Count;
+                            foreach (var adultos in item.Apartamento)
+                            {
+                                counterAdultos += adultos.Passageiros.Count(p => p.IdadePassageiro > 12);
+                                counterCriancas += adultos.Passageiros.Count(p => p.IdadePassageiro < 12);
+                                if (counterCriancas < 0)
+                                {
+                                    counterCriancas = 0;
+                                }
+                            }
+                            
+                            <p class="pacote-detalhes-Apto">
+                                @if (counterAptos > 1)
+                                {
+                                    <label>@counterAptos Apartamentos</label><br />
+                                }
+                                else
+                                {
+                                    <label>@counterAptos Apartamento</label><br />
+                                }
+                            </p>
+                            <p class="pacote-detalhes-Apto">
+                                @if (counterAdultos > 1)
+                                {
+                                    <label>@counterAdultos Adultos</label>                        
+                                }
+                                else
+                                {
+                                    <label>@counterAdultos Adulto</label>  
+                                }
+                                @if (counterCriancas == 1)
+                                {
+                                    <label>e @counterCriancas Criança</label>
+                                }
+                                else if (counterCriancas > 1)
+                                {
+                                    <label>e @counterCriancas Crianças</label>
+                                }
+                            </p>
+                        }
+                    </div>
+                    <div class="pacotes-detalhes-aereo" style="border-right:0">
+                        @if (@Voo != "" && item.Aereo != null && item.Aereo.Count > 0)
+                        {
+                            <div class="pacotes-detalhes-aereo-logo">
+                                <img src="@Voo" />
+                            </div>
+                            <div class="pacotes-detalhes-aereo-voo">
+                                <a style="cursor: pointer;margin-top:20px;display:block;" onclick="VerVoo(@item.CodigoPacote)">
+                                    <p>Voo: @item.Aereo[0].NumeroVoo</p>
+                                    <br />
+                                    <p>Saida: @item.Aereo[0].HorarioIda</p>
+                                    <br />
+                                    <p>
+                                        Detalhes
+                                        <img width="20px" height="20px" style="position: absolute;" src="/Images/images_pacote/lupa.jpg" />
+                                    </p>
+                                </a>
+                                <span style="display: block; text-align: right; width: 20px; font-size: 10px; font-weight: bold; font-family: arial; color: gray; float: left; padding: 0 0 0 5px;">Assentos Disponiveis:</span>
+                                @if (@Regime.QuantidadeAssentos >= 10)
+                                {
+                                    <span title="mais de 10 lugares" style="color: white; background-color: #f05c18; font-size: 13px; font-weight: bold; padding: 4px 3px; float: right; margin: 0 12px 0 0;">+10</span>
+                                }
+                                else
+                                { 
+                                    <span style="color: white; background-color: #f05c18; font-size: 13px; font-weight: bold; padding: 4px 3px; float: right; margin: 0 12px 0 0;">@Regime.QuantidadeAssentos</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="pacotes-detalhes-valor" style="margin-top: 0; border-left:1px solid #DDD">
+                        @if (Regime.QuantidadeParcela > 1)
+                        {
+                            <div class="pacote-detalhes-parcelas">@Regime.QuantidadeParcela x R$</div>
+                            <div class="pacote-detalhes-valor-parcela">
+                                @Regime.ValorParcela
+                                <label style="font-size: 11px;">@Regime.ValorParcelaCentavos</label>
+                                <b></b>
+                            </div>
+                            if (Regime.ValorEntrada > 0)
+                            {
+                            <p class="pacote-detalhes-entrada">
+                                @*+ Taxa @Regime.Taxas<br>*@
+                                + entrada de R$ @Regime.ValorEntradaExibe.ToString("N2")
+                            </p>
+                            }   
+                            <p class="pacote-detalhes-entrada">
+                                @*+ Taxa @Regime.Taxas<br>*@
+                                à vista R$ @Regime.ValorTotalExibe @Regime.ValorTotalExibeCentavos
+                            </p>
+                            if (Regime.Taxas != 0)
+                            {
+                            <p class="pacote-detalhes-entrada">
+                                <label>Taxas: R$ @Regime.Taxas.ToString("n2")</label>
+                            </p>
+                            }
+                            <p class="pacote-detalhes-entrada">
+                                <label>Valor total: R$ @String.Format("{0:0.00}", Regime.ValorTotal.ToString("n2"))</label>
+                            </p>
+                            <a onclick="VerPreco(@item.CodigoPacote,'Preco')" class="btnTesteMa">Preços outras acomodações</a>
+                            <br />
+                            <a onclick="VerPrecoParcelas(@item.CodigoPacote,'Preco')" class="btnTesteAzul">Formas de pagamento</a>
+                        }
+                        else
+                        {
+                           
+                            <div style="margin-bottom: 5px; margin-left: 8px; width: 320px">
+                                <div style="font-size: 9px; color: #616060; font-weight: bold;">
+                                    Valor referência por pessoa em apto:
+                                </div>
+                                @foreach (var PassageiroPacote in item.PassageiroPacote.OrderBy(p => p.DescricaoTipoPax))
+                                {
+                                    if (PassageiroPacote.DescricaoTipoPax == "Individual" || PassageiroPacote.DescricaoTipoPax == "Duplo" || PassageiroPacote.DescricaoTipoPax == "Triplo")
+                                    {
+                                    <div style="float: left; margin-right: 8px; margin-top: 5px; margin-bottom: 0px;">
+                                        <div style="border-right: 1px solid #DDD;">
+                                            @if(PassageiroPacote.DescricaoTipoPax == "Duplo")
+                                            {
+                                            <label style="font-size: 10px; font-weight:bold">@PassageiroPacote.DescricaoTipoPax</label>
+                                            }
+                                            else
+                                            {
+                                            <label style="font-size: 10px; ">@PassageiroPacote.DescricaoTipoPax</label>
+                                            }
+
+                                        </div>
+                                        <div style="font-size: 9px; float: left; margin-left: 0; margin-right: 3px; margin-top: 7px;">R$</div>
+                                        <div style="float: left; font-size: 18px; color: #DF2A00; border-right: 1px solid #DDD; padding-right:5px">
+                                            @((PassageiroPacote.ValorVenda).ToString("n2").Split(',').First())
+                                            <label style="font-size: 9px; margin-left: -3px;">
+                                                ,@((PassageiroPacote.ValorVenda).ToString("n2").Split(',').Last())</label>
+                                            <b></b>
+                                        </div>
+                                    </div>
+                                    }
+                                }
+
+                            </div>
+                            <div id="divcalcular-@item.CodigoPacote" style="color: #7B7B7B; font-size: 11px !important; margin-bottom: 10px; width: 150px; margin-left: 8px; margin-top: 10px; float: left;">
+                                <a onclick="CalcularPrecoPacote(@item.CodigoPacote)" class="btnCalcular" style="margin-left:0px">Calcular Total da Viagem</a>
+                            </div>
+@*
+                            if (Regime.Taxas != 0)
+                            {
+                            <p class="pacote-detalhes-entrada">
+                                <label>Taxas: R$ @Regime.Taxas.ToString("n2")</label>
+                            </p>
+                            }
+                            <p class="pacote-detalhes-entrada">
+                                <label>Valor total: R$ @String.Format("{0:0.00}", Regime.ValorTotal.ToString("n2"))</label>
+                            </p>*@
+                            <a onclick="VerPreco(@item.CodigoPacote,'Preco')" class="btnTesteMa" style="margin-left:8px">Preços outras acomodações</a>
+                            <br />
+                            <a onclick="VerPrecoParcelas(@item.CodigoPacote)" class="btnTesteAzul" style="margin-left:8px">Formas de pagamento</a>
+                        }
+
+                        <div class="@item.CodigoPacote-Preco" style="margin-top: -129px;position: absolute;padding: 10px 20px;box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);border: 1px solid #F37736;border-radius: 8px 8px 8px 8px;background: #F5F8FA;display:none;border-radius: 10px 10px 10px 10px;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbDetalhePreco">
+                                <tbody>
+
+                                    @if (item.PassageiroPacote != null && item.PassageiroPacote.Count > 0)
+                                    {
+                                        ValorTaxa = item.PassageiroPacote[0].ValorTaxa;
+                                    }
+                                    @foreach (var PassageiroPacote in item.PassageiroPacote)
+                                    {
+                                        <tr>
+                                            <td>@PassageiroPacote.DescricaoTipoPax</td>
+                                            <td>R$ @PassageiroPacote.ValorVenda</td>
+                                        </tr>
+                                    }
+                                    @*   @if (ValorTaxa > 0)
+                                    {
+                                        <tr>
+                                            <td style="border: 1px dotted gray; border-right: none; border-left: none; font-weight: bold;">Taxas</td>
+                                            <td style="border-left: 0px solid gray; border-right: none; border-top: 1px dotted gray; border-bottom: 1px dotted gray;">R$ @ValorTaxa</td>
+                                        </tr>
+                                    }*@
+                                </tbody>
+                            </table>
+                            <a onclick="FecharPreco(@item.CodigoPacote,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+                        </div>
+
+                        <div class="@item.CodigoPacote-Parcelas tbsParcela">
+                            <div>
+                                <img src="~/Images/loading_transparent.gif" />
+                            </div>
+                            <a onclick="FecharPrecoParcelas(@item.CodigoPacote,'Preco')"><span class="fecharDetalhePreco">fechar</span></a>
+                        </div>
+                    </div>
+
+                    <input type="hidden" value="@item.CodigoPacote" />
+
+                    @if (@Regime.CodigoStatusVenda == "0")
+                    {
+                        <a class="button_solicitar"  style="margin-top:78px;"  onclick="AdicionarCarrinho(@item.CodigoPacote, true)">Solicitar</a>
+                    }
+                    @if (@Regime.CodigoStatusVenda == "1")
+                    {
+                        <a class="button_comprar" style="margin-top:78px;" onclick="AdicionarCarrinho(@item.CodigoPacote, true)">Comprar</a>
+                    }
+                    @if (@Regime.CodigoStatusVenda == "2")
+                    {
+                        <a class="button_lotado"  style="margin-top:78px;"  onclick="AdicionarCarrinho(@item.CodigoPacote, true)">Lotado</a>
+                    }
+                    <div>
+                        <img style="height: 31px; margin-left: 7px; cursor:pointer" src="/Images/adicionar-carrinho.png" onclick="AdicionarCarrinho(@item.CodigoPacote, false)"/>
+                    </div>
+                    @if (Session["Usuario"] != null)
+                    { 
+                        <br />
+                        <a href="javascript:"  style="float: right; cursor: pointer; margin-right: 12px !important;" onclick="AdicionarOrcamento(@item.CodigoPacote)">
+                            <img src="/Images/bot_orcamento.png" />
+                        </a>
+                    }
+
+                    <div class="clear"></div>
+                </div>
+                        }
+                    }
+            }
+            <hr class="pacote-detalhes-separacao">
+        </div>
+    </div>
+}
+else
+{
+    Html.RenderPartial("NoDataFound", false);
+}

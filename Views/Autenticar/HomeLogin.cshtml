@@ -1,0 +1,86 @@
+﻿@model FT.Web.Model.Models.PessoaModel
+<script src="~/Scripts/MenuPainelControle.js"></script>
+
+@{bool usuarioLogado = (bool)ViewBag.Usuario;}
+@*<p style="font-size: small">
+    @usuario
+    @Html.ActionLink("Sair", "LogOff", "Autenticar")
+</p>*@
+
+
+@if (usuarioLogado)
+{
+    <script>
+        $(document).ready(function () {
+            ControleExibicaoMenu();
+        });
+    </script>
+    
+    using (Html.BeginForm("LogOff", "Autenticar", FormMethod.Post))
+    {
+    <div id="logout" class="logout">
+        <div class="configFull"></div>
+        <input type="submit" class="btnSair" value="" />
+        <input id="hdlogout" type="hidden" value="0" />
+    </div>
+    }
+    <div class="configFullTemplate">
+        <div class="config_seta">
+        </div>
+        <div>
+            <ul>
+                <li class="meucadastro" style="display: none;">
+                    @using (Html.BeginForm("DadosUsuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario_MeusDados" }))
+                    {
+                        @Html.HiddenFor(p => p.ID_PESSOA)
+                        @Html.HiddenFor(p => p.ID_EMPRESA)
+                        @Html.HiddenFor(p => p.ID_PERFIL)
+                        <a href="javascript:FormUsuario_MeusDados.submit();">Gerenciar meus dados</a>
+                    }
+                </li>
+
+                <li><a href="/PainelControle">Painel de Controle</a></li>
+                @if ((Session["Usuario"] as FT.Web.Model.Models.PessoaModel).B2B)
+                {
+                    <li><a href="/PainelControle/Reserva">Ver minhas compras</a></li>
+                }
+                else
+                {
+                    <li><a href="/Venda">Ver minhas compras</a></li>
+                }
+            </ul>
+            @*<img src="~/Images/top_bat.gif" />
+
+            <p>
+                Meu atendimento exclusivo
+                                <img src="~/Images/icon_log.gif" />
+            </p>
+
+            <p class="logout_azul">
+                11 <strong>4502-2580</strong><br />
+                lazer.alphaville@flytour.com.br
+            </p>*@
+        </div>
+    </div>
+    
+    
+    <div class="top_perfil">
+        <label>Bem vindo, @Model.NM_PESSOA</label>
+    </div>
+}
+else
+{
+    <div id="login" class="login">
+        <input id="hdLogin" type="hidden" value="0" />
+    </div>
+    <div class="logincompleto">
+    </div>
+    <div class="clear"></div>
+    <div class="top_perfil">
+        @using (Html.BeginForm("Usuario", "PainelControle", FormMethod.Post, new { @id = "FormUsuario" }))
+        {
+            @*<label><a href="javascript:FormUsuario.submit();">Cadastre-se</a></label>*@
+        }
+    </div>
+}
+

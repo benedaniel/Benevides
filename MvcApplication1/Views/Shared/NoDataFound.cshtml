@@ -1,0 +1,32 @@
+﻿@model Boolean?
+
+<link href="~/Content/NoDataFound.css" rel="stylesheet" />
+<script>
+    function BackClose() {
+        $.modal.close();
+    }
+</script>
+<div class="totalNoDataFound">
+    <div class="imgNoDataFound">
+        <img src="~/Images/ico_resultado_nao_encontrado.png" />
+    </div>
+    <div class="textNoDataFound">
+        <span class="desculpeNoDataFound">Desculpe,</span>
+        <br />
+        <span class="NaoEncontradoNoDataFound">Não Foram encontrados resultados para a sua busca.</span>
+        <br />
+        <span class="PorFavorNoDataFound">Por favor, tente refazer a busca utilizando novas informações.</span>
+        <br />
+        <br />
+        <span class="obrigadoNoDataFound">Obrigado!</span>
+    </div>
+</div>
+
+@if (Model.HasValue && Model.Value)
+{
+    <a class="button_back" href="javascript:" onclick="BackClose();">Voltar para busca</a>
+}
+else
+{
+    <a class="button_back" href="javascript:history.go(-1)">Voltar para busca</a>
+}

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Atividades - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Atividade.js"></script>
+<link href="~/Content/jquery/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery/jquery-ui.js"></script>
+<script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+
+@model FT.Web.Model.Models.AtividadeModel
+
+<h2>ConsultaAtividades</h2>
+
+@using (Html.BeginForm("Consulta", "Atividades", FormMethod.Post))
+{ 
+    <div class="contentBusca">
+
+        @Html.LabelFor(p => p.CodigoAtividade)
+        @Html.TextBox("txtDestino")
+
+        @Html.LabelFor(p => p.dtEmbarque)
+        @Html.TextBox("txtDtEmbarque")
+
+
+        @Html.LabelFor(p => p.dtRetorno)
+        @Html.TextBox("txtDtRetorno")
+
+        @Html.LabelFor(p => p.qtdAdultos)
+        @Html.DropDownList("ddlAdultos", ViewData["adultos"] as SelectList)
+
+        @Html.LabelFor(p => p.qtdCriancas)
+        @Html.DropDownList("ddlCriancas", ViewData["criancas"] as SelectList)
+
+        <input id="btnBuscarAtividades" type="button" value="Buscar Serviços" />
+
+    </div>
+
+}
+<div id="gridContainer" style="display: none;">
+</div>
+<div id="gridCarrinho" style="display: none;">
+</div>

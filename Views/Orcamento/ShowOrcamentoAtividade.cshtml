@@ -1,0 +1,314 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+@foreach (var item in Model.Atividade)
+{
+    <div class="content_atividade">
+        <a class="linkRemover" onclick="removerItemOrcamento('@item.CodigoAtividade', @Model.CodigoOrcamento, 4)">Remover</a>
+        @foreach (var AssViagem in item.AssistenciaViagem)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Assistencia Viagem</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade</td>
+                        </tr>
+                        <tr>
+                            @foreach (var regime in AssViagem.TarifasItem)
+                            {
+                                <td>
+                                    <strong>Data Inicial:</strong> @regime.DataInicial
+                                    <br />
+                                    <strong>Data Final:</strong>  @regime.DataFinal
+                                </td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                    @foreach (var regime in AssViagem.TarifasItem)
+                    {
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : R$ @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                    <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td>Apartamento @(i + 1) : @AssViagem.Apartamento[i].Passageiros.Count Pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+
+        @foreach (var AssViagem in item.Transfer)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Traslado</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade </td>
+                        </tr>
+                        <tr>
+                           
+                                <td>
+                                    <strong>Data:</strong> @item.dtEmbarque
+                                    <br />
+                           
+                                </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                   
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                    <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td> @AssViagem.Apartamento[i].Passageiros.Count pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+        @foreach (var AssViagem in item.Passeio)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Passeio</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade </td>
+                        </tr>
+                        <tr>
+                           
+                                <td>
+                                <strong>Data:</strong> @item.dtEmbarque
+                                </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                    
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                    <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td> @AssViagem.Apartamento[i].Passageiros.Count Pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+        @foreach (var AssViagem in item.Ingresso)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Ingresso</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade </td>
+                        </tr>
+                        <tr>
+                           
+                                <td>
+                                    <strong>Data:</strong> @item.dtEmbarque
+                                    <br />
+                           
+                                </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                   
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                   <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td> @AssViagem.Apartamento[i].Passageiros.Count Pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+        @foreach (var AssViagem in item.PacoteAtividade)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Pacote Atividade</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade </td>
+                        </tr>
+                        <tr>
+                           
+                                <td>
+                                    <strong>Data:</strong> @item.dtEmbarque
+                                    <br />
+
+                                </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                   
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                    <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td>@AssViagem.Apartamento[i].Passageiros.Count Pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+
+        @foreach (var AssViagem in item.Restaurante)
+        {
+            <div class="ativ">
+                <div class="atividade_infos">
+                    <span class="span-titulo-package">Restaurante</span><br />
+
+                    <table>
+                        <tr>
+                            <td>@AssViagem.NomeAtividade </td>
+                        </tr>
+                        <tr>
+                          
+                                <td>
+                                    <strong>Data:</strong> @item.dtEmbarque
+                                    <br />                                    
+                                </td>
+                          
+                        </tr>
+                    </table>
+                </div>
+                <div class="atividade_taxs">
+                   
+                        <table class="atividade_tax">
+                            <tbody>
+                                <tr style="float: left;">
+                                    <td class="title-pax-package-hotel"><strong>Valor da Atividade:</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="price-package"><span>Valor : @AssViagem.ValorTotal.ToString("c2")</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                    <table class="pacote_tax">
+                        <tr style="float: right;">
+                            <td class="title-pax-package-hotel"><strong>Quantidade:</strong></td>
+                        </tr>
+                        @for (int i = 0; i < AssViagem.Apartamento.Count; i++)
+                        {
+                            <tr>
+                                <td>@AssViagem.Apartamento[i].Passageiros.Count Pessoas<br>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="clear"></div>
+}

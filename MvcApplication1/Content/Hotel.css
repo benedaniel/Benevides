@@ -1,0 +1,424 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+
+/* ---------------------------- Hotel Cabeçalho */
+.hotel-cabecalho-1 {
+	width:700px;
+	height:auto;
+	border:solid 1px #CCC;
+	border-radius:10px;
+	-moz-box-radius:10px;
+	-webkit-box-radius:10px;
+     margin-top: 10px;
+}
+
+.imgCarrinho {
+    src: "url(../Images/adicionar-carrinho.png)";
+}
+
+input#amount {
+    
+	border-bottom:solid 1px #CCC;
+}
+.hotel-cabecalho-1-1 {
+	height:50px;
+	background:#DDD;
+	border-bottom:solid 1px #CCC;
+	border-radius:10px 10px 0 0;
+	-moz-box-radius:10px 10px 0 0;
+	-webkit-box-radius:10px 10px 0 0;
+}
+.hotel-cabecalho-1-2 {
+	height:auto;
+	background:#f2f2f2;
+	border-top:solid 1px #FFF;
+	border-radius:0 0 10px 10px;
+	-moz-box-radius:0 0 10px 10px;
+	-webkit-box-radius:0 0 10px 10px;
+	padding:0 0 15px 0;
+}
+.hotel-cabecalho-1-texto-1 { display:block; float:left; height:40px; line-height:43px; padding:5px 0 5px 5px; color:#0b5bb4; text-transform:uppercase; font-size:1em; }
+.hotel-cabecalho-1-texto-2 { font-family:Verdana, Verdana, Helvetica, sans-serif; font-size:0.7em; margin:18px 6px 0 0; color:#666; float:right; }
+.hotel-cabecalho-1-texto-3 { font-size:1.1em; margin:15px 0 0 19px; color:#ee5c28; }
+.hotel-cabecalho-1-texto-4 { font-family:Verdana, Verdana, Helvetica, sans-serif; font-size:0.8em; margin:5px 0 0 20px; color:#777;  }
+.hotel-cabecalho-1-texto-4 strong { font-weight:normal; color:#000; }
+.hotel-cabecalho-1-texto-5 { font-family:Verdana, Verdana, Helvetica, sans-serif; font-size:0.9em; margin:5px 0 0 20px; color:#ee5c28; }
+.hotel-cabecalho-1-texto-6 { font-family:Verdana, Verdana, Helvetica, sans-serif; font-size:0.9em; margin:5px 0 0 20px; color:#ee5c28; }
+.btnAtualizarRegistros {
+
+    color: #FFF;
+    text-decoration: none;
+    display: block;
+    border: solid 1px #ef6c0c;
+    font-size: 12px;
+    background: #ef6c0c;
+    -webkit-border-radius: 5px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px;
+    margin: 5px 0 0 0px;
+    width: 160px;
+
+    /*display: block !important;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("../Images/images_pacote/bot_refazer_busca.png") no-repeat scroll 0 0 #C2ECFF;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-right: 0 solid #BB410A;
+    border-style: solid;
+    border-width: 0;
+    color: #FFFFFF  !important;
+    cursor: pointer;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    height: 34px;*/
+    /*margin: 20px 20px 20px 84px;*/
+    /*padding: 0px 18px !important;*/
+    /*text-align: left;
+    width: 146px;*/
+}
+
+.icone-titulo {
+	width:40px;
+	height:40px;
+	float:left;
+	background:url(../images/icones_titulo.png) 0 -40px;
+	margin:5px 5px 5px 20px;
+}
+.combo-ordenar {
+	height:27px;
+	float:right;
+	margin:16px 10px 0 0;
+	font-family:Verdana, Helvetica, Verdana, sans-serif;
+	font-size:0.7em;
+	border:solid 1px #DDD; 
+}
+
+
+/* ---------------------------- Hotel Resultados */
+.hotel-resultados { width:700px; height:auto; margin:20px 0; border:solid 1px #CCC; border-radius:10px; -moz-box-radius:10px; -webkit-box-radius:10px; overflow:hidden;  background:url(../images/bg_valor_hotel.jpg) top right no-repeat; background-size: 100%}
+.hotel-resultados-left { width:510px; float:left; }
+.hotel-resultados-left-1 { background:url(../images/bg1_matriz.gif) top repeat-x; padding-bottom: 10px; }
+.hotel-resultados-left-1-img { width:128px; height:128px; border:solid 1px #FFF; background:#CCC; margin:20px 20px 0 20px; float:left; }
+
+.hotel-resultados-left-2 {  border-top: 1px solid #CCCCCC;
+    float: left;
+    height: auto;
+    width: 510px;}
+.hotel-resultados-left-2a { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:156px;  height: auto; font-size:0.7em; color:#666; padding:10px 0 0 10px; letter-spacing:-0.05em; }
+.hotel-resultados-left-2b { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:110px; height:auto; font-size:0.7em; text-align:center; color:#666; padding:10px 0 0 0; letter-spacing:-0.05em; }
+.hotel-resultados-left-2c { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:119px; height:auto; font-size:0.7em; text-align:center; color:#666; padding:10px 0 0 0; letter-spacing:-0.05em; }
+.hotel-resultados-left-2d { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:80px; height:auto; border-left:solid 1px #DDD; font-size:0.7em; text-align:center; padding:7px 0 0 0; color:#ee5c28; font-weight:bold; }
+.hotel-resultados-left-2a strong, .hotel-resultados-left-2b strong, .hotel-resultados-left-2c strong { font-weight:normal; color:#000; }
+
+
+
+.hotel-resultados-p-l { width:165px; float:left; }
+.hotel-resultados-p-l-img { width:133px; margin:20px 20px 0 20px;}
+.hotel-resultados-p-l-img img { width:133px; height:auto;  border:solid 1px #DDD;}
+.hotel-resultados-foto-hotel { float:left; width:124px; height:16px; margin:3px 0 0 3px; font-size:0.7em; color:#134486; }
+.hotel-resultados-foto-hotel-ico { float:left; height:16px; width:16px; margin:3px 0 0 20px; background:url(../images/pacotes_detalhes_hospedagem.gif); }
+.hotel-resultados-hotel-mapa { float:left; width:124px; height:16px; margin:3px 0 0 3px; font-size:0.7em; color:#287dcf; }
+.hotel-resultados-hotel-mapa-ico { float:left; height:16px; width:16px; margin:3px 0 0 20px; background:url(../images/pacotes_detalhes_hospedagem.gif) 16px 0; }
+.hotel-resultados-hotel-mapa:hover, .hotel-resultados-foto-hotel:hover { text-decoration:underline; }
+
+
+.hotel-resultados-left-1-descricao { width:318px; height:auto; margin:20px 20px 10px 0; float:right; }
+.hotel-resultados-texto-1 { font-size:0.7em; padding:0 20px 5px 0; color:#666; line-height:0.9em; }
+.hotel-resultados-texto-2 { font-size:0.9em; padding:0 20px 0 0; color:#ee5c29; text-transform:uppercase; font-weight:bold; }
+.hotel-resultados-texto-3 { font-size:0.7em; line-height:1.2em; padding:10px 0 0 0; color:#333; text-align:justify; }
+/*.hotel-resultados-estrelas { width:80px; height:16px; background:url(../images/estrelas.png); }*/
+
+.hotel-resultados-mais a { display:block; margin:15px 0 10px 0; width:130px; font-size:0.7em; font-weight:bold; color:#3c9ce7; border-top:solid 1px #3c9ce7; border-bottom:solid 1px #3c9ce7; padding:3px 0; text-align:center;}
+.hotel-resultados-mais a:hover { color:#005496; border-top:solid 1px #005496; border-bottom:solid 1px #005496; }
+
+.hotel-resultados-right { width:190px; height:auto; float:right; -moz-box-radius:0 10px 10px 0; -webkit-box-radius:0 10px 10px 0; }
+.hotel-resultados-valor { height:110px; }
+.hotel-resultados-moeda { display:block; width:60px; font-size:1.2em; text-align:right; font-family:Verdana, Verdana, sans-serif; color:#0b407f;  float:left; padding:9px 6px 0 0; }
+.hotel-resultados-valor-parcela { display:block; height:40px; width:auto; font-size:1.8em; text-align:left; font-family:Verdana, Verdana, sans-serif; letter-spacing:-1px; color:#df2a00; float:left; }
+.hotel-resultados-valor-parcela b { font-weight:normal; font-size:0.7em; }
+.hotel-resultados-apartirde { display:block; width:148px; font-size:0.7em; text-align:center; font-family:Verdana, Verdana, sans-serif; color:#999; margin:20px; }
+
+.hotel-resultados-comprar { width:120px; height:57px; background:url(../images/hotel_detalhes_comprar.png) no-repeat; margin:auto; }
+.hotel-resultados-comprar:hover { opacity:0.8; }
+
+.hotel-resultados-Lotado { 
+    width:120px; height:57px; background: url("../images/images_pacote/Botoes_01.png") repeat scroll 0 -167px rgba(0, 0, 0, 0); margin:auto;
+}
+.hotel-resultados-Lotado:hover { opacity:0.8; }
+.hotel-resultados-Solicitar { 
+    width:120px; height:57px; background: url("../images/images_pacote/Botoes_01.png") repeat scroll 0 -56px rgba(0, 0, 0, 0); margin:auto;
+}
+.hotel-resultados-Solicitar:hover { opacity:0.8; }
+
+.hotel-resultados-preco-pessoa { cursor:pointer; clear:both; font-size:0.7em; letter-spacing:-1px; text-align:center; color:#666; margin:18px; }
+
+
+/* ---------------------------- Botoes Hoteis Resultados */
+
+.hoteis-botoes { width:700px; height:auto; margin:30px 0 0 0;}
+
+.combo-quantidade-resultados { height:27px; font-family:Verdana, Helvetica, Verdana, sans-serif; font-size:0.7em; border:solid 1px #DDD; float:right; }
+
+.bot-hoteis-lista { width:160px; height:35px; background:url(../images/hoteis_botoes.gif) -160px 0; color:#FFF; float:left; margin:0 20px 0 0; border-radius:8px; -moz-box-radius:8px; -webkit-box-radius:8px; text-align:center; line-height:30px; font-size:0.8em; }
+
+.bot-hoteis-mapa { width:160px; height:35px; background:url(../images/hoteis_botoes.gif) 0 -35px; color:#FFF; float:left; margin:0 20px 0 0; border-radius:8px; -moz-box-radius:8px; -webkit-box-radius:8px; text-align:center; line-height:30px; font-size:0.8em; }
+.bot-hoteis-mapa:hover { opacity:0.8; }
+
+.hoteis-quantidade-resultados { float:right; width:200px; margin:0 10px 0 0; }
+
+.hoteis-quantidade-resultados-texto { display:block; float:right; font-family:Verdana, Helvetica, Verdana, sans-serif; font-size:0.7em; margin:2px 5px 0 0;}
+
+
+
+
+
+/* ---------------------------- Hotel Detalhes */
+
+.hotel-detalhes { width:700px; height:auto; margin:20px 0; border:solid 1px #CCC; border-radius:10px; -moz-box-radius:10px; -webkit-box-radius:10px; overflow:hidden; padding:0 0 40px 0;}
+
+.hotel-detalhes-galeria { width:287px; height:260px; float:left; margin:0 0 0 20px; }
+.hotel-detalhes-galeria-exibir { width:285px; height:auto; background:#CCC; border:solid 1px #DDD; }
+.hotel-detalhes-galeria-min { width:40px; height:auto; background:#CCC; border:solid 1px #DDD; float:left; margin:7px 7px 0 0; }
+.hotel-detalhes-galeria-min-r { width:40px; height:auto; background:#CCC; border:solid 1px #DDD; float:left; margin:7px 0 0 0; }
+
+.hotel-detalhes-right { width:190px; height:auto; float:right; -moz-box-radius:0 10px 10px 0; -webkit-box-radius:0 10px 10px 0; margin:0 60px 0 0;}
+.hotel-detalhes-valor { height:90px; padding:0 4px 0 0; }
+.hotel-detalhes-moeda { display:block; width:60px; font-size:1.2em; text-align:right; font-family:Verdana, Verdana, sans-serif; color:#0b407f;  float:right; padding:9px 6px 0 0; }
+.hotel-detalhes-valor-parcela { display:block; height:40px; width:auto; font-size:2em; text-align:left; font-family:Verdana, Verdana, sans-serif; letter-spacing:-1px; color:#df2a00; float:right; }
+.hotel-detalhes-valor-parcela b { font-weight:normal; font-size:0.7em; }
+.hotel-detalhes-apartirde { display:block; width:100%; font-size:0.7em; text-align:right; font-family:Verdana, Verdana, sans-serif; color:#999; margin:20px 0 10px 0; }
+.hotel-detalhes-preco-pessoa {clear:both; display:block; width:186px; font-size:0.7em; text-align:right; font-family:Verdana, Verdana, sans-serif; color:#999; margin:20px 0; padding:0 4px 0 0; }
+.hotel-detalhes-comprar { width:120px; height:57px; background:url(../images/hotel_detalhes_comprar.png) no-repeat; margin:auto; float:right; margin:0 0 30px 0; }
+.hotel-detalhes-comprar:hover { opacity:0.8; }
+
+.hotel-detalhes-Lotado { width:120px; height:57px; background:url(../images/images_pacote/Botoes_01.png) no-repeat; margin:auto; float:right; margin:0 0 30px 0; }
+.hotel-detalhes-Lotado:hover { opacity:0.8; }
+
+.hotel-detalhes-Solicitar { width:120px; height:57px; background:url(../images/images_pacote/Botoes_01.png) no-repeat; margin:auto; float:right; margin:0 0 30px 0; }
+.hotel-detalhes-Solicitar:hover { opacity:0.8; }
+
+
+.hotel-detalhes-titulo { margin:20px 20px 3px 20px; }
+.hotel-detalhes-titulo-texto { font-size:1.3em; text-transform:uppercase; color:#ee5c29; float:left; }
+.hotel-detalhes-titulo-texto-2 { font-size:0.7em; text-transform:uppercase; color:#666; margin:0 0 20px 20px; }
+.hotel-detalhes-titulo-estrelas { width:135px; height:20px; background:url(../images/estrelas_2.png) no-repeat; float:left; margin:0 0 0 10px; }
+
+.hotel-detalhes-descricao { padding:20px; clear:both; font-size:0.8em; text-align:justify; line-height:1.4em; color:#666; }
+
+.hotel-detalhes-titulo-1 { display:block; font-size:0.9em; font-weight:bold; color:#ee5c29;  border-bottom:solid 1px #ee5c29; margin:40px 20px 5px 20px; }
+.hotel-detalhes-titulo-1 strong { font-size:0.7em; font-weight:bold; color:#993a0f; }
+
+
+.hotel-detalhes-titulo-mapa { width:270px; height:30px;  margin:20px 20px 0 20px; float:left; font-size:0.9em; text-align:center; color:#666; line-height:30px; }
+.hotel-detalhes-titulo-streetview { width:270px; height:30px; margin:20px 20px 0 20px; float:left; font-size:0.9em; text-align:center; color:#666; line-height:30px; }
+.hotel-detalhes-local-mapa { width:270px; height:180px; border:solid 1px #DDD; margin:0 20px 20px 20px; float:left; background:url(../images/hotel_detalhes_mapa.jpg) center no-repeat; }
+.hotel-detalhes-local-streetview { width:270px; height:180px; border:solid 1px #DDD; margin:0 20px 20px 20px; float:left; background:url(../images/hotel_detalhes_streetview.jpg) center no-repeat; }
+
+.hotel-detalhes-servicos { display:block; font-size:0.8em; text-align:justify; line-height:1.4em; color:#666; margin:10px 20px 0 20px; }
+.hotel-detalhes-instalacoes { }
+.hotel-detalhes-instalacoes-lista { width:200px; float:left; margin:10px 0 20px 30px; font-size:0.8em; color:#666; }
+.hotel-detalhes-instalacoes-lista li { list-style-image:url(../images/marcador_lista_02.png); margin: 0 0 0 20px; padding:0 0 0 5px;}
+
+.hotel-detalhes-condicoes-texto{ clear:both; display:block; font-size:0.8em; text-align:justify; line-height:1.4em; color:#666; margin:10px 20px 0 20px; }
+
+.hotel-detalhes-servicos-lista { width:200px;margin: 10px 0 20px 11px; font-size:0.9em; color:#666; }
+.hotel-detalhes-servicos-lista li { list-style-image:url(../images/marcador_lista_02.png); margin: 0 0 0 20px; padding:0 0 0 5px;}
+
+
+
+
+.hotel-detalhes-quartos {
+    border: 1px solid #CCCCCC;
+    height: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    width: 660px;
+}
+
+
+.hotel-detalhes-quartos-img { width:60px; height:40px; background:#DDD; float:left; margin:10px; display:none; }
+.hotel-detalhes-quartos-1 { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:200px; height:auto; font-size:0.7em; color:#666; padding:10px 0 0 21px; letter-spacing:-0.05em; float:left; border-right:solid 1px #DDD; margin:5px 0 0 0; }
+.hotel-detalhes-quartos-2 { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:145px; height:auto; font-size:0.7em; text-align:center; color:#666; padding:10px 0 0 0; letter-spacing:-0.05em; border-right:solid 1px #DDD; margin:5px 0 0 0; }
+.hotel-detalhes-quartos-3 { font-family:Verdana, Helvetica, Verdana, sans-serif; float:left; width:145px; height:auto; font-size:0.7em; text-align:center; color:#666; padding:10px 0 0 0; letter-spacing:-0.05em; border-right:solid 1px #DDD; margin:5px 0 0 0; }
+.hotel-detalhes-quartos-comprar { float:left; width:90px; height:43px; font-size:0.7em; text-align:center; color:#ee5c28; font-weight:bold; background:url(../images/hotel_detalhes_comprar_2.png); margin:11px 0 0 30px;}
+.hotel-detalhes-quartos-comprar:hover { opacity:0.8; }
+
+.hotel-detalhes-quartos-comprar-grid { float:left; width:90px; height:43px; font-size:0.7em; text-align:center; color:#ee5c28; font-weight:bold; background:url(../images/hotel_detalhes_comprar_2.png);  margin: 0 0 0 5px;}
+.hotel-detalhes-quartos-comprar-grid:hover { opacity:0.8; }
+
+
+.hotel-detalhes-quartos-Lotado-grid {
+    background: url("../images/images_pacote/Botoes_02.png") repeat scroll 0 -131px rgba(0, 0, 0, 0);
+    color: #EE5C28;
+    float: left;
+    font-size: 0.7em;
+    font-weight: bold;
+    height: 43px;
+    margin: 0 0 0 5px;
+    text-align: center;
+    width: 90px;
+}
+.hotel-detalhes-quartos-Lotado-grid:hover { opacity:0.8; }
+
+
+.hotel-detalhes-quartos-Solicitar-grid {
+    background: url("../images/images_pacote/Botoes_02.png") repeat scroll 0 -43px rgba(0, 0, 0, 0);
+    color: #EE5C28;
+    float: left;
+    font-size: 0.7em;
+    font-weight: bold;
+    height: 43px;
+    margin: 0 0 0 5px;
+    text-align: center;
+    width: 90px;
+}
+
+.hotel-detalhes-quartos-Solicitar-grid:hover { opacity:0.8; }
+
+
+/*
+ * SimpleModal Basic Modal Dialog
+ */
+
+.hoteisMapa{display:none;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {height:360px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
+#simplemodal-container .simplemodal-data {padding:8px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(../images/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container h3 {color:#84b8d9;}
+
+div.estrela1 {
+    background: url('../../images/estrelas.png') repeat-x scroll 0 2px rgba(0, 0, 0, 0); height: 21px; width: 46px;
+}
+div.estrela2 {
+    background: url('../../images/estrelas.png') repeat-x scroll 0 2px rgba(0, 0, 0, 0); height: 21px; width: 64px;
+}
+div.estrela3 {
+    background: url('../../images/estrelas.png') repeat-x scroll 0 2px rgba(0, 0, 0, 0); height: 21px; width: 78px;
+}
+
+div.estrelafil1 {
+    width: 15px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil2 {
+    width: 33px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil3 {
+    width: 45px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil4 {
+    width: 64px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil5 {
+    width: 80px; height: 16px; background: url(../../images/estrelas.png);
+}
+
+div.estrelafil0 {
+    width: 9px; height: 16px; background: url(../../images/estrelas.png);
+}
+
+div.estrelafil15 {
+    width: 24px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil25 {
+    width: 40px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil35 {
+    width: 56px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil45 {
+    width: 72px; height: 16px; background: url(../../images/estrelas.png);
+}
+div.estrelafil55 {
+    width: 88px; height: 16px; background: url(../../images/estrelas.png);
+}
+
+
+
+
+
+.btnTesteAzul {
+    background-color: #0B407F;
+    border: 1px solid #07264B;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    margin-left: 35px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    width: 106px;
+}
+
+
+    .btnTesteAzul:hover {
+        border: 1px solid #031121;
+        background-color: #072850;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#072850), to(#000000));
+        background-image: -webkit-linear-gradient(top, #072850, #000000);
+        background-image: -moz-linear-gradient(top, #072850, #000000);
+        background-image: -ms-linear-gradient(top, #072850, #000000);
+        background-image: -o-linear-gradient(top, #072850, #000000);
+        background-image: linear-gradient(to bottom, #072850, #000000);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#072850, endColorstr=#000000);
+    }
+
+    
+
+.tbsParcela {
+    margin-top: -129px;
+    position: absolute;
+    padding: 10px 20px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+    border: 1px solid #F37736;
+    border-radius: 8px 8px 8px 8px;
+    background: #F5F8FA;
+    display: none;
+    border-radius: 10px 10px 10px 10px;
+}
+
+
+
+.tbDetalhePreco td {
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.fecharDetalhePreco {
+    text-decoration: underline;
+    color: #f37736;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.fecharDetalhePreco {
+    color: #F37736;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+}

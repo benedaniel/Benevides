@@ -1,0 +1,19 @@
+﻿@model List<FT.Web.Model.Models.RegionalizacaoModel>
+<style>
+ 
+</style>
+<div class="styled-select-regiao">
+    <select name="regionalizacao" class="regionalizacao">
+        @foreach (var item in Model)
+        {
+            if (Session["Regiao"]!= null && Session["Regiao"].ToString() == item.CodigoCidade)
+            {
+            <option selected="selected" value='@item.CodigoCidade'>@item.NomeCidade</option>
+            }
+            else
+            {
+            <option value='@item.CodigoCidade'>@item.NomeCidade</option>
+            }
+        }
+    </select>
+</div>

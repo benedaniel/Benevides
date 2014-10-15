@@ -1,0 +1,125 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+<script src="~/Scripts/Orcamento.js"></script>
+<link href="~/Content/OrcamentoShow.css" rel="stylesheet" />
+
+<div style="" class="control-cotizacao">
+    @Html.Raw(ViewBag.ErroOrca)
+    <label>@ViewBag.ErroOrca</label>
+
+    @if (Model != null)
+    {
+        bool exibirSalvar = false;
+        
+        if (Model.Hotel.Count > 0)
+        {
+            exibirSalvar = true;
+        <div class="itens-cotizados">
+            <label class="labelCotizados">
+                <b><span class="Title-cotizacao-add">Orçamento:</span></b>
+                @if (Model.Hotel.Count == 1)
+                {<span class="mensage-cotizacao">@Model.Hotel.Count Hotel </span> }
+                else
+                {<span class="mensage-cotizacao">@Model.Hotel.Count Hotéis </span> }
+            </label>
+        </div>
+        <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao" style="display: none;">SALVAR</a>
+        }
+
+        if (Model.Aereo.Count > 0)
+        {
+            exibirSalvar = true;
+        <div class="itens-cotizados">
+            <label class="labelCotizados">
+                <b><span class="Title-cotizacao-add">Orçamento:</span></b>
+                @if (Model.Aereo.Count == 1)
+                {<span class="mensage-cotizacao">@Model.Aereo.Count Voo </span> }
+                else
+                {<span class="mensage-cotizacao">@Model.Aereo.Count Voos </span> }
+            </label>
+        </div>
+        <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao" style="display:none;">SALVAR</a>
+        }
+
+        if (Model.Carro.Count > 0)
+        {
+            exibirSalvar = true;
+        <div class="itens-cotizados">
+            <label class="labelCotizados">
+                <b><span class="Title-cotizacao-add">Orçamento:</span></b>
+                @if (Model.Carro.Count == 1)
+                {<span class="mensage-cotizacao">@Model.Carro.Count Carro </span> }
+                else
+                {<span class="mensage-cotizacao">@Model.Carro.Count Carros </span> }
+            </label>
+        </div>
+        <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao" style="display:none;">SALVAR</a>
+        }
+
+        if (Model.Pacote.Count > 0)
+        {
+            exibirSalvar = true;
+        <div class="itens-cotizados">
+            <label class="labelCotizados">
+                <b><span class="Title-cotizacao-add">Orçamento:</span></b>
+                @if (Model.Pacote.Count == 1)
+                {<span class="mensage-cotizacao">@Model.Pacote.Count Pacote </span> }
+                else
+                {<span class="mensage-cotizacao">@Model.Pacote.Count Pacotes </span> }
+            </label>
+        </div>
+        <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao" style="display:none;">SALVAR</a>
+        }
+
+        if (Model.Atividade.Count > 0)
+        {
+            exibirSalvar = true;
+        <div class="itens-cotizados">
+            <label class="labelCotizados">
+                <b><span class="Title-cotizacao-add">Orçamento:</span></b>
+                @if (Model.Atividade.Count == 1)
+                {<span class="mensage-cotizacao">@Model.Atividade.Count Atividade </span> }
+                else
+                {<span class="mensage-cotizacao">@Model.Atividade.Count Atividades </span> }
+            </label>
+        </div>
+        <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao" style="display:none;">SALVAR</a>
+        }
+
+        if (exibirSalvar)
+        {
+            <a onclick="javascript:showMensage();" href="#divsalvar" class="btn-salvar-cotizacao">SALVAR</a>
+        }
+    }
+</div>
+
+<div class="clear"></div>
+
+<div class="div-painel-save" id="divsalvar" style="display: none; padding-top: 20px;">
+
+    <h3>Salvar Orçamento</h3>
+    <p style="font-size: 13px; margin-bottom: 10px; margin-top: 10px;">
+        Crie um novo orçamento preenchendo o campo abaixo:
+    </p>
+
+    <br />
+    <div class="cotizacao-form">
+        <label for="NameCotizacao">Nome</label><br />
+        <input type="text" maxlength="100" id="NameCotizacao" class="campo-texto-cotizacao">
+
+        <a href="javascript:" onclick="salvaOrcamento();" class="cotizacao-button-salvar" id="bntSalvarCotizacao">CRIAR NOVO</a>
+    </div>
+
+    <p style="font-size: 13px; margin-bottom: 10px; margin-top: 10px;">
+        Ou adicione a seleção a um orçamento já existente:
+    </p>
+
+    <br>
+    <div class="cotizacaoes-div-salvas" id="DivSelectCotizacao">
+
+        <select class="dropdown-cotizacao-save" id="SelectCotizacao">
+            @Html.Raw(ViewBag.ListaOrcamentos)
+        </select>
+    </div>
+
+    <a href="javascript:" onclick="atualizarOrcamento();" class="cotizacao-button-update" id="bntUpdate">OK</a>
+</div>

@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+@model List<FT.Web.Model.Models.DestaqueModel>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NoticiasConsolidadora</title>
+    <link href="~/Hotsites/template/css/style.css" rel="stylesheet" />
+    <style>
+        .destaque-box-consolidadora {
+            height: 116px  !important;
+            float:none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Noticia Box -->
+    @foreach (var item in Model)
+    {
+        <div class="destaque-box-consolidadora">
+            <a href="@item.LinkDestaque" target="_top">
+                <div class="destaque-box-item-consolidadora">
+                    <div class="destaque-box-item-img-consolidadora">
+                        <img src="@item.DestaqueFotos.FirstOrDefault().UrlFoto" width="68" height="68" alt="" title="" />
+                    </div>
+                    <p class="destaque-box-item-txt1-consolidadora">@item.NomeDestaque</p>
+                    <p class="destaque-box-item-txt2-consolidadora">@item.DescricaoDestaque</p>
+                </div>
+            </a>
+        </div>
+    }
+</body>
+</html>

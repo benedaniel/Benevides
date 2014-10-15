@@ -1,0 +1,114 @@
+﻿/*MENU PAINEL DE CONTROLE MENU PAINEL DE CONTROLE INICIO INICIO*/
+
+#divMenuPainelControle {
+    float: left;
+    z-index: 999999;
+}
+
+    #divMenuPainelControle ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 220px;
+        height: 40px;
+    }
+
+        #divMenuPainelControle ul li {
+            position: relative;
+        }
+
+    #divMenuPainelControle li ul {
+        background-color: #FFFFFF;
+        border: 1px solid;
+        display: none;
+        height: 235px;
+        margin: 0 auto;
+        position: absolute;
+        top: 39px;
+        width: 221px;
+        z-index: 999999;
+    }
+
+    #divMenuPainelControle li:hover ul {
+        display: block;
+    }
+
+#divMenuPrincipal a {
+    color: white;
+}
+
+.divItenMenu a {
+    color: #024387;
+    font-size: 12px;
+}
+
+#divMenuPrincipal {
+    background-color: #024387;
+    font-size: 15px;
+    margin-top: 10px;
+    padding: 11px;
+    width: 201px;
+    height: 18px;
+}
+
+.divItenMenu {
+    background-color: #FFFFFF;
+    height: 9px;
+    margin: 0 5px;
+    padding: 15px 0;
+    width: 211px;
+}
+
+    .divItenMenu div {
+        height: 25px;
+        margin-top: -12px;
+        padding-left: 18px;
+        padding-top: 7px;
+    }
+
+        .divItenMenu div:hover {
+            background-color: #DDD;
+        }
+
+    .divItenMenu img {
+        margin-bottom: -1px;
+        padding-right: 5px;
+        width: 17px;
+    }
+
+#divMenuPrincipal img {
+    float: right;
+    margin-top: 4px;
+    width: 9px;
+}
+
+
+
+.imgMenuPainel {
+    float: left;
+    margin-top: 10px;
+    margin-right: 3px;
+}
+
+.divTitlePagina {
+    background-color: #024387;
+    color: #FFFFFF;
+    float: left;
+    font-size: x-large;
+    height: 35px;
+    margin-left: 20px;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-top: 5px;
+    width: 677px;
+}
+
+
+.hrItenMenu {
+    border-bottom: 1px solid #D9D9D8;
+    margin-left: 17px;
+    text-align: center;
+    width: 174px;
+}
+
+/*MENU PAINEL DE CONTROLE MENU PAINEL DE CONTROLE FIM FIM FIM*/

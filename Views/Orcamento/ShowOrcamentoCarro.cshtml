@@ -1,0 +1,70 @@
+﻿@model FT.Web.Model.Models.OrcamentoModel
+
+@foreach (var item in Model.Carro)
+{
+    <div class="content_carro">
+        <table class="table-car">
+            <tbody>
+                <tr>
+                    <td class="td-car-date">
+                        <span class="devreti-car">(Retirada @item.DataCheckIn | Devolução @item.DataCheckOut)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table-info-car">
+            <tbody>
+                <tr>
+                    <td class="td-btnremove-car" colspan="4">
+                        <a class="linkRemover" onclick="removerItemOrcamento('@item.CodigoTarifa', @Model.CodigoOrcamento, 5)">Remover</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-image-car">
+                        @if (item.UrlLogoLocadora != null)
+                        {
+                            <img class="image-car-agency" src="@item.UrlLogoLocadora"><br />
+                        }
+                        else
+                        {
+                            <img class="image-car-agency" src="@item.UrlLogoLocadora"><br />
+                        }
+
+                        @if (item.CarrosFoto.Count > 0)
+                        {
+                            <img class="image-package" width="125" height="100" title="imagepackage" src="@item.CarrosFoto.FirstOrDefault().CarroFotoLink">
+                        }
+                        else
+                        {
+                            <img class="image-package" width="125" height="100" title="imagepackage" src="">
+                        }
+
+                    </td>
+                    <td class="td-info-car"><span class="name-car">@item.ModeloReferencia</span><br>
+                        <span class="retirada-car"><strong style="color: #6C6C6C;">Retirada</strong></span><br>
+                        <span class="infomation-car">@item.LocaisRetirada.FirstOrDefault().NomeCidade, 
+                            @item.LocaisRetirada.FirstOrDefault().NomeEstado,
+                            @item.LocaisRetirada.FirstOrDefault().NomePais - 
+                            @item.LocaisRetirada.FirstOrDefault().NomeLocadoraLoja</span><br>
+                        <span class="dateretirada-Dp information-car">@item.DataCheckIn @item.HoraCheckInSelecionada</span><br>
+                        <span class="infoseg-Dp information-car">@item.Plano</span>   </td>
+                    <td class="td-details-car">
+                        <br>
+                        <span class="ida-car"><strong style="color: #6C6C6C;">Devolução</strong></span><br>
+                        <span class="infomation-car">@item.LocaisDevolucao.FirstOrDefault().NomeCidade,
+                             @item.LocaisDevolucao.FirstOrDefault().NomeEstado,
+                             @item.LocaisDevolucao.FirstOrDefault().NomePais -
+                             @item.LocaisDevolucao.FirstOrDefault().NomeLocadoraLoja</span><br>
+                        <span class="datedev-Dp information-car">@item.DataCheckOut @item.HoraCheckOutSelecionada</span><br>
+                        <span class="tipocar-Dp information-car">@item.Categoria</span>   </td>
+                    <td class="td-price-car">
+                        <div class="div-car-price">
+                            <span class="car-title-price">Total:</span>
+                            <span class="car-price">R$ <strong>@item.ValorTotal</strong></span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

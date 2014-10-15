@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+@model List<FT.Web.Model.Models.DestaqueModel>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Noticiasfranchising</title>
+    <link href="~/Hotsites/template/css/style.css" rel="stylesheet" />
+    <style>
+        .destaque-box-franchising {
+            height: 116px  !important;
+            float:none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Noticia Box -->
+    @foreach (var item in Model)
+    {
+        <div class="destaque-box-franchising">
+            <a href="@item.LinkDestaque" target="_top">
+                <div class="destaque-box-item-franchising">
+                    <div class="destaque-box-item-img-franchising">
+                        <img src="@item.DestaqueFotos.FirstOrDefault().UrlFoto" width="68" height="68" alt="" title="" />
+                    </div>
+                    <p class="destaque-box-item-txt1-franchising">@item.NomeDestaque</p>
+                    <p class="destaque-box-item-txt2-franchising">@item.DescricaoDestaque</p>
+                </div>
+            </a>
+        </div>
+    }
+</body>
+</html>

@@ -1,0 +1,444 @@
+﻿.content-right-hotel {
+    float: right;
+    height: auto;
+}
+
+.map-content {
+    height: auto;
+}
+.see-details {
+    color:#00387B !important;
+}
+
+.divcampos-filtros-left {
+    background-color: #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
+    display: inline-block;
+    margin: 2px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    width: 241px;
+}
+
+.inputdestino {
+    width: 215px;
+    border: 1px solid #D6D6D6;
+    border-radius: 5px 5px 5px 5px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    height: 24px;
+    padding: 5px;
+}
+
+.contentBuscaHotel h3 {
+    display: none;
+}
+
+div.checkin {
+    float: none;
+}
+
+
+.filtroHotel label {
+    margin: 0;
+}
+
+.saveSearch {
+    display: none;
+}
+
+.contentBuscaHotel input, styled-select-form input {
+    border: 1px solid #D6D6D6;
+    border-radius: 5px 5px 5px 5px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 5px;
+    font-family: verdana;
+    font-size: 13px;
+}
+
+.barr {
+    display: block;
+}
+
+.contentBuscaHotel select {
+    border: 1px solid #D6D6D6;
+    border-radius: 5px 5px 5px 5px;
+    color: #00387B;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 5px;
+    width: 210px;
+}
+
+
+.content-left p {
+    color: #666666;
+    display: block;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+
+.btnPesquisar {
+    display: none;
+}
+
+.btnRePesquisar {
+    display: block !important;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("../Images/images_pacote/bot_refazer_busca.png") no-repeat scroll 0 0 #C2ECFF;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-right: 0 solid #BB410A;
+    border-style: solid;
+    border-width: 0;
+    color: #FFFFFF  !important;
+    cursor: pointer;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    height: 34px;
+    margin: 20px 20px 20px 84px;
+    padding: 0px 18px !important;
+    text-align: left;
+    width: 146px;
+}
+
+
+
+div.BuscadorSet {
+    float: left;
+}
+
+    div.BuscadorSet div {
+        float: left;
+        padding-right: 40px;
+        width: 172px;
+    }
+
+
+div.BuscadorSetDate {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.SetDate {
+    float: left;
+    padding-right: 25px;
+}
+
+div.BuscadorSetDate div.SetDate input {
+    border-radius: 5px 0 0 5px;
+    border-right: medium none;
+    width: 139px;
+}
+
+div.SetDate .ui-datepicker-trigger {
+    float: right;
+    background: url('../Images/calendario_input-silver.png') no-repeat 0 0;
+    height: 37px;
+    width: 37px;
+    margin-top: 8px;
+}
+
+.noitelab {
+    color: #666666;
+}
+
+
+div.quantsContent {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.quants {
+    float: left;
+    padding-right: 25px;
+}
+
+
+
+
+    div.quants div {
+        width: 87px;
+        padding-top: 8px;
+    }
+
+        div.quants div input {
+            border-radius: 5px 0 0 5px;
+            border-right: medium none;
+            width: 46px;
+            height: 34px;
+            line-height: 34px;
+            margin: 0;
+            padding: 0;
+            padding-left: 5px;
+            display: block;
+        }
+
+        div.quants div a {
+            float: right;
+            margin: 0;
+            padding: 0;
+            display: block;
+            width: 35px;
+            height: 18px;
+        }
+
+            div.quants div a.plus {
+                background: url('../Images/icon_up-silver.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minus {
+                background: url('../Images/icon_down-silver.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+            div.quants div a.plusHotel {
+                background: url('../Images/icon_up-silver.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minusHotel {
+                background: url('../Images/icon_down-silver.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+.buscaAvancada {
+    line-height: 20px;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+    vertical-align: central;
+    color: #666666;
+}
+
+    .buscaAvancada img {
+        line-height: 20px;
+        vertical-align: middle;
+    }
+
+div.checkin .txtStartDate {
+    height: 24px;
+    width: 139px;
+}
+
+div.checkout .txtEndDate {
+    height: 24px;
+    width: 139px;
+}
+
+
+div.quartosmm {
+    width: 65px;
+}
+
+    div.quartosmm input {
+        border-radius: 5px 0 0 5px;
+        border-right: medium none;
+        display: block;
+        height: 34px;
+        line-height: 34px;
+        margin: 0;
+        padding: 0 0 0 5px;
+        width: 24px;
+    }
+
+
+/*Select Medio*/
+
+div.styled-select-form-medium {
+    background: url("../Images/cbl_mediums.jpg") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 60px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form-medium select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 85px;
+    }
+
+
+        div.styled-select-form-medium select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+/*Select padrão*/
+
+div.styled-select-form {
+    background: url("../Images/cbls.jpg") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 186px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 211px;
+    }
+
+
+        div.styled-select-form select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+
+/*Select Pequeno*/
+
+
+div.styled-select-form-small {
+    background: url("../Images/cbl_smalls.jpg") no-repeat scroll right center transparent;
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 46px;
+    padding: 0;
+    margin: 0;
+}
+
+    div.styled-select-form-small select {
+        background: none repeat scroll 0 0 transparent;
+        border: 0 none;
+        border-radius: 0 0 0 0;
+        font-family: Verdana;
+        height: 36px;
+        line-height: 1;
+        outline: medium none;
+        padding: 9px;
+        text-decoration: none;
+        width: 71px;
+    }
+
+
+        div.styled-select-form-small select option {
+            background-color: #FFF;
+            border: 0 none;
+            outline: medium none;
+            text-decoration: none;
+        }
+
+div.quartosmm a {
+    float: right;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 35px;
+    height: 18px;
+}
+
+    div.quartosmm a.plusHotel {
+        background: url('../Images/icon_up-silver.png') no-repeat 0 0;
+    }
+
+    div.quartosmm a.minusHotel {
+        background: url('../Images/icon_down-silver.png') no-repeat 0 0;
+        margin-top: -18px;
+    }
+
+div.quartos ul li div.roomChilAge {
+    display: none;
+    height: 40px;
+    margin-left: 5px;
+    padding-top: 4px;
+}
+
+
+
+div.quartos ul li div.roomTitle {
+    color: #D4D4D4;
+    float: left;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    height: 33px;
+    padding-left: 12px;
+    padding-top: 27px;
+    width: 77px;
+}
+
+    div.quartos ul li div.roomTitle label {
+    }
+
+div.quartos ul li div.roomAdults {
+    height: 60px;
+    width: 65px;
+    float: left;
+}
+
+div.quartos ul li div.roomChil {
+    height: 60px;
+    width: 70px;
+    float: left;
+}
+
+div.quartos ul li div.roomChilAge {
+    display: none;
+    float: left;
+    height: 64px;
+    padding-top: 4px;
+    width: 193px;
+    margin-left: 5px;
+}
+
+    div.quartos ul li div.roomChilAge p {
+        color: #666;
+        font-family: Verdana;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    div.quartos ul li div.roomChilAge label {
+        height: 1px;
+        background-color: #fff;
+        width: 100%;
+    }
+
+    div.quartos ul li div.roomChilAge select {
+        padding-right: 2px;
+    }
+
+
+div.contentBuscaHotel .filtroHotel label {
+    margin:0;
+}
+
+div#moreoptionshotel label {
+    margin-bottom:8px;
+}

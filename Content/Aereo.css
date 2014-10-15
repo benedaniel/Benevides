@@ -1,0 +1,1011 @@
+﻿
+.tituloAereo {
+    font-family: verdana;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.idaeVolta {
+    font-family: verdana;
+    font-size: 10px;
+    color: #5c5c5c;
+}
+
+.valor {
+    font-family: verdana;
+    color: #b81a1b;
+    font-size: 20px;
+}
+
+.addtoCart {
+}
+
+
+.opcoes {
+}
+
+.rs {
+    font-family: verdana;
+    color: #b81a1b;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tudo {
+    width: 700px;
+    margin-top: 15px;
+    border: 1px solid silver;
+    display: table;
+    height: auto;
+}
+
+.grupo {
+    float: left;
+    width: 530px;
+    height: auto;
+    min-height: 230px;
+    display: inline-block;
+}
+
+.buscador-campos {
+    width: 428px;
+    min-height: 380px;
+    background: #f05c18;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 8px;
+    -moz-border-radius: 8px 0 0 0;
+    -webkit-border-radius: 0 8px 8px 8px;
+    padding: 25px;
+    clear: both;
+}
+
+.filtroHotel label {
+    color: #666666;
+    display: block;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+.slider-range .ui-slider-handle .ui-state-default .ui-corner-all .ui-state-focus .ui-state-hover .ui-state-active {
+    width: 1.2em !important;
+}
+
+
+.ui-slider {
+    position: relative;
+    text-align: left;
+}
+
+    .ui-slider .ui-slider-handle {
+        position: absolute;
+        z-index: 2;
+        width: 1.2em;
+        height: 1.2em;
+        cursor: default;
+    }
+
+    .ui-slider .ui-slider-range {
+        position: absolute;
+        z-index: 1;
+        font-size: .7em;
+        display: block;
+        border: 0;
+        background-position: 0 0;
+    }
+
+.ui-slider-horizontal {
+    height: .8em;
+}
+
+    .ui-slider-horizontal .ui-slider-handle {
+        top: -.3em;
+        margin-left: -.6em;
+    }
+
+    .ui-slider-horizontal .ui-slider-range {
+        top: 0;
+        height: 100%;
+    }
+
+    .ui-slider-horizontal .ui-slider-range-min {
+        left: 0;
+    }
+
+    .ui-slider-horizontal .ui-slider-range-max {
+        right: 0;
+    }
+
+.ui-slider-vertical {
+    width: .8em;
+    height: 100px;
+}
+
+    .ui-slider-vertical .ui-slider-handle {
+        left: -.3em;
+        margin-left: 0;
+        margin-bottom: -.6em;
+    }
+
+    .ui-slider-vertical .ui-slider-range {
+        left: 0;
+        width: 100%;
+    }
+
+    .ui-slider-vertical .ui-slider-range-min {
+        bottom: 0;
+    }
+
+    .ui-slider-vertical .ui-slider-range-max {
+        top: 0;
+    }
+
+.ui-slider-horizontal .ui-slider-handle {
+    background: none repeat scroll 0 0 #1052C5 !important;
+    margin-left: -0.6em !important;
+    top: -0.3em;
+}
+
+.preco div#slider-range {
+    background-color: #CCCCCC;
+    border: solid 1px #666;
+    margin-left: 15px;
+    margin-top: 10px;
+    width: 190px;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+    background: none repeat scroll 0 0 #FF5A18;
+    height: 100%;
+    top: 0;
+}
+
+.inputFiltro {
+    border: 1px solid #D6D6D6;
+    border-radius: 5px 5px 5px 5px;
+    color: #999999;
+    font-size: 0.8em;
+    margin: 0;
+    width: 210px;
+}
+
+.listaFiltro {
+    width: 220px;
+}
+
+.lblEstrela {
+    line-height: 30px;
+}
+
+.buscadorlabel {
+    color: #FFF;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.idaevolta {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    background-color: #efefef;
+    width: 520px;
+    min-height: 20px;
+    border-bottom: 1px solid silver;
+    border-right: 1px solid silver;
+    padding-top: 10px;
+}
+
+.conteudo {
+    width: 510px;
+    height: auto;
+    display: inline-block;
+    border-right: 1px solid silver;
+    padding: 10px;
+}
+
+.vooida {
+    background: url('../Images/voo-ida.png') no-repeat 0 0;
+    height: 26px;
+    width: 32px;
+    float: left;
+}
+
+.voovolta {
+    background: url('../Images/voo-volta.png') no-repeat 0 0;
+    height: 26px;
+    width: 32px;
+    float: left;
+}
+
+.saida {
+    font-family: verdana;
+    font-size: 11px;
+}
+
+.chegada {
+    font-family: verdana;
+    font-size: 11px;
+    padding-left: 15px;
+}
+
+.duracao {
+    font-family: verdana;
+    font-size: 11px;
+    padding-left: 15px;
+}
+
+.parada {
+    font-family: verdana;
+    font-size: 11px;
+    padding-left: 20px;
+    text-decoration: underline;
+    color: #6794b3;
+    cursor: pointer;
+}
+
+.parcelamento {
+    padding-left: 20px;
+    padding-top: 16px;
+    font-weight: bold;
+    color: #dc8349;
+    font-family: verdana;
+    font-size: 12px;
+    width: 510px;
+    height: 35px;
+    border-right: 1px solid silver;
+}
+
+.tarifa {
+    border-left: 1px solid #C0C0C0;
+    width: 140px;
+    height: auto;
+    min-height: 210px;
+    padding-left: 20px;
+    padding-top: 20px;
+    display: inline-block;
+}
+
+.logocia {
+    display: inline-block;
+    float: left;
+    width: auto;
+    height: auto;
+    max-width: 105px;
+}
+
+.cia {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.nomecia {
+    font-family: Verdana;
+    font-size: 12px;
+    color: #7b7b7b;
+}
+
+.aereo-cabecalho-1 {
+    margin-top: 10px;
+    width: 700px;
+    height: auto;
+    border: solid 1px #CCC;
+    border-radius: 10px;
+    -moz-box-radius: 10px;
+    -webkit-box-radius: 10px;
+}
+
+.aereo-cabecalho-1-1 {
+    height: 50px;
+    background: #DDD;
+    border-bottom: solid 1px #CCC;
+    border-radius: 10px 10px 0 0;
+    -moz-box-radius: 10px 10px 0 0;
+    -webkit-box-radius: 10px 10px 0 0;
+}
+
+.aereo-cabecalho-1-2 {
+    height: auto;
+    background: #f2f2f2;
+    border-top: solid 1px #FFF;
+    border-radius: 0 0 10px 10px;
+    -moz-box-radius: 0 0 10px 10px;
+    -webkit-box-radius: 0 0 10px 10px;
+    padding: 0 0 15px 0;
+}
+
+.selectAereo {
+    color: #000;
+    width: 210px;
+    padding: 5px;
+    height: 24px;
+    border: solid 1px #d6d6d6;
+    border-top: solid 1px #d6d6d6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #00387b;
+    font-family: Verdana;
+    font-weight: bold;
+}
+
+.aereo-cabecalho-1-texto-1 {
+    display: block;
+    float: left;
+    height: 40px;
+    line-height: 43px;
+    padding: 5px 0 5px 5px;
+    color: #0b5bb4;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.aereo-cabecalho-1-texto-2 {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.7em;
+    margin: 18px 6px 0 0;
+    color: #666;
+    float: right;
+}
+
+.aereo-cabecalho-1-texto-3 {
+    font-size: 1.5em;
+    margin: 15px 0 0 20px;
+    color: #ee5c28;
+}
+
+.aereo-cabecalho-1-texto-4 {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 0.8em;
+    margin: 5px 0 0 20px;
+    color: #777;
+}
+
+    .aereo-cabecalho-1-texto-4 strong {
+        font-weight: normal;
+        color: #000;
+    }
+
+.icone-titulo {
+    width: 40px;
+    height: 40px;
+    float: left;
+    background: url(../images/icones_titulo.png) 40px 0px;
+    margin: 5px 5px 5px 5px;
+}
+
+.combo-ordenar {
+    height: 20px;
+    width: 140px;
+    padding: 1px;
+    color: black;
+    float: right;
+    margin: 16px 10px 0 0;
+    font-family: Arial, Helvetica, Verdana, sans-serif;
+    font-size: 0.7em;
+    border: solid 1px #DDD;
+}
+
+
+
+.buttonAereoRefazer {
+    background: url(../Images/images_pacote/bot_refazer_busca.png) no-repeat;
+    margin: 20px;
+    cursor: pointer;
+    width: 146px;
+    height: 34px;
+    padding: 0px 0px;
+    font-family: Verdana;
+    border: solid 0px #bb410a;
+    border-top: solid 0px #7f2f00;
+    color: white;
+    font-size: 12px;
+    background-color: #c2ecff;
+    font-weight: bold;
+    margin-left: 84px;
+}
+
+.aereo-comprar {
+    float: left;
+    width: 120px;
+    height: 57px;
+    background: url(../Images/images_pacote/Botoes_01.png) no-repeat;
+    margin: 15px 0 0 15px;
+}
+
+    .aereo-comprar:hover {
+        opacity: 0.8;
+    }
+
+div.SetDate .ui-datepicker-trigger {
+    float: right;
+    background: url('../Images/calendario_input-silver.png') no-repeat 0 0;
+    height: 36px;
+    width: 36px;
+    margin-top: 8px;
+}
+
+div.BuscadorSetDate {
+    padding-right: 25px;
+    width: 425px;
+}
+
+div.SetDate {
+    float: left;
+    padding-right: 25px;
+}
+
+div.BuscadorSetDate div.SetDate input {
+    border-radius: 5px 0 0 5px;
+    border-right: medium none;
+    width: 139px;
+}
+
+
+
+div.quantsContent {
+    padding-right: 25px;
+    width: 230px;
+}
+
+.labelbuscador {
+    font-family: Verdana;
+    font-weight: bold;
+    color: #666666;
+    font-size: 10px;
+}
+
+.labelbuscadorHoras {
+    float: right;
+    margin-top: 7px;
+    font-family: Verdana;
+    font-weight: bold;
+    color: rgba(156, 156, 156, 0.68);
+    font-size: 10px;
+}
+
+.labelbuscadorFiltro {
+    font-family: Verdana;
+    font-weight: bold;
+    color: #666666;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+div.quants {
+    padding-right: 25px;
+}
+
+    div.quants label {
+        font-size: 10px;
+        color: #FFF;
+    }
+
+    div.quants div {
+        width: 115px;
+        padding-top: 8px;
+    }
+
+        div.quants div input {
+            border-radius: 5px 0 0 5px;
+            border-right: medium none;
+            width: 74px;
+            height: 34px;
+            line-height: 34px;
+            margin: 0;
+            padding: 0;
+            padding-left: 5px;
+            display: block;
+            font-size: 12px;
+        }
+
+        div.quants div a {
+            float: right;
+            margin: 0;
+            padding: 0;
+            display: block;
+            width: 35px;
+            height: 18px;
+        }
+
+            div.quants div a.plus {
+                background: url('../Images/icon_up-silver.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minus {
+                background: url('../Images/icon_down-silver.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+            div.quants div a.plusHotel {
+                background: url('../Images/icon_up.png') no-repeat 0 0;
+            }
+
+            div.quants div a.minusHotel {
+                background: url('../Images/icon_down.png') no-repeat 0 0;
+                margin-top: -18px;
+            }
+
+
+#simplemodal-overlay {
+    background-color: #000000;
+}
+
+#aeroporto label {
+}
+
+
+
+#simplemodal-container a.modalCloseImg {
+    background: url("../images/x.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline;
+    height: 29px;
+    position: absolute;
+    right: -16px;
+    top: -15px;
+    width: 25px;
+    z-index: 3200;
+}
+
+/**/
+
+.the-matrix-all-other-cols {
+    width: 700px;
+}
+
+.the-matrix ul {
+    float: left;
+    list-style: none outside none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 140px;
+}
+
+    .the-matrix ul li {
+        height: 37px;
+        padding-top: 20px;
+        text-align: center;
+        border: solid 1px #42699C;
+    }
+
+        .the-matrix ul li a {
+            color: #CE1010;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+            .the-matrix ul li a:hover {
+                text-decoration: underline;
+            }
+
+        .the-matrix ul li.the-matrix-first-row {
+            height: 48px;
+            overflow: hidden;
+            padding-top: 13px;
+        }
+
+
+
+.the-matrix-all-other-cols ul:first-child li:first-child {
+    background: url("/Imagens/icon-melhores-precos.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+.the-matrix-first-col {
+    color: #42699C;
+    font-weight: bold;
+    background-color: #E7EFF7;
+    margin-bottom: 10px;
+}
+
+.the-matrix .matrix-corner-TL, .the-matrix .matrix-corner-TR, .the-matrix .matrix-corner-BL, .the-matrix .matrix-corner-BR {
+    background: url("../img/corners-matrix-table.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 10px;
+    position: absolute;
+    width: 10px;
+}
+
+.the-matrix .matrix-corner-TL {
+    background-position: left top;
+    left: 10px;
+    top: 25px;
+}
+
+.the-matrix .matrix-corner-TR {
+    background-position: right top;
+    right: 10px;
+    top: 25px;
+}
+
+.the-matrix .matrix-corner-BL {
+    background-position: left bottom;
+    bottom: 15px;
+    left: 10px;
+}
+
+.the-matrix .matrix-corner-BR {
+    background-position: right bottom;
+    bottom: 15px;
+    right: 10px;
+}
+
+.the-matrix h2 {
+    border-bottom: 1px solid #DFE1E7;
+    color: #333333;
+    font-size: 17px;
+    letter-spacing: -0.05em;
+    margin: 15px 0 5px;
+    padding-bottom: 5px;
+}
+
+.the-pagination {
+    clear: both;
+    display: block;
+    padding: 10px;
+}
+
+    .the-pagination ul {
+        clear: both;
+        display: table;
+        list-style: none outside none;
+        width: 100%;
+    }
+
+        .the-pagination ul li {
+            display: table-cell;
+            text-align: center;
+        }
+
+            .the-pagination ul li.pagination-previous {
+                text-align: left;
+            }
+
+            .the-pagination ul li.pagination-next {
+                text-align: right;
+            }
+
+            .the-pagination ul li a {
+                background: url("../img/bgPaginacao.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+                border: 1px solid #B7B7B7;
+                border-radius: 4px 4px 4px 4px;
+                color: #58595B;
+                cursor: pointer;
+                display: inline-block;
+                margin-right: 6px;
+                padding: 6px 10px;
+                text-decoration: none;
+            }
+
+                .the-pagination ul li a:hover, .the-pagination ul li span.pagination-selected a {
+                    background-position: 0 -41px;
+                    color: #F37736;
+                }
+
+            .the-pagination ul li span {
+                display: inline;
+                margin: 0 2px;
+            }
+
+    .the-pagination .pagination-label {
+        clear: both;
+        color: #999999;
+        display: block;
+        font-size: 11px;
+        margin-top: 10px !important;
+        text-align: center;
+    }
+
+#DivRadio1 input[type=checkbox],
+#DivRadio1 input[type=radio ] {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    box-shadow: none;
+    color: #FFF;
+    font-size: 0.8em;
+    margin: 0px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    height: 10px;
+    opacity: 1;
+}
+
+    #DivRadio1 input[type=checkbox]:not(old),
+    #DivRadio1 input[type=radio ]:not(old) {
+        width: 21px;
+        height: 18px;
+        margin: 0;
+        padding: 0;
+    }
+
+        #DivRadio1 input[type=checkbox]:not(old) + label,
+        #DivRadio1 input[type=radio ]:not(old) + label {
+            vertical-align: text-bottom;
+            display: inline-block;
+            margin-left: -28px;
+            padding-left: 28px;
+            /*background: url('../Images/checks.png') no-repeat 0 0;*/
+            line-height: 24px;
+            font-family: Verdana;
+            font-weight: bold;
+            font-size: 12px;
+            vertical-align: text-bottom;
+        }
+
+        #DivRadio1 input[type=checkbox]:not(old):checked + label,
+        #DivRadio1 input[type=radio]:not(old):checked + label {
+            background-position: 0 -25px;
+            vertical-align: text-bottom;
+        }
+
+#DivRadio1 {
+    color: #666666;
+}
+
+
+#DivRadio2 input[type=checkbox],
+#DivRadio2 input[type=radio ] {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #7F2F00 #BB410A #BB410A;
+    border-image: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    box-shadow: none;
+    color: #FFF;
+    font-size: 0.8em;
+    margin: 0px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    height: 10px;
+    opacity: 1;
+}
+
+    #DivRadio2 input[type=checkbox]:not(old),
+    #DivRadio2 input[type=radio ]:not(old) {
+        width: 21px;
+        margin: 0;
+        padding: 0;
+        height: 15px;
+        display: inline-block;
+    }
+
+        #DivRadio2 input[type=checkbox]:not(old) + label,
+        #DivRadio2 input[type=radio ]:not(old) + label {
+            display: inline-block;
+            /*margin-left: -28px;
+            padding-left: 28px;*/
+            /*background: url('../Images/checks.png') no-repeat 0 0;*/
+            line-height: 24px;
+            font-family: Verdana;
+            font-weight: bold;
+            font-size: 12px;
+            margin-left: -10px;
+        }
+
+        #DivRadio2 input[type=checkbox]:not(old):checked + label,
+        #DivRadio2 input[type=radio]:not(old):checked + label {
+            background-position: 0 -25px;
+            vertical-align: text-bottom;
+            margin-left: -10px !important;
+        }
+
+#DivRadio2 {
+    color: #666666;
+}
+
+.radioAereo {
+    width: 30px !important;
+    height: 16px !important;
+    padding: 3px 6px !important;
+    margin: 8px 0 !important;
+    border: solid 1px #bb410a !important;
+    border-top: solid 1px #7f2f00 !important;
+    border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    box-shadow: none !important;
+    color: #999 !important;
+    font-size: 0.8em !important;
+}
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+    border-top-left-radius: 4px;
+}
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-right,
+.ui-corner-tr {
+    border-top-right-radius: 4px;
+}
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl {
+    border-bottom-left-radius: 4px;
+}
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-bottom-right-radius: 4px;
+}
+
+.ui-widget-content {
+    border: 1px solid #aaaaaa;
+    background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+    color: #222222;
+}
+
+.ui-widget {
+    font-family: Verdana;
+    font-size: 12px;
+}
+
+
+
+.ui-tooltip {
+    padding: 8px;
+    position: absolute;
+    z-index: 9999;
+    max-width: 300px;
+    -webkit-box-shadow: 0 0 5px #aaa;
+    box-shadow: 0 0 5px #aaa;
+}
+
+/*
+ * SimpleModal Basic Modal Dialog
+ */
+
+/* Overlay */
+#simplemodal-overlay {
+    background-color: #000;
+}
+
+/* Container */
+#simplemodal-container {
+    height: auto;
+    width: 717px;
+    width: 717px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 12px;
+    padding-bottom: 30px;
+}
+
+    #simplemodal-container .simplemodal-data {
+        padding: 8px;
+    }
+
+    #simplemodal-container code {
+        background: #141414;
+        border-left: 3px solid #65B43D;
+        color: #bbb;
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+        padding: 4px 6px 6px;
+    }
+
+    #simplemodal-container a {
+        color: #ddd;
+    }
+
+        #simplemodal-container a.modalCloseImg {
+            background: url(../images/x.png) no-repeat;
+            width: 25px;
+            height: 29px;
+            display: inline;
+            z-index: 3200;
+            position: absolute;
+            top: -15px;
+            right: -16px;
+            cursor: pointer;
+        }
+
+    #simplemodal-container h3 {
+        color: #84b8d9;
+    }
+
+
+#ui-datepicker-div {
+    width: 40em !important;
+}
+
+
+
+
+
+.btnTesteAzul {
+    background-color: #0B407F;
+    border: 1px solid #07264B;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial,helvetica,sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    margin-left: 19px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+    width: 106px;
+}
+
+    .btnTesteAzul:hover {
+        border: 1px solid #031121;
+        background-color: #072850;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#072850), to(#000000));
+        background-image: -webkit-linear-gradient(top, #072850, #000000);
+        background-image: -moz-linear-gradient(top, #072850, #000000);
+        background-image: -ms-linear-gradient(top, #072850, #000000);
+        background-image: -o-linear-gradient(top, #072850, #000000);
+        background-image: linear-gradient(to bottom, #072850, #000000);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#072850, endColorstr=#000000);
+    }
+
+
+.tbsParcela {
+    background: none repeat scroll 0 0 #F5F8FA;
+    border: 1px solid #F37736;
+    border-radius: 10px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+    display: none;
+    margin-top: -112px;
+    padding: 10px 11px;
+    position: absolute;
+}
+
+.tbDetalhePreco td {
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.fecharDetalhePreco {
+    text-decoration: underline;
+    color: #f37736;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.fecharDetalhePreco {
+    color: #F37736;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.roomTitle {
+    font-size: 12px;
+}

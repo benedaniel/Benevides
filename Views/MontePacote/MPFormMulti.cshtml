@@ -1,0 +1,198 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+
+<script src="~/Scripts/MultiMP.js"></script>
+<script src="~/Scripts/MontePacote.js"></script>
+<style>
+    .labelMontePacote {
+        font-size: 12px !important;
+        font-weight: bold;
+    }
+</style>
+
+<div class="buscadorMP contentBusca">
+    <h3 class="titleinside">Monte seu pacote</h3>
+    <div id="DivRadioMP">
+        <input type="radio" id="MPIdaevolta" name="MP" value="Single" checked="checked" />
+        <label for="MPIdaevolta">Ida e volta</label>
+        <input type="radio" id="MPMulti" name="MP" value="Multi" />
+        <label for="MPMulti">Multi Trecho</label>
+    </div>
+    <div class="clear"></div>
+    <div class="MPSingle">
+        @{ 
+            System.Diagnostics.Stopwatch swViewsFormMP = new System.Diagnostics.Stopwatch();
+            swViewsFormMP.Start();
+
+            using (Html.BeginForm("AdicionarDestino", "MontePacote", FormMethod.Post, new { id = "formMontePacote", name = "formMontePacote" }))
+            {
+            <div class="SimpleInsideOrigem">
+                <br />
+                <label class="labelMontePacote insideOrigemTex">Origem</label>
+                <input type="text" id="Origem" name="Origem" class="inputdestinoMP watermark" title="Informe sua origem" />
+                <label id="lblErroOrigem" class="field-validation-error" style="display: none;"></label>
+            </div>
+            <div class="SimpleInsideDestino">
+                <label class="labelMontePacote insideDestinoTex">Destino</label><br />
+                <input type="text" id="Destino" name="Destino" class="inputdestinoMP watermark" title="Informe seu destino" />
+                <label id="lblErroDestino" class="field-validation-error" style="display: none;"></label>
+            </div>
+            <div class="clear"></div>    
+            <div class="BuscadorSetDate">
+                <div class="SetDate">
+                    <label class="labelMontePacote">Data de saída</label><br />
+                    <input type="text" class="txtStartDate" id="Saida" name="Saida" />
+                    <label id="lblErroDataSaida" class="field-validation-error" style="display: none;"></label>
+                </div>
+            </div>
+            <div class="clear" style="display: none;"></div>
+            <div class="BuscadorSetDate">
+                <div class="SetDate">
+                    <label class="labelMontePacote">Data de retorno</label><br />
+                    <input type="text" class="txtEndDate" id="Retorno" name="Retorno" style="width:139px;" />
+                    <label id="lblErroDataRetorno" class="field-validation-error" style="display: none;"></label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="quants">
+                <label class="labelMontePacote">Noites</label><br class="saveSearch" />
+                <div>
+                    <a href="javascript:" id="plusNightsMonte" class="plusHotel"></a>
+                    <input id="txtNoitesMonte" class="adultomp" type="text" value="0" onkeypress="return isNumberKey(event)" maxlength="2" onkeyup="changeNightsKeyMP(this.value);" />
+                    <a href="javascript:" id="minusNightsMonte" class="minusHotel"></a>
+                    <input type="hidden" id="hdnNoites" name="hdnNoites" value="@Request["hdnNoitesMonte"]" />
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="bar"></div>
+            <div class="clear"></div>
+            <p class="BuscadorSet">
+
+                <label class="buscadorlabel">Quantidade de quartos</label>
+                <input type="button" id="plusRoomsMonte" class="buttonPacote" />
+                <input type="button" id="minusRoomsMonte" class="buttonPacoteRemover" />
+            </p>
+            <div class="clear"></div>
+            <div class="quartos">
+                <ul class="listaQuartosMP">
+                    @{Html.RenderPartial("QuartosMP");}
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div class="bar"></div>
+            <div class="clear"></div>
+            <br class="saveSearch" />
+            <input id="origemMP" name="origemMP" type="hidden" />
+            <div>
+                <input type="submit" value="" class="btnPesquisar" onclick="return SendToServerMP()" />
+            </div>
+            }
+            swViewsFormMP.Stop();
+            
+        }
+    </div>
+    <div class="MPmultiDiv" style="display: none;">
+        @{ 
+            System.Diagnostics.Stopwatch swViewsFormMPMulti = new System.Diagnostics.Stopwatch();
+            swViewsFormMPMulti.Start();
+            using (Html.BeginForm("AdicionarDestinoMP", "MontePacote", FormMethod.Post, new { id = "formMontePacoteMulti", name = "formMontePacote" }))
+            {
+
+            <div id="DivtituloMP" class='roomTitle' style="display: block">
+                <br />
+                <label style="font-size: 16px; font-weight: bold;">Destino 1</label>
+                <br />
+                <div style="margin-bottom: -10px;">
+                </div>
+                <label>___________________________________________________________</label>
+                <br />
+                <br />
+            </div>
+            <div style="float: left;">
+                <label class="labelMontePacote">Origem</label><br />
+                <input type="text" id="OrigemCmpMP_1" name="Origem" class="inputdestinoMPMP watermark OrigenMulti" title="Informe sua origem" />
+                <label id="lblErroOrigemMP" class="field-validation-error" style="display: none;"></label>
+            </div>
+            <div style="float: left; margin-left: 9px;">
+                <label class="labelMontePacote">Destino</label><br />
+                <input type="text" id="DestinoCmpMP_1" name="Destino" class="inputdestinoMPMP watermark DestinoMulti" title="Informe seu destino" />
+                <label id="lblErroDestinoMP" class="field-validation-error" style="display: none;"></label>
+            </div>
+           
+            <div class="clear"></div>
+            <div class="BuscadorSetDate">
+                <div class="SetDate">
+                    <label class="labelMontePacote">Data de saída</label><br />
+                    <input type="text" class="calendar txtStartDate SaidaMulti" name="Saida" />
+                    <label id="lblErroDataSaidaMP" class="field-validation-error" style="display: none;"></label>
+                </div>
+            </div>
+
+            <div class="quants">
+                <label class="labelMontePacote">Noites</label><br class="saveSearch" />
+                <div>
+                    <a href="javascript:" class="plusHotel plusMPMulti"></a>
+                    <input class="noites" type="text" value="1" onkeypress="return isNumberKey(event)" onkeyup="changeNightsKey(this.value);" maxlength="2" />
+                    <a href="javascript:" class="minusHotel minusMPMulti"></a>
+                    <input type="hidden" id="hdnNoitesMP" name="hdnNoites" value="@Request["hdnNoitesMonteMP"]" />
+                </div>
+            </div>
+            <div class="clear" style="display: none;"></div>
+
+            <div class="clear"></div>
+            <div class="bar"></div>
+            <div class="clear"></div>
+            <ul id="trechosAdicionaisMP">
+            </ul>
+            <div class="clear"></div>
+            <div class="IndexINde"></div>
+            <div id="divAddtrechoMP" style="display: block; margin-bottom: 10px;">
+                <p class="BuscadorSet">
+                    @Html.Label("Acrescentar destino", new { @class = "buscadorlabel" })
+                    <input type="button" id="plusRoomsMP" onclick="adicionarTrechoMP()" class="buttonPacote" style="margin-left:40px;" />
+                    <input type="button" id="minusRoomsMP" onclick="removerTrechoMP()" class="buttonPacoteRemover" />
+                </p>
+            </div>
+
+            <div class="clear"></div>
+            <div class="bar"></div>
+            <div class="clear"></div>
+            
+            <p class="BuscadorSet">
+                <label class="buscadorlabel">Quantidade de quartos</label>
+                <input type="button" id="plusRoomsMonteMulti" class="buttonPacote" />
+                <input type="button" id="minusRoomsMonteMulti" class="buttonPacoteRemover" />
+            </p>            
+            <div class="clear"></div>
+            <div class="quartos">
+                <ul class="listaQuartosMPMulti">
+                    @{Html.RenderPartial("QuartosMPMulti");}
+                </ul>
+            </div>
+        
+            <div class="clear"></div>
+            <div class="bar"></div>
+            <div class="clear"></div>
+            <br class="saveSearch" />
+        
+            <input id="origemMPMulti" name="origemMP" type="hidden" />
+        
+            <input id="ListaOrigem" name="ListaOrigem" type="hidden" />
+            <input id="ListaDestino" name="ListaDestino" type="hidden" />
+            <input id="ListaDestinoCodigo" name="ListaDestinoCodigo" type="hidden" />
+            <input id="ListaOrigemCodigo" name="ListaOrigemCodigo" type="hidden" />
+            <input id="ListaSaida" name="ListaSaida" type="hidden" />
+            <input id="RetornoMultiMP" name="RetornoMultiMP" type="hidden" />
+            <input id="ApartamentoMP" name="ApartamentoMP" type="hidden" />            
+            
+            
+            <div>
+                <input type="submit" value="" class="btnPesquisar" onclick="return SendToServerMPMulti()" />
+            </div>
+            }
+
+            swViewsFormMPMulti.Stop();
+            
+        }
+    </div>
+
+</div>

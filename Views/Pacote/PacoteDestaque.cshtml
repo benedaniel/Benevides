@@ -1,0 +1,98 @@
+﻿@model List<FT.Web.Model.Models.DestaqueModel>
+<script>
+    $(function () {
+        $('#slidesDestaque-').slidesjs({
+            width: 940,
+            height: 528,
+            navigation: {
+                active: true,
+                effect: "slide"
+            },
+            play: {
+                active: false,
+                effect: "slide",
+                interval: 20000,
+                auto: true,
+                swap: true,
+                pauseOnHover: true
+            }
+        });
+    });
+</script>
+
+@{
+    string slide = "solo";
+    if (Model.Count > 1)
+    {
+        slide = "";
+    }
+}
+<div class="slideshow">
+    <div class="container">
+        <div id="slidesDestaque-@slide">
+            @{
+                var counter = Model.Where(p => p.DestaqueFotos.Any(b => b.AlturaFoto == 300 && b.LarguraFoto == 480)).Count();
+            }
+            @for (int i = 0; i < Model.Where(p => p.DestaqueFotos.Any(b => b.AlturaFoto == 300 && b.LarguraFoto == 480)).Count(); i++)
+            {
+                if (i < 5)
+                { 
+                <a href="@Model[i].LinkDestaque">
+                    <div class="slide-1">
+                        <div class="slide-1-img">
+                            @for (int j = 0; j < Model[i].DestaqueFotos.Count(); j++)
+                            {
+                                if (Model[i].DestaqueFotos[j].AlturaFoto == 300 && Model[i].DestaqueFotos[j].LarguraFoto == 480)
+                                {
+                                <img src='@Model[i].DestaqueFotos[j].UrlFoto@Model[i].DestaqueFotos[j].CdFoto' width='480' height='300' alt=''>
+                                }
+                            }
+                        </div>
+                        </div>
+                </a>
+                }
+            }
+        </div>
+    </div>
+    @if (counter > 1)
+    { 
+        <a href="@Model[Model.Count - 2].LinkDestaque" onclick="$('.loadingDefault').show();">
+            <div class="slide-2">
+                <div class="slide-2-img">
+                    @for (int j = 0; j < Model[Model.Count - 2].DestaqueFotos.Count(); j++)
+                    {
+                        if (Model[Model.Count - 2].DestaqueFotos[j].AlturaFoto == 160 && Model[Model.Count - 2].DestaqueFotos[j].LarguraFoto == 235)
+                        {
+                        <img src='@Model[Model.Count - 2].DestaqueFotos[j].UrlFoto@Model[Model.Count - 2].DestaqueFotos[j].CdFoto' width='235' height='160' alt=''>
+                        }
+                    }
+                </div>
+            </div>
+        </a>    
+    
+        <a href="@Model[Model.Count - 1].LinkDestaque"onclick="$('.loadingDefault').show();">
+            <div class="slide-3" style="border:0 !important">
+                <div class="slide-2-img" style="border:0 !important">
+                    @for (int j = 0; j < Model[Model.Count - 1].DestaqueFotos.Count(); j++)
+                    {
+                        if (Model[Model.Count - 1].DestaqueFotos[j].AlturaFoto == 160 && Model[Model.Count - 1].DestaqueFotos[j].LarguraFoto == 235)
+                        {
+                        <img src='@Model[Model.Count - 1].DestaqueFotos[j].UrlFoto@Model[Model.Count - 1].DestaqueFotos[j].CdFoto' width='235' height='160' alt=''>
+                        }
+                    }
+                </div>
+            </div>
+        </a>
+    }
+    else
+    {
+        <div class="slide-2" style="border:0 !important">
+            <div class="slide-2-img" style="border:0 !important">
+            </div>
+        </div>
+        <div class="slide-3" style="border:0 !important">
+            <div class="slide-2-img" style="border:0 !important">
+            </div>
+        </div>
+    }
+</div>

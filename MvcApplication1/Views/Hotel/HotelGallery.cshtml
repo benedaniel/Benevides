@@ -1,0 +1,15 @@
+﻿@model List<FT.Web.Model.Models.HotelFotoModel>
+
+
+@foreach (var item in Model)
+{
+    <a class="fancybox" rel="gallery1" href="@item.HotelFotoUrl" title="">
+
+        <img src="@item.HotelFotoUrl" class="fancybox" alt="@item.HotelFotoTitulo" />
+    </a>
+    
+       
+}
+
+
+

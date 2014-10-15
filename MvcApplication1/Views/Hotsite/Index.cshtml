@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ResizeIframe.js"></script>
+<style>
+    .content {
+        clear: both;
+        margin: auto;
+        width: 980px;
+        height: 100%;
+        padding: 10px 0 0 0;
+    }
+</style>
+
+<div class="content">
+    <iframe name="Stack" src="/Hotsites/@ViewBag.Teste" scrolling="no" frameborder="0" id="iframes" width="980"
+         onload="AjusteHeightFrame(this.id);"'></iframe>
+</div>
+

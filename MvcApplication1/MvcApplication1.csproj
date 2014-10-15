@@ -1,0 +1,1334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A353FB6-ECF7-4843-AB66-4ED89DBA06EC}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MvcApplication1</RootNamespace>
+    <AssemblyName>MvcApplication1</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="AutoComplete\ListaAutoComplete.cs" />
+    <Compile Include="AutoComplete\Repository.ashx.cs">
+      <DependentUpon>Repository.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Aereo\AereoController.cs" />
+    <Compile Include="Controllers\Atividade\AtividadeController.cs" />
+    <Compile Include="Controllers\Base\Multibase.cs" />
+    <Compile Include="Controllers\Base\_BaseController.cs" />
+    <Compile Include="Controllers\Caderno\CadernoController.cs" />
+    <Compile Include="Controllers\Campanha\CampanhaController.cs" />
+    <Compile Include="Controllers\Carrinho\CarrinhoController.cs" />
+    <Compile Include="Controllers\Carro\CarroController.cs" />
+    <Compile Include="Controllers\Circuito\CircuitoController.cs" />
+    <Compile Include="Controllers\Consolidadora\ConsolidadoraController.cs" />
+    <Compile Include="Controllers\Destino\DestinoController.cs" />
+    <Compile Include="Controllers\Erro\ErroController.cs" />
+    <Compile Include="Controllers\EventosEIncentivo\EventosEIncentivoController.cs" />
+    <Compile Include="Controllers\FaleConosco\FaleConoscoController.cs" />
+    <Compile Include="Controllers\Franchising\FranchisingController.cs" />
+    <Compile Include="Controllers\Gerenciamento\AutenticarController.cs" />
+    <Compile Include="Controllers\Gerenciamento\PainelControleController.cs" />
+    <Compile Include="Controllers\Home\HomeController.cs" />
+    <Compile Include="Controllers\Hotel\HotelController.cs" />
+    <Compile Include="Controllers\Hotsite\HotsiteController.cs" />
+    <Compile Include="Controllers\InformacoesImportantes\InformacoesImportantesController.cs" />
+    <Compile Include="Controllers\Mapa\MapaController.cs" />
+    <Compile Include="Controllers\MontePacote\MontePacoteController.cs" />
+    <Compile Include="Controllers\OndeEstamos\OndeEstamosController.cs" />
+    <Compile Include="Controllers\Orcamento\OrcamentoController.cs" />
+    <Compile Include="Controllers\Pacote\PacoteController.cs" />
+    <Compile Include="Controllers\Pagamento\PagamentoController.cs" />
+    <Compile Include="Controllers\Reserva\ReservaController.cs" />
+    <Compile Include="Controllers\RoteirosCarro\RoteirosCarroController.cs" />
+    <Compile Include="Controllers\Shared\SharedController.cs" />
+    <Compile Include="Controllers\SitesGrupo\SitesGrupoController.cs" />
+    <Compile Include="Controllers\Venda\VendaController.cs" />
+    <Compile Include="Controllers\ViagensANegocios\ViagensANegociosController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\FaleConosco\FaleConoscoHelper.cs" />
+    <Compile Include="Helpers\Hotel\HotelHtmlHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\Aereo.css" />
+    <Content Include="Content\AereoPAcote.css" />
+    <Content Include="Content\Atividade.css" />
+    <Content Include="Content\Banners.css" />
+    <Content Include="Content\Buscadores.css" />
+    <Content Include="Content\Campanhas.css" />
+    <Content Include="Content\Carrinho.css" />
+    <Content Include="Content\Carro.css" />
+    <Content Include="Content\Circuito.css" />
+    <Content Include="Content\css\style-onde-estamos.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\dark-hive\images\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_highlight-hard_20_0972a5_1x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_highlight-soft_33_003147_1x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_highlight-soft_35_222222_1x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_highlight-soft_44_444444_1x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Content\dark-hive\images\ui-bg_loop_25_000000_21x21.png" />
+    <Content Include="Content\dark-hive\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\dark-hive\images\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Content\dark-hive\images\ui-icons_a83300_256x240.png" />
+    <Content Include="Content\dark-hive\images\ui-icons_cccccc_256x240.png" />
+    <Content Include="Content\dark-hive\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\dark-hive\images\_notes\dwsync.xml" />
+    <Content Include="Content\dark-hive\jquery-ui-1.8.6.custom.css" />
+    <Content Include="Content\dark-hive\_notes\dwsync.xml" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\DestaqueHotelIframe.css" />
+    <Content Include="Content\DestaquePacotesIframe.css" />
+    <Content Include="Content\Destinos.css" />
+    <Content Include="Content\Estilo.css" />
+    <Content Include="Content\FiltroHotel.css" />
+    <Content Include="Content\form.css" />
+    <Content Include="Content\FT.UI\FTVPopup.css" />
+    <Content Include="Content\Home.css" />
+    <Content Include="Content\Hotel.css" />
+    <Content Include="Content\HotelResult.css" />
+    <Content Include="Content\Hotsites.css" />
+    <Content Include="Content\images\6passos.png" />
+    <Content Include="Content\images\academia_flytour.jpg" />
+    <Content Include="Content\images\academia_flytour_01.jpg" />
+    <Content Include="Content\images\academia_flytour_02.jpg" />
+    <Content Include="Content\images\assistencia_de_viagem_01.jpg" />
+    <Content Include="Content\images\assistencia_de_viagem_02.jpg" />
+    <Content Include="Content\images\atendimento-emergencial.jpg" />
+    <Content Include="Content\images\atendimento_emergencial_01.jpg" />
+    <Content Include="Content\images\atendimento_emergencial_02.jpg" />
+    <Content Include="Content\images\atendimento_emergencial_03.jpg" />
+    <Content Include="Content\images\banner-agentedeviagem-01.jpg" />
+    <Content Include="Content\images\banner-agentedeviagem-02.jpg" />
+    <Content Include="Content\images\banner_destaque_01.jpg" />
+    <Content Include="Content\images\banner_destaque_02.jpg" />
+    <Content Include="Content\images\bg_destaque-1-left-eventos_azul.jpg" />
+    <Content Include="Content\images\bg_destaque-1-left-eventos_laranja.jpg" />
+    <Content Include="Content\images\bg_destaque-1-left-negocios_azul.png" />
+    <Content Include="Content\images\bg_destaque-1-left-negocios_laranja.png" />
+    <Content Include="Content\images\bg_destaque_box_eventos.jpg" />
+    <Content Include="Content\images\bg_destaque_box_negocios.jpg" />
+    <Content Include="Content\images\bg_drop_consolidadora.png" />
+    <Content Include="Content\images\bg_drop_eventos.png" />
+    <Content Include="Content\images\bg_drop_franchising.png" />
+    <Content Include="Content\images\bg_drop_negocios.png" />
+    <Content Include="Content\images\bg_linha1_link.png" />
+    <Content Include="Content\images\bg_nav_consolidadora.gif" />
+    <Content Include="Content\images\bg_nav_consolidadora_separa.png" />
+    <Content Include="Content\images\bg_nav_eventos.gif" />
+    <Content Include="Content\images\bg_nav_eventos_separa.png" />
+    <Content Include="Content\images\bg_nav_franchising.gif" />
+    <Content Include="Content\images\bg_nav_franchising_separa.png" />
+    <Content Include="Content\images\bg_nav_negocios.gif" />
+    <Content Include="Content\images\bg_nav_negocios_separa.png" />
+    <Content Include="Content\images\bg_slider_franchising_01.jpg" />
+    <Content Include="Content\images\bg_slider_franchising_bg.jpg" />
+    <Content Include="Content\images\bg_textura_footer.png" />
+    <Content Include="Content\images\botao_01_center.png" />
+    <Content Include="Content\images\botao_01_left.png" />
+    <Content Include="Content\images\botao_01_right.png" />
+    <Content Include="Content\images\botao_enviar_01.png" />
+    <Content Include="Content\images\btnfechar.jpg" />
+    <Content Include="Content\images\btnfechar.png" />
+    <Content Include="Content\images\btravel_01.jpg" />
+    <Content Include="Content\images\btravel_02.jpg" />
+    <Content Include="Content\images\campanhas-de-premiacao-e-viagens-de-incentivo.jpg" />
+    <Content Include="Content\images\capacidade_financeira_01.jpg" />
+    <Content Include="Content\images\cartao_corporativo_01.jpg" />
+    <Content Include="Content\images\cartao_corporativo_02.jpg" />
+    <Content Include="Content\images\cases-de-sucesso-rigesa-01.jpg" />
+    <Content Include="Content\images\cfc_01.jpg" />
+    <Content Include="Content\images\cfc_02.jpg" />
+    <Content Include="Content\images\click_trip_01.jpg" />
+    <Content Include="Content\images\click_trip_02.jpg" />
+    <Content Include="Content\images\codigo-de-etica.jpg" />
+    <Content Include="Content\images\congressos_01.jpg" />
+    <Content Include="Content\images\congressos_02.jpg" />
+    <Content Include="Content\images\consultoria_corporativa_01.jpg" />
+    <Content Include="Content\images\consultoria_corporativa_02.jpg" />
+    <Content Include="Content\images\coordenacao_eventos_01.jpg" />
+    <Content Include="Content\images\coordenacao_eventos_02.jpg" />
+    <Content Include="Content\images\cursos_palestras_01.jpg" />
+    <Content Include="Content\images\cursos_palestras_02.jpg" />
+    <Content Include="Content\images\depoimento-corina.jpg" />
+    <Content Include="Content\images\depoimento-hugo.jpg" />
+    <Content Include="Content\images\depoimento-solange.jpg" />
+    <Content Include="Content\images\depoimento_marines_elias.jpg" />
+    <Content Include="Content\images\depoimento_percy.jpg" />
+    <Content Include="Content\images\eflytour_01.jpg" />
+    <Content Include="Content\images\eflytour_02.jpg" />
+    <Content Include="Content\images\feiras_exposicoes_01.jpg" />
+    <Content Include="Content\images\feiras_exposicoes_02.jpg" />
+    <Content Include="Content\images\ferramenta-de-reserva-on-line.jpg" />
+    <Content Include="Content\images\ferramenta_gestao_eventos.jpg" />
+    <Content Include="Content\images\ferramenta_gestao_eventos_02.jpg" />
+    <Content Include="Content\images\flytour_american_express.jpg" />
+    <Content Include="Content\images\flytour_hoteis_01.jpg" />
+    <Content Include="Content\images\flytour_hoteis_02.jpg" />
+    <Content Include="Content\images\flytour_operadora_01.jpg" />
+    <Content Include="Content\images\flytour_operadora_02.jpg" />
+    <Content Include="Content\images\flytour_service_01.jpg" />
+    <Content Include="Content\images\flytour_service_02.jpg" />
+    <Content Include="Content\images\franquia_01.jpg" />
+    <Content Include="Content\images\franquia_02.jpg" />
+    <Content Include="Content\images\gds_01.jpg" />
+    <Content Include="Content\images\gds_02.jpg" />
+    <Content Include="Content\images\grupos-e-eventos.jpg" />
+    <Content Include="Content\images\grupos_e_eventos_01.jpg" />
+    <Content Include="Content\images\grupos_e_eventos_03.jpg" />
+    <Content Include="Content\images\guia-de-viagens.jpg" />
+    <Content Include="Content\images\guia_de_viagens_03.jpg" />
+    <Content Include="Content\images\header_bg.gif" />
+    <Content Include="Content\images\home_destaque1_left_franchising.jpg" />
+    <Content Include="Content\images\home_destaque1_left_franchising.png" />
+    <Content Include="Content\images\home_destaque1_left_franchising_02.jpg" />
+    <Content Include="Content\images\home_destaque_box.jpg" />
+    <Content Include="Content\images\home_destaque_premios_left_franchising.jpg" />
+    <Content Include="Content\images\home_destaque_right.jpg" />
+    <Content Include="Content\images\home_miniatura_servicos.jpg" />
+    <Content Include="Content\images\home_slider.jpg" />
+    <Content Include="Content\images\home_slider_02.jpg" />
+    <Content Include="Content\images\home_slider_03.jpg" />
+    <Content Include="Content\images\home_slider_eventos.jpg" />
+    <Content Include="Content\images\ico-agencias-resultados.gif" />
+    <Content Include="Content\images\ico_email.png" />
+    <Content Include="Content\images\ico_facebook.gif" />
+    <Content Include="Content\images\ico_linguagem.gif" />
+    <Content Include="Content\images\ico_regionalizacao.gif" />
+    <Content Include="Content\images\ico_tel.png" />
+    <Content Include="Content\images\ico_twitter.gif" />
+    <Content Include="Content\images\ico_youtube.png" />
+    <Content Include="Content\images\incentivo_01.jpg" />
+    <Content Include="Content\images\incentivo_02.jpg" />
+    <Content Include="Content\images\integracao_backoffice_01.jpg" />
+    <Content Include="Content\images\integracao_backoffice_02.jpg" />
+    <Content Include="Content\images\investimento_lojas_padrao.png" />
+    <Content Include="Content\images\isend_01.jpg" />
+    <Content Include="Content\images\isend_02.jpg" />
+    <Content Include="Content\images\logistica_grupos.jpg" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\mapa_fuso_horario_1.jpg" />
+    <Content Include="Content\images\mapa_fuso_horario_2.jpg" />
+    <Content Include="Content\images\marcador01_footer_consolidadora.png" />
+    <Content Include="Content\images\marcador01_footer_eventos.png" />
+    <Content Include="Content\images\marcador01_footer_franchising.png" />
+    <Content Include="Content\images\marcador01_footer_negocios.png" />
+    <Content Include="Content\images\marcador_noticias_01.png" />
+    <Content Include="Content\images\mice_01.jpg" />
+    <Content Include="Content\images\mice_02.jpg" />
+    <Content Include="Content\images\parceiros_fornecedores.jpg" />
+    <Content Include="Content\images\parceiros_fornecedores_02.jpg" />
+    <Content Include="Content\images\planejamento_eventos_01.jpg" />
+    <Content Include="Content\images\planejamento_eventos_corporativos_01.jpg" />
+    <Content Include="Content\images\planejamento_eventos_corporativos_01a.jpg" />
+    <Content Include="Content\images\planejamento_eventos_corporativos_02.jpg" />
+    <Content Include="Content\images\politica-de-Viagens_01.jpg" />
+    <Content Include="Content\images\politica-de-Viagens_02.jpg" />
+    <Content Include="Content\images\premiacao_01.jpg" />
+    <Content Include="Content\images\premiacoes_e_incentivo_03.jpg" />
+    <Content Include="Content\images\premio_home_01.png" />
+    <Content Include="Content\images\premio_home_02.png" />
+    <Content Include="Content\images\premio_home_03.png" />
+    <Content Include="Content\images\premio_home_04.png" />
+    <Content Include="Content\images\redes_footer.png" />
+    <Content Include="Content\images\relacionamento-com-o-cliente.jpg" />
+    <Content Include="Content\images\relacionamento-com-o-cliente_01.jpg" />
+    <Content Include="Content\images\relacionamento-com-o-cliente_02.jpg" />
+    <Content Include="Content\images\relacionamento_com_cliente_03.jpg" />
+    <Content Include="Content\images\relatorios-gerenciais.jpg" />
+    <Content Include="Content\images\relatorios_gerenciais_03.jpg" />
+    <Content Include="Content\images\reserva_online_02.jpg" />
+    <Content Include="Content\images\reserva_online_03.jpg" />
+    <Content Include="Content\images\resultados_2012.jpg" />
+    <Content Include="Content\images\rsvp_01.jpg" />
+    <Content Include="Content\images\rsvp_02.jpg" />
+    <Content Include="Content\images\sala-de-imprensa_01.jpg" />
+    <Content Include="Content\images\seguranca-da-informacao.jpg" />
+    <Content Include="Content\images\select_combo_franchising.gif" />
+    <Content Include="Content\images\select_combo_onde_estamos.gif" />
+    <Content Include="Content\images\selo-de-excelencia-flytour.jpg" />
+    <Content Include="Content\images\service-plus.jpg" />
+    <Content Include="Content\images\service-plus_01.jpg" />
+    <Content Include="Content\images\service-plus_02.jpg" />
+    <Content Include="Content\images\service_plus_02.jpg" />
+    <Content Include="Content\images\service_plus_03.jpg" />
+    <Content Include="Content\images\seta-01.png" />
+    <Content Include="Content\images\seta-azul.png" />
+    <Content Include="Content\images\seta.png" />
+    <Content Include="Content\images\skybonus_01.jpg" />
+    <Content Include="Content\images\skybonus_03.jpg" />
+    <Content Include="Content\images\slider_franchising_1.png" />
+    <Content Include="Content\images\slider_franchising_3.png" />
+    <Content Include="Content\images\slider_negocios.jpg" />
+    <Content Include="Content\images\sustentabilidade.jpg" />
+    <Content Include="Content\images\tags_franchising.jpg" />
+    <Content Include="Content\images\tecnologia.jpg" />
+    <Content Include="Content\images\treinamentos_01.jpg" />
+    <Content Include="Content\images\treinamentos_02.jpg" />
+    <Content Include="Content\images\viagens-a-lazer.jpg" />
+    <Content Include="Content\images\viagens_a_lazer_01.jpg" />
+    <Content Include="Content\images\visto-azul.png" />
+    <Content Include="Content\images\visto.png" />
+    <Content Include="Content\images\workshops_01.jpg" />
+    <Content Include="Content\images\workshops_02.jpg" />
+    <Content Include="Content\images\XXX.jpg" />
+    <Content Include="Content\jquery\blank.gif" />
+    <Content Include="Content\jquery\fancybox_loading%402x.gif" />
+    <Content Include="Content\jquery\fancybox_loading.gif" />
+    <Content Include="Content\jquery\fancybox_overlay.png" />
+    <Content Include="Content\jquery\fancybox_sprite%402x.png" />
+    <Content Include="Content\jquery\fancybox_sprite.png" />
+    <Content Include="Content\jquery\jquery-ui.css" />
+    <Content Include="Content\jquery\jquery.fancybox.css" />
+    <Content Include="Content\jquery\stylesheet-image-based.css" />
+    <Content Include="Content\LoginConsolidadora.css" />
+    <Content Include="Content\Master.css" />
+    <Content Include="Content\MenuPainelControle.css" />
+    <Content Include="Content\ModalAereo.css" />
+    <Content Include="Content\MontePacote.css" />
+    <Content Include="Content\MpIndex.css" />
+    <Content Include="Content\NoDataFound.css" />
+    <Content Include="Content\normalize.css" />
+    <Content Include="Content\Orcamento.css" />
+    <Content Include="Content\OrcamentoShow.css" />
+    <Content Include="Content\Pacote.css" />
+    <Content Include="Content\PacoteX.css" />
+    <Content Include="Content\PainelControle.css" />
+    <Content Include="Content\ppgallery.css" />
+    <Content Include="Content\Reserva.css" />
+    <Content Include="Content\RoteirosCarro.css" />
+    <Content Include="Content\Usuario.css" />
+    <Content Include="Content\Venda.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Hotsites\atividades.htm" />
+    <Content Include="Hotsites\banner-home-menor.htm" />
+    <Content Include="Hotsites\banner-home.htm" />
+    <Content Include="Hotsites\comum\images\academia_flytour.jpg" />
+    <Content Include="Hotsites\comum\images\codigo-de-etica.jpg" />
+    <Content Include="Hotsites\comum\images\linha-do-tempo-mini.jpg" />
+    <Content Include="Hotsites\comum\images\linha-do-tempo.jpg" />
+    <Content Include="Hotsites\comum\images\mapa_fuso_horario_1.jpg" />
+    <Content Include="Hotsites\comum\images\mapa_fuso_horario_2.jpg" />
+    <Content Include="Hotsites\comum\images\marcador_noticias_01.png" />
+    <Content Include="Hotsites\comum\images\sala-de-imprensa_01.jpg" />
+    <Content Include="Hotsites\comum\images\selo-de-excelencia-flytour.jpg" />
+    <Content Include="Hotsites\comum\images\sustentabilidade.jpg" />
+    <Content Include="Hotsites\comum\institucional-academia-flytour.html" />
+    <Content Include="Hotsites\comum\institucional-codigo-de-etica.html" />
+    <Content Include="Hotsites\comum\institucional-flytour-american-express-servicos-de-viagens.html" />
+    <Content Include="Hotsites\comum\institucional-grupo-flytour.html" />
+    <Content Include="Hotsites\comum\institucional-sala-de-imprensa.html" />
+    <Content Include="Hotsites\comum\institucional-selo-de-excelencia-flytour.html" />
+    <Content Include="Hotsites\comum\institucional-sustentabilidade.html" />
+    <Content Include="Hotsites\comum\institucional-trabalhe-conosco.html" />
+    <Content Include="Hotsites\comum\uteis-alfandega.html" />
+    <Content Include="Hotsites\comum\uteis-atendimento-nos-aeroportos.html" />
+    <Content Include="Hotsites\comum\uteis-comunicacao-em-5-idiomas.html" />
+    <Content Include="Hotsites\comum\uteis-conversao-de-medidas.html" />
+    <Content Include="Hotsites\comum\uteis-cotacao-de-moedas.html" />
+    <Content Include="Hotsites\comum\uteis-dicas-para-sua-viagem.html" />
+    <Content Include="Hotsites\comum\uteis-direitos-do-viajante.html" />
+    <Content Include="Hotsites\comum\uteis-documentacao-e-vistos.html" />
+    <Content Include="Hotsites\comum\uteis-duty-free-shop.html" />
+    <Content Include="Hotsites\comum\uteis-fuso-horario.html" />
+    <Content Include="Hotsites\comum\uteis-saude.html" />
+    <Content Include="Hotsites\comum\uteis-transporte-de-animais.html" />
+    <Content Include="Hotsites\Consolidadora\index.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-academia-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-codigo-de-etica.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-fale-conosco.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-flytour-travel-solution.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-grupo-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-onde-estamos.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-sala-de-imprensa.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-selo-de-excelencia-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\institucional-sustentabilidade.htm" />
+    <Content Include="Hotsites\Consolidadora\noticias.htm" />
+    <Content Include="Hotsites\Consolidadora\produtos-mega-promo-tam.htm" />
+    <Content Include="Hotsites\Consolidadora\produtos-super-condicao-delta-air-lines.htm" />
+    <Content Include="Hotsites\Consolidadora\seja-um-cliente.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-academia-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-assistencia-de-viagem.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-atendimento-emergencial.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-b-travel.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-cartao-corporativo.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-cartao-flytour-consolidadas.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-click-trip.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-consultoria-corporativa.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-e-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-flytour-hoteis.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-flytour-operadora.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-flytour-service.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-franquia-flytour-american-express.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-integracao-com-back-office.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-isend.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-programa-de-relacionamento-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-projeto-gds-flytour.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-service-plus.htm" />
+    <Content Include="Hotsites\Consolidadora\servicos-skybonus.htm" />
+    <Content Include="Hotsites\Consolidadora\teste.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-alfandega.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-atendimento-nos-aeroportos.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-comunicacao-em-5-idiomas.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-conversao-de-medidas.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-cotacao-de-moedas.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-dicas-para-sua-viagem.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-direitos-do-viajante.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-documentacao-e-vistos.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-duty-free-shop.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-fuso-horario.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-saude.htm" />
+    <Content Include="Hotsites\Consolidadora\uteis-transporte-de-animais.htm" />
+    <Content Include="Hotsites\destinos-internacionais-lisboa.htm" />
+    <Content Include="Hotsites\destinos-internacionais-nova-york.htm" />
+    <Content Include="Hotsites\destinos-internacionais.htm" />
+    <Content Include="Hotsites\destinos-nacionais-rio-de-janeiro.htm" />
+    <Content Include="Hotsites\destinos-nacionais.htm" />
+    <Content Include="Hotsites\destinos_internacionais.jpg" />
+    <Content Include="Hotsites\destinos_internacionais_lisboa.jpg" />
+    <Content Include="Hotsites\destinos_internacionais_nova_york.jpg" />
+    <Content Include="Hotsites\destinos_nacionais.jpg" />
+    <Content Include="Hotsites\destinos_nacionais_rio.jpg" />
+    <Content Include="Hotsites\EventosEIncentivo\index.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-academia-flytour.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-cases-de-sucesso.html" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-codigo-de-etica.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-fale-conosco.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-flytour-eventos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-grupo-flytour.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-nossos-clientes.html" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-onde-estamos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-sala-de-imprensa.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-selo-de-excelencia-flytour.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\institucional-sustentabilidade.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-atendimento-emergencial.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-coordenacao-de-eventos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-eventos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-ferramenta-de-gestao-de-eventos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-incentivos-e-premiacoes.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-logistica-integrada-de-grupos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-mice.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-parceiros-e-fornecedores.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-planejamento-e-organizacao-de-eventos-corporativos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-rsvp.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\servicos-service-plus.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-alfandega.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-atendimento-nos-aeroportos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-comunicacao-em-5-idiomas.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-conversao-de-medidas.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-cotacao-de-moedas.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-dicas-para-sua-viagem.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-direitos-do-viajante.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-documentacao-e-vistos.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-duty-free-shop.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-fuso-horario.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-saude.htm" />
+    <Content Include="Hotsites\EventosEIncentivo\uteis-transporte-de-animais.htm" />
+    <Content Include="Hotsites\Franchising\depoimentos.htm" />
+    <Content Include="Hotsites\Franchising\index.htm" />
+    <Content Include="Hotsites\Franchising\institucional-academia-flytour.htm" />
+    <Content Include="Hotsites\Franchising\institucional-codigo-de-etica.htm" />
+    <Content Include="Hotsites\Franchising\institucional-fale-conosco.htm" />
+    <Content Include="Hotsites\Franchising\institucional-flytour-american-express-servicos-de-viagens.htm" />
+    <Content Include="Hotsites\Franchising\institucional-flytour-franchising.htm" />
+    <Content Include="Hotsites\Franchising\institucional-grupo-flytour.htm" />
+    <Content Include="Hotsites\Franchising\institucional-onde-estamos.htm" />
+    <Content Include="Hotsites\Franchising\institucional-premios-e-reconhecimento.htm" />
+    <Content Include="Hotsites\Franchising\institucional-sala-de-imprensa.htm" />
+    <Content Include="Hotsites\Franchising\institucional-selo-de-excelencia-flytour.htm" />
+    <Content Include="Hotsites\Franchising\institucional-sustentabilidade.htm" />
+    <Content Include="Hotsites\Franchising\investimento.htm" />
+    <Content Include="Hotsites\Franchising\mercado-de-turismo.htm" />
+    <Content Include="Hotsites\Franchising\noticias.htm" />
+    <Content Include="Hotsites\Franchising\perfil-do-franqueado-flytour-american-express-servicos-de-viagens.htm" />
+    <Content Include="Hotsites\Franchising\porque-ser-flytour.htm" />
+    <Content Include="Hotsites\Franchising\produtos-e-servicos.htm" />
+    <Content Include="Hotsites\Franchising\referencia-no-mercado-de-franchising.htm" />
+    <Content Include="Hotsites\Franchising\seis-passos-para-se-tornar-um-franqueado-flytour-american-express.htm" />
+    <Content Include="Hotsites\Franchising\seja-um-franqueado.htm" />
+    <Content Include="Hotsites\Franchising\uteis-alfandega.htm" />
+    <Content Include="Hotsites\Franchising\uteis-atendimento-nos-aeroportos.htm" />
+    <Content Include="Hotsites\Franchising\uteis-comunicacao-em-5-idiomas.htm" />
+    <Content Include="Hotsites\Franchising\uteis-conversao-de-medidas.htm" />
+    <Content Include="Hotsites\Franchising\uteis-cotacao-de-moedas.htm" />
+    <Content Include="Hotsites\Franchising\uteis-dicas-para-sua-viagem.htm" />
+    <Content Include="Hotsites\Franchising\uteis-direitos-do-viajante.htm" />
+    <Content Include="Hotsites\Franchising\uteis-documentacao-e-vistos.htm" />
+    <Content Include="Hotsites\Franchising\uteis-duty-free-shop.htm" />
+    <Content Include="Hotsites\Franchising\uteis-fuso-horario.htm" />
+    <Content Include="Hotsites\Franchising\uteis-saude.htm" />
+    <Content Include="Hotsites\Franchising\uteis-transporte-de-animais.htm" />
+    <Content Include="Hotsites\hoteis.htm" />
+    <Content Include="Hotsites\itens-painel-agente.htm" />
+    <Content Include="Hotsites\passagens.htm" />
+    <Content Include="Hotsites\reserva-condicoes-gerais-b2b.htm" />
+    <Content Include="Hotsites\reserva-condicoes-gerais-b2c.htm" />
+    <Content Include="Hotsites\rm\cenario-macroeconomico.html" />
+    <Content Include="Hotsites\rm\dados-financeiros.html" />
+    <Content Include="Hotsites\rm\estrutura-societaria.html" />
+    <Content Include="Hotsites\rm\grupo-economico.html" />
+    <Content Include="Hotsites\rm\historico.html" />
+    <Content Include="Hotsites\rm\images\estrutura-societaria-atual.png" />
+    <Content Include="Hotsites\rm\images\grupo-economico.png" />
+    <Content Include="Hotsites\rm\images\noticias.jpg" />
+    <Content Include="Hotsites\rm\images\organograma.png" />
+    <Content Include="Hotsites\rm\images\slider\slider-rm-02.jpg" />
+    <Content Include="Hotsites\rm\images\slider\slider-rm.jpg" />
+    <Content Include="Hotsites\rm\include-cabecalho-rm.html" />
+    <Content Include="Hotsites\rm\include-menu-principal-rm.html" />
+    <Content Include="Hotsites\rm\include-rodape-rm.html" />
+    <Content Include="Hotsites\rm\index.html" />
+    <Content Include="Hotsites\rm\institucional-fale-conosco.html" />
+    <Content Include="Hotsites\rm\organograma.html" />
+    <Content Include="Hotsites\shared\institucional-academia-flytour.html" />
+    <Content Include="Hotsites\shared\institucional-codigo-de-etica.html" />
+    <Content Include="Hotsites\shared\institucional-flytour-american-express-servicos-de-viagens.html" />
+    <Content Include="Hotsites\shared\institucional-grupo-flytour.html" />
+    <Content Include="Hotsites\shared\institucional-sala-de-imprensa.html" />
+    <Content Include="Hotsites\shared\institucional-selo-de-excelencia-flytour.html" />
+    <Content Include="Hotsites\shared\institucional-sustentabilidade.html" />
+    <Content Include="Hotsites\shared\uteis-alfandega.html" />
+    <Content Include="Hotsites\shared\uteis-atendimento-nos-aeroportos.html" />
+    <Content Include="Hotsites\shared\uteis-comunicacao-em-5-idiomas.html" />
+    <Content Include="Hotsites\shared\uteis-conversao-de-medidas.html" />
+    <Content Include="Hotsites\shared\uteis-cotacao-de-moedas.html" />
+    <Content Include="Hotsites\shared\uteis-dicas-para-sua-viagem.html" />
+    <Content Include="Hotsites\shared\uteis-direitos-do-viajante.html" />
+    <Content Include="Hotsites\shared\uteis-documentacao-e-vistos.html" />
+    <Content Include="Hotsites\shared\uteis-duty-free-shop.html" />
+    <Content Include="Hotsites\shared\uteis-fuso-horario.html" />
+    <Content Include="Hotsites\shared\uteis-saude.html" />
+    <Content Include="Hotsites\shared\uteis-transporte-de-animais.html" />
+    <Content Include="Hotsites\template\css\style-slider-consolidadora.css" />
+    <Content Include="Hotsites\template\css\style-slider-eventos.css" />
+    <Content Include="Hotsites\template\css\style-slider-franchising.css" />
+    <Content Include="Hotsites\template\css\style-slider-negocios.css" />
+    <Content Include="Hotsites\template\css\style.css" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-consolidadora_azul.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-consolidadora_laranja.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-eventos_azul.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-eventos_azul.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-eventos_laranja.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-eventos_laranja.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-franchising_azul.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-franchising_laranja.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-negocios_azul.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-1-left-negocios_laranja.png" />
+    <Content Include="Hotsites\template\images\bg_destaque-2-left-eventos_azul.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque-2-left-eventos_laranja.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque_box_consolidadora.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque_box_eventos.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque_box_franchising.jpg" />
+    <Content Include="Hotsites\template\images\bg_destaque_box_negocios.jpg" />
+    <Content Include="Hotsites\template\images\bg_drop_consolidadora.png" />
+    <Content Include="Hotsites\template\images\bg_drop_eventos.png" />
+    <Content Include="Hotsites\template\images\bg_drop_franchising.png" />
+    <Content Include="Hotsites\template\images\bg_drop_negocios.png" />
+    <Content Include="Hotsites\template\images\bg_drop_rm.png" />
+    <Content Include="Hotsites\template\images\bg_linha1_link.png" />
+    <Content Include="Hotsites\template\images\bg_nav_consolidadora.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_consolidadora_separa.png" />
+    <Content Include="Hotsites\template\images\bg_nav_eventos.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_eventos_separa.png" />
+    <Content Include="Hotsites\template\images\bg_nav_franchising.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_franchising_separa.png" />
+    <Content Include="Hotsites\template\images\bg_nav_negocios.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_negocios_separa.png" />
+    <Content Include="Hotsites\template\images\bg_nav_rm.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_rm_footer.gif" />
+    <Content Include="Hotsites\template\images\bg_nav_rm_separa.png" />
+    <Content Include="Hotsites\template\images\bg_slider_franchising_01.jpg" />
+    <Content Include="Hotsites\template\images\bg_slider_franchising_bg.jpg" />
+    <Content Include="Hotsites\template\images\bg_slider_rm.gif" />
+    <Content Include="Hotsites\template\images\bg_textura_footer.png" />
+    <Content Include="Hotsites\template\images\botao_01_center.png" />
+    <Content Include="Hotsites\template\images\botao_01_left.png" />
+    <Content Include="Hotsites\template\images\botao_01_right.png" />
+    <Content Include="Hotsites\template\images\botao_enviar_01.png" />
+    <Content Include="Hotsites\template\images\bullets_slide_02.png" />
+    <Content Include="Hotsites\template\images\bullets_slide_negocios.png" />
+    <Content Include="Hotsites\template\images\header_bg.gif" />
+    <Content Include="Hotsites\template\images\header_titulo_consolidadora.png" />
+    <Content Include="Hotsites\template\images\header_titulo_eventos.png" />
+    <Content Include="Hotsites\template\images\header_titulo_franchising.png" />
+    <Content Include="Hotsites\template\images\header_titulo_negocios.png" />
+    <Content Include="Hotsites\template\images\header_titulo_rm.png" />
+    <Content Include="Hotsites\template\images\ico_email.png" />
+    <Content Include="Hotsites\template\images\ico_facebook.gif" />
+    <Content Include="Hotsites\template\images\ico_linguagem.gif" />
+    <Content Include="Hotsites\template\images\ico_regionalizacao.gif" />
+    <Content Include="Hotsites\template\images\ico_tel.png" />
+    <Content Include="Hotsites\template\images\ico_twitter.gif" />
+    <Content Include="Hotsites\template\images\ico_youtube.png" />
+    <Content Include="Hotsites\template\images\logo.png" />
+    <Content Include="Hotsites\template\images\marcador01_footer_consolidadora.png" />
+    <Content Include="Hotsites\template\images\marcador01_footer_eventos.png" />
+    <Content Include="Hotsites\template\images\marcador01_footer_franchising.png" />
+    <Content Include="Hotsites\template\images\marcador01_footer_negocios.png" />
+    <Content Include="Hotsites\template\images\marcador01_footer_rm.png" />
+    <Content Include="Hotsites\template\images\redes_footer.png" />
+    <Content Include="Hotsites\template\images\select_combo_franchising.gif" />
+    <Content Include="Hotsites\template\images\select_combo_onde_estamos.gif" />
+    <Content Include="Hotsites\template\images\seta-azul.png" />
+    <Content Include="Hotsites\template\images\seta.png" />
+    <Content Include="Hotsites\template\images\slider_franchising_1.png" />
+    <Content Include="Hotsites\template\images\slider_franchising_3.png" />
+    <Content Include="Hotsites\template\images\tags_franchising.jpg" />
+    <Content Include="Hotsites\template\images\visto-azul.png" />
+    <Content Include="Hotsites\template\images\visto.png" />
+    <Content Include="Hotsites\template\include-analytics.html" />
+    <Content Include="Hotsites\template\js\jquery-2.0.2.js" />
+    <Content Include="Hotsites\template\js\jquery.slides.min.js" />
+    <Content Include="Hotsites\ViagensANegocios\index.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-academia-flytour.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-codigo-de-etica.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-fale-conosco.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-flytour-american-express-servicos-de-viagens.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-grupo-flytour.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-onde-estamos.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-sala-de-imprensa.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-selo-de-excelencia-flytour.htm" />
+    <Content Include="Hotsites\ViagensANegocios\institucional-sustentabilidade.htm" />
+    <Content Include="Hotsites\ViagensANegocios\noticias.htm" />
+    <Content Include="Hotsites\ViagensANegocios\relacionamento.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-atendimento-emergencial.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-campanhas-de-premiacao-e-viagens-de-incentivo.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-consultoria-e-politica-de-viagens-corporativas.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-ferramenta-de-reserva-on-line.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-grupos-e-eventos.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-guia-de-viagens.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-relatorios-gerenciais.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-seguranca-da-informacao.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-service-plus.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-tecnologia.htm" />
+    <Content Include="Hotsites\ViagensANegocios\servicos-viagens-a-lazer.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-alfandega.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-atendimento-nos-aeroportos.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-comunicacao-em-5-idiomas.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-conversao-de-medidas.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-cotacao-de-moedas.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-dicas-para-sua-viagem.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-direitos-do-viajante.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-documentacao-e-vistos.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-duty-free-shop.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-fuso-horario.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-saude.htm" />
+    <Content Include="Hotsites\ViagensANegocios\uteis-transporte-de-animais.htm" />
+    <Content Include="Images\404.gif" />
+    <Content Include="Images\adicionar-carrinho.png" />
+    <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\animated-overlay.gif" />
+    <Content Include="Images\ava.gif" />
+    <Content Include="Images\avades.gif" />
+    <Content Include="Images\avadess.gif" />
+    <Content Include="Images\avadess.jpg" />
+    <Content Include="Images\avas.gif" />
+    <Content Include="Images\avas.jpg" />
+    <Content Include="Images\bandeira-american-express.gif" />
+    <Content Include="Images\bandeira-dinersclub.gif" />
+    <Content Include="Images\bandeira-elo.gif" />
+    <Content Include="Images\bandeira-mastercard.gif" />
+    <Content Include="Images\bandeira-santander.gif" />
+    <Content Include="Images\bandeira-visa.gif" />
+    <Content Include="Images\beachflag-preferencial.png" />
+    <Content Include="Images\beachflag.png" />
+    <Content Include="Images\beachflagFranquia.png" />
+    <Content Include="Images\beachflag_shadow.png" />
+    <Content Include="Images\bg1_matriz.gif" />
+    <Content Include="Images\bg2_matriz.jpg" />
+    <Content Include="Images\bg3_cabecalho_detalhes_pacote.gif" />
+    <Content Include="Images\bgCar.jpg" />
+    <Content Include="Images\bgerro.gif" />
+    <Content Include="Images\bgErro.png" />
+    <Content Include="Images\bgs-novo-resultado.png" />
+    <Content Include="Images\bg_abas.gif" />
+    <Content Include="Images\bg_valor_hotel.jpg" />
+    <Content Include="Images\blank.gif" />
+    <Content Include="Images\botao_01_center.png" />
+    <Content Include="Images\botao_01_left.png" />
+    <Content Include="Images\botao_01_right.png" />
+    <Content Include="Images\botao_comprar_slide_01.png" />
+    <Content Include="Images\botao_comprar_slide_02.png" />
+    <Content Include="Images\botao_fechar.png" />
+    <Content Include="Images\botao_imprimir.gif" />
+    <Content Include="Images\botao_Pesquisar.png" />
+    <Content Include="Images\Botao_Receber_Ofertas.png" />
+    <Content Include="Images\Botoes_01.png" />
+    <Content Include="Images\Botoes_02.png" />
+    <Content Include="Images\Botoes_03.png" />
+    <Content Include="Images\bot_orcamento.png" />
+    <Content Include="Images\bt-enviar-cotizacao.gif" />
+    <Content Include="Images\bt-ok.gif" />
+    <Content Include="Images\bt-remover.gif" />
+    <Content Include="Images\bullets_slide_01.png" />
+    <Content Include="Images\bullets_slide_02.png" />
+    <Content Include="Images\calendario_avancar.png" />
+    <Content Include="Images\calendario_input-silver.png" />
+    <Content Include="Images\calendario_input.png" />
+    <Content Include="Images\calendario_recuar.png" />
+    <Content Include="Images\cart_comprar.png" />
+    <Content Include="Images\cbl.gif" />
+    <Content Include="Images\cbls.gif" />
+    <Content Include="Images\cbls.jpg" />
+    <Content Include="Images\cbl_medium.gif" />
+    <Content Include="Images\cbl_mediums.jpg" />
+    <Content Include="Images\cbl_small.gif" />
+    <Content Include="Images\cbl_smalls.jpg" />
+    <Content Include="Images\checks.png" />
+    <Content Include="Images\css-images-ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\del_cat.png" />
+    <Content Include="Images\destint.png" />
+    <Content Include="Images\destnac.png" />
+    <Content Include="Images\editorial_bg.gif" />
+    <Content Include="Images\editorial_cadernos.png" />
+    <Content Include="Images\editorial_informacoes.png" />
+    <Content Include="Images\editorial_internacional.gif" />
+    <Content Include="Images\editorial_nacional.gif" />
+    <Content Include="Images\estrelas.png" />
+    <Content Include="Images\estrelas_2.png" />
+    <Content Include="Images\example-slide-1.jpg" />
+    <Content Include="Images\example-slide-2.jpg" />
+    <Content Include="Images\example-slide-3.jpg" />
+    <Content Include="Images\example-slide-4.jpg" />
+    <Content Include="Images\fancybox_loading%402x.gif" />
+    <Content Include="Images\fancybox_loading.gif" />
+    <Content Include="Images\fancybox_overlay.png" />
+    <Content Include="Images\fancybox_sprite%402x.png" />
+    <Content Include="Images\fancybox_sprite.png" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\filtro.jpg" />
+    <Content Include="Images\GIF_Carros_02.gif" />
+    <Content Include="Images\header_bg.gif" />
+    <Content Include="Images\home_mapa.png" />
+    <Content Include="Images\hoteis_botoes.gif" />
+    <Content Include="Images\HotelFlag.png" />
+    <Content Include="Images\hotel_detalhes_comprar.png" />
+    <Content Include="Images\hotel_detalhes_comprar_2.png" />
+    <Content Include="Images\hotel_detalhes_mapa.jpg" />
+    <Content Include="Images\hotel_detalhes_streetview.jpg" />
+    <Content Include="Images\hotsite_item_bgs.gif" />
+    <Content Include="Images\hotsite_item_seta.png" />
+    <Content Include="Images\ico-menu-roteiros-de-carros.png" />
+    <Content Include="Images\ico-menu-servicos.png" />
+    <Content Include="Images\icon-archive.gif" />
+    <Content Include="Images\icon-atividade.png" />
+    <Content Include="Images\icon-cart.png" />
+    <Content Include="Images\icon-edit.gif" />
+    <Content Include="Images\icones_titulo.png" />
+    <Content Include="Images\icones_titulo_laranja.png" />
+    <Content Include="Images\icon_down-silver.png" />
+    <Content Include="Images\icon_down.png" />
+    <Content Include="Images\icon_erro.gif" />
+    <Content Include="Images\icon_log.gif" />
+    <Content Include="Images\icon_up-silver.png" />
+    <Content Include="Images\icon_up.png" />
+    <Content Include="Images\ico_agencias.png" />
+    <Content Include="Images\ico_calendario_matriz.png" />
+    <Content Include="Images\ico_facebook.gif" />
+    <Content Include="Images\ico_hoteis_destaque.png" />
+    <Content Include="Images\ico_hoteis_destaque_la.png" />
+    <Content Include="Images\ico_inclui_matriz.png" />
+    <Content Include="Images\ico_linguagem.gif" />
+    <Content Include="Images\ico_pacotes_nacionais_internacionais.gif" />
+    <Content Include="Images\ico_passagens_destaque.png" />
+    <Content Include="Images\ico_regionalizacao.gif" />
+    <Content Include="Images\ico_resultado_nao_encontrado.png" />
+    <Content Include="Images\ico_twitter.gif" />
+    <Content Include="Images\ico_youtube.png" />
+    <Content Include="Images\idaDetalheVoo.png" />
+    <Content Include="Images\images_banners\display_01.jpg" />
+    <Content Include="Images\images_banners\display_02.jpg" />
+    <Content Include="Images\images_banners\display_03.jpg" />
+    <Content Include="Images\images_banners\hotsite_compras_no_exterior.jpg" />
+    <Content Include="Images\images_banners\hotsite_destinos_de_luxo.jpg" />
+    <Content Include="Images\images_banners\hotsite_locacao_de_veiculos.jpg" />
+    <Content Include="Images\images_banners\hotsite_lua_de_mel.jpg" />
+    <Content Include="Images\images_banners\hotsite_norte_e_nordeste.jpg" />
+    <Content Include="Images\images_banners\hotsite_seguro_de_viagem.jpg" />
+    <Content Include="Images\images_banners\pacotes.jpg" />
+    <Content Include="Images\images_banners\slide_1_1.jpg" />
+    <Content Include="Images\images_banners\slide_2_1.jpg" />
+    <Content Include="Images\images_banners\slide_2_2.jpg" />
+    <Content Include="Images\images_pacote\add_quarto.png" />
+    <Content Include="Images\images_pacote\aereo-button.jpg" />
+    <Content Include="Images\images_pacote\arrowDown.gif" />
+    <Content Include="Images\images_pacote\bg1_matriz.gif" />
+    <Content Include="Images\images_pacote\bg2_matriz.gif" />
+    <Content Include="Images\images_pacote\bg2_matriz.jpg" />
+    <Content Include="Images\images_pacote\bg3_cabecalho_detalhes_pacote.gif" />
+    <Content Include="Images\images_pacote\Botoes_01.png" />
+    <Content Include="Images\images_pacote\bot_refazer_busca.png" />
+    <Content Include="Images\images_pacote\close-button-aereo.jpg" />
+    <Content Include="Images\images_pacote\close-button-aereo.png" />
+    <Content Include="Images\images_pacote\del_quarto.png" />
+    <Content Include="Images\images_pacote\dropdown_arrow.png" />
+    <Content Include="Images\images_pacote\estrela1.png" />
+    <Content Include="Images\images_pacote\estrela2.png" />
+    <Content Include="Images\images_pacote\estrela3,50.png" />
+    <Content Include="Images\images_pacote\estrela3.png" />
+    <Content Include="Images\images_pacote\estrela4,50.png" />
+    <Content Include="Images\images_pacote\estrela4.png" />
+    <Content Include="Images\images_pacote\estrela5.png" />
+    <Content Include="Images\images_pacote\G3.gif" />
+    <Content Include="Images\images_pacote\icones_titulo.png" />
+    <Content Include="Images\images_pacote\icones_titulo_laranja.png" />
+    <Content Include="Images\images_pacote\ico_calendario_matriz.png" />
+    <Content Include="Images\images_pacote\ico_inclui_matriz.png" />
+    <Content Include="Images\images_pacote\ico_Servicos.png" />
+    <Content Include="Images\images_pacote\lupa.jpg" />
+    <Content Include="Images\images_pacote\marcador_lista_01.png" />
+    <Content Include="Images\images_pacote\O6.gif" />
+    <Content Include="Images\images_pacote\pacotes_detalhes_hospedagem.gif" />
+    <Content Include="Images\images_pacote\pacote_detalhes_comprar.png" />
+    <Content Include="Images\images_pacote\pacote_matriz_ver_detalhe.png" />
+    <Content Include="Images\images_tema\Tema_01.jpg" />
+    <Content Include="Images\keep_buy.png" />
+    <Content Include="Images\linha_botao.png" />
+    <Content Include="Images\loader.gif" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\loadingPartial.gif" />
+    <Content Include="Images\loadings\aereo_buscando.gif" />
+    <Content Include="Images\loadings\carro_buscando.gif" />
+    <Content Include="Images\loadings\hotel_buscando.gif" />
+    <Content Include="Images\loadings\pacote_buscando.gif" />
+    <Content Include="Images\loadings\servico_buscando.gif" />
+    <Content Include="Images\Loading_2.gif" />
+    <Content Include="Images\loading_buffalo_travel_vietnam.gif" />
+    <Content Include="Images\loading_transparent.gif" />
+    <Content Include="Images\load_autocomplete.gif" />
+    <Content Include="Images\login_ok.gif" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logodestint.jpg" />
+    <Content Include="Images\logodestnac.jpg" />
+    <Content Include="Images\logo_flytour-com.png" />
+    <Content Include="Images\main-details-stars.png" />
+    <Content Include="Images\marcador_lista_01.png" />
+    <Content Include="Images\marcador_lista_02.png" />
+    <Content Include="Images\melhores-precos.jpg" />
+    <Content Include="Images\MenuPainel.png" />
+    <Content Include="Images\minha_viagem.png" />
+    <Content Include="Images\nav_footer_marcador.png" />
+    <Content Include="Images\nav_footer_novo.png" />
+    <Content Include="Images\nav_icones.png" />
+    <Content Include="Images\nav_separacao.png" />
+    <Content Include="Images\newsemail.gif" />
+    <Content Include="Images\no-image.png" />
+    <Content Include="Images\pacotes_detalhes_hospedagem.gif" />
+    <Content Include="Images\painel_controle\icone-videos.png" />
+    <Content Include="Images\painel_controle\iconeAddUsuarios.png" />
+    <Content Include="Images\painel_controle\iconeCotizacao.png" />
+    <Content Include="Images\painel_controle\iconeDadosAgencia.png" />
+    <Content Include="Images\painel_controle\iconefinanceiro.png" />
+    <Content Include="Images\painel_controle\iconeListagemUsuarios.png" />
+    <Content Include="Images\painel_controle\iconeManual.png" />
+    <Content Include="Images\painel_controle\iconemapaplus.png" />
+    <Content Include="Images\painel_controle\iconeMeuCadastro.png" />
+    <Content Include="Images\painel_controle\iconemultis.png" />
+    <Content Include="Images\painel_controle\iconeOrcamento.png" />
+    <Content Include="Images\painel_controle\iconeReservaAgencia.png" />
+    <Content Include="Images\painel_controle\iconExtrato.png" />
+    <Content Include="Images\plus-small.png" />
+    <Content Include="Images\popup_10-04-2014.jpg" />
+    <Content Include="Images\popup_img.jpg" />
+    <Content Include="Images\rodape-logos-abav.gif" />
+    <Content Include="Images\rodape-logos-abracorp.gif" />
+    <Content Include="Images\rodape-logos-iata.gif" />
+    <Content Include="Images\rodape-logos-mtur.gif" />
+    <Content Include="Images\select.png" />
+    <Content Include="Images\selo-tarifa-operadora.png" />
+    <Content Include="Images\seta-branca-baixo.png" />
+    <Content Include="Images\seta.png" />
+    <Content Include="Images\seta_form_01.png" />
+    <Content Include="Images\seta_form_02.png" />
+    <Content Include="Images\setinhas-secoes.png" />
+    <Content Include="Images\slide_info_bg.jpg" />
+    <Content Include="Images\slide_valor.gif" />
+    <Content Include="Images\slide_valor_bg.gif" />
+    <Content Include="Images\slide_valor_botao.png" />
+    <Content Include="Images\sombra_ico_agencias.png" />
+    <Content Include="Images\sprite_ico_pagamento.png" />
+    <Content Include="Images\testeDestaque.png" />
+    <Content Include="Images\top.png" />
+    <Content Include="Images\top_bat.gif" />
+    <Content Include="Images\top_config.gif" />
+    <Content Include="Images\top_config_seta.png" />
+    <Content Include="Images\top_geo.gif" />
+    <Content Include="Images\top_ling.gif" />
+    <Content Include="Images\top_login.gif" />
+    <Content Include="Images\top_login_des.gif" />
+    <Content Include="Images\top_logof.gif" />
+    <Content Include="Images\transparencia_20.png" />
+    <Content Include="Images\troca.png" />
+    <Content Include="Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100 %281%29.png" />
+    <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\ui-icons_454545_256x240.png" />
+    <Content Include="Images\ui-icons_888888_256x240.png" />
+    <Content Include="Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\voltaDetalheVoo.png" />
+    <Content Include="Images\voo-ida.png" />
+    <Content Include="Images\voo-volta.png" />
+    <Content Include="Images\x.png" />
+    <Content Include="Images\xis.png" />
+    <Content Include="lib\images\amex.png" />
+    <Content Include="lib\images\dinersclub.png" />
+    <Content Include="lib\images\elo.png" />
+    <Content Include="lib\images\mastercard.png" />
+    <Content Include="lib\images\visa.png" />
+    <Content Include="Scripts\Aereo.js" />
+    <Content Include="Scripts\AereoAP.js" />
+    <Content Include="Scripts\AgenciaMapaModel.js" />
+    <Content Include="Scripts\Atividade.js" />
+    <Content Include="Scripts\AtividadeDetalhe.js" />
+    <Content Include="Scripts\Autenticar.js" />
+    <Content Include="Scripts\Banners.js" />
+    <Content Include="Scripts\base.js" />
+    <Content Include="Scripts\CallAjax.js" />
+    <Content Include="Scripts\Campanhas.js" />
+    <Content Include="Scripts\Carro.js" />
+    <Content Include="Scripts\CascadingEstadoParaCidade.js" />
+    <Content Include="Scripts\Consolidadora.js" />
+    <Content Include="Scripts\fancybox\blank.gif" />
+    <Content Include="Scripts\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Scripts\fancybox\fancybox_loading.gif" />
+    <Content Include="Scripts\fancybox\fancybox_overlay.png" />
+    <Content Include="Scripts\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Scripts\fancybox\fancybox_sprite.png" />
+    <Content Include="Scripts\fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Scripts\fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Scripts\fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Scripts\fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Scripts\fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox.css" />
+    <Content Include="Scripts\fancybox\jquery.fancybox.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\FTV.UI\FTVPopup.js" />
+    <Content Include="Scripts\funcoes.js" />
+    <Content Include="Scripts\home.js" />
+    <Content Include="Scripts\Hotel.js" />
+    <Content Include="Scripts\jquery.simplePagination.js" />
+    <None Include="Scripts\jquery\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\jquery\jquery-2.0.3.js" />
+    <Content Include="Scripts\jquery\jquery-2.0.3.min.js" />
+    <Content Include="Scripts\jquery\jquery-jPages.js" />
+    <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.fancybox.js" />
+    <Content Include="Scripts\jquery\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery\jquery.onlychars.js" />
+    <Content Include="Scripts\jquery\jquery.simplemodal.js" />
+    <Content Include="Scripts\jquery\jquery.slides.min.js" />
+    <Content Include="Scripts\jquery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery\jquery.validate.js" />
+    <Content Include="Scripts\jquery\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery\markerclusterer.js" />
+    <Content Include="Scripts\jquery\markerclusterer_packed.js" />
+    <Content Include="Scripts\knockout\knockout-2.3.0.debug.js" />
+    <Content Include="Scripts\knockout\knockout-2.3.0.js" />
+    <Content Include="Scripts\ListaUsuario.js" />
+    <Content Include="Scripts\LoginConsolidadora.js" />
+    <Content Include="Scripts\Mapa.js" />
+    <Content Include="Scripts\MenuPainelControle.js" />
+    <Content Include="Scripts\moment-with-langs.js" />
+    <Content Include="Scripts\moment-with-langs.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\MontePacote.js" />
+    <Content Include="Scripts\MultiMP.js" />
+    <Content Include="Scripts\Newsletter.js" />
+    <Content Include="Scripts\Orcamento.js" />
+    <Content Include="Scripts\Pacote.js" />
+    <Content Include="Scripts\PacoteDetalhe.js" />
+    <Content Include="Scripts\PacoteMatriz.js" />
+    <Content Include="Scripts\ppgallery.js" />
+    <Content Include="Scripts\QtrIE.js" />
+    <Content Include="Scripts\Reserva.js" />
+    <Content Include="Scripts\ResizeIframe.js" />
+    <Content Include="Scripts\simplePagination.css" />
+    <Content Include="Scripts\Site.js" />
+    <Content Include="Scripts\TesteMP.js" />
+    <Content Include="Scripts\Usuario.js" />
+    <Content Include="Scripts\Validations.js" />
+    <Content Include="Scripts\Venda.js" />
+    <Content Include="Scripts\Watermark.js" />
+    <Content Include="Scripts\WithLabel.js" />
+    <Content Include="Scripts\_notes\dwsync.xml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="SitesGrupo\BannerDestaqueConsolidadora.cshtml" />
+    <Content Include="SitesGrupo\BannerDestaqueEventos.cshtml" />
+    <Content Include="SitesGrupo\BannerDestaqueFranchising.cshtml" />
+    <Content Include="SitesGrupo\BannerDestaqueViagensaNegocio.cshtml" />
+    <Content Include="SitesGrupo\CampanhaConsolidadora.cshtml" />
+    <Content Include="SitesGrupo\CampanhaEventos.cshtml" />
+    <Content Include="SitesGrupo\CampanhaFranchising.cshtml" />
+    <Content Include="SitesGrupo\CampanhaViagensaNegocio.cshtml" />
+    <Content Include="SitesGrupo\NoticiasConsolidadora.cshtml" />
+    <Content Include="SitesGrupo\NoticiasEventos.cshtml" />
+    <Content Include="SitesGrupo\NoticiasFranchising.cshtml" />
+    <Content Include="SitesGrupo\NoticiasViagensaNegocio.cshtml" />
+    <Content Include="Views\Aereo\AereoForm.cshtml" />
+    <Content Include="Views\Aereo\AereoMenuForm.cshtml" />
+    <Content Include="Views\Aereo\AereoPacoteMatriz.cshtml" />
+    <Content Include="Views\Aereo\AereoPacoteResultado.cshtml" />
+    <Content Include="Views\Aereo\AereoPacotesForm.cshtml" />
+    <Content Include="Views\Aereo\AereoPacoteVenda.cshtml" />
+    <Content Include="Views\Aereo\AereoResultado.cshtml" />
+    <Content Include="Views\Aereo\Index.cshtml" />
+    <Content Include="Views\Aereo\LoadAereo.cshtml" />
+    <Content Include="Views\Aereo\LoadAereoPacotes.cshtml" />
+    <Content Include="Views\Aereo\PassagemDestaque.cshtml" />
+    <Content Include="Views\Atividade\AtividadeForm.cshtml" />
+    <Content Include="Views\Atividade\AtividadeMenuForm.cshtml" />
+    <Content Include="Views\Atividade\Index.cshtml" />
+    <Content Include="Views\Atividade\LoadDetalheAtividade.cshtml" />
+    <Content Include="Views\Atividade\LoadGrid.cshtml" />
+    <Content Include="Views\Autenticar\AcessoNegado.cshtml" />
+    <Content Include="Views\Autenticar\Administrativo.cshtml" />
+    <Content Include="Views\Autenticar\HomeLogin.cshtml" />
+    <Content Include="Views\Autenticar\Index.cshtml" />
+    <Content Include="Views\Autenticar\LogOn.cshtml" />
+    <Content Include="Views\Autenticar\RecuperarSenha.cshtml" />
+    <Content Include="Views\Autenticar\SessionLogin.cshtml" />
+    <Content Include="Views\Autenticar\TrocaSenha.cshtml" />
+    <Content Include="Views\Autenticar\_Logar.cshtml" />
+    <Content Include="Views\Autenticar\_LogIn.cshtml" />
+    <Content Include="Views\Caderno\Index.cshtml" />
+    <Content Include="Views\Campanha\Index.cshtml" />
+    <Content Include="Views\Carrinho\ContadorCarrinho.cshtml" />
+    <Content Include="Views\Carrinho\Index.cshtml" />
+    <Content Include="Views\Carrinho\LoadCarrinho.cshtml" />
+    <Content Include="Views\Carrinho\MinhaViagem.cshtml" />
+    <Content Include="Views\Carro\CarroForm.cshtml" />
+    <Content Include="Views\Carro\CarroMenuForm.cshtml" />
+    <Content Include="Views\Carro\CotacaoLojas.cshtml" />
+    <Content Include="Views\Carro\Index.cshtml" />
+    <Content Include="Views\Carro\LoadReservaFinalizada.cshtml" />
+    <Content Include="Views\Carro\ReservaCarro.cshtml" />
+    <Content Include="Views\Carro\Resultado.cshtml" />
+    <Content Include="Views\Circuito\Index.cshtml" />
+    <Content Include="Views\Consolidadora\Index.cshtml" />
+    <Content Include="Views\Destino\DestinoInternacional.cshtml" />
+    <Content Include="Views\Destino\DestinoInternacionalDetalhes.cshtml" />
+    <Content Include="Views\Destino\DestinoNacional.cshtml" />
+    <Content Include="Views\Destino\DestinoNacionalDetalhes.cshtml" />
+    <Content Include="Views\Destino\Index.cshtml" />
+    <Content Include="Views\Erro\Erro404.cshtml" />
+    <Content Include="Views\Erro\Erro500.cshtml" />
+    <Content Include="Views\EventosEIncentivo\Index.cshtml" />
+    <Content Include="Views\FaleConosco\Enviado.cshtml" />
+    <Content Include="Views\FaleConosco\Index.cshtml" />
+    <Content Include="Views\Franchising\Index.cshtml" />
+    <Content Include="Views\Franchising\IndexComFaleConosco.cshtml" />
+    <Content Include="Views\Home\Criancas.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\NewsletterForm.cshtml" />
+    <Content Include="Views\Home\Quartos.cshtml" />
+    <Content Include="Views\Home\Trechos.cshtml" />
+    <Content Include="Views\Hotel\HotelDestaque.cshtml" />
+    <Content Include="Views\Hotel\HotelDestaqueHotsite.cshtml" />
+    <Content Include="Views\Hotel\HotelDestaqueInferior.cshtml" />
+    <Content Include="Views\Hotel\HotelDestaqueInternacional.cshtml" />
+    <Content Include="Views\Hotel\HotelDestaqueInternacionalHotsite.cshtml" />
+    <Content Include="Views\Hotel\HotelDetalhes.cshtml" />
+    <Content Include="Views\Hotel\HotelForm.cshtml" />
+    <Content Include="Views\Hotel\HotelGallery.cshtml" />
+    <Content Include="Views\Hotel\HotelMenuForm.cshtml" />
+    <Content Include="Views\Hotel\Index.cshtml" />
+    <Content Include="Views\Hotel\Resultado.cshtml" />
+    <Content Include="Views\Hotel\ResultadoGrid.cshtml" />
+    <Content Include="Views\Hotsite\Index.cshtml" />
+    <Content Include="Views\InformacoesImportantes\Index.cshtml" />
+    <Content Include="Views\Mapa\Index.cshtml" />
+    <Content Include="Views\MontePacote\FiltroAereo.cshtml" />
+    <Content Include="Views\MontePacote\FiltroHotel.cshtml" />
+    <Content Include="Views\MontePacote\Index.cshtml" />
+    <Content Include="Views\MontePacote\MontePacote.cshtml" />
+    <Content Include="Views\MontePacote\MPFormMulti.cshtml" />
+    <Content Include="Views\MontePacote\MPHotelCarro.cshtml" />
+    <Content Include="Views\MontePacote\MPHotelVoo.cshtml" />
+    <Content Include="Views\MontePacote\MPHotelVooCarro.cshtml" />
+    <Content Include="Views\MontePacote\MPVooCarro.cshtml" />
+    <Content Include="Views\MontePacote\QuartosMP.cshtml" />
+    <Content Include="Views\MontePacote\QuartosMPMulti.cshtml" />
+    <Content Include="Views\MontePacote\TrechosMP.cshtml" />
+    <Content Include="Views\OndeEstamos\Index.cshtml" />
+    <Content Include="Views\Orcamento\EditarOrcamento.cshtml" />
+    <Content Include="Views\Orcamento\GetOrcamentos.cshtml" />
+    <Content Include="Views\Orcamento\Index.cshtml" />
+    <Content Include="Views\Orcamento\ListarOrcamento.cshtml" />
+    <Content Include="Views\Orcamento\OrcamentoEmail.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamento.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoAereo.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoAereoEmail.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoAtividade.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoCarro.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoHotel.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoHotelEmail.cshtml" />
+    <Content Include="Views\Orcamento\ShowOrcamentoPacote.cshtml" />
+    <Content Include="Views\Orcamento\Teste.cshtml" />
+    <Content Include="Views\Pacote\GridDetalhePacoteMatriz.cshtml" />
+    <Content Include="Views\Pacote\GridPacoteMatriz.cshtml" />
+    <Content Include="Views\Pacote\Index.cshtml" />
+    <Content Include="Views\Pacote\LoadDetalhePacoteMatriz.cshtml" />
+    <Content Include="Views\Pacote\LoadPacoteMatriz.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaque.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaquesInferior.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaquesInternacionais.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaquesInternacionaisIframe.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaquesNacionais.cshtml" />
+    <Content Include="Views\Pacote\PacoteDestaquesNacionaisIframe.cshtml" />
+    <Content Include="Views\Pacote\PacoteForm.cshtml" />
+    <Content Include="Views\Pacote\PacoteMenuForm.cshtml" />
+    <Content Include="Views\Pagamento\LoadPagamentos.cshtml" />
+    <Content Include="Views\Pagamento\Modalidade.cshtml" />
+    <Content Include="Views\PainelControle\Extrato.cshtml" />
+    <Content Include="Views\PainelControle\Index.cshtml" />
+    <Content Include="Views\PainelControle\ListaUsuario.cshtml" />
+    <Content Include="Views\PainelControle\Menu.cshtml" />
+    <Content Include="Views\PainelControle\Reserva.cshtml" />
+    <Content Include="Views\PainelControle\Usuario.cshtml" />
+    <Content Include="Views\Reserva\Index.cshtml" />
+    <Content Include="Views\Reserva\RegistrarReserva.cshtml" />
+    <Content Include="Views\RoteirosCarro\Index.cshtml" />
+    <Content Include="Views\Shared\EmailDefault.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\NoDataFound.cshtml" />
+    <Content Include="Views\Shared\Quartos.cshtml" />
+    <Content Include="Views\Shared\Regionalizacao.cshtml" />
+    <Content Include="Views\Shared\TesteTopo.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutConsolidadora.cshtml" />
+    <Content Include="Views\Shared\_LayoutEventosEIncentivo.cshtml" />
+    <Content Include="Views\Shared\_LayoutFranchising.cshtml" />
+    <Content Include="Views\Shared\_LayoutViagensANegocios.cshtml" />
+    <Content Include="Views\SitesGrupo\BannerDestaqueConsolidadora.cshtml" />
+    <Content Include="Views\SitesGrupo\BannerDestaqueEventos.cshtml" />
+    <Content Include="Views\SitesGrupo\BannerDestaqueFranchising.cshtml" />
+    <Content Include="Views\SitesGrupo\BannerDestaqueViagensaNegocio.cshtml" />
+    <Content Include="Views\SitesGrupo\CampanhaConsolidadora.cshtml" />
+    <Content Include="Views\SitesGrupo\CampanhaEventos.cshtml" />
+    <Content Include="Views\SitesGrupo\CampanhaFranchising.cshtml" />
+    <Content Include="Views\SitesGrupo\CampanhaViagensaNegocio.cshtml" />
+    <Content Include="Views\SitesGrupo\FaleConoscoFranchising.cshtml" />
+    <Content Include="Views\SitesGrupo\NoticiasConsolidadora.cshtml" />
+    <Content Include="Views\SitesGrupo\NoticiasEventos.cshtml" />
+    <Content Include="Views\SitesGrupo\NoticiasFranchising.cshtml" />
+    <Content Include="Views\SitesGrupo\NoticiasViagensaNegocio.cshtml" />
+    <Content Include="Views\Venda\Consulta.cshtml" />
+    <Content Include="Views\Venda\Detalhe.cshtml" />
+    <Content Include="Views\Venda\Index.cshtml" />
+    <Content Include="Views\ViagensANegocios\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Helpers\Aereo\" />
+    <Folder Include="Helpers\Atividade\" />
+    <Folder Include="Helpers\Base\" />
+    <Folder Include="Helpers\Caderno\" />
+    <Folder Include="Helpers\Carrinho\" />
+    <Folder Include="Helpers\Carro\" />
+    <Folder Include="Helpers\Circuito\" />
+    <Folder Include="Helpers\Destino\" />
+    <Folder Include="Helpers\Erro\" />
+    <Folder Include="Helpers\Gerenciamento\" />
+    <Folder Include="Helpers\Home\" />
+    <Folder Include="Helpers\Hotsite\" />
+    <Folder Include="Helpers\InformacoesImportantes\" />
+    <Folder Include="Helpers\MontePacote\" />
+    <Folder Include="Helpers\Orcamento\" />
+    <Folder Include="Helpers\Pacote\" />
+    <Folder Include="Helpers\Pagamento\" />
+    <Folder Include="Helpers\Reserva\" />
+    <Folder Include="Helpers\RoteirosCarro\" />
+    <Folder Include="Helpers\Shared\" />
+    <Folder Include="Helpers\Venda\" />
+    <Folder Include="Languages\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Shared\Reserva\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoComplete\Repository.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\.DS_Store" />
+    <Content Include="Content\images\.DS_Store" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Hotsites\comum\.DS_Store" />
+    <Content Include="Hotsites\Consolidadora\_LayoutConsolidadora.cshtml" />
+    <Content Include="Hotsites\docs_download\Codigo-de-Etica-Flytour.pdf" />
+    <Content Include="Hotsites\docs_download\Manual_de_Indicadores_Selo_V00.pdf" />
+    <Content Include="Hotsites\docs_download\Regulamento_Tecnico_Selo_V00.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\.DS_Store" />
+    <Content Include="Scripts\jquery\jquery-2.0.3.min.map" />
+    <Content Include="Scripts\jquery\jquery.onlychars" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55966/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

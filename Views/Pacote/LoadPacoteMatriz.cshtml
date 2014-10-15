@@ -1,0 +1,117 @@
+﻿@model IList<FT.Web.Model.Models.PacoteModel>
+@{
+    ViewBag.Title = "LoadPacoteMatriz - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+}
+
+@{RouteValueDictionary tRVD = new RouteValueDictionary(ViewContext.RouteData.Values);}
+
+<form id="FomMatriz" action="/Pacote/LoadPacoteMatriz" method="post" style="margin-left: 10px; margin-top: 10px">
+    <script src="~/Scripts/PacoteMatriz.js"></script>
+
+    <link href="~/Content/PacoteX.css" rel="stylesheet" />
+    <div style="margin: auto; width: 980px;" id="DivPai">
+        <div style="float: left; padding-top: 10px; color: white; background-color: #f05c18; width: 255px; border-radius: 10px;">
+            <span style="font-family: Verdana; margin: 10px; color: white; font-size: 20px;">Pesquisar</span>
+            <div style="margin: 2px; background-color: #eeeeee; border-radius: 10px; height: 445px;">
+                <div style="margin-bottom: 15px;" id="DivRadio">
+                    <ul id="" class="semMargem" style="margin-top: 10px">
+
+                        <li style="float: left; margin-left: 25px; padding-top: 15px;">
+                            <input type="hidden" id="hdnOrigem" name="hdnOrigem" value="@Request.Form["rdbOrigem"]" />
+                            <input type="radio" class="radioPacote" name="rdbOrigem" value="S" tabindex="1">
+                            <label style="font-family: Verdana; color: #666; font-weight: bold; font-size: 12px;">Nacionais</label>
+
+                        </li>
+                        <li style="float: left; margin-left: 25px;">
+                            <input type="radio" class="radioPacote" name="rdbOrigem" value="N" tabindex="1">
+                            <label for="rdbOrigemNasc" style="font-family: Verdana; color: #666; font-weight: bold; font-size: 12px;">Internacionais</label>
+                        </li>
+                    </ul>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+                <ul class="fixAltura">
+
+                    <li style="margin-left: 20px; float: left; margin-top: 10px; font-family: Verdana" id="liLoadingDeparture_0" class="">
+                        <span style="font-family: Verdana; font-weight: bold; margin-left: 8px; color: #666; font-size: 12px;">Origem</span>
+                        <br />
+                        <div class="loaderEmbarque"></div>
+                        <select class="selectPacoteMatriz" name="ddlCidadesEmbarque" id="ddlCidadesEmbarque">
+                            <option value="" dt="teste">Origem</option>
+                        </select><br />
+                        <br />
+                        <input type="hidden" id="hdnEmbarque" name="hdnEmbarque" value="@Request.Form["ddlCidadesEmbarque"]" />
+                        <input type="hidden" id="hdnCidadeDestino" name="hdnCidadeDestino" value="@Request.Form["ddlCidadesDestino"]" />
+                        <input type="hidden" id="hdnDataSaida" name="hdnDataSaida" value="@Request.Form["ddlDataVIagem"]" />
+                    </li>
+                    <li style="margin-left: 20px; float: left" id="liLoadingDeparture_1" class="">
+                        <span style="font-family: Verdana; font-weight: bold; margin-left: 8px; color: #666; font-size: 12px;">Destino</span><br />
+                        <div class="loader"></div>
+                        <input type="hidden" id="hdnCidadeOrigem" name="hdnCidadeOrigem" value="@Request.Form["hdnCidadesDestinoTexto"]" />
+                        <select class="selectPacoteMatriz" name="ddlCidadesDestino" id="ddlCidadesDestino">
+                            <option selected value="@Request.Form["ddlCidadesDestino"]" dt="teste">@Request.Form["hdnCidadesDestinoTexto"]</option>
+                        </select><br />
+                        <br />
+
+                    </li>
+                    <li style="margin-left: 20px; float: left" id="liLoadingData" class="">
+                        <span style="font-family: Verdana; font-weight: bold; margin-left: 8px; color: #666; font-size: 12px;">Data</span><br />
+                        <div class="loaderData"></div>
+                        <select class="selectPacoteMatriz" name="ddlDataVIagem" id="ddlDataVIagem">
+                            <option value="@Request.Form["ddlDataVIagem"]">@Request.Form["hdnDataViagemTexto"]</option>
+                        </select><br />
+                        <br />
+                    </li>
+
+                    <li style="margin-left: 20px; float: left" id="liLoadingData" class="">
+                        <span style="font-family: Verdana; font-weight: bold; margin-left: 8px; color: #666; font-size: 12px;">Tipo Produto</span><br />
+                        <div class="loaderData"></div>
+                        <input type="hidden" name="hdnPrd"  id="hdnPrd" value="@Request.Form["ddlTipoPrd"]" />
+                        <select class="selectPacoteMatriz" name="ddlTipoPrd" id="ddlTipoPrd">
+                            <option value="">Selecione</option>
+                            <option value="2">Aéreo + Terrestre</option>
+                            <option value="1">Somente Terrestre</option>
+                        </select><br />
+                        <br />
+                    </li>
+
+                </ul>
+
+                <div style="float: right; margin-top: 10px; margin-right: 10px;" class="box-bottom">
+                    <input class="buttonPacoteRefazer" name="buttonPacote" id="buttonPacote" type="button" value="Refazer Busca">
+                </div>
+            </div>
+        </div>
+        <div id="DivPai2" style="float: left; width: 630px; margin-left: 5px;">
+            <div class="pacote-cabecalho-1">
+                <div class="pacote-cabecalho-1-1">
+                    <div class="icone-titulo"></div>
+                    <p class="pacote-cabecalho-1-texto-1">Resultados da Pesquisa</p>
+                    <select id="combo-ordenar" name="combo-ordenar" class="combo-ordenar">
+                        <option value="3">Preço - menor &gt; maior</option>
+                        <option value="4">Preço - maior &gt; menor</option>
+                        <option value="1">Pacote - A &gt; Z</option>
+                        <option value="2">Pacote - Z &gt; A</option>
+                    </select>
+                    <p class="pacote-cabecalho-1-texto-2">Ordenar por</p>
+                </div>
+                <div class="pacote-cabecalho-1-2">
+                    <p class="pacote-cabecalho-1-texto-3">
+                        Pacotes para <strong>
+                            <label id="lblPacotesPara" style="font-weight: bold;">@Request.Form["hdnCidadesDestinoTexto"] </label>
+                        </strong>
+                    </p>
+                    <p class="pacote-cabecalho-1-texto-4">
+                        Saindo de <strong>
+                            <label id="lblSaindo" style="font-weight: bold;">@Request.Form["hdnCidadesEmbarqueTexto"]</label></strong>, em <strong>
+                                <label id="lblDatasaida" style="font-weight: bold;">@Request.Form["hdnDataViagemTexto"]</label></strong>
+                    </p>
+                </div>
+            </div>
+
+            <div id="GridPacoteMatriz">
+                @{Html.RenderPartial("GridPacoteMatriz", Model);}
+            </div>
+        </div>
+</form>

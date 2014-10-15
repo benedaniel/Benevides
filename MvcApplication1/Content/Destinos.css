@@ -1,0 +1,205 @@
+﻿div.logoDest {
+    width: 357px;
+    margin-top: 20px;
+}
+
+div.logoDestInt {
+    width: 427px;
+    margin-top: 20px;
+}
+
+h2.nasc {
+    color: #085184;
+    margin-top: 17px;
+    font-weight: bold;
+    font-family: Tahoma,Verdana,Geneva,sans-serif;
+    font-size: 1.8em;
+    float: right;
+}
+
+h2.inter {
+    color: #EF6918;
+    margin-top: 17px;
+    font-weight: bold;
+    font-family: Tahoma,Verdana,Geneva,sans-serif;
+    font-size: 1.8em;
+    float: right;
+}
+
+div.destinos {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    min-height: 300px;
+}
+
+    div.destinos div.destino {
+        width: 226px;
+        height: 126px;
+        border: solid 2px #EFEFEF;
+        float: left;
+        margin-right: 15px;
+        margin-bottom: 40px;
+        background-color: #ffd800;
+    }
+
+        div.destinos div.destino a.nasc {
+            background: url("../Images/destnac.png") no-repeat scroll -226px 0 rgba(0, 0, 0, 0);
+            display: block;
+            height: 126px;
+            width: 226px;
+        }
+
+        div.destinos div.destino p.nasc {
+            color: #085184;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: Tahoma,Verdana,Geneva,sans-serif;
+            font-size: 0.9em;
+        }
+
+        div.destinos div.destino a.inter {
+            background: url("../Images/destint.png") no-repeat scroll -226px 0 rgba(0, 0, 0, 0);
+            display: block;
+            height: 126px;
+            width: 226px;
+        }
+
+        div.destinos div.destino p.inter {
+            color: #EF6918;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: Tahoma,Verdana,Geneva,sans-serif;
+            font-size: 0.9em;
+        }
+
+        div.destinos div.destino a:hover {
+            background-position: 0px 0px;
+        }
+
+div.destino-topo {
+    width: 990px;
+    min-height: 300px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+    div.destino-topo div.destino-fotos {
+        float: left;
+    }
+
+    div.destino-topo div.destino-desc {
+        float: right;
+        width: 600px;
+        text-align: justify;
+        font-family: Verdana,Geneva,sans-serif;
+        font-size: 0.8em;
+    }
+
+        div.destino-topo div.destino-desc h1 {
+            color: #F75110;
+            margin-bottom: 30px;
+            font-size: 1.7em;
+        }
+
+        div.destino-topo div.destino-desc p {
+            color: #737173;
+        }
+
+    div.destino-topo div.destino-fotos .imgPrincipal {
+        width: 345px;
+        height: 255px;
+        background-color: #000;
+        border: solid 1px #CCC;
+        background-size: 345px 255px;
+    }
+
+    div.destino-topo div.destino-fotos ul.imgMenor {
+        margin-top: 8px;
+    }
+
+        div.destino-topo div.destino-fotos ul.imgMenor li {
+            float: left;
+            margin-right: 8px;
+            width: 49px;
+            height: 49px;
+            background-size: 49px 49px;
+            background-color: #000;
+            border: solid 1px #CCC;
+        }
+
+ul.imgMenor li a {
+    width: 49px;
+    height: 49px;
+}
+
+    ul.imgMenor li a img {
+        width: 49px;
+        height: 49px;
+    }
+
+
+div.destino-conteudo {
+    width: 990px;
+    min-height: 300px;
+    margin-bottom: 30px;
+    margin-top: 60px;
+}
+
+    div.destino-conteudo div.destino-menu {
+        background-color: #0049A5;
+        width: 227px;
+        padding: 10px;
+        border-radius: 10px;
+        font-family: Verdana,Geneva,sans-serif;
+        float: left;
+    }
+
+        div.destino-conteudo div.destino-menu ul {
+            width: 227px;
+        }
+
+        div.destino-conteudo div.destino-menu li {
+            color: #FFF;
+            padding-bottom: 5px;
+            border-bottom: solid 1px #ccc;
+            height: 32px;
+            line-height: 39px;
+            padding-left: 5px;
+            cursor: pointer;
+        }
+
+            div.destino-conteudo div.destino-menu li:hover {
+                color: #F75108;
+                padding-bottom: 5px;
+                border-bottom: solid 1px #ccc;
+                background-color: #fff;
+            }
+
+    div.destino-conteudo div.destino-item {
+        border: 1px solid #CCCCCC;
+        border-radius: 10px 10px 10px 10px;
+        float: right;
+        margin-bottom: 30px;
+        min-height: 300px;
+        padding: 36px;
+        width: 623px;
+    }
+
+        div.destino-conteudo div.destino-item h1 {
+            color: #F75110;
+            font-family: Verdana,Geneva,sans-serif;
+            font-size: 1.4em;
+        }
+
+        div.destino-conteudo div.destino-item h2 {
+            color: #0049A5;
+            font-family: Verdana,Geneva,sans-serif;
+            font-size: 0.8em;
+        }
+
+        div.destino-conteudo div.destino-item p {
+            text-align: justify;
+            font-family: Verdana,Geneva,sans-serif;
+            font-size: 0.8em;
+            color: #737173;
+        }

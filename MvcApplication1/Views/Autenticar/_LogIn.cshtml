@@ -1,0 +1,35 @@
+﻿@model FT.Web.Model.Models.UsuarioModel
+@{string paramUrl = string.IsNullOrEmpty(Request.Params["returnUrl"]) ? "" : Request.Params["returnUrl"];
+  string Error = Convert.ToString(ViewBag.Error);
+  }
+@using (Html.BeginForm("LogIn", "Autenticar", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+    @Html.Label(Error);
+    <div>
+        <div>
+            <div>
+                @Html.LabelFor(p => p.Usuario)
+            </div>
+            <div>
+                @Html.TextBoxFor(p => p.Usuario)
+                @Html.ValidationMessageFor(p => p.Usuario)
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(p => p.Senha)
+            </div>
+            <div>
+                @Html.PasswordFor(p => p.Senha)
+                @Html.ValidationMessageFor(p => p.Senha)
+            </div>
+            <div>
+                @Html.Hidden("paramUrl", paramUrl)
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Logar" />
+        </div>
+    </div>
+}

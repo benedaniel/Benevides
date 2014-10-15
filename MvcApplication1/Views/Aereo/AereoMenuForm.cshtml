@@ -1,0 +1,245 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AereoMenuForm</title>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/ResizeIframe.js"></script>
+    <script src="~/Scripts/jquery/jquery.slides.min.js"></script>
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/jquery/stylesheet-image-based.css" rel="stylesheet" />
+    <link href="~/Content/Buscadores.css" rel="stylesheet" />
+    <link href="~/Content/Master.css" rel="stylesheet" />
+    <script src="~/Scripts/Site.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Validations.js"></script>
+    <script src="~/Scripts/Watermark.js"></script>
+    <script src="~/Scripts/moment-with-langs.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <link href="~/Content/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/form.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            AjusteHeightFrameParent("iframeBuscadorAereo", 30);
+        });
+    </script>
+
+    <style>
+        label {
+            color: #FFF;
+            font-family: Verdana;
+            font-size: 11px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="loading" style="display: none;">
+        <img src="~/Images/Loading_2.gif" width="370" />
+    </div>
+
+    <div id="tabs-3">
+        <div class="buscador-campos">
+            @{
+                ViewBag.Title = "ConsultaAereos";
+            }
+
+            <script src="~/Scripts/Aereo.js"></script>
+
+            @model FT.Web.Model.Models.AereoModel
+
+            @using (Html.BeginForm("LoadAereo", "Aereo", FormMethod.Post, new { id = "aereoForm", target = "_top" }))
+            {   
+                <div class="contentBusca">
+                    <div id="DivRadio">
+                        <h3>Procure sua passagem</h3>
+                        @Html.RadioButtonFor(p => p.Tipo, "IdaeVolta", new { Checked = "checked", @class = "buscadorlabel", @id = "radio2" })
+                        <label for="radio2">Ida e volta</label>
+                        @Html.RadioButtonFor(p => p.Tipo, "SomenteIda", new { @class = "buscadorlabel", @id = "radio1" })
+                        <label for="radio1">Somente ida</label>
+                        @Html.RadioButtonFor(p => p.Tipo, "MultiTrecho", new { @class = "buscadorlabel", @id = "radio3" })
+                        <label for="radio1">Multi Trecho</label>
+                    </div>
+                    <div class="clear"></div>
+                    <br />
+
+                    <div id="Divtitulo" class='roomTitle' style="display: none">
+                        <br />
+                        <label style="font-size: 16px; font-weight: bold;">Trecho 1</label>
+                        <br />
+                        <div style="margin-bottom: -10px;">
+                        </div>
+                        <label>___________________________________________________________</label>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="BuscadorSet">
+                        <div>
+                            @Html.LabelFor(p => p.Origem, new { @class = "buscadorlabel" })
+                            <div id="divOrigem">
+                                @Html.TextBoxFor(p => p.Origem, new { @id = "OrigemAereo", @class = "watermarkAereo inputdestinoAereo", title = "Informe sua origem" })<br />
+                                @Html.ValidationMessageFor(p => p.Origem)
+                            </div>
+                        </div>
+                        @Html.LabelFor(p => p.Destino, new { @class = "buscadorlabel" })
+                        <div id="divDestino">
+                            @Html.TextBoxFor(p => p.Destino, new { @id = "DestinoAereo", @class = "watermarkAereo inputdestinoAereo", title = "Informe seu destino", onchange = "selectCidade(1, this)" })<br />
+                            @Html.ValidationMessageFor(p => p.Destino)
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="clear"></div>
+
+                    <div class="BuscadorSetDate">
+                        <div class="SetDate">
+                            @Html.LabelFor(p => p.DataEmbarque, new { @class = "buscadorlabel" })<br />
+                            @Html.TextBoxFor(p => p.DataEmbarque, new { @class = "txtStartDate" })
+                            @Html.ValidationMessageFor(p => p.DataEmbarque)
+                        </div>
+
+                        <div id="destinoDiv" class="SetDate">
+                            @Html.LabelFor(p => p.DataRetorno, new { @class = "buscadorlabel" })<br />
+                            @Html.TextBoxFor(p => p.DataRetorno, new { @class = "txtEndDate" })
+                            @Html.ValidationMessageFor(p => p.DataRetorno)
+                        </div>
+
+                    </div>
+
+                    <ul id="trechosAdicionais">
+                    </ul>
+                    <div class="clear"></div>
+                    <div id="divAddtrecho" style="display: none; margin-bottom: 10px;">
+                        <label>___________________________________________________________</label><br />
+                        <p class="BuscadorSet">
+                            @Html.Label("Acrescentar destino", new { @class = "buscadorlabel" })
+                            <input type="button" id="plusRooms" onclick="adicionarTrecho()" class="buttonPacote" />
+                            <input type="button" id="minusRooms" onclick="removerTrecho()" class="buttonPacoteRemover" />
+                        </p>
+                    </div>
+                    <div class="quantsContent">
+                        <div class="quants">
+                            <label>Adulto</label>
+                            <br />
+                            <div>
+
+                                <a id="plusAdt" href="javascript:" class="plus"></a>
+                                @Html.TextBoxFor(p => p.QuantidadeAdulto, new { id = "qtAdultos", onkeypress = "return isNumberKey(event)", onkeyup = "isLessThanZero(this)" })
+                                <a id="minusAdt" href="javascript:" class="minus"></a>
+
+                                @Html.ValidationMessageFor(p => p.QuantidadeAdulto)
+                            </div>
+                        </div>
+
+                        <div class="quants">
+                            <label>Crianças <small>(2 a 11 anos)</small></label>
+                            <div>
+
+                                <a id="plusCri" href="javascript:" class="plus"></a>
+                                @Html.TextBoxFor(p => p.QuantidadeCrianca, new { id = "qtCriancas", onkeypress = "return isNumberKey(event)" })
+                                <a id="minusCri" href="javascript:" class="minusCC"></a>
+
+                                @Html.ValidationMessageFor(p => p.QuantidadeCrianca)
+                            </div>
+                        </div>
+
+                        <div class="quants">
+                            <label>Bebês <small>(1 a 23 meses)</small></label><br />
+                            <div>
+
+                                <a id="plusbb" href="javascript:" class="plus"></a>
+                                @Html.TextBoxFor(p => p.QuantidadeBebe, new { id = "qtBebes", onkeypress = "return isNumberKey(event)" })
+                                <a id="minusbb" href="javascript:" class="minusCC"></a>
+
+                                @Html.ValidationMessageFor(p => p.QuantidadeBebe)
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.BloquearPassageiros)
+                    {
+                        <script>
+                            $('#qtAdultos').attr('disabled', 'disabled');
+                            $('#plusAdt').attr('disabled', 'disabled');
+                            $('#minusAdt').attr('disabled', 'disabled');
+                            $('#qtCriancas').attr('disabled', 'disabled');
+                            $('#plusCri').attr('disabled', 'disabled');
+                            $('#minusCri').attr('disabled', 'disabled');
+                            $('#qtBebes').attr('disabled', 'disabled');
+                            $('#plusbb').attr('disabled', 'disabled');
+                            $('#minusbb').attr('disabled', 'disabled');
+                        </script>
+                    }
+                    <div class="clear"></div>
+                    <br />
+
+                    <a href="javascript:" id="searchAdvMenu" class="buscaAvancada">Busca avançada
+            <img id="imgavaereo" src="~/Images/ava.gif" />
+                    </a>
+
+                    <br />
+
+                    <div id="moreoptions" style="display: none">
+                        <br />
+                        <div class="BuscadorSet">
+                            <div>
+                                <label>Horário da ida</label>
+                                <div class="styled-select-form">
+                                    <select name="horarioIdaSelect">
+                                        <option>Qualquer</option>
+                                        <option>Manha</option>
+                                        <option>Tarde</option>
+                                        <option>Noite</option>
+                                        <option>Madrugada</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label>Horário da volta</label>
+                                <div class="styled-select-form">
+                                    <select name="horarioVoltaSelect">
+                                        <option>Qualquer</option>
+                                        <option>Manha</option>
+                                        <option>Tarde</option>
+                                        <option>Noite</option>
+                                        <option>Madrugada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="BuscadorSet">
+                            <div>
+                                <label>Classe</label>
+                                <div class="styled-select-form">
+                                    <select name="classeSelect">
+                                        <option>Qualquer</option>
+                                        <option>Econômica</option>
+                                        <option>Executiva</option>
+                                        <option>Primeira classe</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="radio3">
+                                <input type="checkbox" id="radio3" name="somenteDireto" />
+                                <label for="radio3" style="font-size: 11px;">Somente vôos diretos</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <input type="submit" id="btnBuscarAereos" value="" onclick="return AereoLoadingShow()" class="btnPesquisar" />
+                    @Html.ValidationMessageFor(p => p.Tipo)
+                </div>
+            }
+            <div id="gridContainer" style="display: none;">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

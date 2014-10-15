@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Tela Restrita - Flytour Viagens - Pacotes de Viagem, Passagens Aéreas, Hotéis, Roteiros, Carros, Cruzeiros e Ingressos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Autenticar.js"></script>
+<script src="~/Scripts/jquery/jquery.simplemodal.js"></script>
+<link href="~/Content/Usuario.css" rel="stylesheet" />
+@model FT.Web.Model.Models.PessoaModel
+@{string paramUrl = string.IsNullOrEmpty(Request.Params["returnUrl"]) ? "" : Request.Params["returnUrl"];
+  string Error = ViewBag.Error == null ? "" : ViewBag.Error;
+}
+<div class="content">
+    @using (Html.BeginForm("Logar", "Autenticar", FormMethod.Post, new { @id = "formAuth" }))
+    {
+        if (!string.IsNullOrEmpty(Error))
+        { 
+        <script>
+            $(document).ready(function () {
+                showMensagem("Login", "@Html.Raw(Error.Replace("\r", "").Replace("\n", "").Replace(";", "<br />").Replace("\"", "\'"))", 500);
+            });
+        </script>
+        }
+        <div class="div-login">
+            <div style="float: left">
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.USUARIO, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(p => p.USUARIO, new { @class = "inputG" })
+                        @Html.ValidationMessageFor(p => p.USUARIO)
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.LabelFor(p => p.SENHA, new { @class = "label-campo-geral" })
+                    </div>
+                    <div>
+                        @Html.PasswordFor(p => p.SENHA, new { @class = "inputG" })
+                        @Html.ValidationMessageFor(p => p.SENHA)
+                    </div>
+                    <div>
+                        @Html.Hidden("paramUrl", paramUrl)
+                        <input type="hidden" id="ID_PESSOA" name ="ID_PESSOA" value="@Model.ID_PESSOA" />
+                        @Html.HiddenFor(p => p.ID_EMPRESA)
+                        <input type="hidden" id="id_token" value="@Model.Token" />
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" class="botao-logar" value="Logar" onclick="if ($('#formAuth').valid()) { showdivLoad(); }" />
+                </div>
+                <br />
+                <div>@Html.ActionLink("Esqueci a Senha", "RecuperarSenha", "Autenticar")</div>
+            </div>
+            <div class="instrucoes">
+                <p style="font-weight: bold; line-height: 22px;">Olá!</p>
+                <p style="line-height: 22px;">Se você não é um agente de viagem, clique no link abaixo e encontre a nossa loja mais proxima.</p>
+                <div style="clear: both"></div>
+                <div onclick="window.location='/Mapa'" class="botaoLojas">
+                    <label style="cursor:pointer; float: left">Encontrar loja mais proxima</label>
+                    <div style="cursor:pointer; float: left; background: url(../images/seta.png) no-repeat; height: 15px; width: 15px; margin-left: 10px; margin-top: 4px;">
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    }
+
+</div>
+<div>
+    @{string erro = ViewBag.Error;
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        SetPerfilAgencia();
+    });
+
+    function getPerfils() {
+        return '@ViewBag.lstPerfil';
+    }
+    function getAgencias() {
+        return '@ViewBag.lstAgencia';
+    }
+    function SetPerfilAgencia() {
+        var lstPerfil = getPerfils();
+        var lstAgencia = getAgencias();
+        if (lstPerfil != "" || lstAgencia != "") {
+            $("#dialog").modal({
+                modal: true,
+                height: 300,
+                width: 800
+            });
+            $("#btnOk").focus();
+        }
+
+    }
+
+    $(function () {
+
+        $("#btnOk").click(function () {
+
+            var perfil;
+            if ($("input:radio[name=rdbPerfil]:checked").val() == undefined) {
+                perfil = null;
+            }
+            else {
+                perfil = $("input:radio[name=rdbPerfil]:checked").val()
+            }
+
+            var agencia;
+            if ($("input:radio[name=rdbAgencia]:checked").val() == undefined) {
+                agencia = null;
+            }
+            else {
+                agencia = $("input:radio[name=rdbAgencia]:checked").val()
+            }
+
+            if (perfil != 159 && agencia == null) {
+                showMensagem("Usuario Inválido", "O usuário utilizado não tem uma agencia cadastrada. por favor entrar em contato com o suporte", 500, 600)
+                $.modal.close();
+                return false;
+            }
+
+            var args = new Object();
+            args = {
+
+                CodigoPerfil: perfil,
+                CodigoAgencia: agencia,
+                ID_PESSOA: $("#ID_PESSOA").val(),
+                ID_EMPRESA: $("#ID_EMPRESA").val(),
+                id_token: $("#id_token").val()
+            };
+
+            $.ajax({
+                url: '/Autenticar/SetaPerfilAgenciaUsuario',
+                type: 'POST',
+                data: args,
+                dataType: 'json',
+                success: function (result) {
+                    var url = $("#paramUrl").val();
+                    if (url == "")
+                        window.location.href = "/PainelControle";
+                    else
+                        window.location.href = url;
+                }
+            });
+        });
+    });
+
+</script>
+@*<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />*@
+<div id="dialog" style="display: none; font-size: small;">
+    @if (ViewBag.lstPerfil != null)
+    {
+        var lstPerfil = (List<FT.Web.Model.Models.PerfilModel>)@ViewBag.lstPerfil;
+        <div class="divradios" title="Perfil">
+            <fieldset>
+                <legend style="margin-bottom: 8px">Perfil</legend>
+                <p>
+                    @for (int i = 0; i < lstPerfil.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                        <input class="radioescolha rdbPerfil" type="radio" name="rdbPerfil" value="@lstPerfil[i].ID_PERFIL" checked > <span class="textradio"> @lstPerfil[i].DS_PERFIL </span>
+                        <br />
+                        }
+                        else
+                        {
+                        <input class="radioescolha rdbPerfil" type="radio" name="rdbPerfil" value="@lstPerfil[i].ID_PERFIL" > <span class="textradio"> @lstPerfil[i].DS_PERFIL </span> <br />
+                        }
+                    }
+                </p>
+            </fieldset>
+        </div>
+    }
+    @if (@ViewBag.lstAgencia != null)
+    {
+        var lstAgencia = (List<FT.Web.Model.Models.AgenciaModel>)@ViewBag.lstAgencia;
+        <div class="divradios" title="Agencia">
+            <fieldset>
+                <legend style="margin-bottom: 8px">Agencia</legend>
+                <p>
+                    <h4>
+                        @for (int i = 0; i < lstAgencia.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                            <input class="radioescolha rdbAgencia" type="radio" name="rdbAgencia" value="@lstAgencia[i].ID_PESSOA_AGENCIA" checked> <span class="textradio"> @lstAgencia[i].NM_PESSOA_AGENCIA </span>
+                            <br />
+                            }
+                            else
+                            {
+                            <input class="radioescolha rdbAgencia" type="radio" name="rdbAgencia" value="@lstAgencia[i].ID_PESSOA_AGENCIA" > <span class="textradio"> @lstAgencia[i].NM_PESSOA_AGENCIA </span> <br />
+                            }
+                        }
+                    </h4>
+                </p>
+            </fieldset>
+        </div>
+        <input type="hidden" value ="@ViewBag.url"  id="paramUrl" />
+    }
+    <input class="botao-logar" type="submit" id="btnOk" value="Ok" />
+</div>
+

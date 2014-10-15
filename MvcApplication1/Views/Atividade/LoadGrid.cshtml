@@ -1,0 +1,853 @@
+﻿@*  CONSULTA DE INGRESSOS 12-08-2013*@
+<script>
+    function mensagem() {
+        var num = 0;
+        var arr = @Html.Raw(Json.Encode(@ViewBag.HotelMapa))
+        BuscaHoteisMapa(arr);
+
+    }
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+</script>
+<link href="~/Content/Atividade.css" rel="stylesheet" />
+@model IList<FT.Web.Model.Models.AtividadeModel>
+@using System.Web.Helpers
+
+<div>
+    @if (Model != null && Model.Count > 0)
+    {
+
+        if (Model.Count == 1 && (Model.First().Transfer.Count == 0 && Model.First().AssistenciaViagem.Count == 0 && Model.First().Ingresso.Count == 0 && Model.First().Passeio.Count == 0 && Model.First().Restaurante.Count == 0 && Model.First().PacoteAtividade.Count == 0))
+        {
+            Html.RenderPartial("NoDataFound", (Boolean?)ViewBag.IsMontePacote);
+        }
+        else
+        {
+            foreach (FT.Web.Model.Models.AtividadeModel AtividadeModel in Model)
+            {
+                <div id="tabs" class="pacote tabs">
+                    <ul style="margin: 5px;">
+                        @if (AtividadeModel.Transfer.Count > 0)
+                        {
+                            <li><a href="#tabs-1">Traslado</a></li>
+                        }
+                        @if (AtividadeModel.AssistenciaViagem.Count > 0)
+                        {
+                            <li><a href="#tabs-2">Assistencia Viagem</a></li>
+                        }
+                        @if (AtividadeModel.Ingresso.Count > 0)
+                        {
+                            <li><a href="#tabs-3">Ingresso</a></li>
+                        }
+                        @if (AtividadeModel.Passeio.Count > 0)
+                        {
+                            <li><a href="#tabs-4">Passeio</a></li>
+                        }
+                        @if (AtividadeModel.Restaurante.Count > 0)
+                        {
+                            <li><a href="#tabs-5">Restaurante</a></li>
+                        }
+                        @if (AtividadeModel.PacoteAtividade.Count > 0)
+                        {
+                            <li><a href="#tabs-6">Pacote </a></li>
+                        }
+                    </ul>
+
+
+                    @if (AtividadeModel.Transfer.Count > 0)
+                    {
+                        <div id="tabs-1" class="pacotes-detalhes-hospedagem">
+                            <div class="pacote-detalhes-cabecalho">TRASLADOS</div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.TransferModel TransferModel in AtividadeModel.Transfer)
+                            { 
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">@Request.Form["Destinos"]</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@TransferModel.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@TransferModel.DescricaoAtividade</div>
+                                    </div>
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+                                                @foreach (FT.Web.Model.Models.TarifaModel TarifaModel in TransferModel.TarifasItem)
+                                                {
+                                                    @Html.DropDownList("ddl" + @TransferModel.CodigoAtividade, (IEnumerable<SelectListItem>)@TransferModel.Tarifas, new { @class = "SelectAtividadeTarifa", @onchange = "DataTarifaChange(" + @TransferModel.CodigoAtividade + ")" })
+                                                }
+                                                <br />
+                                                <br />
+
+                                                @if (TransferModel.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@TransferModel.CodigoAtividade">@TransferModel.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@TransferModel.CodigoAtividade" name="lbl_@TransferModel.CodigoAtividade">@string.Format("{0:0.00}", TransferModel.ValorParcela).Remove(string.Format("{0:0.00}", TransferModel.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@TransferModel.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", TransferModel.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                                    <input type="hidden" id="hdnValorTotal_@TransferModel.CodigoAtividade" value="@TransferModel.ValorParcela" />
+                                                    <input type="hidden" id="hdnCustoTotal_@TransferModel.CodigoAtividade" value="@TransferModel.Tarifas[0].Value.Split('|').Last()" />                                            
+                                         
+                                                    if (TransferModel.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@TransferModel.CodigoAtividade">@TransferModel.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">R$</div>
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@TransferModel.CodigoAtividade" name="lbl_@TransferModel.CodigoAtividade">
+                                                            @string.Format("{0:0.00}", TransferModel.Tarifas[0].Value.Split('|').First()).Remove(string.Format("{0:0.00}", TransferModel.Tarifas[0].Value.Split('|').First()).Length - 2)
+                                                        </label>
+                                                        <label id="lbl_centavos_@TransferModel.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", TransferModel.Tarifas[0].Value.Split('|').First()).Split(',').Last()</label>
+                                                    </div>
+                                         
+                                                    if (TransferModel.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @TransferModel.Tarifas[0].Value.Split('|')[1]</div>
+                                                    <input type="hidden" id="hdnValorTotal_@TransferModel.CodigoAtividade" value="@TransferModel.Tarifas[0].Value.Split('|').First()" />                                            
+                                                    <input type="hidden" id="hdnCustoTotal_@TransferModel.CodigoAtividade" value="@TransferModel.Tarifas[0].Value.Split('|').Last()" />      
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @TransferModel.Tarifas[0].Value</div>
+                                                    <input type="hidden" id="hdnValorTotal_@TransferModel.CodigoAtividade" value="@TransferModel.Tarifas[0].Value" />                                            
+                                                    <input type="hidden" id="hdnCustoTotal_@TransferModel.CodigoAtividade" value="@TransferModel.Tarifas[0].Value" />      
+                                                    }
+                                                }
+
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+                                                if (@TransferModel.CodigoStatusVenda == 0)
+                                                {//SOLICITAR
+                                                <a  style="margin-left:30px !important;" class="button_solicitar"  onclick="AdicionarAtividadeTransfer(@TransferModel.CodigoAtividade, true)">Solicitar</a>
+                                                }
+                                                if (@TransferModel.CodigoStatusVenda == 1)
+                                                {
+                                                <a class="button_comprar_atividade"   onclick="AdicionarAtividadeTransfer(@TransferModel.CodigoAtividade, true)">Comprar</a>
+                                                }
+                                                if (@TransferModel.CodigoStatusVenda == 2)
+                                                {
+                                                <a style="margin-left:30px !important;" class="button_lotado"  onclick="AdicionarAtividadeTransfer(@TransferModel.CodigoAtividade, true)">Lotado</a>
+                                                }
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadeTransfer(@TransferModel.CodigoAtividade, false)"/>
+                                                </div>
+                                        
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@TransferModel.CodigoAtividade, 'Transfer', null)" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@TransferModel.CodigoAtividade-Parcelas-Transfer tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@TransferModel.CodigoAtividade,'Transfer')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                        
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor: pointer;" class="addMPSucessAt" onclick="AdicionarAtividadeTransferMontePacote(@TransferModel.CodigoAtividade)">Adicionar ao pacote
+                                                </a>
+                                            }
+                                            <br />
+
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadeTransferOrcamento(@TransferModel.CodigoAtividade)">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" />
+                                                </a>
+                                            }
+
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+                    @if (AtividadeModel.AssistenciaViagem.Count > 0)
+                    {
+                        <div id="tabs-2" class="pacotes-detalhes-hospedagem">
+
+                            <div class="pacote-detalhes-cabecalho">ASSISTENCIA VIAGEM</div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.AssistenciaViagemModel AssistenciaViagem in AtividadeModel.AssistenciaViagem)
+                            {  
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1"></div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@AssistenciaViagem.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@AssistenciaViagem.DescricaoAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">Observação</div>
+                                    </div>
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+
+                                                @{
+                                var TarifaModelIngressos = AssistenciaViagem.TarifasItem.First();
+                                            
+                                                }
+
+                                                <span class="pacote-detalhes-titulo-Checkin-Checkout">Início:</span> <span class="pacote-detalhes-Checkin-Checkout">@TarifaModelIngressos.DataInicial.Substring(0, 10)</span>
+
+                                                <br />
+                                                <br />
+
+                                                <span class="pacote-detalhes-titulo-Checkin-Checkout">Fim:</span> <span class="pacote-detalhes-Checkin-Checkout">@TarifaModelIngressos.DataFinal.Substring(0, 10)</span>
+
+                                                <br />
+                                                <br />
+
+                                                @if (AssistenciaViagem.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@AssistenciaViagem.CodigoAtividade">@AssistenciaViagem.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@AssistenciaViagem.CodigoAtividade" name="lbl_@AssistenciaViagem.CodigoAtividade">@string.Format("{0:0.00}", AssistenciaViagem.ValorParcela).Remove(string.Format("{0:0.00}", AssistenciaViagem.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@AssistenciaViagem.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", AssistenciaViagem.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                                    if (AssistenciaViagem.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@AssistenciaViagem.CodigoAtividade">@AssistenciaViagem.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+
+                                                }
+                                                else
+                                                {
+
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">R$ </div>
+
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@AssistenciaViagem.CodigoAtividade" name="lbl_@AssistenciaViagem.CodigoAtividade">
+                                                            @string.Format("{0:0.00}", @AssistenciaViagem.TarifasItem[0].ValorTotalExibe).Remove(string.Format("{0:0.00}", @AssistenciaViagem.TarifasItem[0].ValorTotalExibe).Length - 2)</label>
+                                                        <label id="lbl_centavos_@AssistenciaViagem.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", @AssistenciaViagem.TarifasItem[0].ValorTotalExibe).Split(',').Last()</label>
+
+                                                    </div>
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @AssistenciaViagem.ValorTotal.ToString("n2") </div>
+                                                }
+                                                <input type="hidden" id="hdnValorTotal_@AssistenciaViagem.CodigoAtividade" value="@AssistenciaViagem.ValorTotal.ToString().Replace(",", ".")" />
+                                                @if (AssistenciaViagem.Tarifas.Count > 0)
+                                                {
+                                                    if (AssistenciaViagem.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <input type="hidden" id="hdnCustoTotal_@AssistenciaViagem.CodigoAtividade" value="@AssistenciaViagem.Tarifas[0].Value.Split('|').Last()" />    
+                                                    }
+                                                    else
+                                                    {
+                                                    <input type="hidden" id="hdnCustoTotal_@AssistenciaViagem.CodigoAtividade" value="@AssistenciaViagem.Tarifas[0].Value" />    
+                                                    }
+                                                }
+                                                else
+                                                {
+  
+                                                    <input type="hidden" id="hdnCustoTotal_@AssistenciaViagem.CodigoAtividade" value="0" />
+                                                }
+
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+
+                                                if (@AssistenciaViagem.CodigoStatusVenda == 0)
+                                                {//SOLICITAR
+                                                <a style="margin-left:20px !important;" class="button_solicitar"  onclick="AdicionarAtividadeAssistencia(@AssistenciaViagem.CodigoAtividade, true, '@TarifaModelIngressos.DataInicial.Substring(0, 10)', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')">Solicitar</a>
+                                                }
+                                                if (@AssistenciaViagem.CodigoStatusVenda == 1)
+                                                {
+                                                <a class="button_comprar_atividade" onclick="AdicionarAtividadeAssistencia(@AssistenciaViagem.CodigoAtividade, true, '@TarifaModelIngressos.DataInicial.Substring(0, 10)', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')">Comprar
+                                                </a>
+                                                }
+                                                if (@AssistenciaViagem.CodigoStatusVenda == 2)
+                                                {
+                                                <a class="button_lotado"  onclick="AdicionarAtividadeAssistencia(@AssistenciaViagem.CodigoAtividade, true, '@TarifaModelIngressos.DataInicial.Substring(0, 10)', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')">Lotado</a>
+                                                }
+
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadeAssistencia(@AssistenciaViagem.CodigoAtividade, false, '@TarifaModelIngressos.DataInicial.Substring(0, 10)', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')"/>
+                                                </div>
+                                        
+                                        
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@AssistenciaViagem.CodigoAtividade, 'Assistencia', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@AssistenciaViagem.CodigoAtividade-Parcelas-Assistencia tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@AssistenciaViagem.CodigoAtividade,'Assistencia')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                        
+                                        
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor: pointer;" class="addMPSucessAt"  onclick="AdicionarAtividadeAssistenciaMontePacote(@AssistenciaViagem.CodigoAtividade, '@TarifaModelIngressos.DataInicial.Substring(0, 10)', '@TarifaModelIngressos.DataFinal.Substring(0, 10)')">Adicionar ao pacote
+                                                </a>
+                                            }
+                                            <br />
+
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadeAssitenciaOrcamento(@AssistenciaViagem.CodigoAtividade, '@TarifaModelIngressos.DataFinal.Substring(0, 10)')">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" />
+                                                </a>
+                                            }
+
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+
+                    @if (AtividadeModel.Ingresso.Count > 0)
+                    {
+                        <div id="tabs-3" class="pacotes-detalhes-hospedagem">
+
+                            <div class="pacote-detalhes-cabecalho">INGRESSOS</div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.IngressoModel Ingressos in AtividadeModel.Ingresso)
+                            {  
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1"></div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@Ingressos.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@Ingressos.DescricaoAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">Observação</div>
+                                    </div>
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+                                                @foreach (FT.Web.Model.Models.TarifaModel TarifaModelIngressos in Ingressos.TarifasItem)
+                                                {
+                                                    @Html.DropDownList("ddl" + @Ingressos.CodigoAtividade, (IEnumerable<SelectListItem>)@Ingressos.Tarifas, new { @class = "SelectAtividadeTarifa", @onchange = "DataTarifaChange(" + @Ingressos.CodigoAtividade + ")" })
+                                                }
+                                                <br />
+                                                <br />
+
+
+
+
+
+
+                                                @if (Ingressos.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@Ingressos.CodigoAtividade">@Ingressos.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Ingressos.CodigoAtividade" name="lbl_@Ingressos.CodigoAtividade">@string.Format("{0:0.00}", Ingressos.ValorParcela).Remove(string.Format("{0:0.00}", Ingressos.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Ingressos.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Ingressos.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                                    if (Ingressos.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@Ingressos.CodigoAtividade">@Ingressos.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+                                            
+                                                    <input type="hidden" id="hdnValorTotal_@Ingressos.CodigoAtividade" value="@Ingressos.ValorParcela" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Ingressos.CodigoAtividade" value="@Ingressos.Tarifas[0].Value.Split('|').Last()" />                                            
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">R$</div>
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Ingressos.CodigoAtividade" name="lbl_@Ingressos.CodigoAtividade">@string.Format("{0:0.00}", Ingressos.Tarifas[0].Value.Split('|').First()).Remove(string.Format("{0:0.00}", Ingressos.Tarifas[0].Value.Split('|').First()).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Ingressos.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Ingressos.Tarifas[0].Value.Split('|').First()).Split(',').Last()</label>
+                                                    </div>
+                                                    if (Ingressos.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Ingressos.Tarifas[0].Value.Split('|')[1] </div>
+                                                    <input type="hidden" id="hdnValorTotal_@Ingressos.CodigoAtividade" value="@Ingressos.Tarifas[0].Value.Split('|').First()" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Ingressos.CodigoAtividade" value="@Ingressos.Tarifas[0].Value.Split('|').Last()" />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Ingressos.Tarifas[0].Value </div>
+                                                    <input type="hidden" id="hdnValorTotal_@Ingressos.CodigoAtividade" value="@Ingressos.Tarifas[0].Value" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Ingressos.CodigoAtividade" value="@Ingressos.Tarifas[0].Value" />
+                                                    }
+                                                }
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+                                                <a class="button_comprar_atividade" onclick="AdicionarAtividadeIngresso(@Ingressos.CodigoAtividade, true)">Comprar
+                                                </a>
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadeIngresso(@Ingressos.CodigoAtividade, false)"/>
+                                                </div>
+                                        
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@Ingressos.CodigoAtividade, 'Ingresso', null)" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@Ingressos.CodigoAtividade-Parcelas-Ingresso tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@Ingressos.CodigoAtividade,'Ingresso')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor: pointer;" class="addMPSucessAt"  onclick="AdicionarAtividadeIngressoMontePacote(@Ingressos.CodigoAtividade)">Adicionar ao pacote
+                                                </a>
+                                            }
+
+                                            <br />
+
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadeIngressoOrcamento(@Ingressos.CodigoAtividade)">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" /></a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+
+                    @if (AtividadeModel.Passeio.Count > 0)
+                    {
+                        <div id="tabs-4" class="pacotes-detalhes-hospedagem">
+
+                            <div class="pacote-detalhes-cabecalho">PASSEIOS</div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.PasseioModel Passeio in AtividadeModel.Passeio)
+                            {  
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1"></div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@Passeio.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@Passeio.DescricaoAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">Observação</div>
+                                    </div>
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+                                                @foreach (FT.Web.Model.Models.TarifaModel TarifaModelPasseio in Passeio.TarifasItem)
+                                                {
+                                                    @Html.DropDownList("ddl" + @Passeio.CodigoAtividade, (IEnumerable<SelectListItem>)@Passeio.Tarifas, new { @class = "SelectAtividadeTarifa", @onchange = "DataTarifaChange(" + @Passeio.CodigoAtividade + ")" })
+                                                }
+                                                <br />
+                                                <br />
+
+                                                @if (Passeio.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@Passeio.CodigoAtividade">@Passeio.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Passeio.CodigoAtividade" name="lbl_@Passeio.CodigoAtividade">@string.Format("{0:0.00}", Passeio.ValorParcela).Remove(string.Format("{0:0.00}", Passeio.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Passeio.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Passeio.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                                    if (Passeio.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@Passeio.CodigoAtividade">@Passeio.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+
+                                                    <input type="hidden" id="hdnValorTotal_@Passeio.CodigoAtividade" value="@Passeio.ValorParcela" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Passeio.CodigoAtividade" value="@Passeio.Tarifas[0].Value.Split('|').Last()" />                                            
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">R$</div>
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Passeio.CodigoAtividade" name="lbl_@Passeio.CodigoAtividade">
+                                                            @string.Format("{0:0.00}", Passeio.Tarifas[0].Value.Split('|').First()).Remove(string.Format("{0:0.00}", Passeio.Tarifas[0].Value.Split('|').First()).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Passeio.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Passeio.Tarifas[0].Value.Split('|').First()).Split(',').Last()</label>
+
+                                                    </div>
+                                                    if (Passeio.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Passeio.Tarifas[0].Value.Split('|')[1]</div>
+                                                    <input type="hidden" id="hdnValorTotal_@Passeio.CodigoAtividade" value="@Passeio.Tarifas[0].Value.Split('|').First()" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Passeio.CodigoAtividade" value="@Passeio.Tarifas[0].Value.Split('|').Last()" />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Passeio.Tarifas[0].Value</div>
+                                                    <input type="hidden" id="hdnValorTotal_@Passeio.CodigoAtividade" value="@Passeio.Tarifas[0].Value" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Passeio.CodigoAtividade" value="@Passeio.Tarifas[0].Value" />
+                                                    }
+                                                }
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+                                                if (@Passeio.CodigoStatusVenda == 0)
+                                                {//SOLICITAR
+                                                <a  style="margin-left:20px !important;" class="button_solicitar"  onclick="AdicionarAtividadeAssistencia(@Passeio.CodigoAtividade, true)">Solicitar</a>
+                                                }
+                                                if (@Passeio.CodigoStatusVenda == 1)
+                                                {
+                                                <a class="button_comprar_atividade" onclick="AdicionarAtividadePasseio(@Passeio.CodigoAtividade, true)">Comprar
+                                                </a>
+                                                }
+                                                if (@Passeio.CodigoStatusVenda == 2)
+                                                {
+                                                <a class="button_lotado"  onclick="AdicionarAtividadePasseio(@Passeio.CodigoAtividade, true)">Lotado</a>
+                                                }
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadePasseio(@Passeio.CodigoAtividade, false)"/>
+                                                </div>
+
+                                        
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@Passeio.CodigoAtividade, 'Passeio', null)" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@Passeio.CodigoAtividade-Parcelas-Passeio tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@Passeio.CodigoAtividade,'Passeio')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                        
+                                        
+                                        
+                                            }
+                                            else
+                                            {
+                                
+                                                <a style="cursor: pointer;" class="addMPSucessAt"  onclick="AdicionarAtividadePasseioMontePacote(@Passeio.CodigoAtividade)">Adicionar ao pacote
+                                                </a>
+                                            }
+                                            <br />
+
+
+
+
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadePasseioOrcamento(@Passeio.CodigoAtividade)">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" />
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+
+                    @if (AtividadeModel.Restaurante.Count > 0)
+                    {
+                        <div id="tabs-5" class="pacotes-detalhes-hospedagem">
+                            <div class="pacote-detalhes-cabecalho">RESTAURANTE</div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.RestauranteModel Restaurante in AtividadeModel.Restaurante)
+                            {  
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1"></div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@Restaurante.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@Restaurante.DescricaoAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">Observação</div>
+                                    </div>
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+                                                @foreach (FT.Web.Model.Models.TarifaModel TarifaModelRestaurante in Restaurante.TarifasItem)
+                                                {
+                                                    @Html.DropDownList("ddl" + @Restaurante.CodigoAtividade, (IEnumerable<SelectListItem>)@Restaurante.Tarifas, new { @class = "SelectAtividadeTarifa", @onchange = "DataTarifaChange(" + @Restaurante.CodigoAtividade + ")" })
+                                                }
+                                                <br />
+                                                <br />
+
+                                                @if (Restaurante.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@Restaurante.CodigoAtividade">@Restaurante.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Restaurante.CodigoAtividade" name="lbl_@Restaurante.CodigoAtividade">@string.Format("{0:0.00}", Restaurante.ValorParcela).Remove(string.Format("{0:0.00}", Restaurante.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Restaurante.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Restaurante.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                                    if (Restaurante.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@Restaurante.CodigoAtividade">@Restaurante.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+                                            
+                                                    <input type="hidden" id="hdnValorTotal_@Restaurante.CodigoAtividade" value="@Restaurante.ValorParcela" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Restaurante.CodigoAtividade" value="@Restaurante.Tarifas[0].Value.Split('|').Last()" />                                            
+                                                }
+                                                else
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">R$</div>
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@Restaurante.CodigoAtividade" name="lbl_@Restaurante.CodigoAtividade">
+                                                            @string.Format("{0:0.00}", Restaurante.Tarifas[0].Value.Split('|').First()).Remove(string.Format("{0:0.00}", Restaurante.Tarifas[0].Value.Split('|').First()).Length - 2)</label>
+                                                        <label id="lbl_centavos_@Restaurante.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", Restaurante.Tarifas[0].Value.Split('|').First()).Split(',').Last()</label>
+                                                    </div>
+                                                    if (Restaurante.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Restaurante.Tarifas[0].Value.Split('|')[1] </div>
+                                                    <input type="hidden" id="hdnValorTotal_@Restaurante.CodigoAtividade" value="@Restaurante.Tarifas[0].Value.Split('|').First()" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Restaurante.CodigoAtividade" value="@Restaurante.Tarifas[0].Value.Split('|').Last()" />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @Restaurante.Tarifas[0].Value </div>
+                                                    <input type="hidden" id="hdnValorTotal_@Restaurante.CodigoAtividade" value="@Restaurante.Tarifas[0].Value" />
+                                                    <input type="hidden" id="hdnCustoTotal_@Restaurante.CodigoAtividade" value="@Restaurante.Tarifas[0].Value" />
+                                                    }
+                                                }
+
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+                                                if (@Restaurante.CodigoStatusVenda == 0)
+                                                {//SOLICITAR
+                                                <a style="margin-left:20px !important;" class="button_solicitar"  onclick="AdicionarAtividadeRestaurante(@Restaurante.CodigoAtividade, true)">Solicitar</a>
+                                                }
+                                                if (@Restaurante.CodigoStatusVenda == 1)
+                                                {
+                                                <a class="button_comprar_atividade" onclick="AdicionarAtividadeRestaurante(@Restaurante.CodigoAtividade, true)">Comprar
+                                                </a>
+                                                }
+                                                if (@Restaurante.CodigoStatusVenda == 2)
+                                                {
+                                                <a class="button_lotado"  onclick="AdicionarAtividadeRestaurante(@Restaurante.CodigoAtividade, true)">Lotado</a>
+                                                }
+
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadeRestaurante(@Restaurante.CodigoAtividade, false)"/>
+                                                </div>
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@Restaurante.CodigoAtividade, 'Restaurante', null)" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@Restaurante.CodigoAtividade-Parcelas-Restaurante tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@Restaurante.CodigoAtividade,'Restaurante')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor: pointer;" class="addMPSucessAt"  onclick="AdicionarAtividadeRestauranteMontePacote(@Restaurante.CodigoAtividade)">Adicionar ao pacote
+                                                </a>
+                                            }
+
+                                            <br />
+
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadeRestauranteOrcamento(@Restaurante.CodigoAtividade)">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" />
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+
+                    @if (AtividadeModel.PacoteAtividade.Count > 0)
+                    {
+                        <div id="tabs-6" class="pacotes-detalhes-hospedagem">
+                            <div class="pacote-detalhes-cabecalho">PACOTE </div>
+                            <div class="clear"></div>
+                            @foreach (FT.Web.Model.Models.PacoteAtividadeModel PacoteAtividade in AtividadeModel.PacoteAtividade)
+                            {  
+                                <div class="pacotes-detalhes-hospedagem-p">
+                                    <div class="pacotes-detalhes-hospedagem-p-l">
+                                        <div class="pacotes-detalhes-hospedagem-texto-1"></div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-2">@PacoteAtividade.NomeAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-3">@PacoteAtividade.DescricaoAtividade</div>
+                                        <div class="pacotes-detalhes-hospedagem-texto-1">Observação</div>
+                                    </div>
+
+                                    <div class="pacotes-detalhes-hospedagem-p-r">
+                                        <div class="pacotes-detalhes-hotel">
+                                            <div class="pacotes-detalhes-hotel-1">
+                                                @foreach (FT.Web.Model.Models.TarifaModel TarifaModelRestaurante in PacoteAtividade.TarifasItem)
+                                                {
+                                                    @Html.DropDownList("ddl" + @PacoteAtividade.CodigoAtividade, (IEnumerable<SelectListItem>)@PacoteAtividade.Tarifas, new { @class = "SelectAtividadeTarifa", @onchange = "DataTarifaChange(" + @PacoteAtividade.CodigoAtividade + ")" })
+                                                }
+                                                <br />
+                                                <br />
+                                                @if (PacoteAtividade.QuantidadeParcela > 1)
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">Preço por pessoa</div>
+                                                    <div class="pacote-detalhes-parcelas">
+                                                        <label id="lbl_parcelas_@PacoteAtividade.CodigoAtividade">@PacoteAtividade.QuantidadeParcela</label>
+                                                        x R$
+                                                    </div>
+                                                    <div class="pacote-detalhes-semjuros">
+                                                        <p style="font-size: 11px;">sem juros</p>
+                                                    </div>
+                                    
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@PacoteAtividade.CodigoAtividade" name="lbl_@PacoteAtividade.CodigoAtividade">@string.Format("{0:0.00}", PacoteAtividade.ValorParcela).Remove(string.Format("{0:0.00}", PacoteAtividade.ValorParcela).Length - 2)</label>
+                                                        <label id="lbl_centavos_@PacoteAtividade.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", PacoteAtividade.ValorParcela).Split(',').Last()</label>
+                                                    </div>
+                                              
+                                                    <input type="hidden" id="hdnValorTotal_@PacoteAtividade.CodigoAtividade" value="@PacoteAtividade.ValorParcela" />
+                                            
+                                                    if (PacoteAtividade.ValorEntrada > 0)
+                                                    { 
+                                                    <div class="pacote-detalhes-apartirde">
+                                                        + Entrada de
+                                                        <label id="lbl_entrada_@PacoteAtividade.CodigoAtividade">@PacoteAtividade.ValorEntrada</label>
+                                                    </div>   
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="pacote-detalhes-apartirde">a partir de</div>
+                                                    <div class="pacote-detalhes-parcelas">R$</div>
+                                                    <div class="pacote-detalhes-valor-parcela">
+                                                        <label id="lbl_@PacoteAtividade.CodigoAtividade" name="lbl_@PacoteAtividade.CodigoAtividade">
+                                                            @string.Format("{0:0.00}", PacoteAtividade.Tarifas[0].Value.Split('|').First()).Remove(string.Format("{0:0.00}", PacoteAtividade.Tarifas[0].Value.Split('|').First()).Length - 2)</label>
+                                                        <label id="lbl_centavos_@PacoteAtividade.CodigoAtividade" style="font-size: 11px;">@string.Format("{0:0.00}", PacoteAtividade.Tarifas[0].Value.Split('|').First()).Split(',').Last()</label>
+                                                    </div>
+                                                    if (PacoteAtividade.Tarifas[0].Value.Contains("|"))
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @PacoteAtividade.Tarifas[0].Value.Split('|')[1] </div>
+                                            
+                                                    <input type="hidden" id="hdnValorTotal_@PacoteAtividade.CodigoAtividade" value="@PacoteAtividade.Tarifas[0].Value.Split('|').First()" />
+                                                    }
+                                                    else
+                                                    {
+                                                    <div class="pacote-detalhes-apartirde">Total: R$ @PacoteAtividade.Tarifas[0].Value </div>
+                                            
+                                                    <input type="hidden" id="hdnValorTotal_@PacoteAtividade.CodigoAtividade" value="@PacoteAtividade.Tarifas[0].Value" />
+                                                    }
+
+                                                }
+                                            </div>
+                                            @if (ViewBag.IsMontePacote == null)
+                                            {
+                                                if (@PacoteAtividade.CodigoStatusVenda == 0)
+                                                {//SOLICITAR
+                                                <a class="button_solicitar"  onclick="AdicionarAtividadePacoteAtividade(@PacoteAtividade.CodigoAtividade, true)">Solicitar</a>
+                                                }
+                                                if (@PacoteAtividade.CodigoStatusVenda == 1)
+                                                {
+                                                <a class="button_comprar_atividade" onclick="AdicionarAtividadePacoteAtividade(@PacoteAtividade.CodigoAtividade, true)">Comprar
+                                                </a>
+                                                }
+                                                if (@PacoteAtividade.CodigoStatusVenda == 2)
+                                                {
+                                                <a class="button_lotado"  onclick="AdicionarAtividadePacoteAtividade(@PacoteAtividade.CodigoAtividade, true)">Lotado</a>
+                                                }
+                                                <div>
+                                                    <img style="height: 31px; margin-left: 2px;  cursor:pointer" src="../Images/adicionar-carrinho.png" onclick="AdicionarAtividadePacoteAtividade(@PacoteAtividade.CodigoAtividade, false)"/>
+                                                </div>
+                                                <br />
+                                                <a onclick="VerPrecoParcelas(@PacoteAtividade.CodigoAtividade, 'PacoteAtividade', null)" class="btnTesteAzul">Formas de pagamento</a>
+                                                <div class="@PacoteAtividade.CodigoAtividade-Parcelas-PacoteAtividade tbsParcela">
+                                                    <div>
+                                                        <img src="~/Images/loading_transparent.gif" />
+                                                    </div>
+                                                    <a onclick="FecharPrecoParcelas(@PacoteAtividade.CodigoAtividade,'PacoteAtividade')"><span class="fecharDetalhePreco">fechar</span></a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a style="cursor: pointer;" class="addMPSucessAt"  onclick="AdicionarAtividadePacoteAtividadeMontePacote(@PacoteAtividade.CodigoAtividade)">Adicionar ao pacote
+                                                </a>
+                                            }
+                                            <br />
+                                            @if (Session["Usuario"] != null && ViewBag.IsMontePacote == null)
+                                            { 
+                                                <a  href="javascript:"  style="cursor: pointer; display:block;  width: 78px !important; height: 14px !important; float: right !important; margin-left: 23px !important; " onclick="AdicionarAtividadePacoteAtividadeOrcamento(@PacoteAtividade.CodigoAtividade)">
+                                                    <img src="@string.Format("/Images/bot_orcamento.png")" />
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <hr class="pacote-detalhes-separacao">
+                            }
+                        </div>
+                    }
+
+                </div>
+            }
+        }
+    }
+    else
+    {
+        Html.RenderPartial("NoDataFound", (Boolean?)ViewBag.IsMontePacote);
+    }
+
+</div>
+<script>
+    $('.SelectAssistenciaTarifa').attr('readonly', 'readonly');
+    $('.SelectAssistenciaTarifaFinal').attr('readonly', 'readonly');
+    $(".SelectAssistenciaTarifaFinal option:last").attr("selected", "selected");
+</script>

@@ -1,0 +1,188 @@
+﻿@model List<FT.Web.Model.Models.CarroResultadoTratadoModel>
+
+@{
+
+    if (ViewBag.DadosPesquisaCarro != null)
+    {
+        FT.Web.Model.Models.CarroPesquisaModel carroPesquisa = ViewBag.DadosPesquisaCarro;
+        
+    <div class="carro-cabecalho-1">
+        <div class="carro-cabecalho-1-1">
+            <div class="carro-detalhes-ico-titulo"></div>
+            <p class="carro-cabecalho-1-texto-1"><strong>Resultados da Pesquisa</strong></p>
+
+        </div>
+        <div class="carro-cabecalho-1-2">
+            @*                <p class="carro-cabecalho-1-texto-3">
+                    Carros em <strong>
+                        <label id="lblLocalRetirada" style="font-weight: bold;">@Model.LocalRetirada </label>
+                        @Html.DisplayFor(model => model.LocalRetirada, new {id="lblcarrosRetirada", style="font-weight: bold;"}) <span style="font-size:20px;">em @Html.DisplayFor(model => model.DataCheckIn) </span>
+                    </strong>
+                </p>*@
+            <p class="carro-cabecalho-1-texto-4">
+                Retirada em <strong>@carroPesquisa.LocalRetirada</strong> - data 
+                    <label id="lblDataCheckin">@carroPesquisa.DataCheckIn</label>
+                às @carroPesquisa.HoraCheckInSelecionada<br />
+                Devolução em <strong>@if (carroPesquisa.LocalDevolucao != null && carroPesquisa.LocalDevolucao.ToLower() == "informe o local de devolução")
+                                     { @carroPesquisa.LocalRetirada;
+                                     }
+                                     else
+                                     {  @carroPesquisa.LocalDevolucao}</strong> - data
+                    <label id="lblDataCheckOut">@carroPesquisa.DataCheckOut</label>
+                às @carroPesquisa.HoraCheckOutSelecionada
+                @*<label id="lblLocalDevolucao" style="font-weight: bold;">@Model.LocalRetirada</label></strong> em <strong>*@
+            </p>
+        </div>
+    </div>
+    }
+}
+
+<script src="~/Scripts/Site.js"></script>
+@*<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />*@
+
+<link href="~/Content/Carro.css" rel="stylesheet" />
+
+<div id="divReservaCarro" style="display: none; font-size: small;" title="Detalhe do Carro..."></div>
+
+<br />
+@{List<string> listLocadora = new List<string>();
+  int numeroColuna = 0;
+  int qtdLocadoraDinamico = 0;
+  Dictionary<string, int> locadorasDict = new Dictionary<string, int>(); 
+}
+@if (Model.Count == 0)
+{
+    if (ViewBag.IsMontePacote == null)
+    { Html.RenderPartial("NoDataFound", false); }
+    else { Html.RenderPartial("NoDataFound", (Boolean?)ViewBag.IsMontePacote); }
+}
+@foreach (var categoria in Model)
+{
+    locadorasDict.Clear();
+    <div class="bloco-carro">
+
+        <table cellpadding="0" cellspacing="0" class="tabela-resulado-carro">
+            <tr class="tabela-titulo-resulado-carro">
+                <td class="tabela-titulo-resulado-carro"><span class="agrupador">
+                    <h2>@categoria.DescricaoCategoria</h2>
+                </span></td>
+
+            </tr>
+
+            @foreach (var plano in categoria.ListResultPlano)
+            {
+                <tr class="tabela-linha-resulado-carro">
+                    <td class="tabela-campo-plano">
+                        @plano.Plano
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div id="divloca_@qtdLocadoraDinamico" style="border-radius: 0 15px 0 0; /*border-right: 1px solid #808080;*/ overflow: hidden; width:310px">
+            <b>
+                <div class="nav-precos seta-esq nav_@qtdLocadoraDinamico">
+                    <a href="javascript:rolarScrollHorEsq('#divloca_@qtdLocadoraDinamico', 155)">< </a>
+                </div>
+                <div class="nav-precos seta-dir nav_@qtdLocadoraDinamico">
+                    <a href="javascript:rolarScrollHorDir('#divloca_@qtdLocadoraDinamico', 155)">> </a>
+                </div>
+
+            </b>
+            <table style="float: left;" cellspacing="0" cellpadding="0">
+
+
+                <tr class="tabela-titulo-resulado-carro">
+
+                    @foreach (var plano in categoria.ListResultPlano)
+                    {
+
+                        foreach (var locadora in plano.ListLocadoraValor)
+                        {
+                            if (!listLocadora.Exists(p => p == locadora.Locadora))
+                            {
+                                locadorasDict.Add(locadora.carroCompleto.DescricaoLocadora, numeroColuna);
+                                numeroColuna++;
+                        <td class="tabela-titulo-resulado-carro">
+                            <img width="50" height="23" src="@locadora.carroCompleto.UrlLogoLocadora" alt="@locadora.carroCompleto.DescricaoLocadora"/>
+                        </td>
+                        
+                        
+                        
+                            }
+
+                            listLocadora.Add(locadora.Locadora);
+
+                        }
+                    }
+                </tr>
+
+                @foreach (var plano in categoria.ListResultPlano)
+                {
+                    <tr class="tabela-linha-resulado-carro">
+
+                        @for (int i = 0; i < numeroColuna; i++)
+                        {
+                            var result = plano.ListLocadoraValor.Where(p => p.Locadora == locadorasDict.First(b => b.Value == i).Key).ToList();
+                            if (result.Count > 0)
+                            {
+                                foreach (var listLocadoraValor in result)
+                                {
+
+                                    string valorTotalExibicao = listLocadoraValor.ValorVenda.ToString("n2");
+                                    string valorInteiro = valorTotalExibicao.Substring(0, valorTotalExibicao.Length - 3);
+                                    string valorCentavos = valorTotalExibicao.Substring(valorTotalExibicao.Length - 2);
+                                
+                            <td class="tabela-campo-preco">
+                                <div class="moeda-simbolo">R$  </div>
+                                <div class="valor-principal">@valorInteiro </div>
+                                <div class="centavo-principal">,@valorCentavos</div>
+                                @if (ViewBag.IsMontePacote == null)
+                                {
+                                    <a href="javascript:verDetalhesCarro(@Json.Encode(@listLocadoraValor.carroCompleto))" ><span class="simbolo-detalhe-carro">+</span></a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:verDetalhesCarro(@Json.Encode(@listLocadoraValor.carroCompleto), true)" ><span class="simbolo-detalhe-carro">+</span></a>
+                                }
+
+                            </td>
+                                }
+
+                            }
+                            else
+                            {
+                            <td class="tabela-campo-preco"></td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+
+        @if (numeroColuna == 2)
+        {
+            <script>
+                $('.nav_@qtdLocadoraDinamico').hide();
+                $("#divloca_@qtdLocadoraDinamico").css("width", "310px");
+            </script>
+        }
+        else if (numeroColuna > 2)
+        {
+            <script>
+                $('.nav_@qtdLocadoraDinamico').show();
+                $("#divloca_@qtdLocadoraDinamico").css("width", "310px");
+            </script>
+        }
+        else
+        { 
+            <script>
+                $('.nav_@qtdLocadoraDinamico').hide();
+                $("#divloca_@qtdLocadoraDinamico").css("width", "155px");
+            </script>
+        }
+        <br />
+        <br />
+    </div>
+        { qtdLocadoraDinamico = qtdLocadoraDinamico + 1; listLocadora = new List<string>(); numeroColuna = 0; }
+}

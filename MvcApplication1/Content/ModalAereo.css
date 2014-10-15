@@ -1,0 +1,12 @@
+﻿
+
+@media (max-height: 800px) {
+    #simplemodal-container {
+        height: auto !important;
+        margin-top: -660px !important;
+    }
+    .divVervoo {
+        max-height: 680px !important;
+        overflow-y: scroll !important;
+    }
+}

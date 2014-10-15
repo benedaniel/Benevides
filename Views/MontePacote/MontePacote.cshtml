@@ -1,0 +1,74 @@
+﻿@model FT.Web.Model.Models.MontePacoteModel
+<script src="~/Scripts/MontePacote.js"></script>
+
+<style>
+    .labelMontePacote {
+        font-size: 12px !important;
+        font-weight: bold;
+    }
+</style>
+
+<div class="contentBusca">
+    <h3>Monte seu pacote</h3>
+    @using (Html.BeginForm("AdicionarDestino", "MontePacote", FormMethod.Post, new { id = "formMontePacote", name = "formMontePacote" }))
+    {
+        <div>
+            <label class="labelMontePacote">Origem</label>
+            <input type="text" id="Origem" name="Origem" class="inputdestinoMP watermark" title="Informe sua origem" />
+            <label id="lblErroOrigem" class="field-validation-error" style="display: none;"></label>
+        </div>
+        <div>
+            <label class="labelMontePacote">Destino</label>
+            <input type="text" id="Destino" name="Destino" class="inputdestinoMP watermark" title="Informe seu destino" />
+            <label id="lblErroDestino" class="field-validation-error" style="display: none;"></label>
+        </div>
+        <div class="clear"></div>    
+        <div class="BuscadorSetDate">
+            <div class="SetDate">
+                <label class="labelMontePacote">Data de saída</label><br />
+                <input type="text" class="txtStartDate" id="Saida" name="Saida" />
+                <label id="lblErroDataSaida" class="field-validation-error" style="display: none;"></label>
+            </div>
+        </div>
+        <div class="clear" style="display: none;"></div>
+        <div class="BuscadorSetDate">
+            <div class="SetDate">
+                <label class="labelMontePacote">Data de retorno</label><br />
+                <input type="text" class="txtEndDate" id="Retorno" name="Retorno" />
+                <label id="lblErroDataRetorno" class="field-validation-error" style="display: none;"></label>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="quants">
+            <label class="labelMontePacote">Noites</label><br class="saveSearch" />
+            <div>
+                <a href="javascript:" id="plusNightsMonte" class="plusHotel"></a>
+                <input id="txtNoitesMonte" type="text" value="0" onkeypress="return isNumberKey(event)" maxlength="2" />
+                <a href="javascript:" id="minusNightsMonte" class="minusHotel"></a>
+                <input type="hidden" id="hdnNoites" name="hdnNoites" value="@Request["hdnNoitesMonte"]" />
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="bar"></div>
+        <div class="clear"></div>
+        <p class="BuscadorSet">
+            <label class="buscadorlabel">Quantidade de quartos</label>
+            <input type="button" id="plusRoomsMonte" class="buttonPacote" />
+            <input type="button" id="minusRoomsMonte" class="buttonPacoteRemover" />
+        </p>
+        <div class="clear"></div>
+        <div class="quartos">
+            <ul class="listaQuartosMP">
+                @{Html.RenderAction("QuartosMP", "MontePacote");}
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="bar"></div>
+        <div class="clear"></div>
+        <br class="saveSearch" />
+        <input id="origemMP" name="origemMP" type="hidden" />
+        <div>
+            <input type="submit" value="" class="btnPesquisar" onclick="return SendToServerMP()" />
+        </div>
+    }
+</div>

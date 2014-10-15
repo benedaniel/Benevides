@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NewDataSet>
+  <Regionalizacao>
+    <NomeCidade>São Paulo</NomeCidade>
+    <CodigoCidade>9668</CodigoCidade>
+  </Regionalizacao>
+  <Regionalizacao>
+    <NomeCidade>Rio de Janeiro</NomeCidade>
+    <CodigoCidade>7043</CodigoCidade>
+  </Regionalizacao>
+  <Regionalizacao>
+    <NomeCidade>Belo Horizonte</NomeCidade>
+    <CodigoCidade>2754</CodigoCidade>
+  </Regionalizacao>
+  <Regionalizacao>
+    <NomeCidade>Brasília</NomeCidade>
+    <CodigoCidade>1778</CodigoCidade>
+  </Regionalizacao>
+</NewDataSet>
